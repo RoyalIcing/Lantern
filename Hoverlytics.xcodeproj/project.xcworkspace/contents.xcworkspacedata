@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Hoverlytics for Mac.xcodeproj">
+      location = "self:Hoverlytics.xcodeproj">
    </FileRef>
 </Workspace>

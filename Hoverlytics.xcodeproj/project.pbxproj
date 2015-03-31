@@ -1,0 +1,811 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B22425F81AC8F8B200809EF0 /* HoverlyticsModel.h in Headers */ = {isa = PBXBuildFile; fileRef = B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B22425FE1AC8F8B200809EF0 /* HoverlyticsModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; };
+		B22426071AC8F8B200809EF0 /* HoverlyticsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426061AC8F8B200809EF0 /* HoverlyticsModelTests.swift */; };
+		B224260A1AC8F8B200809EF0 /* HoverlyticsModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; };
+		B224260B1AC8F8B200809EF0 /* HoverlyticsModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B22426121AC8F8D000809EF0 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B7DBF1AC785C90026AEDB /* CloudKit.framework */; };
+		B22426141AC8F8DB00809EF0 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426131AC8F8DB00809EF0 /* Site.swift */; };
+		B22426161AC8FA2E00809EF0 /* CloudKit+Hoverlytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426151AC8FA2E00809EF0 /* CloudKit+Hoverlytics.swift */; };
+		B22B7D951AC6B9090026AEDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7D941AC6B9090026AEDB /* AppDelegate.swift */; };
+		B22B7D971AC6B9090026AEDB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7D961AC6B9090026AEDB /* ViewController.swift */; };
+		B22B7D991AC6B9090026AEDB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B22B7D981AC6B9090026AEDB /* Images.xcassets */; };
+		B22B7D9C1AC6B9090026AEDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22B7D9A1AC6B9090026AEDB /* Main.storyboard */; };
+		B22B7DA81AC6B9090026AEDB /* Hoverlytics_for_MacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DA71AC6B9090026AEDB /* Hoverlytics_for_MacTests.swift */; };
+		B22B7DB41AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB31AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m */; };
+		B22B7DB71AC77CAC0026AEDB /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */; };
+		B22B7DB91AC77D420026AEDB /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB81AC77D420026AEDB /* PageViewController.swift */; };
+		B22B7DBB1AC77EF20026AEDB /* Editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22B7DBA1AC77EF20026AEDB /* Editor.storyboard */; };
+		B22B7DBD1AC782DD0026AEDB /* insertHoverlytics.js in Resources */ = {isa = PBXBuildFile; fileRef = B22B7DBC1AC782DD0026AEDB /* insertHoverlytics.js */; };
+		B22B7DC01AC785C90026AEDB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B7DBF1AC785C90026AEDB /* CloudKit.framework */; };
+		B23EA59E1ACA5F6A009B4032 /* ValueValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */; };
+		B2A63B5F1AC8DAA0004CEBE1 /* SiteSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */; };
+		B2A63B611AC8DACD004CEBE1 /* SiteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */; };
+		B2C4A93F1ACA31F0000F1566 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */; };
+		B2C4A9411ACA3203000F1566 /* MainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4A9401ACA3203000F1566 /* MainState.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B22425FF1AC8F8B200809EF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B22B7D871AC6B9090026AEDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B22425F21AC8F8B200809EF0;
+			remoteInfo = HoverlyticsModel;
+		};
+		B22426011AC8F8B200809EF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B22B7D871AC6B9090026AEDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B22B7D8E1AC6B9090026AEDB;
+			remoteInfo = Hoverlytics;
+		};
+		B22426081AC8F8B200809EF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B22B7D871AC6B9090026AEDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B22425F21AC8F8B200809EF0;
+			remoteInfo = HoverlyticsModel;
+		};
+		B22B7DA21AC6B9090026AEDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B22B7D871AC6B9090026AEDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B22B7D8E1AC6B9090026AEDB;
+			remoteInfo = "Hoverlytics for Mac";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B22425E91AC8F7CB00809EF0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B224260B1AC8F8B200809EF0 /* HoverlyticsModel.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HoverlyticsModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B22425F61AC8F8B200809EF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HoverlyticsModel.h; sourceTree = "<group>"; };
+		B22425FD1AC8F8B200809EF0 /* HoverlyticsModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoverlyticsModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B22426051AC8F8B200809EF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B22426061AC8F8B200809EF0 /* HoverlyticsModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverlyticsModelTests.swift; sourceTree = "<group>"; };
+		B22426131AC8F8DB00809EF0 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Site.swift; sourceTree = "<group>"; };
+		B22426151AC8FA2E00809EF0 /* CloudKit+Hoverlytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CloudKit+Hoverlytics.swift"; sourceTree = "<group>"; };
+		B22B7D8F1AC6B9090026AEDB /* Hoverlytics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hoverlytics.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B22B7D931AC6B9090026AEDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B22B7D941AC6B9090026AEDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B22B7D961AC6B9090026AEDB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B22B7D981AC6B9090026AEDB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B22B7D9B1AC6B9090026AEDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B22B7DA11AC6B9090026AEDB /* HoverlyticsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoverlyticsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B22B7DA61AC6B9090026AEDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B22B7DA71AC6B9090026AEDB /* Hoverlytics_for_MacTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hoverlytics_for_MacTests.swift; sourceTree = "<group>"; };
+		B22B7DB11AC6B9860026AEDB /* Hoverlytics-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hoverlytics-Bridging-Header.h"; sourceTree = "<group>"; };
+		B22B7DB21AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSViewController+PGWSConstraintConvenience.h"; sourceTree = "<group>"; };
+		B22B7DB31AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSViewController+PGWSConstraintConvenience.m"; sourceTree = "<group>"; };
+		B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		B22B7DB81AC77D420026AEDB /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		B22B7DBA1AC77EF20026AEDB /* Editor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Editor.storyboard; sourceTree = "<group>"; };
+		B22B7DBC1AC782DD0026AEDB /* insertHoverlytics.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = insertHoverlytics.js; sourceTree = "<group>"; };
+		B22B7DBE1AC785B20026AEDB /* Hoverlytics.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Hoverlytics.entitlements; sourceTree = "<group>"; };
+		B22B7DBF1AC785C90026AEDB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueValidation.swift; sourceTree = "<group>"; };
+		B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SiteSettings.storyboard; sourceTree = "<group>"; };
+		B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteSettingsViewController.swift; sourceTree = "<group>"; };
+		B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
+		B2C4A9401ACA3203000F1566 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainState.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B22425EF1AC8F8B200809EF0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B22426121AC8F8D000809EF0 /* CloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B22425FA1AC8F8B200809EF0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B22425FE1AC8F8B200809EF0 /* HoverlyticsModel.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B22B7D8C1AC6B9090026AEDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B22B7DC01AC785C90026AEDB /* CloudKit.framework in Frameworks */,
+				B224260A1AC8F8B200809EF0 /* HoverlyticsModel.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B22B7D9E1AC6B9090026AEDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B22425F41AC8F8B200809EF0 /* HoverlyticsModel */ = {
+			isa = PBXGroup;
+			children = (
+				B22426151AC8FA2E00809EF0 /* CloudKit+Hoverlytics.swift */,
+				B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */,
+				B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */,
+				B22426131AC8F8DB00809EF0 /* Site.swift */,
+				B2C4A9401ACA3203000F1566 /* MainState.swift */,
+				B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */,
+				B22425F51AC8F8B200809EF0 /* Supporting Files */,
+			);
+			path = HoverlyticsModel;
+			sourceTree = "<group>";
+		};
+		B22425F51AC8F8B200809EF0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B22425F61AC8F8B200809EF0 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B22426031AC8F8B200809EF0 /* HoverlyticsModelTests */ = {
+			isa = PBXGroup;
+			children = (
+				B22426061AC8F8B200809EF0 /* HoverlyticsModelTests.swift */,
+				B22426041AC8F8B200809EF0 /* Supporting Files */,
+			);
+			path = HoverlyticsModelTests;
+			sourceTree = "<group>";
+		};
+		B22426041AC8F8B200809EF0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B22426051AC8F8B200809EF0 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B22B7D861AC6B9090026AEDB = {
+			isa = PBXGroup;
+			children = (
+				B22B7DBF1AC785C90026AEDB /* CloudKit.framework */,
+				B22B7D911AC6B9090026AEDB /* Hoverlytics */,
+				B22B7DA41AC6B9090026AEDB /* HoverlyticsTests */,
+				B22425F41AC8F8B200809EF0 /* HoverlyticsModel */,
+				B22426031AC8F8B200809EF0 /* HoverlyticsModelTests */,
+				B22B7D901AC6B9090026AEDB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B22B7D901AC6B9090026AEDB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B22B7D8F1AC6B9090026AEDB /* Hoverlytics.app */,
+				B22B7DA11AC6B9090026AEDB /* HoverlyticsTests.xctest */,
+				B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */,
+				B22425FD1AC8F8B200809EF0 /* HoverlyticsModelTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B22B7D911AC6B9090026AEDB /* Hoverlytics */ = {
+			isa = PBXGroup;
+			children = (
+				B22B7DBE1AC785B20026AEDB /* Hoverlytics.entitlements */,
+				B22B7D941AC6B9090026AEDB /* AppDelegate.swift */,
+				B22B7D981AC6B9090026AEDB /* Images.xcassets */,
+				B22B7D9A1AC6B9090026AEDB /* Main.storyboard */,
+				B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */,
+				B22B7D961AC6B9090026AEDB /* ViewController.swift */,
+				B22B7DBA1AC77EF20026AEDB /* Editor.storyboard */,
+				B22B7DB81AC77D420026AEDB /* PageViewController.swift */,
+				B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */,
+				B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */,
+				B22B7DBC1AC782DD0026AEDB /* insertHoverlytics.js */,
+				B22B7DB51AC6B98A0026AEDB /* Categories */,
+				B22B7D921AC6B9090026AEDB /* Supporting Files */,
+				B22B7DB11AC6B9860026AEDB /* Hoverlytics-Bridging-Header.h */,
+			);
+			path = Hoverlytics;
+			sourceTree = "<group>";
+		};
+		B22B7D921AC6B9090026AEDB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B22B7D931AC6B9090026AEDB /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B22B7DA41AC6B9090026AEDB /* HoverlyticsTests */ = {
+			isa = PBXGroup;
+			children = (
+				B22B7DA71AC6B9090026AEDB /* Hoverlytics_for_MacTests.swift */,
+				B22B7DA51AC6B9090026AEDB /* Supporting Files */,
+			);
+			path = HoverlyticsTests;
+			sourceTree = "<group>";
+		};
+		B22B7DA51AC6B9090026AEDB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B22B7DA61AC6B9090026AEDB /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B22B7DB51AC6B98A0026AEDB /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				B22B7DB21AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.h */,
+				B22B7DB31AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		B22425F01AC8F8B200809EF0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B22425F81AC8F8B200809EF0 /* HoverlyticsModel.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		B22425F21AC8F8B200809EF0 /* HoverlyticsModel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B224260C1AC8F8B200809EF0 /* Build configuration list for PBXNativeTarget "HoverlyticsModel" */;
+			buildPhases = (
+				B22425EE1AC8F8B200809EF0 /* Sources */,
+				B22425EF1AC8F8B200809EF0 /* Frameworks */,
+				B22425F01AC8F8B200809EF0 /* Headers */,
+				B22425F11AC8F8B200809EF0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HoverlyticsModel;
+			productName = HoverlyticsModel;
+			productReference = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		B22425FC1AC8F8B200809EF0 /* HoverlyticsModelTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B224260F1AC8F8B200809EF0 /* Build configuration list for PBXNativeTarget "HoverlyticsModelTests" */;
+			buildPhases = (
+				B22425F91AC8F8B200809EF0 /* Sources */,
+				B22425FA1AC8F8B200809EF0 /* Frameworks */,
+				B22425FB1AC8F8B200809EF0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B22426001AC8F8B200809EF0 /* PBXTargetDependency */,
+				B22426021AC8F8B200809EF0 /* PBXTargetDependency */,
+			);
+			name = HoverlyticsModelTests;
+			productName = HoverlyticsModelTests;
+			productReference = B22425FD1AC8F8B200809EF0 /* HoverlyticsModelTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B22B7D8E1AC6B9090026AEDB /* Hoverlytics */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B22B7DAB1AC6B9090026AEDB /* Build configuration list for PBXNativeTarget "Hoverlytics" */;
+			buildPhases = (
+				B22B7D8B1AC6B9090026AEDB /* Sources */,
+				B22B7D8C1AC6B9090026AEDB /* Frameworks */,
+				B22B7D8D1AC6B9090026AEDB /* Resources */,
+				B22425E91AC8F7CB00809EF0 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B22426091AC8F8B200809EF0 /* PBXTargetDependency */,
+			);
+			name = Hoverlytics;
+			productName = "Hoverlytics for Mac";
+			productReference = B22B7D8F1AC6B9090026AEDB /* Hoverlytics.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B22B7DA01AC6B9090026AEDB /* HoverlyticsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B22B7DAE1AC6B9090026AEDB /* Build configuration list for PBXNativeTarget "HoverlyticsTests" */;
+			buildPhases = (
+				B22B7D9D1AC6B9090026AEDB /* Sources */,
+				B22B7D9E1AC6B9090026AEDB /* Frameworks */,
+				B22B7D9F1AC6B9090026AEDB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B22B7DA31AC6B9090026AEDB /* PBXTargetDependency */,
+			);
+			name = HoverlyticsTests;
+			productName = "Hoverlytics for MacTests";
+			productReference = B22B7DA11AC6B9090026AEDB /* HoverlyticsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B22B7D871AC6B9090026AEDB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Burnt Caramel";
+				TargetAttributes = {
+					B22425F21AC8F8B200809EF0 = {
+						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 5278SPSAPR;
+					};
+					B22425FC1AC8F8B200809EF0 = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = B22B7D8E1AC6B9090026AEDB;
+					};
+					B22B7D8E1AC6B9090026AEDB = {
+						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 5278SPSAPR;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
+					B22B7DA01AC6B9090026AEDB = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = B22B7D8E1AC6B9090026AEDB;
+					};
+				};
+			};
+			buildConfigurationList = B22B7D8A1AC6B9090026AEDB /* Build configuration list for PBXProject "Hoverlytics" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B22B7D861AC6B9090026AEDB;
+			productRefGroup = B22B7D901AC6B9090026AEDB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B22B7D8E1AC6B9090026AEDB /* Hoverlytics */,
+				B22B7DA01AC6B9090026AEDB /* HoverlyticsTests */,
+				B22425F21AC8F8B200809EF0 /* HoverlyticsModel */,
+				B22425FC1AC8F8B200809EF0 /* HoverlyticsModelTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B22425F11AC8F8B200809EF0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B22425FB1AC8F8B200809EF0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B22B7D8D1AC6B9090026AEDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B22B7DBD1AC782DD0026AEDB /* insertHoverlytics.js in Resources */,
+				B22B7D991AC6B9090026AEDB /* Images.xcassets in Resources */,
+				B22B7DBB1AC77EF20026AEDB /* Editor.storyboard in Resources */,
+				B2A63B5F1AC8DAA0004CEBE1 /* SiteSettings.storyboard in Resources */,
+				B22B7D9C1AC6B9090026AEDB /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B22B7D9F1AC6B9090026AEDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B22425EE1AC8F8B200809EF0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B22426141AC8F8DB00809EF0 /* Site.swift in Sources */,
+				B23EA59E1ACA5F6A009B4032 /* ValueValidation.swift in Sources */,
+				B2C4A9411ACA3203000F1566 /* MainState.swift in Sources */,
+				B2C4A93F1ACA31F0000F1566 /* ModelManager.swift in Sources */,
+				B22426161AC8FA2E00809EF0 /* CloudKit+Hoverlytics.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B22425F91AC8F8B200809EF0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B22426071AC8F8B200809EF0 /* HoverlyticsModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B22B7D8B1AC6B9090026AEDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B22B7D971AC6B9090026AEDB /* ViewController.swift in Sources */,
+				B22B7D951AC6B9090026AEDB /* AppDelegate.swift in Sources */,
+				B2A63B611AC8DACD004CEBE1 /* SiteSettingsViewController.swift in Sources */,
+				B22B7DB71AC77CAC0026AEDB /* MainWindowController.swift in Sources */,
+				B22B7DB91AC77D420026AEDB /* PageViewController.swift in Sources */,
+				B22B7DB41AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B22B7D9D1AC6B9090026AEDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B22B7DA81AC6B9090026AEDB /* Hoverlytics_for_MacTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B22426001AC8F8B200809EF0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B22425F21AC8F8B200809EF0 /* HoverlyticsModel */;
+			targetProxy = B22425FF1AC8F8B200809EF0 /* PBXContainerItemProxy */;
+		};
+		B22426021AC8F8B200809EF0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B22B7D8E1AC6B9090026AEDB /* Hoverlytics */;
+			targetProxy = B22426011AC8F8B200809EF0 /* PBXContainerItemProxy */;
+		};
+		B22426091AC8F8B200809EF0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B22425F21AC8F8B200809EF0 /* HoverlyticsModel */;
+			targetProxy = B22426081AC8F8B200809EF0 /* PBXContainerItemProxy */;
+		};
+		B22B7DA31AC6B9090026AEDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B22B7D8E1AC6B9090026AEDB /* Hoverlytics */;
+			targetProxy = B22B7DA21AC6B9090026AEDB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B22B7D9A1AC6B9090026AEDB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B22B7D9B1AC6B9090026AEDB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B224260D1AC8F8B200809EF0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = HoverlyticsModel/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B224260E1AC8F8B200809EF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = HoverlyticsModel/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B22426101AC8F8B200809EF0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = HoverlyticsModelTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hoverlytics.app/Contents/MacOS/Hoverlytics";
+			};
+			name = Debug;
+		};
+		B22426111AC8F8B200809EF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = HoverlyticsModelTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hoverlytics.app/Contents/MacOS/Hoverlytics";
+			};
+			name = Release;
+		};
+		B22B7DA91AC6B9090026AEDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B22B7DAA1AC6B9090026AEDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		B22B7DAC1AC6B9090026AEDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Hoverlytics/Hoverlytics.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Hoverlytics/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = Hoverlytics;
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Hoverlytics/Hoverlytics-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B22B7DAD1AC6B9090026AEDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Hoverlytics/Hoverlytics.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Hoverlytics/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = Hoverlytics;
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Hoverlytics/Hoverlytics-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		B22B7DAF1AC6B9090026AEDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = HoverlyticsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = HoverlyticsTests;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hoverlytics.app/Contents/MacOS/Hoverlytics";
+			};
+			name = Debug;
+		};
+		B22B7DB01AC6B9090026AEDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = HoverlyticsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = HoverlyticsTests;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hoverlytics.app/Contents/MacOS/Hoverlytics";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B224260C1AC8F8B200809EF0 /* Build configuration list for PBXNativeTarget "HoverlyticsModel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B224260D1AC8F8B200809EF0 /* Debug */,
+				B224260E1AC8F8B200809EF0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B224260F1AC8F8B200809EF0 /* Build configuration list for PBXNativeTarget "HoverlyticsModelTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B22426101AC8F8B200809EF0 /* Debug */,
+				B22426111AC8F8B200809EF0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B22B7D8A1AC6B9090026AEDB /* Build configuration list for PBXProject "Hoverlytics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B22B7DA91AC6B9090026AEDB /* Debug */,
+				B22B7DAA1AC6B9090026AEDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B22B7DAB1AC6B9090026AEDB /* Build configuration list for PBXNativeTarget "Hoverlytics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B22B7DAC1AC6B9090026AEDB /* Debug */,
+				B22B7DAD1AC6B9090026AEDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B22B7DAE1AC6B9090026AEDB /* Build configuration list for PBXNativeTarget "HoverlyticsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B22B7DAF1AC6B9090026AEDB /* Debug */,
+				B22B7DB01AC6B9090026AEDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B22B7D871AC6B9090026AEDB /* Project object */;
+}

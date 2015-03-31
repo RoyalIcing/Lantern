@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+    </dependencies>
+    <scenes>
+        <!--Site Settings-->
+        <scene sceneID="2nV-nl-Dg5">
+            <objects>
+                <viewController title="Site Settings" storyboardIdentifier="Site Settings View Controller" showSeguePresentationStyle="single" id="CU5-0T-cmJ" customClass="SiteSettingsViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="i5p-pL-hHv">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="194"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField identifier="Home Page URL Field" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="VeV-fu-voS">
+                                <rect key="frame" x="20" y="71" width="360" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="360" id="9V6-Nl-Mp4"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="The URL to this website’s home page" drawsBackground="YES" id="hts-RC-QJC">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField identifier="Home Page URL Label" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uvy-ba-1oM">
+                                <rect key="frame" x="18" y="101" width="107" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Home Page URL" id="fNU-Ra-dho">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MLF-5p-KtY">
+                                <rect key="frame" x="141" y="13" width="119" height="32"/>
+                                <buttonCell key="cell" type="push" title="Remove Site" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fCc-yl-yFU">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="removeSite:" target="CU5-0T-cmJ" id="XoH-OX-YHv"/>
+                                </connections>
+                            </button>
+                            <textField identifier="Name Label" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QeI-n5-VEp">
+                                <rect key="frame" x="18" y="157" width="78" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Site’s Name" id="PJJ-VC-EI1">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField identifier="Name Field" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="uIC-0I-q7g">
+                                <rect key="frame" x="20" y="127" width="360" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="360" id="22c-pr-9EO"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Name" drawsBackground="YES" id="d2s-Vy-ynt">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="MLF-5p-KtY" firstAttribute="top" secondItem="VeV-fu-voS" secondAttribute="bottom" constant="30" id="15B-Cs-DYG"/>
+                            <constraint firstItem="QeI-n5-VEp" firstAttribute="leading" secondItem="uIC-0I-q7g" secondAttribute="leading" id="HsO-2r-o0X"/>
+                            <constraint firstAttribute="bottom" secondItem="MLF-5p-KtY" secondAttribute="bottom" constant="20" symbolic="YES" id="PtQ-XH-lYs"/>
+                            <constraint firstItem="QeI-n5-VEp" firstAttribute="leading" secondItem="i5p-pL-hHv" secondAttribute="leading" constant="20" symbolic="YES" id="RTu-hA-8zA"/>
+                            <constraint firstItem="QeI-n5-VEp" firstAttribute="top" secondItem="i5p-pL-hHv" secondAttribute="top" constant="20" symbolic="YES" id="UTu-HD-XYG"/>
+                            <constraint firstItem="uIC-0I-q7g" firstAttribute="top" secondItem="QeI-n5-VEp" secondAttribute="bottom" constant="8" symbolic="YES" id="XBb-WF-YtH"/>
+                            <constraint firstAttribute="centerX" secondItem="MLF-5p-KtY" secondAttribute="centerX" id="ZRh-fM-y5C"/>
+                            <constraint firstItem="Uvy-ba-1oM" firstAttribute="leading" secondItem="VeV-fu-voS" secondAttribute="leading" id="g4j-Ba-EBm"/>
+                            <constraint firstItem="VeV-fu-voS" firstAttribute="top" secondItem="Uvy-ba-1oM" secondAttribute="bottom" constant="8" symbolic="YES" id="qe0-EC-6rf"/>
+                            <constraint firstItem="QeI-n5-VEp" firstAttribute="leading" secondItem="Uvy-ba-1oM" secondAttribute="leading" id="r07-kA-Ax6"/>
+                            <constraint firstItem="Uvy-ba-1oM" firstAttribute="top" secondItem="uIC-0I-q7g" secondAttribute="bottom" constant="9" id="vzK-fE-npI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="homePageURLField" destination="VeV-fu-voS" id="zju-Up-BEi"/>
+                        <outlet property="nameField" destination="uIC-0I-q7g" id="Dc9-PU-La3"/>
+                    </connections>
+                </viewController>
+                <customObject id="4yK-ro-LSu" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="319" y="217"/>
+        </scene>
+    </scenes>
+</document>
