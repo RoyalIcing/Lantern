@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14D127a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -351,7 +351,20 @@
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="IPS-l0-Ja6"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Wpo-Aj-pBW"/>
-                                <toolbarItem implicitItemIdentifier="33AB0BAC-0F75-433B-8547-5F52502A2215" explicitItemIdentifier="chosenSite" label="Site" paletteLabel="Site" visibilityPriority="4" id="UDa-Tt-8U7">
+                                <toolbarItem implicitItemIdentifier="E101A52F-9533-4F68-B061-3B53DDCE426E" explicitItemIdentifier="newSiteButton" label="New Site" paletteLabel="New Site" image="NSAddTemplate" visibilityPriority="1000" id="cbE-mo-coS">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="40" height="25"/>
+                                    <size key="maxSize" width="40" height="25"/>
+                                    <button key="view" verticalHuggingPriority="750" id="V8C-mE-AIW">
+                                        <rect key="frame" x="0.0" y="14" width="40" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSAddTemplate" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SxB-aC-a7k">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="33AB0BAC-0F75-433B-8547-5F52502A2215" explicitItemIdentifier="chosenSite" label="Chosen Site" paletteLabel="Chosen Site" id="UDa-Tt-8U7">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="90" height="28"/>
                                     <size key="maxSize" width="120" height="28"/>
@@ -371,7 +384,7 @@
                                         </popUpButtonCell>
                                     </popUpButton>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="69CF055A-8451-4A20-8C7E-140CA0CF5072" explicitItemIdentifier="siteSettingsButton" label="Settings" paletteLabel="Settings" id="dTY-M3-1X3">
+                                <toolbarItem implicitItemIdentifier="69CF055A-8451-4A20-8C7E-140CA0CF5072" explicitItemIdentifier="siteSettingsButton" label="Site Settings" paletteLabel="Site Settings" visibilityPriority="1000" id="dTY-M3-1X3">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="80" height="25"/>
                                     <size key="maxSize" width="80" height="25"/>
@@ -400,6 +413,7 @@
                                 </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
+                                <toolbarItem reference="cbE-mo-coS"/>
                                 <toolbarItem reference="UDa-Tt-8U7"/>
                                 <toolbarItem reference="dTY-M3-1X3"/>
                                 <toolbarItem reference="Wpo-Aj-pBW"/>
@@ -431,4 +445,7 @@
             <point key="canvasLocation" x="310" y="604"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSAddTemplate" width="11" height="11"/>
+    </resources>
 </document>

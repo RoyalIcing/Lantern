@@ -18,10 +18,12 @@ public enum ValueValidationErrorCode: Int {
 }
 
 
-private enum Error {
-	case StringIsEmpty(string: String)
+private let whitespaceCharacterSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+
+public enum ValidationError {
+	case StringIsEmpty(string: String, identifier: String)
 	
-	case URLStringIsInvalid(string: String)
+	case URLStringIsInvalid(string: String, identifier: String)
 	
 	var errorCode: Int {
 		switch self {
@@ -34,10 +36,10 @@ private enum Error {
 	
 	var description: String {
 		switch self {
-		case StringIsEmpty:
-			return "Please enter"
-		case URLStringIsInvalid:
-			return "Please enter a valid URL"
+		case StringIsEmpty(let string, let identifier):
+			return "Please enter something for \"\(identifier)\""
+		case URLStringIsInvalid(let string, let identifier):
+			return "Please enter a valid URL for \"\(identifier)\""
 		}
 	}
 	
@@ -47,68 +49,28 @@ private enum Error {
 		]
 		return NSError(domain: ValueValidationErrorDomain, code: self.errorCode, userInfo: userInfo)
 	}
-}
-
-
-private let whitespaceCharacterSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()
-
-public enum ValueValidation {
-	case InputtedString(String)
-	case InputtedURLString(String)
 	
-	public static func validateString(string: String) -> (string: String?, error: NSError?) {
+	public static func validateString(string: String, identifier: String) -> (string: String?, error: NSError?) {
 		let string = string.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
 		if string.isEmpty {
-			return (nil, Error.StringIsEmpty(string: string).cocoaError)
+			return (nil, self.StringIsEmpty(string: string, identifier: identifier).cocoaError)
 		}
 		
 		return (string, nil)
 	}
 	
-	public static func validateURLString(URLString: String) -> (URL: NSURL?, error: NSError?) {
+	public static func validateURLString(URLString: String, identifier: String) -> (URL: NSURL?, error: NSError?) {
 		if let URL = detectWebURL(fromString: URLString) {
 			return (URL, nil)
 		}
 		else {
-			return (nil, Error.URLStringIsInvalid(string: URLString).cocoaError)
+			return (nil, self.URLStringIsInvalid(string: URLString, identifier: identifier).cocoaError)
 		}
-	}
-
-	private var validateReturningInternalError: Error? {
-		var stringToCheck: String?
-		var checkStringForURL = false
-		
-		switch self {
-		case .InputtedString(let string):
-			stringToCheck = string
-		case .InputtedURLString(let URLString):
-			stringToCheck = URLString
-			checkStringForURL = true
-		}
-		
-		if let string = stringToCheck {
-			let string = string.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
-			if string.isEmpty {
-				return .StringIsEmpty(string: string)
-			}
-			
-			if checkStringForURL {
-				if detectWebURL(fromString: string) == nil {
-					return .URLStringIsInvalid(string: string)
-				}
-			}
-		}
-	
-		return nil
-	}
-	
-	public var validateReturningCocoaError: NSError? {
-		return validateReturningInternalError?.cocoaError
 	}
 }
 
 
-public func detectWebURL(fromString URLString: String) -> NSURL? {
+private func detectWebURL(fromString URLString: String) -> NSURL? {
 	var error: NSError?
 	let dataDetector = NSDataDetector(types: NSTextCheckingType.Link.rawValue, error: &error)
 	

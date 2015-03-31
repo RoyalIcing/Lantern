@@ -22,23 +22,43 @@ class SiteSettingsViewController: NSViewController {
         // Do view setup here.
     }
 	
+	@IBAction func createSite(sender: NSButton) {
+		let (siteValues, error) = copySiteValuesFromUI()
+		if let siteValues = siteValues {
+			modelManager.createSiteWithValues(siteValues)
+			self.dismissController(nil)
+		}
+		else if let error = error {
+			NSApplication.sharedApplication().presentError(error, modalForWindow: self.view.window!, delegate: nil, didPresentSelector: nil, contextInfo: nil)
+		}
+	}
+	
 	@IBAction func removeSite(sender: NSButton) {
 		modelManager.removeSite(site)
 	}
 	
+	func updateUIWithSiteValues(siteValues: SiteValues) {
+		nameField.stringValue = siteValues.name
+		homePageURLField.stringValue = siteValues.homePageURL.absoluteString!
+	}
+	
 	func copySiteValuesFromUI() -> (SiteValues?, NSError?) {
-		let whitespaceCharacterSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+		let errorDomain = "SiteSettingsViewController.validationErrorDomain"
 		
 		let name = nameField.stringValue
-		if let error = ValueValidation.InputtedString(name).validateReturningCocoaError {
+		let validatedName = ValidationError.validateString(name, identifier: "Name")
+		if let error = validatedName.error {
 			return (nil, error)
 		}
+		/*if let error = ValueValidation.InputtedString(name).validateReturningCocoaError {
+			return (nil, error)
+		}*/
 		
 		let homePageURLString = homePageURLField.stringValue
 		/*if let error = ValueValidation.InputtedURLString(name).validateReturningCocoaError {
 			return (nil, error)
 		}*/
-		let validatedHomePageURL = ValueValidation.validateURLString(homePageURLString)
+		let validatedHomePageURL = ValidationError.validateURLString(homePageURLString, identifier: "Home Page URL")
 		if let error = validatedHomePageURL.error {
 			return (nil, error)
 		}

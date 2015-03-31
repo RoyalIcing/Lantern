@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14D127a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
     </dependencies>
     <scenes>
         <!--Site Settings-->
@@ -82,7 +82,90 @@
                 </viewController>
                 <customObject id="4yK-ro-LSu" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="319" y="217"/>
+            <point key="canvasLocation" x="319" y="19"/>
+        </scene>
+        <!--Add Site-->
+        <scene sceneID="3lj-hP-Yw6">
+            <objects>
+                <viewController title="Add Site" storyboardIdentifier="Add Site View Controller" showSeguePresentationStyle="single" id="ont-Pv-J5Y" customClass="SiteSettingsViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="Qx0-hQ-3T0">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="194"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField identifier="Home Page URL Field" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Tx3-lb-zH8">
+                                <rect key="frame" x="20" y="71" width="360" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="360" id="bls-es-CoL"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="The URL to this website’s home page" drawsBackground="YES" id="AXb-ec-1Zi">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField identifier="Home Page URL Label" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Pl-MS-8D3">
+                                <rect key="frame" x="18" y="101" width="107" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Home Page URL" id="qzx-qO-2c6">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VlE-6k-Gbv">
+                                <rect key="frame" x="141" y="13" width="119" height="32"/>
+                                <buttonCell key="cell" type="push" title="Create Site" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JHp-Nh-goI">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="createSite:" target="ont-Pv-J5Y" id="ZTL-82-kN0"/>
+                                </connections>
+                            </button>
+                            <textField identifier="Name Label" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2WE-up-9VU">
+                                <rect key="frame" x="18" y="157" width="78" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Site’s Name" id="n6P-bf-Hmx">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField identifier="Name Field" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yWR-fU-VaP">
+                                <rect key="frame" x="20" y="127" width="360" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="360" id="dLn-XN-IYr"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Name" drawsBackground="YES" id="t4O-aZ-x4a">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="2WE-up-9VU" firstAttribute="top" secondItem="Qx0-hQ-3T0" secondAttribute="top" constant="20" symbolic="YES" id="3Bm-C2-lUD"/>
+                            <constraint firstItem="Tx3-lb-zH8" firstAttribute="top" secondItem="0Pl-MS-8D3" secondAttribute="bottom" constant="8" symbolic="YES" id="5gM-8G-3ZO"/>
+                            <constraint firstItem="yWR-fU-VaP" firstAttribute="top" secondItem="2WE-up-9VU" secondAttribute="bottom" constant="8" symbolic="YES" id="7ag-PN-YSN"/>
+                            <constraint firstAttribute="centerX" secondItem="VlE-6k-Gbv" secondAttribute="centerX" id="Dmk-xM-sLg"/>
+                            <constraint firstItem="0Pl-MS-8D3" firstAttribute="top" secondItem="yWR-fU-VaP" secondAttribute="bottom" constant="9" id="EtU-F8-KKs"/>
+                            <constraint firstItem="VlE-6k-Gbv" firstAttribute="top" secondItem="Tx3-lb-zH8" secondAttribute="bottom" constant="30" id="Oh5-1o-HZI"/>
+                            <constraint firstItem="2WE-up-9VU" firstAttribute="leading" secondItem="yWR-fU-VaP" secondAttribute="leading" id="WpJ-LS-UWv"/>
+                            <constraint firstItem="0Pl-MS-8D3" firstAttribute="leading" secondItem="Tx3-lb-zH8" secondAttribute="leading" id="YTC-j8-1Sn"/>
+                            <constraint firstAttribute="bottom" secondItem="VlE-6k-Gbv" secondAttribute="bottom" constant="20" symbolic="YES" id="YiG-22-ohM"/>
+                            <constraint firstItem="2WE-up-9VU" firstAttribute="leading" secondItem="0Pl-MS-8D3" secondAttribute="leading" id="kHa-Pm-RPm"/>
+                            <constraint firstItem="2WE-up-9VU" firstAttribute="leading" secondItem="Qx0-hQ-3T0" secondAttribute="leading" constant="20" symbolic="YES" id="u1e-6K-dN3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="homePageURLField" destination="Tx3-lb-zH8" id="9Xr-Ov-cBy"/>
+                        <outlet property="nameField" destination="yWR-fU-VaP" id="XAb-AL-WVG"/>
+                    </connections>
+                </viewController>
+                <customObject id="YaF-ix-LLD" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="319" y="355"/>
         </scene>
     </scenes>
 </document>

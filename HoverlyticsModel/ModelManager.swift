@@ -25,16 +25,11 @@ enum RecordType {
 }
 
 
-public enum ModelManagerNotification {
-	case AllSitesDidChange
-	
-	private static let AllSitesDidChangeString = "HoverlyticsModel.ModelManager.AllSitesDidChangeNotification"
+public enum ModelManagerNotification: String {
+	case AllSitesDidChange = "HoverlyticsModel.ModelManager.AllSitesDidChangeNotification"
 	
 	public var notificationName: String {
-		switch self {
-		case .AllSitesDidChange:
-			return ModelManagerNotification.AllSitesDidChangeString
-		}
+		return self.rawValue
 	}
 }
 
@@ -123,6 +118,15 @@ public class ModelManager {
 		else {
 			setAllSites(self, nil)
 		}
+	}
+	
+	public func createSiteWithValues(siteValues: SiteValues) {
+		let site = Site(values: siteValues)
+		let operation = CKModifyRecordsOperation(recordsToSave: [site.record], recordIDsToDelete: nil)
+		operation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
+			self.queryAllSites()
+		}
+		database.addOperation(operation)
 	}
 	
 	public func removeSite(site: Site) {

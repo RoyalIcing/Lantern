@@ -67,7 +67,7 @@ public struct SiteValues {
 }
 
 extension SiteValues {
-	init(record: CKRecord) {
+	init(fromRecord record: CKRecord) {
 		name = record.objectForKey("name") as String
 		homePageURL = NSURL(string: record.objectForKey("homePageURL") as String)!
 	}
@@ -75,7 +75,7 @@ extension SiteValues {
 
 
 public class Site {
-	var record: CKRecord!
+	public var record: CKRecord!
 	
 	public let values: SiteValues
 	public var needsSaving: Bool = false
@@ -89,18 +89,18 @@ public class Site {
 		else {
 			let record = CKRecord(recordType: RecordType.Site.identifier)
 			record.setObject(values.name, forKey: "name")
-			record.setObject(values.homePageURL.path, forKey: "homePageURL")
+			record.setObject(values.homePageURL.absoluteString!, forKey: "homePageURL")
 			self.record = record
 			needsSaving = true
 		}
 	}
 	
 	public convenience init(record: CKRecord) {
-		self.init(values: SiteValues(record: record), record: record)
+		self.init(values: SiteValues(fromRecord: record), record: record)
 	}
 	
-	public convenience init(name: String, homePageURL: NSURL) {
-		self.init(values: SiteValues(name: name, homePageURL: homePageURL), record: nil)
+	public convenience init(values: SiteValues) {
+		self.init(values: values, record: nil)
 	}
 	
 	public var name: String { return values.name }

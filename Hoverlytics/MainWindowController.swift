@@ -23,6 +23,12 @@ class MainWindowController: NSWindowController, NSToolbarDelegate {
 	@IBOutlet var toolbar: NSToolbar! {
 		didSet {
 			toolbarAssistant = MainWindowToolbarAssistant(toolbar: toolbar, mainState: mainState, modelManager: modelManager)
+			
+			toolbarAssistant.prepareNewSiteButton = { [unowned self] button in
+				button.target = self.mainViewController
+				button.action = "showAddSite:"
+			}
+			
 			toolbarAssistant.prepareSiteSettingsButton = { [unowned self] button in
 				button.target = self.mainViewController
 				button.action = "showSiteSettings:"
@@ -37,6 +43,9 @@ class MainWindowController: NSWindowController, NSToolbarDelegate {
 		if let window = window {
 			window.titleVisibility = .Hidden
 		}
+		
+		mainViewController.modelManager = modelManager
+		mainViewController.mainState = mainState
     }
 	
 	@IBAction func focusOnSearchPagesField(sender: AnyObject?) {
@@ -76,7 +85,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		}
 		
 		addObserver(.AllSitesDidChange) { (notification) in
-			self.updateSitesPopUpButton()
+			self.updateUIForSites()
 		}
 	}
 	
@@ -89,6 +98,10 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	let siteTag: Int = 1
 	
 	func updateSitesPopUpButton() {
+		if sitesPopUpButton == nil {
+			return
+		}
+		
 		func removeNextItemWithTag(tag: Int) -> Bool {
 			let index = sitesPopUpButton.indexOfItemWithTag(tag)
 			if index == -1 {
@@ -102,21 +115,42 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		
 		while removeNextItemWithTag(siteTag) {}
 		
+		sitesPopUpButton.target = self
+		sitesPopUpButton.action = "chosenSiteDidChange:"
+		
 		let menu = sitesPopUpButton.menu!
 		if let allSites = modelManager.allSites {
 			for site in allSites {
-				let menuItem = NSMenuItem(title: site.name, action: "chosenSiteDidChange:", keyEquivalent: "")
+				let menuItem = NSMenuItem(title: site.name, action: nil, keyEquivalent: "")
 				menuItem.representedObject = site
+				menuItem.tag = siteTag
 				menu.insertItem(menuItem, atIndex: 0)
 			}
 		}
 		else {
 			let menuItem = NSMenuItem(title: "No Sites", action: nil, keyEquivalent: "")
+			menuItem.tag = siteTag
 			menu.insertItem(menuItem, atIndex: 0)
 		}
+		
+		updateChosenSiteState()
+	}
+	
+	func updateUIForSites() {
+		let hasSites = modelManager.allSites?.count > 0
+		
+		//sitesPopUpButton?.enabled = hasSites
+		siteSettingsButton?.enabled = hasSites
+		siteSettingsButton?.hidden = !hasSites
+		
+		updateSitesPopUpButton()
 	}
 	
 	@objc @IBAction func chosenSiteDidChange(sender: NSPopUpButton) {
+		updateChosenSiteState()
+	}
+
+	func updateChosenSiteState() {
 		if let selectedItem = sitesPopUpButton.selectedItem {
 			if let site = selectedItem.representedObject as? Site {
 				mainState.chosenSite = site
@@ -124,10 +158,13 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		}
 	}
 	
+	typealias PrepareButtonCallback = (NSButton) -> Void
+	
+	var addSiteButton: NSButton!
+	var prepareNewSiteButton: PrepareButtonCallback?
 	
 	var siteSettingsButton: NSButton!
-	typealias PrepareSiteSettingsButtonCallback = (NSButton) -> Void
-	var prepareSiteSettingsButton: PrepareSiteSettingsButtonCallback?
+	var prepareSiteSettingsButton: PrepareButtonCallback?
 	
 	
 	var searchPagesField: NSSearchField!
@@ -144,14 +181,20 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		let itemIdentifier = toolbarItem.itemIdentifier
 		var sizeToFit = false
 		
-		if itemIdentifier == "chosenSite" {
+		if itemIdentifier == "newSiteButton" {
+			addSiteButton = toolbarItem.view as NSButton
+			prepareNewSiteButton?(addSiteButton)
+		}
+		else if itemIdentifier == "chosenSite" {
 			sitesPopUpButton = toolbarItem.view as NSPopUpButton
-			updateSitesPopUpButton()
+			updateUIForSites()
+			//updateSitesPopUpButton()
 		}
 		else if itemIdentifier == "siteSettingsButton" {
 			siteSettingsButton = toolbarItem.view as NSButton
 			sizeToFit = true
 			prepareSiteSettingsButton?(siteSettingsButton)
+			updateUIForSites()
 		}
 		else if itemIdentifier == "searchPages" {
 			searchPagesField = toolbarItem.view as NSSearchField

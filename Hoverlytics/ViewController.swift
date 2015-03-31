@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import HoverlyticsModel
 
 
 enum MainSection: Int {
@@ -17,6 +18,8 @@ enum MainSection: Int {
 
 class ViewController: NSViewController
 {
+	var modelManager: HoverlyticsModel.ModelManager!
+	var mainState: HoverlyticsModel.MainState!
 	var currentSection: MainSection?
 	
 	lazy var editorStoryboard: NSStoryboard = {
@@ -25,13 +28,6 @@ class ViewController: NSViewController
 	lazy var pageViewController: PageViewController = {
 		self.editorStoryboard.instantiateControllerWithIdentifier("Page View Controller") as PageViewController
 	}()
-	
-	lazy var siteSettingsStoryboard: NSStoryboard = {
-		NSStoryboard(name: "SiteSettings", bundle: nil)!
-		}()
-	lazy var siteSettingsViewController: SiteSettingsViewController = {
-		self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Site Settings View Controller") as SiteSettingsViewController
-		}()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -43,14 +39,43 @@ class ViewController: NSViewController
 		fillViewWithChildView(viewPageView)
 	}
 	
+	
+	lazy var siteSettingsStoryboard = NSStoryboard(name: "SiteSettings", bundle: nil)!
+	lazy var addSiteViewController: SiteSettingsViewController = {
+		let vc = self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Add Site View Controller") as SiteSettingsViewController
+		vc.modelManager = self.modelManager
+		return vc
+		}()
+	lazy var siteSettingsViewController: SiteSettingsViewController = {
+		let vc = self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Site Settings View Controller") as SiteSettingsViewController
+		vc.modelManager = self.modelManager
+		return vc
+		}()
+	
+	
+	@IBAction func showAddSite(button: NSButton) {
+		if addSiteViewController.presentingViewController != nil {
+			dismissViewController(addSiteViewController)
+		}
+		else {
+			presentViewController(addSiteViewController, asPopoverRelativeToRect: button.bounds, ofView: button, preferredEdge: NSMaxYEdge, behavior: .Semitransient)
+		}
+	}
+	
+	
 	@IBAction func showSiteSettings(button: NSButton) {
 		if siteSettingsViewController.presentingViewController != nil {
 			dismissViewController(siteSettingsViewController)
 		}
 		else {
+			if let chosenSite = mainState?.chosenSite {
+				siteSettingsViewController.updateUIWithSiteValues(chosenSite.values)
+			}
+	
 			presentViewController(siteSettingsViewController, asPopoverRelativeToRect: button.bounds, ofView: button, preferredEdge: NSMaxYEdge, behavior: .Semitransient)
 		}
 	}
+	
 	
 	override var representedObject: AnyObject? {
 		didSet {
