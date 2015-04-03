@@ -23,9 +23,13 @@
 		B22B7DB41AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB31AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m */; };
 		B22B7DB71AC77CAC0026AEDB /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */; };
 		B22B7DB91AC77D420026AEDB /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB81AC77D420026AEDB /* PageViewController.swift */; };
-		B22B7DBB1AC77EF20026AEDB /* Editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22B7DBA1AC77EF20026AEDB /* Editor.storyboard */; };
+		B22B7DBB1AC77EF20026AEDB /* Page.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22B7DBA1AC77EF20026AEDB /* Page.storyboard */; };
 		B22B7DBD1AC782DD0026AEDB /* insertHoverlytics.js in Resources */ = {isa = PBXBuildFile; fileRef = B22B7DBC1AC782DD0026AEDB /* insertHoverlytics.js */; };
 		B22B7DC01AC785C90026AEDB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B7DBF1AC785C90026AEDB /* CloudKit.framework */; };
+		B23966E01ACD316E00C6A420 /* windowClose.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966DF1ACD316E00C6A420 /* windowClose.js */; };
+		B23966E21ACD36FF00C6A420 /* userAgent.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966E11ACD36FF00C6A420 /* userAgent.js */; };
+		B23966EA1ACD45BD00C6A420 /* panelAuthorizationChanged.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966E91ACD45BC00C6A420 /* panelAuthorizationChanged.js */; };
+		B23966EC1ACD518E00C6A420 /* setPanelAuthorizationToken.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966EB1ACD518E00C6A420 /* setPanelAuthorizationToken.js */; };
 		B23EA59E1ACA5F6A009B4032 /* ValueValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */; };
 		B2A63B5F1AC8DAA0004CEBE1 /* SiteSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */; };
 		B2A63B611AC8DACD004CEBE1 /* SiteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */; };
@@ -101,10 +105,14 @@
 		B22B7DB31AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSViewController+PGWSConstraintConvenience.m"; sourceTree = "<group>"; };
 		B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		B22B7DB81AC77D420026AEDB /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
-		B22B7DBA1AC77EF20026AEDB /* Editor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Editor.storyboard; sourceTree = "<group>"; };
+		B22B7DBA1AC77EF20026AEDB /* Page.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Page.storyboard; sourceTree = "<group>"; };
 		B22B7DBC1AC782DD0026AEDB /* insertHoverlytics.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = insertHoverlytics.js; sourceTree = "<group>"; };
 		B22B7DBE1AC785B20026AEDB /* Hoverlytics.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Hoverlytics.entitlements; sourceTree = "<group>"; };
 		B22B7DBF1AC785C90026AEDB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		B23966DF1ACD316E00C6A420 /* windowClose.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = windowClose.js; sourceTree = "<group>"; };
+		B23966E11ACD36FF00C6A420 /* userAgent.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = userAgent.js; sourceTree = "<group>"; };
+		B23966E91ACD45BC00C6A420 /* panelAuthorizationChanged.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = panelAuthorizationChanged.js; sourceTree = "<group>"; };
+		B23966EB1ACD518E00C6A420 /* setPanelAuthorizationToken.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = setPanelAuthorizationToken.js; sourceTree = "<group>"; };
 		B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueValidation.swift; sourceTree = "<group>"; };
 		B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SiteSettings.storyboard; sourceTree = "<group>"; };
 		B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteSettingsViewController.swift; sourceTree = "<group>"; };
@@ -153,9 +161,9 @@
 			children = (
 				B22426151AC8FA2E00809EF0 /* CloudKit+Hoverlytics.swift */,
 				B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */,
+				B2C4A9401ACA3203000F1566 /* MainState.swift */,
 				B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */,
 				B22426131AC8F8DB00809EF0 /* Site.swift */,
-				B2C4A9401ACA3203000F1566 /* MainState.swift */,
 				B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */,
 				B22425F51AC8F8B200809EF0 /* Supporting Files */,
 			);
@@ -221,9 +229,13 @@
 				B22B7D961AC6B9090026AEDB /* ViewController.swift */,
 				B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */,
 				B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */,
-				B22B7DBA1AC77EF20026AEDB /* Editor.storyboard */,
+				B22B7DBA1AC77EF20026AEDB /* Page.storyboard */,
 				B22B7DB81AC77D420026AEDB /* PageViewController.swift */,
 				B22B7DBC1AC782DD0026AEDB /* insertHoverlytics.js */,
+				B23966E11ACD36FF00C6A420 /* userAgent.js */,
+				B23966DF1ACD316E00C6A420 /* windowClose.js */,
+				B23966E91ACD45BC00C6A420 /* panelAuthorizationChanged.js */,
+				B23966EB1ACD518E00C6A420 /* setPanelAuthorizationToken.js */,
 				B22B7DB51AC6B98A0026AEDB /* Categories */,
 				B22B7D921AC6B9090026AEDB /* Supporting Files */,
 				B22B7DB11AC6B9860026AEDB /* Hoverlytics-Bridging-Header.h */,
@@ -430,9 +442,13 @@
 			files = (
 				B22B7DBD1AC782DD0026AEDB /* insertHoverlytics.js in Resources */,
 				B22B7D991AC6B9090026AEDB /* Images.xcassets in Resources */,
-				B22B7DBB1AC77EF20026AEDB /* Editor.storyboard in Resources */,
+				B22B7DBB1AC77EF20026AEDB /* Page.storyboard in Resources */,
+				B23966E01ACD316E00C6A420 /* windowClose.js in Resources */,
+				B23966EA1ACD45BD00C6A420 /* panelAuthorizationChanged.js in Resources */,
 				B2A63B5F1AC8DAA0004CEBE1 /* SiteSettings.storyboard in Resources */,
 				B22B7D9C1AC6B9090026AEDB /* Main.storyboard in Resources */,
+				B23966EC1ACD518E00C6A420 /* setPanelAuthorizationToken.js in Resources */,
+				B23966E21ACD36FF00C6A420 /* userAgent.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -697,6 +713,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Hoverlytics/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = Hoverlytics;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Hoverlytics/Hoverlytics-Bridging-Header.h";
@@ -715,6 +732,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Hoverlytics/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_NAME = Hoverlytics;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Hoverlytics/Hoverlytics-Bridging-Header.h";

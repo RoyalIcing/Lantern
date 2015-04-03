@@ -37,7 +37,6 @@ class MainWindowController: NSWindowController, NSToolbarDelegate {
 	}
 
     override func windowDidLoad() {
-		println("wc windowDidLoad")
         super.windowDidLoad()
 		
 		if let window = window {
@@ -47,6 +46,10 @@ class MainWindowController: NSWindowController, NSToolbarDelegate {
 		mainViewController.modelManager = modelManager
 		mainViewController.mainState = mainState
     }
+	
+	@IBAction func showAddSite(sender: AnyObject?) {
+		mainViewController.showAddSite(toolbarAssistant.addSiteButton)
+	}
 	
 	@IBAction func focusOnSearchPagesField(sender: AnyObject?) {
 		toolbarAssistant.focusOnSearchPagesField(sender)
@@ -75,13 +78,15 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		stopObservingModelManager()
 	}
 	
+	var modelManagerNotificationObservers = [ModelManagerNotification: AnyObject]()
 	
 	func startObservingModelManager() {
 		let nc = NSNotificationCenter.defaultCenter()
 		let mainQueue = NSOperationQueue.mainQueue()
 		
-		func addObserver(notificationIdentifier: HoverlyticsModel.ModelManagerNotification, block: (NSNotification!) -> Void) -> NSObjectProtocol {
-			return nc.addObserverForName(notificationIdentifier.notificationName, object: modelManager, queue: mainQueue, usingBlock: block)
+		func addObserver(notificationIdentifier: HoverlyticsModel.ModelManagerNotification, block: (NSNotification!) -> Void) {
+			let observer = nc.addObserverForName(notificationIdentifier.notificationName, object: modelManager, queue: mainQueue, usingBlock: block)
+			modelManagerNotificationObservers[notificationIdentifier] = observer
 		}
 		
 		addObserver(.AllSitesDidChange) { (notification) in
@@ -91,6 +96,11 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	
 	func stopObservingModelManager() {
 		let nc = NSNotificationCenter.defaultCenter()
+		
+		for (notificationIdentifier, observer) in modelManagerNotificationObservers {
+			nc.removeObserver(observer)
+		}
+		modelManagerNotificationObservers.removeAll(keepCapacity: false)
 	}
 	
 	
@@ -98,9 +108,15 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	let siteTag: Int = 1
 	
 	func updateSitesPopUpButton() {
+		#if DEBUG
+			println("updateSitesPopUpButton")
+		#endif
 		if sitesPopUpButton == nil {
 			return
 		}
+		
+		let previouslySelectedItem = sitesPopUpButton.selectedItem
+		let previouslySelectedSite = previouslySelectedItem?.representedObject? as? Site
 		
 		func removeNextItemWithTag(tag: Int) -> Bool {
 			let index = sitesPopUpButton.indexOfItemWithTag(tag)
@@ -118,22 +134,40 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		sitesPopUpButton.target = self
 		sitesPopUpButton.action = "chosenSiteDidChange:"
 		
+		println("popup previously selected \(previouslySelectedSite?.name)")
+		
 		let menu = sitesPopUpButton.menu!
 		if let allSites = modelManager.allSites {
-			for site in allSites {
-				let menuItem = NSMenuItem(title: site.name, action: nil, keyEquivalent: "")
-				menuItem.representedObject = site
+			if allSites.count == 0 {
+				let menuItem = NSMenuItem(title: "(No Sites)", action: nil, keyEquivalent: "")
 				menuItem.tag = siteTag
 				menu.insertItem(menuItem, atIndex: 0)
 			}
+			else {
+				let allSites = allSites.sorted({ $0.name > $1.name })
+				for site in allSites {
+					let menuItem = NSMenuItem(title: site.name, action: nil, keyEquivalent: "")
+					menuItem.representedObject = site
+					menuItem.tag = siteTag
+					menu.insertItem(menuItem, atIndex: 0)
+				}
+			}
 		}
 		else {
-			let menuItem = NSMenuItem(title: "No Sites", action: nil, keyEquivalent: "")
+			let menuItem = NSMenuItem(title: "(Loading Sites)", action: nil, keyEquivalent: "")
 			menuItem.tag = siteTag
 			menu.insertItem(menuItem, atIndex: 0)
 		}
 		
-		updateChosenSiteState()
+		if let previouslySelectedSite = previouslySelectedSite {
+			let index = sitesPopUpButton.indexOfItemWithRepresentedObject(previouslySelectedSite)
+			if index != -1 {
+				sitesPopUpButton.selectItemAtIndex(index)
+			}
+		}
+		else {
+			updateChosenSiteState()
+		}
 	}
 	
 	func updateUIForSites() {
@@ -153,7 +187,12 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	func updateChosenSiteState() {
 		if let selectedItem = sitesPopUpButton.selectedItem {
 			if let site = selectedItem.representedObject as? Site {
+				println("chosenSite TO \(site.name)")
 				mainState.chosenSite = site
+			}
+			else {
+				println("chosenSite TO nil")
+				mainState.chosenSite = nil
 			}
 		}
 	}
@@ -188,7 +227,6 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		else if itemIdentifier == "chosenSite" {
 			sitesPopUpButton = toolbarItem.view as NSPopUpButton
 			updateUIForSites()
-			//updateSitesPopUpButton()
 		}
 		else if itemIdentifier == "siteSettingsButton" {
 			siteSettingsButton = toolbarItem.view as NSButton

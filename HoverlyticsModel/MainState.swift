@@ -9,16 +9,11 @@
 import Foundation
 
 
-public enum MainStateNotification {
-	case ChosenSiteDidChange
-	
-	private static let ChosenSiteDidChangeString = "HoverlyticsModel.MainState.ChosenSiteDidChangeNotification"
+public enum MainStateNotification: String {
+	case ChosenSiteDidChange = "HoverlyticsModel.MainState.ChosenSiteDidChangeNotification"
 	
 	public var notificationName: String {
-		switch self {
-		case .ChosenSiteDidChange:
-			return MainStateNotification.ChosenSiteDidChangeString
-		}
+		return self.rawValue
 	}
 }
 
@@ -39,6 +34,9 @@ public class MainState {
 	
 	public var chosenSite: Site! {
 		didSet {
+			if chosenSite?.identifier == oldValue?.identifier {
+				return
+			}
 			mainQueue_notify(.ChosenSiteDidChange)
 		}
 	}

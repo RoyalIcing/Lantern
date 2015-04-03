@@ -10,17 +10,11 @@ import Foundation
 import CloudKit
 
 
-enum RecordType {
-	case Site
-	
-	
-	private static let siteIdentifier = "Site"
+enum RecordType: String {
+	case Site = "Site"
 	
 	var identifier: String {
-		switch self {
-		case .Site:
-			return RecordType.siteIdentifier
-		}
+		return self.rawValue
 	}
 }
 
@@ -125,8 +119,43 @@ public class ModelManager {
 		let operation = CKModifyRecordsOperation(recordsToSave: [site.record], recordIDsToDelete: nil)
 		operation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
 			self.queryAllSites()
+			//self.mainQueue_notify(.AllSitesDidChange)
 		}
 		database.addOperation(operation)
+	}
+	
+	private func saveSite(site: Site) {
+		let operation = CKModifyRecordsOperation(recordsToSave: [site.record], recordIDsToDelete: nil)
+		operation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
+			if let error = error {
+				println("Error updating Site: \(error)")
+			}
+			else {
+				#if DEBUG
+					println("Updated site successfully")
+				#endif
+			}
+			self.queryAllSites()
+		}
+		database.addOperation(operation)
+		
+		self.mainQueue_notify(.AllSitesDidChange)
+	}
+	
+	public func updateSiteWithValues(site: Site, siteValues: SiteValues) {
+		if site.values == siteValues {
+			return
+		}
+		
+		site.values = siteValues
+		
+		saveSite(site)
+	}
+	
+	public func setGoogleOAuth2TokenJSONString(tokenJSONString: String, forSite site: Site) {
+		site.GoogleAPIOAuth2TokenJSONString = tokenJSONString
+		
+		saveSite(site)
 	}
 	
 	public func removeSite(site: Site) {

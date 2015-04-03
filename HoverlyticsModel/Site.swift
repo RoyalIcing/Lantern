@@ -56,7 +56,7 @@ private enum Error {
 }
 
 
-public struct SiteValues {
+public struct SiteValues: Equatable {
 	public let name: String
 	public let homePageURL: NSURL
 	
@@ -66,45 +66,67 @@ public struct SiteValues {
 	}
 }
 
+public func ==(lhs: SiteValues, rhs: SiteValues) -> Bool {
+	return
+		lhs.name == rhs.name &&
+		lhs.homePageURL == rhs.homePageURL
+}
+
 extension SiteValues {
 	init(fromRecord record: CKRecord) {
 		name = record.objectForKey("name") as String
 		homePageURL = NSURL(string: record.objectForKey("homePageURL") as String)!
 	}
+	
+	func updateValuesInRecord(record: CKRecord) {
+		record.setObject(name, forKey: "name")
+		record.setObject(homePageURL.absoluteString!, forKey: "homePageURL")
+	}
+	
+	func createRecord() -> CKRecord {
+		let record = CKRecord(recordType: RecordType.Site.identifier)
+		updateValuesInRecord(record);
+		return record
+	}
 }
 
 
 public class Site {
-	public var record: CKRecord!
+	var record: CKRecord!
 	
-	public let values: SiteValues
-	public var needsSaving: Bool = false
+	public internal(set) var values: SiteValues {
+		didSet {
+			values.updateValuesInRecord(record)
+		}
+	}
 	
 	private init(values: SiteValues, record: CKRecord?) {
 		self.values = values
 		
-		if let record = record {
-			self.record = record
-		}
-		else {
-			let record = CKRecord(recordType: RecordType.Site.identifier)
-			record.setObject(values.name, forKey: "name")
-			record.setObject(values.homePageURL.absoluteString!, forKey: "homePageURL")
-			self.record = record
-			needsSaving = true
-		}
+		self.record = record ?? values.createRecord()
 	}
 	
-	public convenience init(record: CKRecord) {
+	convenience init(record: CKRecord) {
 		self.init(values: SiteValues(fromRecord: record), record: record)
 	}
 	
-	public convenience init(values: SiteValues) {
+	convenience init(values: SiteValues) {
 		self.init(values: values, record: nil)
 	}
 	
 	public var name: String { return values.name }
 	public var homePageURL: NSURL { return values.homePageURL }
+	
+	public var identifier: String { return record.recordID.recordName }
+	
+	public internal(set) var GoogleAPIOAuth2TokenJSONString: String? {
+		get {
+			return record.objectForKey("GoogleAPIOAuth2TokenJSONString") as String?
+		}
+		set(value) {
+			return record.setObject(value, forKey: "GoogleAPIOAuth2TokenJSONString")
+		}
+	}
 }
 
 /*

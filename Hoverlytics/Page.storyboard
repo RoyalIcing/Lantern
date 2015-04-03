@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+    </dependencies>
+    <scenes>
+        <!--Page View Controller-->
+        <scene sceneID="2IK-UQ-1Iz">
+            <objects>
+                <viewController storyboardIdentifier="Page View Controller" id="lOR-rk-ZOz" customClass="PageViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="IMy-jD-QFc">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="EOJ-Eq-5bL">
+                                <rect key="frame" x="0.0" y="35" width="500" height="265"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="500" id="dVX-GN-paG"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="nWe-1L-Tzu" kind="embed" identifier="webViewController" id="2xK-rR-SMZ"/>
+                                </connections>
+                            </containerView>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-EU-sP3">
+                                <rect key="frame" x="20" y="8" width="460" height="19"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="4BL-LC-tAV"/>
+                                </constraints>
+                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Your Website’s URL" bezelStyle="round" id="otO-hx-4tR">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="URLFieldChanged:" target="lOR-rk-ZOz" id="La7-k6-kgO"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="8cl-EU-sP3" secondAttribute="bottom" constant="8" id="ANg-2P-1QJ"/>
+                            <constraint firstAttribute="trailing" secondItem="8cl-EU-sP3" secondAttribute="trailing" constant="20" id="Jbr-OG-ddw"/>
+                            <constraint firstItem="EOJ-Eq-5bL" firstAttribute="leading" secondItem="IMy-jD-QFc" secondAttribute="leading" id="Oa9-kK-7AF"/>
+                            <constraint firstAttribute="trailing" secondItem="EOJ-Eq-5bL" secondAttribute="trailing" id="Ugs-fy-zEL"/>
+                            <constraint firstItem="8cl-EU-sP3" firstAttribute="top" secondItem="EOJ-Eq-5bL" secondAttribute="bottom" constant="8" id="b39-Ba-O8C"/>
+                            <constraint firstItem="8cl-EU-sP3" firstAttribute="leading" secondItem="IMy-jD-QFc" secondAttribute="leading" constant="20" id="rRF-HU-wR3"/>
+                            <constraint firstAttribute="top" secondItem="EOJ-Eq-5bL" secondAttribute="top" id="vsd-RB-Sf3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="URLField" destination="8cl-EU-sP3" id="iIp-Mj-MuE"/>
+                    </connections>
+                </viewController>
+                <customObject id="NaO-og-c6g" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="304" y="171"/>
+        </scene>
+        <!--Page Web View Controller-->
+        <scene sceneID="zNs-iy-TL9">
+            <objects>
+                <viewController storyboardIdentifier="webViewController" id="nWe-1L-Tzu" customClass="PageWebViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="5KY-5a-zk6">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="SOe-BC-AxO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="304" y="574"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="6MK-e9-sn9">
+            <objects>
+                <viewController id="eNm-fX-uHB" customClass="PageViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="dvG-Ui-hk1">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="uIy-v1-Q91">
+                                <rect key="frame" x="0.0" y="35" width="500" height="265"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="500" id="WJd-Ld-9XZ"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="MSR-nn-DfB" kind="embed" identifier="webViewController" id="cA6-CX-US3"/>
+                                </connections>
+                            </containerView>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7iQ-dg-pKN">
+                                <rect key="frame" x="20" y="8" width="460" height="19"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="cIq-tT-FPs"/>
+                                </constraints>
+                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Your Website’s URL" bezelStyle="round" id="Rpj-za-22t">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="URLFieldChanged:" target="eNm-fX-uHB" id="RDH-LY-zPr"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="7iQ-dg-pKN" secondAttribute="trailing" constant="20" id="2Id-iN-zuk"/>
+                            <constraint firstItem="7iQ-dg-pKN" firstAttribute="top" secondItem="uIy-v1-Q91" secondAttribute="bottom" constant="8" id="3HP-ge-MFw"/>
+                            <constraint firstItem="7iQ-dg-pKN" firstAttribute="leading" secondItem="dvG-Ui-hk1" secondAttribute="leading" constant="20" id="PBe-nH-azg"/>
+                            <constraint firstAttribute="bottom" secondItem="7iQ-dg-pKN" secondAttribute="bottom" constant="8" id="STa-Fa-JUT"/>
+                            <constraint firstItem="uIy-v1-Q91" firstAttribute="leading" secondItem="dvG-Ui-hk1" secondAttribute="leading" id="idf-PC-1rQ"/>
+                            <constraint firstAttribute="trailing" secondItem="uIy-v1-Q91" secondAttribute="trailing" id="pyC-y2-PlI"/>
+                            <constraint firstAttribute="top" secondItem="uIy-v1-Q91" secondAttribute="top" id="yL3-mO-KWJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="URLField" destination="7iQ-dg-pKN" id="Ros-eQ-6ZO"/>
+                    </connections>
+                </viewController>
+                <customObject id="x9D-V1-DFU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="314" y="977"/>
+        </scene>
+        <!--Page Web View Controller-->
+        <scene sceneID="eTo-h2-jFM">
+            <objects>
+                <viewController id="MSR-nn-DfB" customClass="PageWebViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="dem-el-lUL">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="KC8-La-LbR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="314" y="1400"/>
+        </scene>
+    </scenes>
+</document>

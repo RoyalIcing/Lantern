@@ -70,7 +70,7 @@ public enum ValidationError {
 }
 
 
-private func detectWebURL(fromString URLString: String) -> NSURL? {
+public func detectWebURL(fromString URLString: String) -> NSURL? {
 	var error: NSError?
 	let dataDetector = NSDataDetector(types: NSTextCheckingType.Link.rawValue, error: &error)
 	

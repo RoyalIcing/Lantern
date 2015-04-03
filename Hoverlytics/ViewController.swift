@@ -10,33 +10,94 @@ import Cocoa
 import HoverlyticsModel
 
 
-enum MainSection: Int {
-	case Settings = 1
-	case ViewPages = 2
-}
-
-
 class ViewController: NSViewController
 {
 	var modelManager: HoverlyticsModel.ModelManager!
-	var mainState: HoverlyticsModel.MainState!
-	var currentSection: MainSection?
 	
-	lazy var editorStoryboard: NSStoryboard = {
-		NSStoryboard(name: "Editor", bundle: nil)!
+	var mainState: HoverlyticsModel.MainState! {
+		didSet {
+			startObservingModelManager()
+			updateMainViewForState()
+		}
+	}
+	
+	var mainStateNotificationObservers = [MainStateNotification: AnyObject]()
+	
+	func startObservingModelManager() {
+		let nc = NSNotificationCenter.defaultCenter()
+		let mainQueue = NSOperationQueue.mainQueue()
+		
+		func addObserver(notificationIdentifier: MainStateNotification, block: (NSNotification!) -> Void) {
+			let observer = nc.addObserverForName(notificationIdentifier.notificationName, object: mainState, queue: mainQueue, usingBlock: block)
+			mainStateNotificationObservers[notificationIdentifier] = observer
+		}
+		
+		addObserver(.ChosenSiteDidChange) { (notification) in
+			self.updateMainViewForState()
+		}
+	}
+	
+	func stopObservingModelManager() {
+		let nc = NSNotificationCenter.defaultCenter()
+		
+		for (notificationIdentifier, observer) in mainStateNotificationObservers {
+			nc.removeObserver(observer)
+		}
+		mainStateNotificationObservers.removeAll(keepCapacity: false)
+	}
+	
+	lazy var pageStoryboard: NSStoryboard = {
+		NSStoryboard(name: "Page", bundle: nil)!
 	}()
-	lazy var pageViewController: PageViewController = {
-		self.editorStoryboard.instantiateControllerWithIdentifier("Page View Controller") as PageViewController
-	}()
+	var pageViewController: PageViewController!
+	
+	func removePageViewController() {
+		if pageViewController?.parentViewController != nil {
+			pageViewController.removeFromParentViewController()
+			let pageView = pageViewController.view
+			pageView.removeFromSuperview()
+			pageViewController = nil
+		}
+	}
+	
+	func createPageViewControllerForSite(site: Site) {
+		// Create page view controller.
+		let pageViewController = self.pageStoryboard.instantiateControllerWithIdentifier("Page View Controller") as PageViewController
+		
+		pageViewController.GoogleOAuth2TokenJSONString = site.GoogleAPIOAuth2TokenJSONString
+		pageViewController.hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback = { [unowned self] tokenJSONString in
+			self.modelManager.setGoogleOAuth2TokenJSONString(tokenJSONString, forSite: site)
+		}
+		
+		addChildViewController(pageViewController)
+		let pageView = pageViewController.view
+		fillViewWithChildView(pageView)
+		
+		pageViewController.loadURL(site.homePageURL)
+		
+		self.pageViewController = pageViewController
+	}
+	
+	var lastChosenSite: Site!
+	
+	func updateMainViewForState() {
+		if let chosenSite = mainState?.chosenSite {
+			println("updateMainViewForState \(chosenSite.name) before \(lastChosenSite?.name)")
+			// Make sure page view controller is not loaded more than once for a site.
+			if chosenSite.identifier == lastChosenSite?.identifier {
+				return
+			}
+			lastChosenSite = chosenSite
+			
+			removePageViewController()
+			createPageViewControllerForSite(chosenSite)
+		}
+	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		//println("view did load from storyboard \(self.storyboard) parentViewController: \(self.parentViewController)")
-		
-		addChildViewController(pageViewController)
-		let viewPageView = pageViewController.view
-		fillViewWithChildView(viewPageView)
 	}
 	
 	
@@ -70,18 +131,24 @@ class ViewController: NSViewController
 		else {
 			if let chosenSite = mainState?.chosenSite {
 				siteSettingsViewController.updateUIWithSiteValues(chosenSite.values)
+				
+				let modelManager = self.modelManager
+				siteSettingsViewController.willClose = { siteSettingsViewController in
+					let (siteValues, error) = siteSettingsViewController.copySiteValuesFromUI()
+					if let siteValues = siteValues {
+						modelManager.updateSiteWithValues(chosenSite, siteValues: siteValues)
+					}
+				}
+				
+				presentViewController(siteSettingsViewController, asPopoverRelativeToRect: button.bounds, ofView: button, preferredEdge: NSMaxYEdge, behavior: .Semitransient)
 			}
-	
-			presentViewController(siteSettingsViewController, asPopoverRelativeToRect: button.bounds, ofView: button, preferredEdge: NSMaxYEdge, behavior: .Semitransient)
 		}
 	}
 	
 	
 	override var representedObject: AnyObject? {
 		didSet {
-			/*if let contentController = representedObject as? DocumentContentController {
-				PageViewController.setContentController(contentController)
-			}*/
+			
 		}
 	}
 }
