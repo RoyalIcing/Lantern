@@ -14,6 +14,8 @@ class ViewController: NSViewController
 {
 	var modelManager: HoverlyticsModel.ModelManager!
 	
+	var section: MainSection!
+	
 	var mainState: HoverlyticsModel.MainState! {
 		didSet {
 			startObservingModelManager()
@@ -46,72 +48,70 @@ class ViewController: NSViewController
 		mainStateNotificationObservers.removeAll(keepCapacity: false)
 	}
 	
+	
 	lazy var pageStoryboard: NSStoryboard = {
 		NSStoryboard(name: "Page", bundle: nil)!
 	}()
+	var mainSplitViewController: NSSplitViewController!
 	var pageViewController: PageViewController!
-	
-	func removePageViewController() {
-		if pageViewController?.parentViewController != nil {
-			pageViewController.removeFromParentViewController()
-			let pageView = pageViewController.view
-			pageView.removeFromSuperview()
-			pageViewController = nil
-		}
-	}
-	
-	func createPageViewControllerForSite(site: Site) {
-		// Create page view controller.
-		let pageViewController = self.pageStoryboard.instantiateControllerWithIdentifier("Page View Controller") as PageViewController
-		
-		pageViewController.GoogleOAuth2TokenJSONString = site.GoogleAPIOAuth2TokenJSONString
-		pageViewController.hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback = { [unowned self] tokenJSONString in
-			self.modelManager.setGoogleOAuth2TokenJSONString(tokenJSONString, forSite: site)
-		}
-		
-		addChildViewController(pageViewController)
-		let pageView = pageViewController.view
-		fillViewWithChildView(pageView)
-		
-		pageViewController.loadURL(site.homePageURL)
-		
-		self.pageViewController = pageViewController
-	}
+	var statsViewController: StatsViewController!
 	
 	var lastChosenSite: Site!
 	
 	func updateMainViewForState() {
-		if let chosenSite = mainState?.chosenSite {
-			println("updateMainViewForState \(chosenSite.name) before \(lastChosenSite?.name)")
+		if let site = mainState?.chosenSite {
+			println("updateMainViewForState \(site.name) before \(lastChosenSite?.name)")
 			// Make sure page view controller is not loaded more than once for a site.
-			if chosenSite.identifier == lastChosenSite?.identifier {
+			if site.identifier == lastChosenSite?.identifier {
 				return
 			}
-			lastChosenSite = chosenSite
+			lastChosenSite = site
 			
-			removePageViewController()
-			createPageViewControllerForSite(chosenSite)
+			
+			pageViewController.GoogleOAuth2TokenJSONString = site.GoogleAPIOAuth2TokenJSONString
+			pageViewController.hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback = { [unowned self] tokenJSONString in
+				self.modelManager.setGoogleOAuth2TokenJSONString(tokenJSONString, forSite: site)
+			}
+			pageViewController.loadURL(site.homePageURL)
+			
+			
+			statsViewController.primaryURL = site.homePageURL
+			statsViewController.reload()
 		}
 	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		//println("view did load from storyboard \(self.storyboard) parentViewController: \(self.parentViewController)")
+		mainSplitViewController = NSSplitViewController()
+		mainSplitViewController.splitView.vertical = false
+		fillWithChildViewController(mainSplitViewController)
+		
+		let pageStoryboard = self.pageStoryboard
+		
+		// Create page view controller.
+		let pageViewController = pageStoryboard.instantiateControllerWithIdentifier("Page View Controller") as! PageViewController
+		mainSplitViewController.addChildViewController(pageViewController)
+		self.pageViewController = pageViewController
+		
+		
+		let statsViewController = pageStoryboard.instantiateControllerWithIdentifier("Stats View Controller") as! StatsViewController
+		mainSplitViewController.addChildViewController(statsViewController)
+		self.statsViewController = statsViewController
 	}
 	
 	
 	lazy var siteSettingsStoryboard = NSStoryboard(name: "SiteSettings", bundle: nil)!
 	lazy var addSiteViewController: SiteSettingsViewController = {
-		let vc = self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Add Site View Controller") as SiteSettingsViewController
+		let vc = self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Add Site View Controller") as! SiteSettingsViewController
 		vc.modelManager = self.modelManager
 		return vc
-		}()
+	}()
 	lazy var siteSettingsViewController: SiteSettingsViewController = {
-		let vc = self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Site Settings View Controller") as SiteSettingsViewController
+		let vc = self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Site Settings View Controller") as! SiteSettingsViewController
 		vc.modelManager = self.modelManager
 		return vc
-		}()
+	}()
 	
 	
 	@IBAction func showAddSite(button: NSButton) {

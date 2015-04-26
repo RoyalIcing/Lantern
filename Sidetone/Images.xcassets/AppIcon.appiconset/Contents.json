@@ -46,9 +46,8 @@
       "scale" : "1x"
     },
     {
-      "size" : "512x512",
       "idiom" : "mac",
-      "filename" : "hoverlytics-mac-512@2x.png",
+      "size" : "512x512",
       "scale" : "2x"
     }
   ],

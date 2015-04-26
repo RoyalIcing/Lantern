@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2134AAC1AE9F5D800ACDDE3 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */; };
+		B2134AAE1AE9F97F00ACDDE3 /* SiteMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2134AAD1AE9F97F00ACDDE3 /* SiteMapper.swift */; };
+		B2134AAF1AE9FA2B00ACDDE3 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E269361AE9DD820044BE04 /* Alamofire.framework */; };
+		B2134AB01AE9FA2B00ACDDE3 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B2E269361AE9DD820044BE04 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B2134AB31AEA137D00ACDDE3 /* Ono.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2134AB21AEA137D00ACDDE3 /* Ono.framework */; };
+		B2134AB41AEA137D00ACDDE3 /* Ono.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B2134AB21AEA137D00ACDDE3 /* Ono.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B22425F81AC8F8B200809EF0 /* HoverlyticsModel.h in Headers */ = {isa = PBXBuildFile; fileRef = B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B22425FE1AC8F8B200809EF0 /* HoverlyticsModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; };
 		B22426071AC8F8B200809EF0 /* HoverlyticsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426061AC8F8B200809EF0 /* HoverlyticsModelTests.swift */; };
@@ -30,11 +36,22 @@
 		B23966E21ACD36FF00C6A420 /* userAgent.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966E11ACD36FF00C6A420 /* userAgent.js */; };
 		B23966EA1ACD45BD00C6A420 /* panelAuthorizationChanged.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966E91ACD45BC00C6A420 /* panelAuthorizationChanged.js */; };
 		B23966EC1ACD518E00C6A420 /* setPanelAuthorizationToken.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966EB1ACD518E00C6A420 /* setPanelAuthorizationToken.js */; };
+		B23E29EA1AE73DF6009A94E5 /* console.js in Resources */ = {isa = PBXBuildFile; fileRef = B23E29E91AE73DF6009A94E5 /* console.js */; };
+		B23E29EC1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */; };
 		B23EA59E1ACA5F6A009B4032 /* ValueValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */; };
 		B2A63B5F1AC8DAA0004CEBE1 /* SiteSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */; };
 		B2A63B611AC8DACD004CEBE1 /* SiteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */; };
 		B2C4A93F1ACA31F0000F1566 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */; };
 		B2C4A9411ACA3203000F1566 /* MainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4A9401ACA3203000F1566 /* MainState.swift */; };
+		B2E2691C1AE9DD650044BE04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2691B1AE9DD650044BE04 /* AppDelegate.swift */; };
+		B2E2691E1AE9DD650044BE04 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2691D1AE9DD650044BE04 /* ViewController.swift */; };
+		B2E269201AE9DD650044BE04 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2E2691F1AE9DD650044BE04 /* Images.xcassets */; };
+		B2E269231AE9DD650044BE04 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2E269211AE9DD650044BE04 /* Main.storyboard */; };
+		B2E2692F1AE9DD660044BE04 /* SidetoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2692E1AE9DD660044BE04 /* SidetoneTests.swift */; };
+		B2E269371AE9DD820044BE04 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E269361AE9DD820044BE04 /* Alamofire.framework */; };
+		B2E269381AE9DD830044BE04 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B2E269361AE9DD820044BE04 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B2E2693B1AE9E5130044BE04 /* MainSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2693A1AE9E5130044BE04 /* MainSection.swift */; };
+		B2E2693D1AE9E9200044BE04 /* MainView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2E2693C1AE9E9200044BE04 /* MainView.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +83,13 @@
 			remoteGlobalIDString = B22B7D8E1AC6B9090026AEDB;
 			remoteInfo = "Hoverlytics for Mac";
 		};
+		B2E269291AE9DD650044BE04 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B22B7D871AC6B9090026AEDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B2E269161AE9DD650044BE04;
+			remoteInfo = Sidetone;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -76,6 +100,19 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B224260B1AC8F8B200809EF0 /* HoverlyticsModel.framework in Embed Frameworks */,
+				B2134AB01AE9FA2B00ACDDE3 /* Alamofire.framework in Embed Frameworks */,
+				B2134AB41AEA137D00ACDDE3 /* Ono.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2E269391AE9DD830044BE04 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B2E269381AE9DD830044BE04 /* Alamofire.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -83,6 +120,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
+		B2134AAD1AE9F97F00ACDDE3 /* SiteMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteMapper.swift; sourceTree = "<group>"; };
+		B2134AB21AEA137D00ACDDE3 /* Ono.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ono.framework; path = "Carthage/Build/Mac (Manual)/Ono.framework"; sourceTree = "<group>"; };
 		B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HoverlyticsModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22425F61AC8F8B200809EF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HoverlyticsModel.h; sourceTree = "<group>"; };
@@ -113,11 +153,25 @@
 		B23966E11ACD36FF00C6A420 /* userAgent.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = userAgent.js; sourceTree = "<group>"; };
 		B23966E91ACD45BC00C6A420 /* panelAuthorizationChanged.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = panelAuthorizationChanged.js; sourceTree = "<group>"; };
 		B23966EB1ACD518E00C6A420 /* setPanelAuthorizationToken.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = setPanelAuthorizationToken.js; sourceTree = "<group>"; };
+		B23E29E91AE73DF6009A94E5 /* console.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = console.js; sourceTree = "<group>"; };
+		B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WKUserContentController+bundledScripts.swift"; sourceTree = "<group>"; };
 		B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueValidation.swift; sourceTree = "<group>"; };
 		B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SiteSettings.storyboard; sourceTree = "<group>"; };
 		B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteSettingsViewController.swift; sourceTree = "<group>"; };
 		B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		B2C4A9401ACA3203000F1566 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainState.swift; sourceTree = "<group>"; };
+		B2E269171AE9DD650044BE04 /* Sidetone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidetone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2E2691A1AE9DD650044BE04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2E2691B1AE9DD650044BE04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B2E2691D1AE9DD650044BE04 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B2E2691F1AE9DD650044BE04 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B2E269221AE9DD650044BE04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B2E269281AE9DD650044BE04 /* SidetoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SidetoneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2E2692D1AE9DD660044BE04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2E2692E1AE9DD660044BE04 /* SidetoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidetoneTests.swift; sourceTree = "<group>"; };
+		B2E269361AE9DD820044BE04 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
+		B2E2693A1AE9E5130044BE04 /* MainSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSection.swift; sourceTree = "<group>"; };
+		B2E2693C1AE9E9200044BE04 /* MainView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainView.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,11 +196,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				B22B7DC01AC785C90026AEDB /* CloudKit.framework in Frameworks */,
+				B2134AB31AEA137D00ACDDE3 /* Ono.framework in Frameworks */,
+				B2134AAF1AE9FA2B00ACDDE3 /* Alamofire.framework in Frameworks */,
 				B224260A1AC8F8B200809EF0 /* HoverlyticsModel.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B22B7D9E1AC6B9090026AEDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2E269141AE9DD650044BE04 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2E269371AE9DD820044BE04 /* Alamofire.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2E269251AE9DD650044BE04 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -198,11 +269,15 @@
 		B22B7D861AC6B9090026AEDB = {
 			isa = PBXGroup;
 			children = (
+				B2134AB21AEA137D00ACDDE3 /* Ono.framework */,
+				B2E269361AE9DD820044BE04 /* Alamofire.framework */,
 				B22B7DBF1AC785C90026AEDB /* CloudKit.framework */,
 				B22B7D911AC6B9090026AEDB /* Hoverlytics */,
 				B22B7DA41AC6B9090026AEDB /* HoverlyticsTests */,
 				B22425F41AC8F8B200809EF0 /* HoverlyticsModel */,
 				B22426031AC8F8B200809EF0 /* HoverlyticsModelTests */,
+				B2E269181AE9DD650044BE04 /* Sidetone */,
+				B2E2692B1AE9DD660044BE04 /* SidetoneTests */,
 				B22B7D901AC6B9090026AEDB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -214,6 +289,8 @@
 				B22B7DA11AC6B9090026AEDB /* HoverlyticsTests.xctest */,
 				B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */,
 				B22425FD1AC8F8B200809EF0 /* HoverlyticsModelTests.xctest */,
+				B2E269171AE9DD650044BE04 /* Sidetone.app */,
+				B2E269281AE9DD650044BE04 /* SidetoneTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -225,17 +302,23 @@
 				B22B7D941AC6B9090026AEDB /* AppDelegate.swift */,
 				B22B7D981AC6B9090026AEDB /* Images.xcassets */,
 				B22B7D9A1AC6B9090026AEDB /* Main.storyboard */,
+				B2E2693C1AE9E9200044BE04 /* MainView.storyboard */,
+				B2E2693A1AE9E5130044BE04 /* MainSection.swift */,
 				B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */,
 				B22B7D961AC6B9090026AEDB /* ViewController.swift */,
 				B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */,
 				B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */,
 				B22B7DBA1AC77EF20026AEDB /* Page.storyboard */,
 				B22B7DB81AC77D420026AEDB /* PageViewController.swift */,
+				B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */,
+				B2134AAD1AE9F97F00ACDDE3 /* SiteMapper.swift */,
+				B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */,
 				B22B7DBC1AC782DD0026AEDB /* insertHoverlytics.js */,
 				B23966E11ACD36FF00C6A420 /* userAgent.js */,
 				B23966DF1ACD316E00C6A420 /* windowClose.js */,
 				B23966E91ACD45BC00C6A420 /* panelAuthorizationChanged.js */,
 				B23966EB1ACD518E00C6A420 /* setPanelAuthorizationToken.js */,
+				B23E29E91AE73DF6009A94E5 /* console.js */,
 				B22B7DB51AC6B98A0026AEDB /* Categories */,
 				B22B7D921AC6B9090026AEDB /* Supporting Files */,
 				B22B7DB11AC6B9860026AEDB /* Hoverlytics-Bridging-Header.h */,
@@ -275,6 +358,43 @@
 				B22B7DB31AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		B2E269181AE9DD650044BE04 /* Sidetone */ = {
+			isa = PBXGroup;
+			children = (
+				B2E2691B1AE9DD650044BE04 /* AppDelegate.swift */,
+				B2E2691D1AE9DD650044BE04 /* ViewController.swift */,
+				B2E2691F1AE9DD650044BE04 /* Images.xcassets */,
+				B2E269211AE9DD650044BE04 /* Main.storyboard */,
+				B2E269191AE9DD650044BE04 /* Supporting Files */,
+			);
+			path = Sidetone;
+			sourceTree = "<group>";
+		};
+		B2E269191AE9DD650044BE04 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B2E2691A1AE9DD650044BE04 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B2E2692B1AE9DD660044BE04 /* SidetoneTests */ = {
+			isa = PBXGroup;
+			children = (
+				B2E2692E1AE9DD660044BE04 /* SidetoneTests.swift */,
+				B2E2692C1AE9DD660044BE04 /* Supporting Files */,
+			);
+			path = SidetoneTests;
+			sourceTree = "<group>";
+		};
+		B2E2692C1AE9DD660044BE04 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B2E2692D1AE9DD660044BE04 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -365,6 +485,42 @@
 			productReference = B22B7DA11AC6B9090026AEDB /* HoverlyticsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		B2E269161AE9DD650044BE04 /* Sidetone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2E269341AE9DD660044BE04 /* Build configuration list for PBXNativeTarget "Sidetone" */;
+			buildPhases = (
+				B2E269131AE9DD650044BE04 /* Sources */,
+				B2E269141AE9DD650044BE04 /* Frameworks */,
+				B2E269151AE9DD650044BE04 /* Resources */,
+				B2E269391AE9DD830044BE04 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Sidetone;
+			productName = Sidetone;
+			productReference = B2E269171AE9DD650044BE04 /* Sidetone.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B2E269271AE9DD650044BE04 /* SidetoneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2E269351AE9DD660044BE04 /* Build configuration list for PBXNativeTarget "SidetoneTests" */;
+			buildPhases = (
+				B2E269241AE9DD650044BE04 /* Sources */,
+				B2E269251AE9DD650044BE04 /* Frameworks */,
+				B2E269261AE9DD650044BE04 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B2E2692A1AE9DD650044BE04 /* PBXTargetDependency */,
+			);
+			name = SidetoneTests;
+			productName = SidetoneTests;
+			productReference = B2E269281AE9DD650044BE04 /* SidetoneTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -398,6 +554,14 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = B22B7D8E1AC6B9090026AEDB;
 					};
+					B2E269161AE9DD650044BE04 = {
+						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 5278SPSAPR;
+					};
+					B2E269271AE9DD650044BE04 = {
+						CreatedOnToolsVersion = 6.3.1;
+						TestTargetID = B2E269161AE9DD650044BE04;
+					};
 				};
 			};
 			buildConfigurationList = B22B7D8A1AC6B9090026AEDB /* Build configuration list for PBXProject "Hoverlytics" */;
@@ -417,6 +581,8 @@
 				B22B7DA01AC6B9090026AEDB /* HoverlyticsTests */,
 				B22425F21AC8F8B200809EF0 /* HoverlyticsModel */,
 				B22425FC1AC8F8B200809EF0 /* HoverlyticsModelTests */,
+				B2E269161AE9DD650044BE04 /* Sidetone */,
+				B2E269271AE9DD650044BE04 /* SidetoneTests */,
 			);
 		};
 /* End PBXProject section */
@@ -444,6 +610,8 @@
 				B22B7D991AC6B9090026AEDB /* Images.xcassets in Resources */,
 				B22B7DBB1AC77EF20026AEDB /* Page.storyboard in Resources */,
 				B23966E01ACD316E00C6A420 /* windowClose.js in Resources */,
+				B23E29EA1AE73DF6009A94E5 /* console.js in Resources */,
+				B2E2693D1AE9E9200044BE04 /* MainView.storyboard in Resources */,
 				B23966EA1ACD45BD00C6A420 /* panelAuthorizationChanged.js in Resources */,
 				B2A63B5F1AC8DAA0004CEBE1 /* SiteSettings.storyboard in Resources */,
 				B22B7D9C1AC6B9090026AEDB /* Main.storyboard in Resources */,
@@ -453,6 +621,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B22B7D9F1AC6B9090026AEDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2E269151AE9DD650044BE04 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2E269201AE9DD650044BE04 /* Images.xcassets in Resources */,
+				B2E269231AE9DD650044BE04 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2E269261AE9DD650044BE04 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -487,10 +671,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B22B7D971AC6B9090026AEDB /* ViewController.swift in Sources */,
+				B2134AAE1AE9F97F00ACDDE3 /* SiteMapper.swift in Sources */,
 				B22B7D951AC6B9090026AEDB /* AppDelegate.swift in Sources */,
 				B2A63B611AC8DACD004CEBE1 /* SiteSettingsViewController.swift in Sources */,
 				B22B7DB71AC77CAC0026AEDB /* MainWindowController.swift in Sources */,
+				B23E29EC1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift in Sources */,
 				B22B7DB91AC77D420026AEDB /* PageViewController.swift in Sources */,
+				B2E2693B1AE9E5130044BE04 /* MainSection.swift in Sources */,
+				B2134AAC1AE9F5D800ACDDE3 /* StatsViewController.swift in Sources */,
 				B22B7DB41AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,6 +688,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				B22B7DA81AC6B9090026AEDB /* Hoverlytics_for_MacTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2E269131AE9DD650044BE04 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2E2691E1AE9DD650044BE04 /* ViewController.swift in Sources */,
+				B2E2691C1AE9DD650044BE04 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2E269241AE9DD650044BE04 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2E2692F1AE9DD660044BE04 /* SidetoneTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +731,11 @@
 			target = B22B7D8E1AC6B9090026AEDB /* Hoverlytics */;
 			targetProxy = B22B7DA21AC6B9090026AEDB /* PBXContainerItemProxy */;
 		};
+		B2E2692A1AE9DD650044BE04 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B2E269161AE9DD650044BE04 /* Sidetone */;
+			targetProxy = B2E269291AE9DD650044BE04 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -533,6 +743,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				B22B7D9B1AC6B9090026AEDB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B2E269211AE9DD650044BE04 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B2E269221AE9DD650044BE04 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -711,6 +929,12 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"(Manual)",
+				);
 				INFOPLIST_FILE = Hoverlytics/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
@@ -730,6 +954,12 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"(Manual)",
+				);
 				INFOPLIST_FILE = Hoverlytics/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_SWIFT_FLAGS = "";
@@ -772,6 +1002,84 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = HoverlyticsTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hoverlytics.app/Contents/MacOS/Hoverlytics";
+			};
+			name = Release;
+		};
+		B2E269301AE9DD660044BE04 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Sidetone/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B2E269311AE9DD660044BE04 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = Sidetone/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		B2E269321AE9DD660044BE04 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SidetoneTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sidetone.app/Contents/MacOS/Sidetone";
+			};
+			name = Debug;
+		};
+		B2E269331AE9DD660044BE04 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = SidetoneTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sidetone.app/Contents/MacOS/Sidetone";
 			};
 			name = Release;
 		};
@@ -819,6 +1127,24 @@
 			buildConfigurations = (
 				B22B7DAF1AC6B9090026AEDB /* Debug */,
 				B22B7DB01AC6B9090026AEDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2E269341AE9DD660044BE04 /* Build configuration list for PBXNativeTarget "Sidetone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2E269301AE9DD660044BE04 /* Debug */,
+				B2E269311AE9DD660044BE04 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2E269351AE9DD660044BE04 /* Build configuration list for PBXNativeTarget "SidetoneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2E269321AE9DD660044BE04 /* Debug */,
+				B2E269331AE9DD660044BE04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

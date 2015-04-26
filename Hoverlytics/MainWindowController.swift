@@ -10,13 +10,16 @@ import Cocoa
 import HoverlyticsModel
 
 
+private let sectionUserDefaultKey = "mainSection"
+
+
 class MainWindowController: NSWindowController, NSToolbarDelegate {
 	
 	let mainState = HoverlyticsModel.MainState()
 	let modelManager = HoverlyticsModel.ModelManager.sharedManager
 	
 	var mainViewController: ViewController! {
-		return contentViewController as ViewController
+		return contentViewController as! ViewController
 	}
 	
 	var toolbarAssistant: MainWindowToolbarAssistant!
@@ -41,6 +44,7 @@ class MainWindowController: NSWindowController, NSToolbarDelegate {
 		
 		if let window = window {
 			window.titleVisibility = .Hidden
+			//window.appearance = NSAppearance(named: NSAppearanceNameVibrantDark)
 		}
 		
 		mainViewController.modelManager = modelManager
@@ -54,6 +58,14 @@ class MainWindowController: NSWindowController, NSToolbarDelegate {
 	@IBAction func focusOnSearchPagesField(sender: AnyObject?) {
 		toolbarAssistant.focusOnSearchPagesField(sender)
 	}
+}
+
+
+struct ToolbarItem<ControlClass: NSControl> {
+	var control: ControlClass!
+	
+	typealias PrepareBlock = (control: ControlClass) -> Void
+	var prepare: PrepareBlock!
 }
 
 
@@ -116,7 +128,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		}
 		
 		let previouslySelectedItem = sitesPopUpButton.selectedItem
-		let previouslySelectedSite = previouslySelectedItem?.representedObject? as? Site
+		let previouslySelectedSite = previouslySelectedItem?.representedObject as? Site
 		
 		func removeNextItemWithTag(tag: Int) -> Bool {
 			let index = sitesPopUpButton.indexOfItemWithTag(tag)
@@ -214,28 +226,31 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	}
 	
 	
+	//var sectionItem = ToolbarItem<NSSegmentedControl>()
+	
+	
 	func toolbarWillAddItem(notification: NSNotification) {
 		let userInfo = notification.userInfo!
-		let toolbarItem = userInfo["item"] as NSToolbarItem
+		let toolbarItem = userInfo["item"] as! NSToolbarItem
 		let itemIdentifier = toolbarItem.itemIdentifier
 		var sizeToFit = false
 		
 		if itemIdentifier == "newSiteButton" {
-			addSiteButton = toolbarItem.view as NSButton
+			addSiteButton = toolbarItem.view as! NSButton
 			prepareNewSiteButton?(addSiteButton)
 		}
 		else if itemIdentifier == "chosenSite" {
-			sitesPopUpButton = toolbarItem.view as NSPopUpButton
+			sitesPopUpButton = toolbarItem.view as! NSPopUpButton
 			updateUIForSites()
 		}
 		else if itemIdentifier == "siteSettingsButton" {
-			siteSettingsButton = toolbarItem.view as NSButton
+			siteSettingsButton = toolbarItem.view as! NSButton
 			sizeToFit = true
 			prepareSiteSettingsButton?(siteSettingsButton)
 			updateUIForSites()
 		}
 		else if itemIdentifier == "searchPages" {
-			searchPagesField = toolbarItem.view as NSSearchField
+			searchPagesField = toolbarItem.view as! NSSearchField
 		}
 		
 		if sizeToFit {

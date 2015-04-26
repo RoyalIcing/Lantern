@@ -84,4 +84,12 @@
 	[self addLayoutConstraintToMatchAttribute:NSLayoutAttributeTop withChildView:innerView identifier:@"top"];
 }
 
+- (void)fillWithChildViewController:(NSViewController *)childViewController
+{
+	NSParameterAssert(childViewController != nil);
+	
+	[self addChildViewController:childViewController];
+	[self fillViewWithChildView:(childViewController.view)];
+}
+
 @end

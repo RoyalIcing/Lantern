@@ -23,5 +23,6 @@
 - (NSLayoutConstraint *)addLayoutConstraintToMatchAttribute:(NSLayoutAttribute)attribute withChildView:(NSView *)innerView identifier:(NSString *)identifier;
 
 - (void)fillViewWithChildView:(NSView *)innerView;
+- (void)fillWithChildViewController:(NSViewController *)childViewController;
 
 @end

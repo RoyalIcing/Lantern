@@ -66,7 +66,7 @@ class PageViewController: NSViewController {
 	
 	override func prepareForSegue(segue: NSStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == "webViewController" {
-			webViewController = segue.destinationController as PageWebViewController
+			webViewController = segue.destinationController as! PageWebViewController
 			prepareWebViewController(webViewController)
 		}
 	}
@@ -128,12 +128,12 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		
 		let userContentController = webViewConfiguration.userContentController ?? WKUserContentController()
 		
-		func addUserScript(scriptNameInBundle: String, injectAtStart: Bool = false, injectAtEnd: Bool = false, forMainFrameOnly: Bool = true, sourceReplacements: [String:String]? = nil) {
+		func addBundledUserScript(scriptNameInBundle: String, injectAtStart: Bool = false, injectAtEnd: Bool = false, forMainFrameOnly: Bool = true, sourceReplacements: [String:String]? = nil) {
 			let scriptURL = NSBundle.mainBundle().URLForResource(scriptNameInBundle, withExtension: "js")!
 			let scriptSource = NSMutableString(contentsOfURL: scriptURL, usedEncoding: nil, error: nil)!
 			
 			if let sourceReplacements = sourceReplacements {
-				func replaceInTemplate(find target: NSString, replace replacement: NSString) {
+				func replaceInTemplate(find target: String, replace replacement: String) {
 					scriptSource.replaceOccurrencesOfString(target, withString: replacement, options: NSStringCompareOptions(0), range: NSMakeRange(0, scriptSource.length))
 				}
 				
@@ -143,40 +143,43 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 			}
 			
 			if injectAtStart {
-				let script = WKUserScript(source: scriptSource, injectionTime: .AtDocumentStart, forMainFrameOnly: forMainFrameOnly)
+				let script = WKUserScript(source: scriptSource as String, injectionTime: .AtDocumentStart, forMainFrameOnly: forMainFrameOnly)
 				userContentController.addUserScript(script)
 			}
 			
 			if injectAtEnd {
-				let script = WKUserScript(source: scriptSource, injectionTime: .AtDocumentEnd, forMainFrameOnly: forMainFrameOnly)
+				let script = WKUserScript(source: scriptSource as String, injectionTime: .AtDocumentEnd, forMainFrameOnly: forMainFrameOnly)
 				userContentController.addUserScript(script)
 			}
 		}
 		
+		addBundledUserScript("console", injectAtStart: true)
+		userContentController.addScriptMessageHandler(self, name: "console")
+		
 		if true {
-			addUserScript("userAgent", injectAtStart: true)
+			addBundledUserScript("userAgent", injectAtStart: true)
 		}
 		
 		if allowsClosing {
-			addUserScript("windowClose", injectAtStart: true)
+			addBundledUserScript("windowClose", injectAtStart: true)
 			
 			userContentController.addScriptMessageHandler(self, name: PageWebViewController_receiveWindowCloseMessageIdentifier)
 		}
 		
 		if wantsHoverlyticsScript {
-			addUserScript("insertHoverlytics", injectAtEnd: true)
+			addBundledUserScript("insertHoverlytics", injectAtEnd: true)
 			
 			#if true
 				let tokenJSONString: String? = GoogleOAuth2TokenJSONString
 				
 				if let tokenJSONString = tokenJSONString {
-					addUserScript("setPanelAuthorizationToken", injectAtEnd: true, forMainFrameOnly: false, sourceReplacements: [
+					addBundledUserScript("setPanelAuthorizationToken", injectAtEnd: true, forMainFrameOnly: false, sourceReplacements: [
 						"__TOKEN__": tokenJSONString
 						])
 				}
 			#endif
 			
-			addUserScript("panelAuthorizationChanged", injectAtEnd: true, forMainFrameOnly: false)
+			addBundledUserScript("panelAuthorizationChanged", injectAtEnd: true, forMainFrameOnly: false)
 			
 			userContentController.addScriptMessageHandler(self, name: PageWebViewController_googleAPIAuthorizationChangedMessageIdentifier)
 		}
@@ -236,7 +239,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 	
 	func webView(webView: WKWebView, didCommitNavigation navigation: WKNavigation!) {
 		// FIXME: Error with navigation.request for some reason
-		let request = navigation.valueForKey("request") as NSURLRequest
+		let request = navigation.valueForKey("request") as! NSURLRequest
 		self.URL = request.URL
 		mainQueue_notify(.URLDidChange)
 	}
@@ -292,6 +295,15 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 					#endif
 				}
 			}
+		}
+		else if message.name == "console" {
+			println("CONSOLE")
+			if let messageBody = message.body as? [String: AnyObject] {
+				println("CONSOLE \(messageBody)")
+			}
+		}
+		else {
+			println("Unhandled script message \(message.name)")
 		}
 	}
 	

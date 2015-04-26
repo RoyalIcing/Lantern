@@ -74,8 +74,8 @@ public func ==(lhs: SiteValues, rhs: SiteValues) -> Bool {
 
 extension SiteValues {
 	init(fromRecord record: CKRecord) {
-		name = record.objectForKey("name") as String
-		homePageURL = NSURL(string: record.objectForKey("homePageURL") as String)!
+		name = record.objectForKey("name") as! String
+		homePageURL = NSURL(string: record.objectForKey("homePageURL") as! String)!
 	}
 	
 	func updateValuesInRecord(record: CKRecord) {
@@ -121,7 +121,7 @@ public class Site {
 	
 	public internal(set) var GoogleAPIOAuth2TokenJSONString: String? {
 		get {
-			return record.objectForKey("GoogleAPIOAuth2TokenJSONString") as String?
+			return record.objectForKey("GoogleAPIOAuth2TokenJSONString") as! String?
 		}
 		set(value) {
 			return record.setObject(value, forKey: "GoogleAPIOAuth2TokenJSONString")
