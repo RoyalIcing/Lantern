@@ -70,6 +70,15 @@ public class PageMapper {
 		retrieveInfoForPageWithURL(primaryURL, expectedBaseContentType: .LocalHTMLPage, currentDepth: 0)
 	}
 	
+	public func pageInfoForRequestedURL(URL: NSURL) -> PageInfo? {
+		if let destinationURL = requestedURLToDestinationURL[URL] {
+			return loadedURLToPageInfo[destinationURL]
+		}
+		else {
+			return nil
+		}
+	}
+	
 	private func didRetrieveInfo(pageInfo: PageInfo, forPageWithRequestedURL requestedPageURL: NSURL, expectedBaseContentType: BaseContentType, currentDepth: UInt) {
 		let responseType = PageResponseType(statusCode: pageInfo.statusCode)
 		requestedURLToResponseType[requestedPageURL] = responseType

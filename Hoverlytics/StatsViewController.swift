@@ -463,10 +463,7 @@ extension StatsViewController {
 		{
 			if pageMapper.hasFinishedRequestingURL(pageURL)
 			{
-				if
-					let destinationURL = pageMapper.requestedURLToDestinationURL[pageURL],
-					let pageInfo = pageMapper.loadedURLToPageInfo[destinationURL]
-				{
+				if let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL) {
 					let storyboard = self.storyboard!
 					let sourcePreviewTabViewController = SourcePreviewTabViewController()
 					sourcePreviewTabViewController.pageInfo = pageInfo
@@ -684,10 +681,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 			
 			if pageMapper.hasFinishedRequestingURL(pageURL)
 			{
-				if
-					let destinationURL = pageMapper.requestedURLToDestinationURL[pageURL],
-					let pageInfo = pageMapper.loadedURLToPageInfo[destinationURL]
-				{
+				if let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL) {
 					stringValue = identifier.stringValueInPageInfo(pageInfo)
 				}
 			}
