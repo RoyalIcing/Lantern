@@ -26,12 +26,14 @@ public class MenuAssistant<T: MenuItemRepresentative> {
 	}
 	
 	public var menuItemRepresentatives: [T?]!
+	public typealias Item = T
 	public typealias ItemUniqueIdentifier = T.UniqueIdentifier
 	
 	public var titleReturner: ((menuItemRepresentative: T) -> String)?
 	public var actionAndTargetReturner: ((menuItemRepresentative: T) -> (action: Selector, target: AnyObject?))?
 	public var representedObjectReturner: ((menuItemRepresentative: T) -> AnyObject?)?
 	public var stateReturner: ((menuItemRepresentative: T) -> Int)?
+	public var enabledReturner: ((menuItemRepresentative: T) -> Bool)?
 	
 	private var uniqueIdentifierToMenuItems = [ItemUniqueIdentifier: NSMenuItem]()
 	
@@ -40,8 +42,11 @@ public class MenuAssistant<T: MenuItemRepresentative> {
 		
 		let items = menuItemRepresentatives.map { menuItemRepresentative -> NSMenuItem in
 			if let menuItemRepresentative = menuItemRepresentative {
-				let title = self.titleReturner?(menuItemRepresentative: menuItemRepresentative) ?? menuItemRepresentative.title
-				let tag = menuItemRepresentative.tag ?? 0
+				let title: String = self.titleReturner?(menuItemRepresentative: menuItemRepresentative) ?? menuItemRepresentative.title
+				let tag: Int = menuItemRepresentative.tag ?? 0
+				let state: Int = self.stateReturner?(menuItemRepresentative: menuItemRepresentative) ?? NSOffState
+				let enabled: Bool = self.enabledReturner?(menuItemRepresentative: menuItemRepresentative) ?? true
+				let representedObject: AnyObject? = self.representedObjectReturner?(menuItemRepresentative: menuItemRepresentative)
 				
 				var action: Selector = nil
 				var target: AnyObject?
@@ -62,21 +67,12 @@ public class MenuAssistant<T: MenuItemRepresentative> {
 					self.uniqueIdentifierToMenuItems[uniqueIdentifier] = item
 				}
 				
-				item.tag = tag
 				item.title = title
+				item.tag = tag
 				item.action = action
 				item.target = target
-				
-				if let representedObjectReturner = self.representedObjectReturner {
-					item.representedObject = representedObjectReturner(menuItemRepresentative: menuItemRepresentative)
-				}
-				
-				if let stateReturner = self.stateReturner {
-					item.state = stateReturner(menuItemRepresentative: menuItemRepresentative)
-				}
-				else {
-					item.state = NSOffState
-				}
+				item.enabled = enabled
+				item.representedObject = representedObject
 				
 				return item
 			}
@@ -118,39 +114,6 @@ public class MenuAssistant<T: MenuItemRepresentative> {
 		}
 		else {
 			fatalError("Called .uniqueIdentifierForMenuItem() when receiver was not initialized with a menu")
-		}
-	}
-}
-
-
-public class PopUpButtonAssistant<T: MenuItemRepresentative> {
-	public let popUpButton: NSPopUpButton
-	public let menuAssistant: MenuAssistant<T>
-	
-	public init(popUpButton: NSPopUpButton) {
-		self.popUpButton = popUpButton
-		menuAssistant = MenuAssistant<T>(menu: popUpButton.menu)
-	}
-	
-	public var menuItemRepresentatives: [T?]! {
-		get {
-			return menuAssistant.menuItemRepresentatives
-		}
-		set {
-			menuAssistant.menuItemRepresentatives = newValue
-		}
-	}
-	
-	public func update() {
-		let selectedItem = popUpButton.selectedItem
-		
-		menuAssistant.updateMenu()
-		
-		if let selectedItem = selectedItem {
-			let selectedItemIndex = popUpButton.indexOfItem(selectedItem)
-			if selectedItemIndex != -1 {
-				popUpButton.selectItemAtIndex(selectedItemIndex)
-			}
 		}
 	}
 }

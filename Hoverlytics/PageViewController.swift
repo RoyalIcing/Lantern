@@ -16,12 +16,19 @@ typealias PageViewControllerGoogleOAuth2TokenCallback = (tokenJSONString: String
 
 class PageViewController: NSViewController {
 	@IBOutlet var URLField: NSTextField!
+	@IBOutlet var crawlWhileBrowsingCheckButton: NSButton!
 	var webViewController: PageWebViewController!
+	
+	
+	var crawlWhileBrowsing: Bool = true
+	
 	var GoogleOAuth2TokenJSONString: String?
 	var hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback: PageViewControllerGoogleOAuth2TokenCallback?
 	
-	var minimumWidth: CGFloat = 600.0
-	var minimumHeight: CGFloat = 200.0
+	var navigatedURLDidChangeCallback: ((URL: NSURL) -> Void)?
+	
+	let minimumWidth: CGFloat = 600.0
+	let minimumHeight: CGFloat = 200.0
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -42,7 +49,7 @@ class PageViewController: NSViewController {
 		}
 		
 		addObserver(.URLDidChange) { (notification) in
-			self.updateUIForURL()
+			self.navigatedURLDidChange(self.webViewController.URL)
 		}
 	}
 	
@@ -73,24 +80,31 @@ class PageViewController: NSViewController {
 		}
 	}
 	
+	func navigatedURLDidChange(URL: NSURL) {
+		navigatedURLDidChangeCallback?(URL: URL)
+		
+		updateUIForURL(URL)
+	}
+	
 	func loadURL(URL: NSURL) {
 		webViewController.loadURL(URL)
 		
+		updateUIForURL(URL)
+	}
+	
+	func updateUIForURL(URL: NSURL) {
 		URLField.stringValue = URL.absoluteString!
 	}
 	
-	func updateUIForURL() {
-		if let URL = webViewController.URL {
-			URLField.stringValue = URL.absoluteString!
+	@IBAction func URLFieldChanged(textField: NSTextField) {
+		if let URL = HoverlyticsModel.detectWebURL(fromString: textField.stringValue) {
+			loadURL(URL)
 		}
 	}
 	
-	@IBAction func URLFieldChanged(sender: AnyObject?) {
-		if let textField = sender as? NSTextField {
-			if let URL = HoverlyticsModel.detectWebURL(fromString: textField.stringValue) {
-				loadURL(URL)
-			}
-		}
+	@IBAction func toggleCrawlWhileBrowsing(checkButton: NSButton) {
+		let on = checkButton.state == NSOnState
+		crawlWhileBrowsing = on
 	}
 }
 

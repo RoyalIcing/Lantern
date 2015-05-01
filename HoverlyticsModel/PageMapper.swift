@@ -9,6 +9,9 @@
 import Foundation
 
 
+let JUST_USE_FINAL_URLS = true
+
+
 public class PageMapper {
 	public let primaryURL: NSURL
 	public let crawlsFoundURLs: Bool
@@ -51,11 +54,12 @@ public class PageMapper {
 	public internal(set) var paused = false
 	var queuedURLsToRequest = [(NSURL, BaseContentType, UInt)]()
 	
-	public typealias DidUpdateCallback = (pageURL: NSURL) -> Void
-	public var didUpdateCallback: DidUpdateCallback?
+	public var didUpdateCallback: ((pageURL: NSURL) -> Void)?
+	
+	private static let defaultMaximumDefault: UInt = 10
 	
 	
-	public init(primaryURL: NSURL, crawlsFoundURLs: Bool = true, maximumDepth: UInt = 10) {
+	public init(primaryURL: NSURL, crawlsFoundURLs: Bool = true, maximumDepth: UInt = defaultMaximumDefault) {
 		self.primaryURL = conformURL(primaryURL)!.absoluteURL!
 		self.crawlsFoundURLs = crawlsFoundURLs
 		self.maximumDepth = maximumDepth
@@ -70,8 +74,16 @@ public class PageMapper {
 		retrieveInfoForPageWithURL(primaryURL, expectedBaseContentType: .LocalHTMLPage, currentDepth: 0)
 	}
 	
+	public func crawlAdditionalURL(URL: NSURL) {
+		additionalURLs.append(URL)
+		retrieveInfoForPageWithURL(URL, expectedBaseContentType: .LocalHTMLPage, currentDepth: 0)
+	}
+	
 	public func pageInfoForRequestedURL(URL: NSURL) -> PageInfo? {
-		if let destinationURL = requestedURLToDestinationURL[URL] {
+		if JUST_USE_FINAL_URLS {
+			return loadedURLToPageInfo[URL]
+		}
+		else if let destinationURL = requestedURLToDestinationURL[URL] {
 			return loadedURLToPageInfo[destinationURL]
 		}
 		else {
@@ -79,10 +91,23 @@ public class PageMapper {
 		}
 	}
 	
+	private func retrieveInfoForPageWithURL(pageURL: NSURL, expectedBaseContentType: BaseContentType, currentDepth: UInt) {
+		if !paused {
+			if let pageURL = requestedURLsUnique.insertReturningConformedURLIfNew(pageURL) {
+				PageInfo.retrieveInfoForPageWithURL(pageURL, completionHandler: { [weak self] (pageInfo) in
+					// completionHandler is called on main queue
+					self?.didRetrieveInfo(pageInfo, forPageWithRequestedURL: pageURL, expectedBaseContentType: expectedBaseContentType, currentDepth: currentDepth)
+					})
+			}
+		}
+		else {
+			queuedURLsToRequest.append((pageURL, expectedBaseContentType, currentDepth))
+		}
+	}
+	
 	private func didRetrieveInfo(pageInfo: PageInfo, forPageWithRequestedURL requestedPageURL: NSURL, expectedBaseContentType: BaseContentType, currentDepth: UInt) {
 		let responseType = PageResponseType(statusCode: pageInfo.statusCode)
 		requestedURLToResponseType[requestedPageURL] = responseType
-		
 		
 		let actualBaseContentType = pageInfo.baseContentType
 		
@@ -98,6 +123,21 @@ public class PageMapper {
 			requestedURLToDestinationURL[requestedPageURL] = finalURL
 			loadedURLToPageInfo[finalURL] = pageInfo
 			
+			if JUST_USE_FINAL_URLS {
+				switch actualBaseContentType {
+				case .LocalHTMLPage:
+					requestedLocalPageURLsUnique.insertReturningConformedURLIfNew(finalURL)
+				case .Image:
+					requestedImageURLsUnique.insertReturningConformedURLIfNew(finalURL)
+				case .Feed:
+					requestedFeedURLsUnique.insertReturningConformedURLIfNew(finalURL)
+				case .Text:
+					fallthrough
+				default:
+					break
+				}
+			}
+			
 			let childDepth = currentDepth + 1
 			let processChildren = childDepth <= maximumDepth
 			let crawl = crawlsFoundURLs
@@ -106,7 +146,12 @@ public class PageMapper {
 				externalURLs.unionInPlace(contentInfo.externalURLs)
 				
 				for pageURL in contentInfo.localPageURLs {
-					if let pageURLPath = pageURL.relativePath where pageURLPath != "" {
+					if JUST_USE_FINAL_URLS {
+						if crawl {
+							retrieveInfoForPageWithURL(pageURL, expectedBaseContentType: .LocalHTMLPage, currentDepth: childDepth)
+						}
+					}
+					else if let pageURLPath = pageURL.relativePath where pageURLPath != "" {
 						if let pageURL = requestedLocalPageURLsUnique.insertReturningConformedURLIfNew(pageURL) {
 							if crawl {
 								retrieveInfoForPageWithURL(pageURL, expectedBaseContentType: .LocalHTMLPage, currentDepth: childDepth)
@@ -116,7 +161,12 @@ public class PageMapper {
 				}
 				
 				for imageURL in contentInfo.imageURLs {
-					if let imageURL = requestedImageURLsUnique.insertReturningConformedURLIfNew(imageURL) {
+					if JUST_USE_FINAL_URLS {
+						if crawl {
+							retrieveInfoForPageWithURL(imageURL, expectedBaseContentType: .Image, currentDepth: childDepth)
+						}
+					}
+					else if let imageURL = requestedImageURLsUnique.insertReturningConformedURLIfNew(imageURL) {
 						if crawl {
 							retrieveInfoForPageWithURL(imageURL, expectedBaseContentType: .Image, currentDepth: childDepth)
 						}
@@ -124,7 +174,12 @@ public class PageMapper {
 				}
 				
 				for feedURL in contentInfo.feedURLs {
-					if let feedURL = requestedFeedURLsUnique.insertReturningConformedURLIfNew(feedURL) {
+					if JUST_USE_FINAL_URLS {
+						if crawl {
+							retrieveInfoForPageWithURL(feedURL, expectedBaseContentType: .Feed, currentDepth: childDepth)
+						}
+					}
+					else if let feedURL = requestedFeedURLsUnique.insertReturningConformedURLIfNew(feedURL) {
 						if crawl {
 							retrieveInfoForPageWithURL(feedURL, expectedBaseContentType: .Feed, currentDepth: childDepth)
 						}
@@ -134,20 +189,6 @@ public class PageMapper {
 		}
 		
 		self.didUpdateCallback?(pageURL: requestedPageURL)
-	}
-	
-	private func retrieveInfoForPageWithURL(pageURL: NSURL, expectedBaseContentType: BaseContentType, currentDepth: UInt) {
-		if !paused {
-			if let pageURL = requestedURLsUnique.insertReturningConformedURLIfNew(pageURL) {
-				PageInfo.retrieveInfoForPageWithURL(pageURL, completionHandler: { [weak self] (pageInfo) in
-					// completionHandler is called on main queue
-					self?.didRetrieveInfo(pageInfo, forPageWithRequestedURL: pageURL, expectedBaseContentType: expectedBaseContentType, currentDepth: currentDepth)
-				})
-			}
-		}
-		else {
-			queuedURLsToRequest.append((pageURL, expectedBaseContentType, currentDepth))
-		}
 	}
 	
 	public func pauseCrawling() {

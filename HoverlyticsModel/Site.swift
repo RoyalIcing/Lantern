@@ -128,16 +128,3 @@ public class Site {
 		}
 	}
 }
-
-/*
-public class WebPage {
-	var record: CKRecord!
-	
-	let URL: NSURL
-}
-*/
-/*
-class FavoritedWebPage : WebPage {
-	
-}
-*/

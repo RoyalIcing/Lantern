@@ -222,6 +222,11 @@ class StatsViewController: NSViewController {
 	@IBOutlet var baseContentTypeChoicePopUpButton: NSPopUpButton!
 	var baseContentTypeChoicePopUpButtonAssistant: PopUpButtonAssistant<BaseContentTypeChoice>?
 	
+	var rowMenu: NSMenu!
+	
+	
+	var pageMapper: PageMapper!
+	
 	var chosenBaseContentChoice: BaseContentTypeChoice = .LocalHTMLPages
 	var filterToBaseContentType: BaseContentType {
 		return chosenBaseContentChoice.baseContentType
@@ -234,7 +239,8 @@ class StatsViewController: NSViewController {
 	
 	var filteredURLs = [NSURL]()
 	
-	var rowMenu: NSMenu!
+	var didChooseURLCallback: ((URL: NSURL, pageInfo: PageInfo) -> Void)?
+	
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -247,6 +253,9 @@ class StatsViewController: NSViewController {
 		outlineView.setDataSource(self)
 		outlineView.setDelegate(self)
 		
+		outlineView.target = self
+		outlineView.doubleAction = "doubleClickSelectedRow:"
+		
 		createRowMenu()
 		
 		updateUI()
@@ -258,7 +267,14 @@ class StatsViewController: NSViewController {
 		}
 	}
 	
-	var pageMapper: PageMapper!
+	func crawlNavigatedURL(URL: NSURL) {
+		if let pageMapper = pageMapper {
+			pageMapper.crawlAdditionalURL(URL)
+		}
+		else {
+			primaryURL = URL
+		}
+	}
 	
 	func updateListOfURLs() {
 		if let primaryURL = primaryURL {
@@ -278,10 +294,12 @@ class StatsViewController: NSViewController {
 			else {
 				fatalError("filterResponseChoice must be set to something valid")
 			}
-			
-			//println("filteredURLs \(filteredURLs)")
-			outlineView.reloadData()
 		}
+		else {
+			filteredURLs = []
+		}
+		
+		outlineView.reloadData()
 	}
 	
 	func updateUI(
@@ -321,6 +339,10 @@ class StatsViewController: NSViewController {
 			
 			pageMapper.reload()
 		}
+		else {
+			updateListOfURLs()
+			updateUI()
+		}
 	}
 	
 	private func pageURLDidUpdate(pageURL: NSURL) {
@@ -345,7 +367,7 @@ class StatsViewController: NSViewController {
 			}
 		}
 		
-		let columnsRemainingWidth = outlineView.enclosingScrollView!.documentVisibleRect.width - outlineView.outlineTableColumn!.width
+		let columnsRemainingWidth = outlineView.enclosingScrollView!.documentVisibleRect.width - outlineView.outlineTableColumn!.width - 10.0
 		let columnWidth = max(columnsRemainingWidth / CGFloat(columnIdentifiers.count), minColumnWidth)
 		
 		var columnIndex = 1 // After outline column
@@ -426,6 +448,18 @@ class StatsViewController: NSViewController {
 		let tag = sender.tagOfSelectedSegment()
 		if let columnsMode = StatsColumnsMode(rawValue: tag) {
 			changeColumnsMode(columnsMode)
+		}
+	}
+	
+	@IBAction func doubleClickSelectedRow(sender: AnyObject?) {
+		let row = outlineView.clickedRow
+		if row != -1 {
+			if
+				let URL = outlineView.itemAtRow(row) as? NSURL,
+				let pageInfo = pageMapper.pageInfoForRequestedURL(URL)
+			{
+				didChooseURLCallback?(URL: URL, pageInfo: pageInfo)
+			}
 		}
 	}
 }
@@ -597,9 +631,15 @@ extension StatsViewController {
 			let menuAssistant = popUpButtonAssistant.menuAssistant
 			menuAssistant.titleReturner = { choice in
 				let baseContentType = choice.baseContentType
-				let requestedURLCount = self.pageMapper.numberOfRequestedURLsWithBaseContentType(baseContentType)
-				let loadedURLCount = self.pageMapper.numberOfLoadedURLsWithBaseContentType(baseContentType)
-				return "\(choice.title) (\(loadedURLCount)/\(requestedURLCount))"
+				/*if false {
+					let requestedURLCount = self.pageMapper.numberOfRequestedURLsWithBaseContentType(baseContentType)
+					let loadedURLCount = self.pageMapper.numberOfLoadedURLsWithBaseContentType(baseContentType)
+					return "\(choice.title) (\(loadedURLCount)/\(requestedURLCount))"
+				}
+				else {*/
+					let loadedURLCount = self.pageMapper.numberOfLoadedURLsWithBaseContentType(baseContentType)
+					return "\(choice.title) (\(loadedURLCount))"
+				//}
 			}
 			
 			self.baseContentTypeChoicePopUpButtonAssistant = popUpButtonAssistant

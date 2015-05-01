@@ -106,7 +106,8 @@ public class ModelManager {
 					let allSites: [Site] = siteRecords.map { siteRecord in
 						return Site(record: siteRecord)
 					}
-					setAllSites(self, allSites)
+					//setAllSites(self, allSites)
+					setAllSites(self, [])
 				}
 			}
 		}

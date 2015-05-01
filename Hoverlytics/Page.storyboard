@@ -57,6 +57,7 @@
                     </view>
                     <connections>
                         <outlet property="URLField" destination="8cl-EU-sP3" id="iIp-Mj-MuE"/>
+                        <outlet property="crawlWhileBrowsingCheckButton" destination="eKl-uH-6sn" id="asS-Ho-GA0"/>
                     </connections>
                 </viewController>
                 <customObject id="NaO-og-c6g" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -71,9 +72,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="688" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView misplaced="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1DH-BN-Ck5">
-                                <rect key="frame" x="0.0" y="0.0" width="688" height="263"/>
-                                <clipView key="contentView" misplaced="YES" id="phH-CB-Yie">
+                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1DH-BN-Ck5">
+                                <rect key="frame" x="0.0" y="0.0" width="688" height="266"/>
+                                <clipView key="contentView" id="phH-CB-Yie">
                                     <rect key="frame" x="1" y="17" width="238" height="117"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -165,6 +166,7 @@
                                 </clipView>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="c1D-b4-RSn"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="uUa-TO-Oh3"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="Efk-yv-Oea">
                                     <rect key="frame" x="1" y="119" width="223" height="15"/>
@@ -210,7 +212,7 @@
                                     <action selector="changeBaseContentTypeFilter:" target="r6L-Dj-16X" id="QiJ-Sf-0MT"/>
                                 </connections>
                             </popUpButton>
-                            <popUpButton identifier="problemType" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mo4-F3-qdK" userLabel="Filter Response Choice Popup Button">
+                            <popUpButton identifier="problemType" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mo4-F3-qdK" userLabel="Filter Response Choice Popup Button">
                                 <rect key="frame" x="544" y="273" width="124" height="19"/>
                                 <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Gtx-O5-RJg">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>

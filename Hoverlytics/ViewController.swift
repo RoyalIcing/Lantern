@@ -16,12 +16,14 @@ class ViewController: NSViewController
 	
 	var section: MainSection!
 	
-	var mainState: HoverlyticsModel.MainState! {
+	var mainState: MainState! {
 		didSet {
 			startObservingModelManager()
 			updateMainViewForState()
 		}
 	}
+	
+	typealias MainStateNotification = MainState.Notification
 	
 	var mainStateNotificationObservers = [MainStateNotification: AnyObject]()
 	
@@ -29,7 +31,7 @@ class ViewController: NSViewController
 		let nc = NSNotificationCenter.defaultCenter()
 		let mainQueue = NSOperationQueue.mainQueue()
 		
-		func addObserver(notificationIdentifier: MainStateNotification, block: (NSNotification!) -> Void) {
+		func addObserver(notificationIdentifier: MainState.Notification, block: (NSNotification!) -> Void) {
 			let observer = nc.addObserverForName(notificationIdentifier.notificationName, object: mainState, queue: mainQueue, usingBlock: block)
 			mainStateNotificationObservers[notificationIdentifier] = observer
 		}
@@ -59,15 +61,19 @@ class ViewController: NSViewController
 	var lastChosenSite: Site!
 	
 	func updateMainViewForState() {
-		if let site = mainState?.chosenSite {
-			//println("updateMainViewForState \(site.name) before \(lastChosenSite?.name)")
-			// Make sure page view controller is not loaded more than once for a site.
-			if site.identifier == lastChosenSite?.identifier {
-				return
-			}
-			lastChosenSite = site
-			
-			
+		let site = mainState?.chosenSite
+		
+		//println("updateMainViewForState \(site?.name) before \(lastChosenSite?.name)")
+		// Make sure page view controller is not loaded more than once for a site.
+		/*if site?.identifier == lastChosenSite?.identifier {
+			return
+		}*/
+		if site === lastChosenSite {
+			return
+		}
+		lastChosenSite = site
+		
+		if let site = site {
 			pageViewController.GoogleOAuth2TokenJSONString = site.GoogleAPIOAuth2TokenJSONString
 			pageViewController.hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback = { [unowned self] tokenJSONString in
 				self.modelManager.setGoogleOAuth2TokenJSONString(tokenJSONString, forSite: site)
@@ -77,6 +83,10 @@ class ViewController: NSViewController
 			
 			statsViewController.primaryURL = site.homePageURL
 		}
+		else {
+			//pageViewController.loadURL(nil)
+			statsViewController.primaryURL = nil
+		}
 	}
 	
 	override func viewDidLoad() {
@@ -84,18 +94,46 @@ class ViewController: NSViewController
 		
 		mainSplitViewController = NSSplitViewController()
 		mainSplitViewController.splitView.vertical = false
+		//mainSplitViewController.splitView.dividerStyle = .PaneSplitter
+		mainSplitViewController.splitView.dividerStyle = .Thick
 		fillWithChildViewController(mainSplitViewController)
 		
 		let storyboard = self.pageStoryboard
 		
 		// Create page view controller.
 		let pageViewController = storyboard.instantiateControllerWithIdentifier("Page View Controller") as! PageViewController
-		mainSplitViewController.addChildViewController(pageViewController)
-		self.pageViewController = pageViewController
+		pageViewController.navigatedURLDidChangeCallback = { URL in
+			if pageViewController.crawlWhileBrowsing {
+				#if DEBUG
+					println("navigatedURLDidChangeCallback \(URL)")
+				#endif
+				self.statsViewController.crawlNavigatedURL(URL)
+			}
+		}
 		
 		
 		let statsViewController = storyboard.instantiateControllerWithIdentifier("Stats View Controller") as! StatsViewController
-		mainSplitViewController.addChildViewController(statsViewController)
+		statsViewController.didChooseURLCallback = { URL, pageInfo in
+			if pageInfo.baseContentType == .LocalHTMLPage {
+				self.pageViewController.loadURL(URL)
+			}
+		}
+		
+		
+		mainSplitViewController.addSplitViewItem({
+			let item = NSSplitViewItem(viewController: pageViewController)
+			//item.canCollapse = true
+			return item
+			}())
+		//mainSplitViewController.addChildViewController(pageViewController)
+		self.pageViewController = pageViewController
+		
+		mainSplitViewController.addSplitViewItem({
+			let item = NSSplitViewItem(viewController: statsViewController)
+			//item.canCollapse = true
+			return item
+		}())
+		//mainSplitViewController.addChildViewController(statsViewController)
 		self.statsViewController = statsViewController
 	}
 	

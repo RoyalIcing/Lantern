@@ -15,7 +15,9 @@ private let sectionUserDefaultKey = "mainSection"
 
 class MainWindowController: NSWindowController, NSToolbarDelegate {
 	
-	let mainState = HoverlyticsModel.MainState()
+	let mainState = MainState()
+	typealias MainStateNotification = MainState.Notification
+	
 	let modelManager = HoverlyticsModel.ModelManager.sharedManager
 	
 	var mainViewController: ViewController! {
@@ -94,10 +96,10 @@ struct ToolbarItem<ControlClass: NSControl> {
 
 class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	let toolbar: NSToolbar
-	let mainState: HoverlyticsModel.MainState
+	let mainState: MainState
 	let modelManager: HoverlyticsModel.ModelManager
 	
-	init(toolbar: NSToolbar, mainState: HoverlyticsModel.MainState, modelManager: HoverlyticsModel.ModelManager) {
+	init(toolbar: NSToolbar, mainState: MainState, modelManager: HoverlyticsModel.ModelManager) {
 		self.toolbar = toolbar
 		self.mainState = mainState
 		self.modelManager = modelManager
@@ -140,7 +142,40 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	
 	
 	var sitesPopUpButton: NSPopUpButton!
+	var chosenSiteChoice: SiteMenuItem = .LoadingSavedSites
+	var sitesPopUpButtonAssistant: PopUpButtonAssistant<SiteMenuItem>?
 	let siteTag: Int = 1
+	
+	var siteChoices: [SiteMenuItem?] {
+		var result: [SiteMenuItem?] = [
+			SiteMenuItem.Choice(.Custom),
+			nil
+		]
+		
+		if let allSites = modelManager.allSites {
+			let allSites = allSites.sorted({ $0.name < $1.name })
+			
+			if allSites.count == 0 {
+				result.append(
+					SiteMenuItem.NoSavedSitesYet
+				)
+			}
+			else {
+				for site in allSites {
+					result.append(
+						SiteMenuItem.Choice(.SavedSite(site))
+					)
+				}
+			}
+		}
+		else {
+			result.append(
+				SiteMenuItem.LoadingSavedSites
+			)
+		}
+		
+		return result
+	}
 	
 	func updateSitesPopUpButton() {
 		#if DEBUG
@@ -150,6 +185,36 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			return
 		}
 		
+		
+		var popUpButton = sitesPopUpButton;
+		
+		popUpButton.target = self
+		popUpButton.action = "chosenSiteDidChange:"
+		
+		
+		var popUpButtonAssistant = sitesPopUpButtonAssistant ?? {
+			let popUpButtonAssistant = PopUpButtonAssistant<SiteMenuItem>(popUpButton: popUpButton)
+			
+			let menuAssistant = popUpButtonAssistant.menuAssistant
+			menuAssistant.enabledReturner = { siteChoice in
+				switch siteChoice {
+				case .LoadingSavedSites, .NoSavedSitesYet:
+					return false
+				default:
+					return true
+				}
+			}
+			
+			self.sitesPopUpButtonAssistant = popUpButtonAssistant
+			
+			return popUpButtonAssistant
+			}()
+		
+		popUpButtonAssistant.menuItemRepresentatives = siteChoices
+		popUpButtonAssistant.update()
+		
+		
+		#if false
 		let previouslySelectedItem = sitesPopUpButton.selectedItem
 		var previouslySelectedSite = previouslySelectedItem?.representedObject as? Site
 		
@@ -212,6 +277,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		else {
 			updateChosenSiteState()
 		}
+		#endif
 	}
 	
 	func updateUIForSites() {
@@ -229,7 +295,20 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	}
 
 	func updateChosenSiteState() {
-		if let selectedItem = sitesPopUpButton.selectedItem {
+		if let siteMenuItem = sitesPopUpButtonAssistant?.selectedItemRepresentative {
+			//mainState.chosenSite = site
+			switch siteMenuItem {
+			case .Choice(let siteChoice):
+				mainState.siteChoice = siteChoice
+			default:
+				mainState.siteChoice = .Custom
+			}
+		}
+		else {
+			mainState.siteChoice = .Custom
+		}
+		
+		/*if let selectedItem = sitesPopUpButton.selectedItem {
 			if let site = selectedItem.representedObject as? Site {
 				println("chosenSite TO \(site.name)")
 				mainState.chosenSite = site
@@ -238,7 +317,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 				println("chosenSite TO nil")
 				mainState.chosenSite = nil
 			}
-		}
+		}*/
 	}
 	
 	typealias PrepareButtonCallback = (NSButton) -> Void

@@ -7,41 +7,61 @@
 //
 
 import Foundation
+import HoverlyticsModel
 
 
-public enum MainStateNotification: String {
-	case ChosenSiteDidChange = "HoverlyticsModel.MainState.ChosenSiteDidChangeNotification"
-	
-	public var notificationName: String {
-		return self.rawValue
+enum SiteChoice {
+	case SavedSite(Site)
+	case Custom
+}
+
+extension SiteChoice: Equatable {}
+
+func ==(lhs: SiteChoice, rhs: SiteChoice) -> Bool {
+	switch (lhs, rhs) {
+	case (.Custom, .Custom):
+		return true
+	case (.SavedSite(let lSite), .SavedSite(let rSite)):
+		return lSite.identifier == rSite.identifier
+	default:
+		return false
 	}
 }
 
-/*
-public enum MainStateNotification: String {
-case ChosenSiteDidChange = "HoverlyticsModel.MainState.ChosenSiteDidChangeNotification"
 
-public var notificationName: String {
-return rawValue
-}
-}
-*/
-
-public class MainState {
-	public init() {
+class MainState {
+	init() {
 		
 	}
 	
-	public var chosenSite: Site! {
+	var siteChoice: SiteChoice = .Custom {
 		didSet {
-			if chosenSite?.identifier == oldValue?.identifier {
+			println("didSet siteChoice")
+			if siteChoice == oldValue {
 				return
 			}
 			mainQueue_notify(.ChosenSiteDidChange)
 		}
 	}
 	
-	private func mainQueue_notify(identifier: MainStateNotification, userInfo: [String:AnyObject]? = nil) {
+	var chosenSite: Site? {
+		switch siteChoice {
+		case .SavedSite(let site):
+			return site
+		default:
+			return nil
+		}
+	}
+	
+	enum Notification: String {
+		case ChosenSiteDidChange = "HoverlyticsModel.MainState.ChosenSiteDidChangeNotification"
+		
+		var notificationName: String {
+			return self.rawValue
+		}
+	}
+	
+	func mainQueue_notify(identifier: Notification, userInfo: [String:AnyObject]? = nil) {
 		let nc = NSNotificationCenter.defaultCenter()
 		nc.postNotificationName(identifier.notificationName, object: self, userInfo: userInfo)
 	}
