@@ -21,7 +21,7 @@ class PageViewController: NSViewController {
 	var hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback: PageViewControllerGoogleOAuth2TokenCallback?
 	
 	var minimumWidth: CGFloat = 600.0
-	var minimumHeight: CGFloat = 450.0
+	var minimumHeight: CGFloat = 200.0
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -56,9 +56,11 @@ class PageViewController: NSViewController {
 	}
 	
 	func prepareWebViewController(webViewController: PageWebViewController) {
-		webViewController.GoogleOAuth2TokenJSONString = GoogleOAuth2TokenJSONString
-		webViewController.wantsHoverlyticsScript = true
-		webViewController.hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback = hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback
+		#if false
+			webViewController.wantsHoverlyticsScript = true
+			webViewController.GoogleOAuth2TokenJSONString = GoogleOAuth2TokenJSONString
+			webViewController.hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback = hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback
+		#endif
 		webViewController.prepare()
 		
 		startObservingWebViewController()

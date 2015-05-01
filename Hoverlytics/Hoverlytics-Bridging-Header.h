@@ -3,3 +3,4 @@
 //
 
 #import "NSViewController+PGWSConstraintConvenience.h"
+#import "NSSegmentedControl+PGWSConvenience.h"

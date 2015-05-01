@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
     </dependencies>
@@ -58,9 +58,20 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Site" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="Add Site…" keyEquivalent="n" id="Was-JA-tGl">
+                                        <menuItem title="Add Site…" keyEquivalent="N" id="Was-JA-tGl">
                                             <connections>
                                                 <action selector="showAddSite:" target="Ady-hI-5gd" id="xL6-ti-8bn"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="New Window" keyEquivalent="n" id="QMW-I5-Apg">
+                                            <connections>
+                                                <action selector="newDocument:" target="Ady-hI-5gd" id="Bh0-yD-CEY"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Ya8-qH-8f5"/>
+                                        <menuItem title="Close" keyEquivalent="w" id="SGi-D6-rIV">
+                                            <connections>
+                                                <action selector="performClose:" target="Ady-hI-5gd" id="M0c-Cy-ChT"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -286,6 +297,25 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Stats" id="Mxa-bm-bEn">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Stats" id="ess-1q-Qem">
+                                    <items>
+                                        <menuItem title="Titles" id="Egi-q8-l6H">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="showTitleColumns:" target="Ady-hI-5gd" id="BUy-V6-yKI"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Descriptions" id="ixN-Uo-75W">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="showDescriptionColumns:" target="Ady-hI-5gd" id="ccD-UZ-822"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Window" id="aUF-d1-5bR">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Window" systemMenu="window" id="Td7-aD-5lo">
@@ -388,7 +418,7 @@
                                     <button key="view" verticalHuggingPriority="750" id="i3Y-1h-JQU">
                                         <rect key="frame" x="0.0" y="14" width="80" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" title="Settings" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VpM-Yb-73D">
+                                        <buttonCell key="cell" type="roundTextured" title="Edit" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VpM-Yb-73D">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -416,7 +446,6 @@
                                 <toolbarItem reference="Wpo-Aj-pBW"/>
                             </defaultToolbarItems>
                         </toolbar>
-                        <contentBorderThickness minY="35"/>
                     </window>
                     <connections>
                         <outlet property="toolbar" destination="dkc-cz-bNS" id="YC0-xp-I5M"/>

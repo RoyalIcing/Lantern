@@ -60,7 +60,7 @@ class ViewController: NSViewController
 	
 	func updateMainViewForState() {
 		if let site = mainState?.chosenSite {
-			println("updateMainViewForState \(site.name) before \(lastChosenSite?.name)")
+			//println("updateMainViewForState \(site.name) before \(lastChosenSite?.name)")
 			// Make sure page view controller is not loaded more than once for a site.
 			if site.identifier == lastChosenSite?.identifier {
 				return
@@ -76,7 +76,6 @@ class ViewController: NSViewController
 			
 			
 			statsViewController.primaryURL = site.homePageURL
-			statsViewController.reload()
 		}
 	}
 	
@@ -87,15 +86,15 @@ class ViewController: NSViewController
 		mainSplitViewController.splitView.vertical = false
 		fillWithChildViewController(mainSplitViewController)
 		
-		let pageStoryboard = self.pageStoryboard
+		let storyboard = self.pageStoryboard
 		
 		// Create page view controller.
-		let pageViewController = pageStoryboard.instantiateControllerWithIdentifier("Page View Controller") as! PageViewController
+		let pageViewController = storyboard.instantiateControllerWithIdentifier("Page View Controller") as! PageViewController
 		mainSplitViewController.addChildViewController(pageViewController)
 		self.pageViewController = pageViewController
 		
 		
-		let statsViewController = pageStoryboard.instantiateControllerWithIdentifier("Stats View Controller") as! StatsViewController
+		let statsViewController = storyboard.instantiateControllerWithIdentifier("Stats View Controller") as! StatsViewController
 		mainSplitViewController.addChildViewController(statsViewController)
 		self.statsViewController = statsViewController
 	}

@@ -77,6 +77,7 @@ public class ModelManager {
 			
 			if let error = error {
 				// TODO: error
+				NSApp.presentError(error)
 			}
 			else {
 				self.updateMainProperties()
