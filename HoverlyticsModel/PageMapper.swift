@@ -91,13 +91,24 @@ public class PageMapper {
 		}
 	}
 	
+	private let infoRequestQueue = PageInfoRequestQueue()
+	
 	private func retrieveInfoForPageWithURL(pageURL: NSURL, expectedBaseContentType: BaseContentType, currentDepth: UInt) {
 		if !paused {
 			if let pageURL = requestedURLsUnique.insertReturningConformedURLIfNew(pageURL) {
-				PageInfo.retrieveInfoForPageWithURL(pageURL, completionHandler: { [weak self] (pageInfo) in
+				//#if true
+					let infoRequest = PageInfoRequest(URL: pageURL, completionHandler: { [weak self] (pageInfo) in
+						if let didRetrieveInfo = self?.didRetrieveInfo {
+							didRetrieveInfo(pageInfo, forPageWithRequestedURL: pageURL, expectedBaseContentType: expectedBaseContentType, currentDepth: currentDepth)
+						}
+					})
+					infoRequestQueue.addRequest(infoRequest)
+				/*#else
+					PageInfo.retrieveInfoForPageWithURL(pageURL, completionHandler: { [weak self] (pageInfo) in
 					// completionHandler is called on main queue
 					self?.didRetrieveInfo(pageInfo, forPageWithRequestedURL: pageURL, expectedBaseContentType: expectedBaseContentType, currentDepth: currentDepth)
 					})
+				#endif*/
 			}
 		}
 		else {

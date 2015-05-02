@@ -172,7 +172,8 @@ class ViewController: NSViewController
 		}
 		else {
 			if let chosenSite = mainState?.chosenSite {
-				siteSettingsViewController.updateUIWithSiteValues(chosenSite.values)
+				siteSettingsViewController.site = chosenSite
+				//siteSettingsViewController.updateUIWithSiteValues(chosenSite.values)
 				
 				let modelManager = self.modelManager
 				siteSettingsViewController.willClose = { siteSettingsViewController in

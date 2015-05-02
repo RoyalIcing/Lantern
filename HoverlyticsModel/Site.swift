@@ -57,10 +57,14 @@ private enum Error {
 
 
 public struct SiteValues: Equatable {
+	public let version: UInt
 	public let name: String
 	public let homePageURL: NSURL
 	
+	static let currentVersion: UInt = 1
+	
 	public init(name: String, homePageURL: NSURL) {
+		self.version = SiteValues.currentVersion
 		self.name = name
 		self.homePageURL = homePageURL
 	}
@@ -74,11 +78,18 @@ public func ==(lhs: SiteValues, rhs: SiteValues) -> Bool {
 
 extension SiteValues {
 	init(fromRecord record: CKRecord) {
+		if let versionNumber = record.objectForKey("version") as? NSNumber {
+			version = UInt(versionNumber.unsignedIntegerValue)
+		}
+		else {
+			version = SiteValues.currentVersion
+		}
 		name = record.objectForKey("name") as! String
 		homePageURL = NSURL(string: record.objectForKey("homePageURL") as! String)!
 	}
 	
 	func updateValuesInRecord(record: CKRecord) {
+		record.setObject(version, forKey: "version")
 		record.setObject(name, forKey: "name")
 		record.setObject(homePageURL.absoluteString!, forKey: "homePageURL")
 	}
@@ -123,8 +134,8 @@ public class Site {
 		get {
 			return record.objectForKey("GoogleAPIOAuth2TokenJSONString") as! String?
 		}
-		set(value) {
-			return record.setObject(value, forKey: "GoogleAPIOAuth2TokenJSONString")
+		set {
+			return record.setObject(newValue, forKey: "GoogleAPIOAuth2TokenJSONString")
 		}
 	}
 }

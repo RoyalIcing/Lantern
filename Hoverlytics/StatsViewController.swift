@@ -293,7 +293,6 @@ class StatsViewController: NSViewController {
 			let outlineView = self.outlineView!
 			var selectedRowIndexes = outlineView.selectedRowIndexes
 			var result = [NSURL]()
-			println("previous selectedRowIndexes \(selectedRowIndexes) \(outlineView.numberOfSelectedRows)")
 			selectedRowIndexes.enumerateIndexesUsingBlock { (row, stopPointer) in
 				if let item = outlineView.itemAtRow(row) as? NSURL {
 					result.append(item)
@@ -306,7 +305,6 @@ class StatsViewController: NSViewController {
 			var newRowIndexes = NSMutableIndexSet()
 			for URL in newValue {
 				let row = outlineView.rowForItem(URL)
-				println("restoring selection \(URL) \(row)")
 				if row != -1 {
 					newRowIndexes.addIndex(row)
 				}
@@ -388,9 +386,18 @@ class StatsViewController: NSViewController {
 		}
 	}
 	
+	var updateUIWithProgressOperation: NSBlockOperation!
+	
 	private func pageURLDidUpdate(pageURL: NSURL) {
-		updateUI()
-		//outlineView.reloadItem(pageURL, reloadChildren: true)
+		// Update the UI with a background quality of service using an operation.
+		if updateUIWithProgressOperation == nil {
+			let updateUIWithProgressOperation = NSBlockOperation(block: {
+				self.updateUI()
+				self.updateUIWithProgressOperation = nil
+			})
+			NSOperationQueue.mainQueue().addOperation(updateUIWithProgressOperation)
+			self.updateUIWithProgressOperation = updateUIWithProgressOperation
+		}
 	}
 	
 	private func updateColumnsToOnlyShow(columnIdentifiers: [PagePresentedInfoIdentifier]) {

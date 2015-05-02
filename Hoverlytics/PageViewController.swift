@@ -313,10 +313,12 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 			}
 		}
 		else if message.name == "console" {
+			#if DEBUG
 			println("CONSOLE")
 			if let messageBody = message.body as? [String: AnyObject] {
 				println("CONSOLE \(messageBody)")
 			}
+			#endif
 		}
 		else {
 			println("Unhandled script message \(message.name)")

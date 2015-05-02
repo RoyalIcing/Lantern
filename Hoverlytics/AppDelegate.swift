@@ -30,11 +30,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			NSApp.presentError(error)
 		}
 		
+		#if DEBUG
+			// Update the bloody Dock icon
+			NSApp.applicationIconImage = nil
+		#endif
 	}
 
 	func applicationWillTerminate(aNotification: NSNotification) {
 		// Insert code here to tear down your application
 	}
+	
+	
+	func application(application: NSApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+		let modelManager = HoverlyticsModel.ModelManager.sharedManager
+		modelManager.handleRemoteNotification(userInfo)
+	}
+	
 	
 	lazy var mainStoryboard: NSStoryboard = {
 		return NSStoryboard(name: "Main", bundle: nil)!

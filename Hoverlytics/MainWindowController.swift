@@ -30,7 +30,7 @@ class MainWindowController: NSWindowController, NSToolbarDelegate {
 			toolbarAssistant = MainWindowToolbarAssistant(toolbar: toolbar, mainState: mainState, modelManager: modelManager)
 			
 			toolbarAssistant.prepareNewSiteButton = { [unowned self] button in
-				button.target = self.mainViewController
+				button.target = nil
 				button.action = "showAddSite:"
 			}
 			

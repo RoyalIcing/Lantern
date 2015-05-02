@@ -13,7 +13,6 @@ import HoverlyticsModel
 class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	
 	var modelManager: ModelManager!
-	var site: Site!
 	@IBOutlet var nameField: NSTextField!
 	@IBOutlet var homePageURLField: NSTextField!
 	var willClose: ((viewController: SiteSettingsViewController) -> Void)?
@@ -26,6 +25,12 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	func prepareForReuse() {
 		nameField.stringValue = ""
 		homePageURLField.stringValue = ""
+	}
+	
+	var site: Site! {
+		didSet {
+			updateUIWithSiteValues(site.values)
+		}
 	}
 	
 	@IBAction func createSite(sender: NSButton) {
@@ -42,6 +47,8 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	
 	@IBAction func removeSite(sender: NSButton) {
 		modelManager.removeSite(site)
+		self.dismissController(nil)
+		prepareForReuse()
 	}
 	
 	func updateUIWithSiteValues(siteValues: SiteValues) {

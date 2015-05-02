@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 
 public protocol SegmentedItemRepresentative {

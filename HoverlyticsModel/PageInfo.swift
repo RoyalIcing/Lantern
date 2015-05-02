@@ -191,7 +191,7 @@ public struct PageContentInfo {
 	public let h1Elements: [ONOXMLElement]
 	public let richSnippetElements: [ONOXMLElement]
 	
-	private init(data: NSData, localURL: NSURL, options: PageContentInfoOptions = PageContentInfoOptions()) {
+	init(data: NSData, localURL: NSURL, options: PageContentInfoOptions = PageContentInfoOptions()) {
 		self.data = data
 		
 		var error: NSError?
@@ -343,6 +343,7 @@ public struct PageContentInfo {
 }
 
 
+
 public struct PageInfo {
 	public let requestedURL: NSURL
 	public let finalURL: NSURL?
@@ -352,24 +353,4 @@ public struct PageInfo {
 	public let bytes: Int
 	
 	public let contentInfo: PageContentInfo!
-	
-	static func retrieveInfoForPageWithURL(pageURL: NSURL, completionHandler: (pageInfo: PageInfo) -> Void) {
-		Alamofire
-			.request(.GET, pageURL)
-			.response { (request, response, data, error) in
-				if
-					let response = response,
-					let data = data as? NSData
-				{
-					let MIMEType = MIMETypeString(response.MIMEType)
-					let baseContentType: BaseContentType = MIMEType?.baseContentType ?? .Unknown
-					
-					let contentInfo = PageContentInfo(data: data, localURL: pageURL)
-					
-					var pageInfo = PageInfo(requestedURL: pageURL, finalURL: response.URL, statusCode: response.statusCode, baseContentType: baseContentType, MIMEType: MIMEType, bytes: data.length, contentInfo: contentInfo)
-					
-					completionHandler(pageInfo: pageInfo)
-				}
-		}
-	}
 }

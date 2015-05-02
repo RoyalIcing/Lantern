@@ -27,6 +27,33 @@ public enum ModelManagerNotification: String {
 	}
 }
 
+private struct ModelCollectionAllObjectsSubscriptions {
+	var onRecordCreation: CKSubscription
+	var onRecordUpdate: CKSubscription
+	var onRecordDeletion: CKSubscription
+	
+	static var cloudSubscriptionBaseIdentifier: String = {
+		let cloudSubscriptionBaseIdentifierDefaultsKey = "cloudSubscriptionBaseIdentifier"
+		let ud = NSUserDefaults.standardUserDefaults()
+		ud.registerDefaults([
+			cloudSubscriptionBaseIdentifierDefaultsKey: NSUUID().UUIDString
+		])
+		return ud.stringForKey(cloudSubscriptionBaseIdentifierDefaultsKey)!
+	}()
+}
+
+private extension ModelCollectionAllObjectsSubscriptions {
+	init(recordType: String) {
+		let predicate = NSPredicate(value: true)
+		let baseIdentifier = ModelCollectionAllObjectsSubscriptions.cloudSubscriptionBaseIdentifier
+		self.init(
+			onRecordCreation: CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: baseIdentifier.stringByAppendingString("creation"), options: .FiresOnRecordCreation),
+			onRecordUpdate: CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: baseIdentifier.stringByAppendingString("update"), options: .FiresOnRecordUpdate),
+			onRecordDeletion: CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: baseIdentifier.stringByAppendingString("deletion"), options: .FiresOnRecordDeletion)
+		)
+	}
+}
+
 
 public class ModelManager {
 	let container = CKContainer.hoverlyticsContainer()
@@ -60,12 +87,29 @@ public class ModelManager {
 		return Helper.sharedManager
 	}
 	
+	private var allSitesSubscription: ModelCollectionAllObjectsSubscriptions!
+	
+	private func createCloudSubscriptions() {
+		allSitesSubscription = ModelCollectionAllObjectsSubscriptions(recordType: RecordType.Site.identifier)
+	}
+	
+	public func handleRemoteNotification(remoteNotificationDictionary: [NSObject: AnyObject]) {
+		if let queryNotification = CKNotification(fromRemoteNotificationDictionary: remoteNotificationDictionary) as? CKQueryNotification {
+			// TODO:
+		}
+	}
+	
 	func updateMainProperties() {
 		queryAllSites()
 	}
 	
-	private func runOnForegroundQueue(block: () -> Void) {
-		NSOperationQueue.mainQueue().addOperationWithBlock(block)
+	private func runOnForegroundQueue(currentlyOnForegroundQueue: Bool = false, block: () -> Void) {
+		if currentlyOnForegroundQueue {
+			block()
+		}
+		else {
+			NSOperationQueue.mainQueue().addOperationWithBlock(block)
+		}
 	}
 	
 	private func mainQueue_notify(identifier: ModelManagerNotification, userInfo: [String:AnyObject]? = nil) {
@@ -98,17 +142,27 @@ public class ModelManager {
 	
 	public var allSites: [Site]! = nil
 	
-	func queryAllSites() {
-		func setAllSites(receiver: ModelManager, allSites: [Site]?) -> Void {
-			receiver.runOnForegroundQueue {
-				receiver.allSites = allSites
-				receiver.mainQueue_notify(.AllSitesDidChange)
-			}
+	func notifyAllSitesDidChange() {
+		self.mainQueue_notify(.AllSitesDidChange)
+	}
+	
+	func updateAllSites(allSites: [Site]?) {
+		#if DEBUG
+			println("updateAllSites before \(self.allSites?.count) after \(allSites?.count)")
+		#endif
+		self.runOnForegroundQueue {
+			self.allSites = allSites
+			self.notifyAllSitesDidChange()
 		}
-		
+	}
+	
+	func queryAllSites() {
 		if isAvailable {
 			let predicate = NSPredicate(value: true)
 			let query = CKQuery(recordType: RecordType.Site.identifier, predicate: predicate)
+			query.sortDescriptors = [
+				NSSortDescriptor(key: "name", ascending: true)
+			]
 			database.performQuery(query, inZoneWithID: nil) { (siteRecords, error) -> Void in
 				if let error = error {
 					self.background_didEncounterError(error)
@@ -117,23 +171,29 @@ public class ModelManager {
 					let allSites: [Site] = siteRecords.map { siteRecord in
 						return Site(record: siteRecord)
 					}
-					setAllSites(self, allSites)
+					self.updateAllSites(allSites)
 				}
 			}
 		}
 		else {
-			setAllSites(self, nil)
+			self.updateAllSites(nil)
 		}
 	}
 	
 	public func createSiteWithValues(siteValues: SiteValues) {
 		let site = Site(values: siteValues)
+		
 		let operation = CKModifyRecordsOperation(recordsToSave: [site.record], recordIDsToDelete: nil)
 		operation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
-			self.queryAllSites()
+			//self.queryAllSites()
 			//self.mainQueue_notify(.AllSitesDidChange)
 		}
 		database.addOperation(operation)
+		
+		// Immediately update the UI.
+		var allSites = self.allSites
+		allSites.append(site)
+		updateAllSites(allSites)
 	}
 	
 	private func saveSite(site: Site) {
@@ -142,11 +202,11 @@ public class ModelManager {
 			if let error = error {
 				self.background_didEncounterError(error)
 			}
-			self.queryAllSites()
+			//self.queryAllSites()
 		}
 		database.addOperation(operation)
 		
-		self.mainQueue_notify(.AllSitesDidChange)
+		notifyAllSitesDidChange()
 	}
 	
 	public func updateSiteWithValues(site: Site, siteValues: SiteValues) {
@@ -157,6 +217,9 @@ public class ModelManager {
 		site.values = siteValues
 		
 		saveSite(site)
+		
+		// Just do this now to immediately update the UI.
+		notifyAllSitesDidChange()
 	}
 	
 	public func setGoogleOAuth2TokenJSONString(tokenJSONString: String, forSite site: Site) {
@@ -172,8 +235,17 @@ public class ModelManager {
 			if let error = error {
 				self.background_didEncounterError(error)
 			}
-			self.queryAllSites()
+			//self.queryAllSites()
 		}
 		database.addOperation(operation)
+		
+		var allSites = self.allSites
+		for (index, siteToCheck) in enumerate(allSites) {
+			if site === siteToCheck {
+				allSites.removeAtIndex(index)
+				updateAllSites(allSites)
+				break
+			}
+		}
 	}
 }

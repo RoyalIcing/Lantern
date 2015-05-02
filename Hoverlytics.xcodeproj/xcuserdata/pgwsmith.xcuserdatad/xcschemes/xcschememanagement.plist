@@ -7,21 +7,36 @@
 		<key>Hoverlytics Model.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<key>Hoverlytics for Mac.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>Lantern.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 		<key>Sidetone.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>5</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>B2054D6A1AF477C700DC2C00</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B2054D7B1AF477C700DC2C00</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B22425CA1AC8F7CA00809EF0</key>
 		<dict>
 			<key>primary</key>
