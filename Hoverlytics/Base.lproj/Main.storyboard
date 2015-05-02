@@ -297,25 +297,6 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Stats" id="Mxa-bm-bEn">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Stats" id="ess-1q-Qem">
-                                    <items>
-                                        <menuItem title="Titles" id="Egi-q8-l6H">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="showTitleColumns:" target="Ady-hI-5gd" id="BUy-V6-yKI"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Descriptions" id="ixN-Uo-75W">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="showDescriptionColumns:" target="Ady-hI-5gd" id="ccD-UZ-822"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
                             <menuItem title="Window" id="aUF-d1-5bR">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Window" systemMenu="window" id="Td7-aD-5lo">

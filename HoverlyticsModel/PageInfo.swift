@@ -63,7 +63,7 @@ public enum PageResponseType: Int {
 }
 
 extension PageResponseType {
-	init(statusCode: Int) {
+	public init(statusCode: Int) {
 		switch statusCode {
 		case 200..<300:
 			self = .Successful

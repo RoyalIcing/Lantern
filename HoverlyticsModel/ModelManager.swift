@@ -35,6 +35,8 @@ public class ModelManager {
 	var isAvailable = false
 	var ubiquityIdentityDidChangeObserver: AnyObject!
 	
+	public var didEncounterErrorCallback: ((error: NSError) -> Void)?
+	
 	init() {
 		let fm = NSFileManager.defaultManager()
 		let nc = NSNotificationCenter.defaultCenter()
@@ -71,13 +73,22 @@ public class ModelManager {
 		nc.postNotificationName(identifier.notificationName, object: self, userInfo: userInfo)
 	}
 	
+	func didEncounterError(error: NSError) {
+		didEncounterErrorCallback?(error: error)
+	}
+	
+	private func background_didEncounterError(error: NSError) {
+		self.runOnForegroundQueue {
+			self.didEncounterError(error)
+		}
+	}
+	
 	func updateAccountStatus() {
 		container.accountStatusWithCompletionHandler { (accountStatus, error) -> Void in
 			self.isAvailable = (accountStatus == .Available)
 			
 			if let error = error {
-				// TODO: error
-				NSApp.presentError(error)
+				self.background_didEncounterError(error)
 			}
 			else {
 				self.updateMainProperties()
@@ -100,14 +111,13 @@ public class ModelManager {
 			let query = CKQuery(recordType: RecordType.Site.identifier, predicate: predicate)
 			database.performQuery(query, inZoneWithID: nil) { (siteRecords, error) -> Void in
 				if let error = error {
-					// TODO: error
+					self.background_didEncounterError(error)
 				}
 				else if let siteRecords = siteRecords as? [CKRecord] {
 					let allSites: [Site] = siteRecords.map { siteRecord in
 						return Site(record: siteRecord)
 					}
-					//setAllSites(self, allSites)
-					setAllSites(self, [])
+					setAllSites(self, allSites)
 				}
 			}
 		}
@@ -130,12 +140,7 @@ public class ModelManager {
 		let operation = CKModifyRecordsOperation(recordsToSave: [site.record], recordIDsToDelete: nil)
 		operation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
 			if let error = error {
-				println("Error updating Site: \(error)")
-			}
-			else {
-				#if DEBUG
-					println("Updated site successfully")
-				#endif
+				self.background_didEncounterError(error)
 			}
 			self.queryAllSites()
 		}
@@ -164,6 +169,9 @@ public class ModelManager {
 		let record = site.record
 		let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: [record.recordID])
 		operation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
+			if let error = error {
+				self.background_didEncounterError(error)
+			}
 			self.queryAllSites()
 		}
 		database.addOperation(operation)

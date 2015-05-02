@@ -23,7 +23,7 @@ extension SiteMenuItem: MenuItemRepresentative {
 			case .SavedSite(let site):
 				return site.name
 			case .Custom:
-				return "Custom"
+				return "Custom URL"
 			}
 		case .LoadingSavedSites:
 			return "(Loading Saved Sites)"

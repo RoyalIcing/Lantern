@@ -69,7 +69,7 @@ class MainWindowController: NSWindowController, NSToolbarDelegate {
 	}
 	
 	@IBAction func showAddSite(sender: AnyObject?) {
-		mainViewController.showAddSite(toolbarAssistant.addSiteButton)
+		mainViewController.showAddSiteRelativeToView(toolbarAssistant.addSiteButton)
 	}
 	
 	@IBAction func focusOnSearchPagesField(sender: AnyObject?) {

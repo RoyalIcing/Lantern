@@ -36,7 +36,6 @@ class MainState {
 	
 	var siteChoice: SiteChoice = .Custom {
 		didSet {
-			println("didSet siteChoice")
 			if siteChoice == oldValue {
 				return
 			}
@@ -52,6 +51,8 @@ class MainState {
 			return nil
 		}
 	}
+	
+	var initialHost: String?
 	
 	enum Notification: String {
 		case ChosenSiteDidChange = "HoverlyticsModel.MainState.ChosenSiteDidChangeNotification"

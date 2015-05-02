@@ -62,30 +62,27 @@ class ViewController: NSViewController
 	
 	func updateMainViewForState() {
 		let site = mainState?.chosenSite
-		
-		//println("updateMainViewForState \(site?.name) before \(lastChosenSite?.name)")
-		// Make sure page view controller is not loaded more than once for a site.
-		/*if site?.identifier == lastChosenSite?.identifier {
-			return
-		}*/
 		if site === lastChosenSite {
 			return
 		}
 		lastChosenSite = site
 		
 		if let site = site {
+			let initialURL = site.homePageURL
+			mainState.initialHost = initialURL.host
+			
 			pageViewController.GoogleOAuth2TokenJSONString = site.GoogleAPIOAuth2TokenJSONString
 			pageViewController.hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback = { [unowned self] tokenJSONString in
 				self.modelManager.setGoogleOAuth2TokenJSONString(tokenJSONString, forSite: site)
 			}
-			pageViewController.loadURL(site.homePageURL)
+			pageViewController.loadURL(initialURL)
 			
 			
 			statsViewController.primaryURL = site.homePageURL
 		}
 		else {
-			//pageViewController.loadURL(nil)
 			statsViewController.primaryURL = nil
+			mainState.initialHost = nil
 		}
 	}
 	
@@ -100,10 +97,20 @@ class ViewController: NSViewController
 		
 		let storyboard = self.pageStoryboard
 		
-		// Create page view controller.
+		// The top web browser
 		let pageViewController = storyboard.instantiateControllerWithIdentifier("Page View Controller") as! PageViewController
-		pageViewController.navigatedURLDidChangeCallback = { URL in
+		pageViewController.navigatedURLDidChangeCallback = { [unowned self] URL in
+			if self.mainState.chosenSite == nil {
+				self.mainState.initialHost = URL.host
+			}
+			
 			if pageViewController.crawlWhileBrowsing {
+				// Can only crawl the initial 'local' website.
+				if let initialHost = self.mainState.initialHost {
+					if URL.host != initialHost {
+						return
+					}
+				}
 				#if DEBUG
 					println("navigatedURLDidChangeCallback \(URL)")
 				#endif
@@ -111,7 +118,7 @@ class ViewController: NSViewController
 			}
 		}
 		
-		
+		// The bottom page crawler table
 		let statsViewController = storyboard.instantiateControllerWithIdentifier("Stats View Controller") as! StatsViewController
 		statsViewController.didChooseURLCallback = { URL, pageInfo in
 			if pageInfo.baseContentType == .LocalHTMLPage {
@@ -125,7 +132,6 @@ class ViewController: NSViewController
 			//item.canCollapse = true
 			return item
 			}())
-		//mainSplitViewController.addChildViewController(pageViewController)
 		self.pageViewController = pageViewController
 		
 		mainSplitViewController.addSplitViewItem({
@@ -133,7 +139,6 @@ class ViewController: NSViewController
 			//item.canCollapse = true
 			return item
 		}())
-		//mainSplitViewController.addChildViewController(statsViewController)
 		self.statsViewController = statsViewController
 	}
 	
@@ -151,12 +156,12 @@ class ViewController: NSViewController
 	}()
 	
 	
-	@IBAction func showAddSite(button: NSButton) {
+	@IBAction func showAddSiteRelativeToView(relativeView: NSView) {
 		if addSiteViewController.presentingViewController != nil {
 			dismissViewController(addSiteViewController)
 		}
 		else {
-			presentViewController(addSiteViewController, asPopoverRelativeToRect: button.bounds, ofView: button, preferredEdge: NSMaxYEdge, behavior: .Semitransient)
+			presentViewController(addSiteViewController, asPopoverRelativeToRect: relativeView.bounds, ofView: relativeView, preferredEdge: NSMaxYEdge, behavior: .Semitransient)
 		}
 	}
 	

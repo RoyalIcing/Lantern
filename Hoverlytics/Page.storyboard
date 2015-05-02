@@ -22,7 +22,7 @@
                                 </connections>
                             </containerView>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-EU-sP3">
-                                <rect key="frame" x="20" y="8" width="319" height="19"/>
+                                <rect key="frame" x="20" y="8" width="251" height="19"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="4BL-LC-tAV"/>
                                 </constraints>
@@ -36,8 +36,8 @@
                                 </connections>
                             </textField>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="eKl-uH-6sn">
-                                <rect key="frame" x="344" y="8" width="138" height="18"/>
-                                <buttonCell key="cell" type="check" title="Crawl While Browsing" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="dwE-SW-rGN">
+                                <rect key="frame" x="276" y="8" width="206" height="18"/>
+                                <buttonCell key="cell" type="check" title="Crawl Local Pages While Browsing" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="dwE-SW-rGN">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="smallSystem"/>
                                 </buttonCell>

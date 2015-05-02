@@ -8,6 +8,7 @@
 
 import Cocoa
 import HoverlyticsModel
+import Quartz
 
 
 enum BaseContentTypeChoice: Int {
@@ -208,6 +209,17 @@ extension BaseContentTypeChoice {
 	}
 }
 
+extension PageResponseType {
+	var cocoaColor: NSColor {
+		switch self {
+		case .RequestErrors, .ResponseErrors:
+			return NSColor(SRGBRed: 233.0/255.0, green: 36.0/255.0, blue: 0.0, alpha: 1.0)
+		default:
+			return NSColor.textColor()
+		}
+	}
+}
+
 
 class StatsViewController: NSViewController {
 
@@ -276,6 +288,35 @@ class StatsViewController: NSViewController {
 		}
 	}
 	
+	var selectedURLs: [NSURL] {
+		get {
+			let outlineView = self.outlineView!
+			var selectedRowIndexes = outlineView.selectedRowIndexes
+			var result = [NSURL]()
+			println("previous selectedRowIndexes \(selectedRowIndexes) \(outlineView.numberOfSelectedRows)")
+			selectedRowIndexes.enumerateIndexesUsingBlock { (row, stopPointer) in
+				if let item = outlineView.itemAtRow(row) as? NSURL {
+					result.append(item)
+				}
+			}
+			return result
+		}
+		set {
+			let outlineView = self.outlineView!
+			var newRowIndexes = NSMutableIndexSet()
+			for URL in newValue {
+				let row = outlineView.rowForItem(URL)
+				println("restoring selection \(URL) \(row)")
+				if row != -1 {
+					newRowIndexes.addIndex(row)
+				}
+			}
+			outlineView.selectRowIndexes(newRowIndexes, byExtendingSelection: false)
+		}
+	}
+	
+	var previouslySelectedURLs = [NSURL]()
+	
 	func updateListOfURLs() {
 		if let primaryURL = primaryURL {
 			let baseContentType = filterToBaseContentType
@@ -300,6 +341,8 @@ class StatsViewController: NSViewController {
 		}
 		
 		outlineView.reloadData()
+		
+		self.selectedURLs = previouslySelectedURLs
 	}
 	
 	func updateUI(
@@ -432,6 +475,8 @@ class StatsViewController: NSViewController {
 		updateUI(filterResponseChoice: false)
 	}
 	
+	#if false
+	
 	@IBAction func showTitleColumns(sender: AnyObject?) {
 		changeColumnsMode(StatsColumnsMode.Titles)
 	}
@@ -443,6 +488,8 @@ class StatsViewController: NSViewController {
 	@IBAction func showDownloadSizesColumns(sender: AnyObject?) {
 		changeColumnsMode(StatsColumnsMode.DownloadSizes)
 	}
+	
+	#endif
 	
 	@IBAction func changeColumnsMode(sender: NSSegmentedControl) {
 		let tag = sender.tagOfSelectedSegment()
@@ -461,6 +508,52 @@ class StatsViewController: NSViewController {
 				didChooseURLCallback?(URL: URL, pageInfo: pageInfo)
 			}
 		}
+	}
+}
+
+// TODO: finish quicklook support, needs a local file cache
+extension StatsViewController: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
+	override func keyDown(theEvent: NSEvent) {
+		if let charactersIgnoringModifiers = theEvent.charactersIgnoringModifiers {
+			let u = charactersIgnoringModifiers[charactersIgnoringModifiers.startIndex]
+			
+			if u == Character(" ") {
+				// TODO: enable again
+				//quickLookPreviewItems(self)
+			}
+		}
+	}
+	
+	override func quickLookPreviewItems(sender: AnyObject?)
+	{
+		let selectedRowIndexes = outlineView.selectedRowIndexes
+		if selectedRowIndexes.count == 1 {
+			let row = selectedRowIndexes.firstIndex
+			if let pageURL = outlineView.itemAtRow(row) as? NSURL where pageMapper.hasFinishedRequestingURL(pageURL)
+			{
+				
+			}
+		}
+	}
+	
+	func numberOfPreviewItemsInPreviewPanel(panel: QLPreviewPanel!) -> Int {
+		return selectedURLs.count
+	}
+	
+	func previewPanel(panel: QLPreviewPanel!, previewItemAtIndex index: Int) -> QLPreviewItem! {
+		return selectedURLs[index]
+	}
+	
+	override func acceptsPreviewPanelControl(panel: QLPreviewPanel!) -> Bool {
+		return true
+	}
+	
+	override func beginPreviewPanelControl(panel: QLPreviewPanel!) {
+		panel.delegate = self
+	}
+	
+	override func endPreviewPanelControl(panel: QLPreviewPanel!) {
+		panel.delegate = nil
 	}
 }
 
@@ -718,11 +811,13 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 			//var validatedStringValue: ValidatedStringValue
 			var stringValue: String?
 			var opacity: CGFloat = 1.0
+			var textColor: NSColor = NSColor.textColor()
 			
 			if pageMapper.hasFinishedRequestingURL(pageURL)
 			{
 				if let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL) {
 					stringValue = identifier.stringValueInPageInfo(pageInfo)
+					textColor = PageResponseType(statusCode: pageInfo.statusCode).cocoaColor
 				}
 			}
 			else {
@@ -745,7 +840,10 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 			}
 			
 			if let view = outlineView.makeViewWithIdentifier(cellIdentifier, owner: self) as? NSTableCellView {
-				view.textField?.stringValue = stringValue!
+				if let textField = view.textField {
+					textField.stringValue = stringValue!
+					textField.textColor = textColor
+				}
 				view.alphaValue = opacity
 				
 				//view.menu = rowMenu
@@ -755,5 +853,17 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 		}
 		
 		return nil
+	}
+	
+	/* Seem to need both outlineViewSelectionIsChanging and outlineViewSelectionDidChange to correctly get the selection as the outline view updates quickly, either after selecting by mouse clicking or using the up/down arrow keys.
+	*/
+	func outlineViewSelectionIsChanging(notification: NSNotification)
+	{
+		previouslySelectedURLs = selectedURLs
+	}
+	
+	func outlineViewSelectionDidChange(notification: NSNotification)
+	{
+		previouslySelectedURLs = selectedURLs
 	}
 }
