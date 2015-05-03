@@ -7,42 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B2054D741AF477C700DC2C00 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2054D731AF477C700DC2C00 /* Images.xcassets */; };
 		B2054D831AF477C700DC2C00 /* LanternTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2054D821AF477C700DC2C00 /* LanternTests.swift */; };
-		B2054D8A1AF477F300DC2C00 /* HoverlyticsModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; };
-		B2054D8B1AF477F300DC2C00 /* HoverlyticsModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B2054D901AF4782200DC2C00 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B7DBF1AC785C90026AEDB /* CloudKit.framework */; };
-		B2054D911AF478EB00DC2C00 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22B7D9A1AC6B9090026AEDB /* Main.storyboard */; };
-		B2054D921AF4791D00DC2C00 /* MainView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2E2693C1AE9E9200044BE04 /* MainView.storyboard */; };
-		B2054D931AF4792500DC2C00 /* MainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4A9401ACA3203000F1566 /* MainState.swift */; };
-		B2054D941AF4792500DC2C00 /* MainSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2693A1AE9E5130044BE04 /* MainSection.swift */; };
-		B2054D951AF4792500DC2C00 /* SiteMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22876261AF3A4D800A8A4A2 /* SiteMenuItem.swift */; };
-		B2054D961AF4792500DC2C00 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */; };
-		B2054D971AF4792500DC2C00 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7D961AC6B9090026AEDB /* ViewController.swift */; };
-		B2054D981AF4792A00DC2C00 /* SiteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */; };
-		B2054D991AF4792A00DC2C00 /* MenuAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22766361AEF9B2D0083FE8C /* MenuAssistant.swift */; };
-		B2054D9A1AF4792A00DC2C00 /* PopUpButtonAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2515B7F1AF3C4CA00F6406A /* PopUpButtonAssistant.swift */; };
-		B2054D9B1AF4792A00DC2C00 /* SegmentedControlAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23BE3921AF06AA6008BEDC0 /* SegmentedControlAssistant.swift */; };
-		B2054D9C1AF4792F00DC2C00 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB81AC77D420026AEDB /* PageViewController.swift */; };
-		B2054D9D1AF4792F00DC2C00 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */; };
-		B2054D9E1AF4792F00DC2C00 /* SourcePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22766251AEE62060083FE8C /* SourcePreviewViewController.swift */; };
-		B2054D9F1AF4792F00DC2C00 /* WKUserContentController+bundledScripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */; };
-		B2054DA01AF4793200DC2C00 /* SourcePreview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2B542C61AF0A09600073464 /* SourcePreview.storyboard */; };
-		B2054DA11AF4793500DC2C00 /* Page.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22B7DBA1AC77EF20026AEDB /* Page.storyboard */; };
-		B2054DA21AF4793800DC2C00 /* SiteSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */; };
-		B2054DA31AF4793E00DC2C00 /* console.js in Resources */ = {isa = PBXBuildFile; fileRef = B23E29E91AE73DF6009A94E5 /* console.js */; };
-		B2054DA41AF4794700DC2C00 /* userAgent.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966E11ACD36FF00C6A420 /* userAgent.js */; };
-		B2054DA51AF4794C00DC2C00 /* windowClose.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966DF1ACD316E00C6A420 /* windowClose.js */; };
-		B2054DA61AF4795E00DC2C00 /* NSViewController+PGWSConstraintConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB31AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m */; };
-		B2054DA71AF4796100DC2C00 /* NSSegmentedControl+PGWSConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = B22766231AEDE9250083FE8C /* NSSegmentedControl+PGWSConvenience.m */; };
-		B2054DAF1AF47C1A00DC2C00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7D941AC6B9090026AEDB /* AppDelegate.swift */; };
 		B2054DB11AF494A300DC2C00 /* PageInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2054DB01AF494A300DC2C00 /* PageInfoRequest.swift */; };
 		B2134AAC1AE9F5D800ACDDE3 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */; };
 		B22425F81AC8F8B200809EF0 /* HoverlyticsModel.h in Headers */ = {isa = PBXBuildFile; fileRef = B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B22425FE1AC8F8B200809EF0 /* HoverlyticsModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; };
 		B22426071AC8F8B200809EF0 /* HoverlyticsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426061AC8F8B200809EF0 /* HoverlyticsModelTests.swift */; };
 		B224260A1AC8F8B200809EF0 /* HoverlyticsModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; };
-		B22426121AC8F8D000809EF0 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B7DBF1AC785C90026AEDB /* CloudKit.framework */; };
 		B22426141AC8F8DB00809EF0 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426131AC8F8DB00809EF0 /* Site.swift */; };
 		B22426161AC8FA2E00809EF0 /* CloudKit+Hoverlytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426151AC8FA2E00809EF0 /* CloudKit+Hoverlytics.swift */; };
 		B22766241AEDE9250083FE8C /* NSSegmentedControl+PGWSConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = B22766231AEDE9250083FE8C /* NSSegmentedControl+PGWSConvenience.m */; };
@@ -68,7 +39,6 @@
 		B22B7DB91AC77D420026AEDB /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB81AC77D420026AEDB /* PageViewController.swift */; };
 		B22B7DBB1AC77EF20026AEDB /* Page.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22B7DBA1AC77EF20026AEDB /* Page.storyboard */; };
 		B22B7DBD1AC782DD0026AEDB /* insertHoverlytics.js in Resources */ = {isa = PBXBuildFile; fileRef = B22B7DBC1AC782DD0026AEDB /* insertHoverlytics.js */; };
-		B22B7DC01AC785C90026AEDB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B7DBF1AC785C90026AEDB /* CloudKit.framework */; };
 		B23966E01ACD316E00C6A420 /* windowClose.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966DF1ACD316E00C6A420 /* windowClose.js */; };
 		B23966E21ACD36FF00C6A420 /* userAgent.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966E11ACD36FF00C6A420 /* userAgent.js */; };
 		B23966EA1ACD45BD00C6A420 /* panelAuthorizationChanged.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966E91ACD45BC00C6A420 /* panelAuthorizationChanged.js */; };
@@ -80,18 +50,63 @@
 		B25033121AF5C2C7006A2AE7 /* Ono.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25033111AF5C2C7006A2AE7 /* Ono.framework */; };
 		B25033151AF5C789006A2AE7 /* HoverlyticsModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B25033181AF5C9A5006A2AE7 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B25033131AF5C2D0006A2AE7 /* libxml2.dylib */; };
+		B25033191AF5E1C2006A2AE7 /* HoverlyticsModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; };
+		B250331A1AF5E1D4006A2AE7 /* HoverlyticsModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B250331D1AF5E2FB006A2AE7 /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B2D563221AF5BF8A006DE202 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B250331E1AF5E30B006A2AE7 /* Ono.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B25033111AF5C2C7006A2AE7 /* Ono.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B25033201AF5E514006A2AE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7D941AC6B9090026AEDB /* AppDelegate.swift */; };
+		B25033211AF5E514006A2AE7 /* MainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4A9401ACA3203000F1566 /* MainState.swift */; };
+		B25033221AF5E514006A2AE7 /* MainSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2693A1AE9E5130044BE04 /* MainSection.swift */; };
+		B25033231AF5E514006A2AE7 /* SiteMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22876261AF3A4D800A8A4A2 /* SiteMenuItem.swift */; };
+		B25033241AF5E514006A2AE7 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */; };
+		B25033251AF5E514006A2AE7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7D961AC6B9090026AEDB /* ViewController.swift */; };
+		B25033261AF5E514006A2AE7 /* SiteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */; };
+		B25033271AF5E514006A2AE7 /* MenuAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22766361AEF9B2D0083FE8C /* MenuAssistant.swift */; };
+		B25033281AF5E514006A2AE7 /* PopUpButtonAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2515B7F1AF3C4CA00F6406A /* PopUpButtonAssistant.swift */; };
+		B25033291AF5E514006A2AE7 /* SegmentedControlAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23BE3921AF06AA6008BEDC0 /* SegmentedControlAssistant.swift */; };
+		B250332A1AF5E514006A2AE7 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB81AC77D420026AEDB /* PageViewController.swift */; };
+		B250332B1AF5E514006A2AE7 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */; };
+		B250332C1AF5E514006A2AE7 /* SourcePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22766251AEE62060083FE8C /* SourcePreviewViewController.swift */; };
+		B250332D1AF5E514006A2AE7 /* WKUserContentController+bundledScripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */; };
+		B250332E1AF5E514006A2AE7 /* NSViewController+PGWSConstraintConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB31AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m */; };
+		B250332F1AF5E514006A2AE7 /* NSSegmentedControl+PGWSConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = B22766231AEDE9250083FE8C /* NSSegmentedControl+PGWSConvenience.m */; };
+		B25033431AF5E5B0006A2AE7 /* HoverlyticsModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; };
+		B25033461AF5E5B0006A2AE7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22B7D9A1AC6B9090026AEDB /* Main.storyboard */; };
+		B25033471AF5E5B0006A2AE7 /* MainView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2E2693C1AE9E9200044BE04 /* MainView.storyboard */; };
+		B25033481AF5E5B0006A2AE7 /* SourcePreview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2B542C61AF0A09600073464 /* SourcePreview.storyboard */; };
+		B25033491AF5E5B0006A2AE7 /* windowClose.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966DF1ACD316E00C6A420 /* windowClose.js */; };
+		B250334A1AF5E5B0006A2AE7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2054D731AF477C700DC2C00 /* Images.xcassets */; };
+		B250334B1AF5E5B0006A2AE7 /* SiteSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */; };
+		B250334C1AF5E5B0006A2AE7 /* userAgent.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966E11ACD36FF00C6A420 /* userAgent.js */; };
+		B250334D1AF5E5B0006A2AE7 /* console.js in Resources */ = {isa = PBXBuildFile; fileRef = B23E29E91AE73DF6009A94E5 /* console.js */; };
+		B250334E1AF5E5B0006A2AE7 /* Page.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22B7DBA1AC77EF20026AEDB /* Page.storyboard */; };
+		B25033501AF5E5B0006A2AE7 /* HoverlyticsModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B25033591AF5E79F006A2AE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7D941AC6B9090026AEDB /* AppDelegate.swift */; };
+		B250335A1AF5E7A7006A2AE7 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */; };
+		B250335B1AF5E7AF006A2AE7 /* MainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4A9401ACA3203000F1566 /* MainState.swift */; };
+		B250335C1AF5E7AF006A2AE7 /* MainSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2693A1AE9E5130044BE04 /* MainSection.swift */; };
+		B250335D1AF5E7B5006A2AE7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7D961AC6B9090026AEDB /* ViewController.swift */; };
+		B250335E1AF5E7BC006A2AE7 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB81AC77D420026AEDB /* PageViewController.swift */; };
+		B25033601AF5E7C4006A2AE7 /* SourcePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22766251AEE62060083FE8C /* SourcePreviewViewController.swift */; };
+		B25033611AF5E7CD006A2AE7 /* WKUserContentController+bundledScripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */; };
+		B25033621AF5E7D7006A2AE7 /* SiteMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22876261AF3A4D800A8A4A2 /* SiteMenuItem.swift */; };
+		B25033631AF5E7D7006A2AE7 /* SiteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */; };
+		B25033641AF5E7D7006A2AE7 /* MenuAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22766361AEF9B2D0083FE8C /* MenuAssistant.swift */; };
+		B25033651AF5E7D7006A2AE7 /* PopUpButtonAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2515B7F1AF3C4CA00F6406A /* PopUpButtonAssistant.swift */; };
+		B25033661AF5E7D7006A2AE7 /* SegmentedControlAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23BE3921AF06AA6008BEDC0 /* SegmentedControlAssistant.swift */; };
+		B250336C1AF5EA75006A2AE7 /* DumbStatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B250336B1AF5EA75006A2AE7 /* DumbStatsViewController.swift */; };
 		B2515B801AF3C4CA00F6406A /* PopUpButtonAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2515B7F1AF3C4CA00F6406A /* PopUpButtonAssistant.swift */; };
 		B2A63B5F1AC8DAA0004CEBE1 /* SiteSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */; };
 		B2A63B611AC8DACD004CEBE1 /* SiteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */; };
-		B2AD72E41AF4E36A0099FC7C /* ONOXMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AD72E21AF4E36A0099FC7C /* ONOXMLDocument.h */; };
-		B2AD72E51AF4E36A0099FC7C /* ONOXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD72E31AF4E36A0099FC7C /* ONOXMLDocument.m */; };
 		B2B542C11AF0980E00073464 /* NSData+ONOXMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B542C01AF0980E00073464 /* NSData+ONOXMLDocument.swift */; };
 		B2B542C31AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B542C21AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift */; };
 		B2B542C71AF0A09600073464 /* SourcePreview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2B542C61AF0A09600073464 /* SourcePreview.storyboard */; };
 		B2C4A93F1ACA31F0000F1566 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */; };
+		B2D39B001AF5ECEB003D6738 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */; };
+		B2D39B041AF5F074003D6738 /* NSViewController+PGWSConstraintConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB31AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m */; };
+		B2D39B051AF5F074003D6738 /* NSSegmentedControl+PGWSConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = B22766231AEDE9250083FE8C /* NSSegmentedControl+PGWSConvenience.m */; };
+		B2D39B071AF5F085003D6738 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D39B061AF5F085003D6738 /* CloudKit.framework */; };
 		B2D563241AF5BF8A006DE202 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D563221AF5BF8A006DE202 /* Alamofire.framework */; };
-		B2E2691C1AE9DD650044BE04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2691B1AE9DD650044BE04 /* AppDelegate.swift */; };
-		B2E2691E1AE9DD650044BE04 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2691D1AE9DD650044BE04 /* ViewController.swift */; };
 		B2E269201AE9DD650044BE04 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2E2691F1AE9DD650044BE04 /* Images.xcassets */; };
 		B2E269231AE9DD650044BE04 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2E269211AE9DD650044BE04 /* Main.storyboard */; };
 		B2E2692F1AE9DD660044BE04 /* SidetoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2692E1AE9DD660044BE04 /* SidetoneTests.swift */; };
@@ -100,20 +115,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B2054D7D1AF477C700DC2C00 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B22B7D871AC6B9090026AEDB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B2054D6A1AF477C700DC2C00;
-			remoteInfo = Lantern;
-		};
-		B2054D8C1AF477F300DC2C00 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B22B7D871AC6B9090026AEDB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B22425F21AC8F8B200809EF0;
-			remoteInfo = HoverlyticsModel;
-		};
 		B22425FF1AC8F8B200809EF0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B22B7D871AC6B9090026AEDB /* Project object */;
@@ -142,6 +143,20 @@
 			remoteGlobalIDString = B22B7D8E1AC6B9090026AEDB;
 			remoteInfo = "Hoverlytics for Mac";
 		};
+		B25033571AF5E73E006A2AE7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B22B7D871AC6B9090026AEDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B25033301AF5E5B0006A2AE7;
+			remoteInfo = Lantern;
+		};
+		B2D39AFE1AF5EBA3003D6738 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B22B7D871AC6B9090026AEDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B25033301AF5E5B0006A2AE7;
+			remoteInfo = Lantern;
+		};
 		B2E269291AE9DD650044BE04 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B22B7D871AC6B9090026AEDB /* Project object */;
@@ -152,17 +167,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B2054D8E1AF477F300DC2C00 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B2054D8B1AF477F300DC2C00 /* HoverlyticsModel.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B22425E91AC8F7CB00809EF0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -174,12 +178,53 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B250331C1AF5E2F0006A2AE7 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B250331E1AF5E30B006A2AE7 /* Ono.framework in CopyFiles */,
+				B250331D1AF5E2FB006A2AE7 /* Alamofire.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B250334F1AF5E5B0006A2AE7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B25033501AF5E5B0006A2AE7 /* HoverlyticsModel.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2D39B011AF5EFAB003D6738 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2D39B021AF5EFB8003D6738 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B2E269391AE9DD830044BE04 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B250331A1AF5E1D4006A2AE7 /* HoverlyticsModel.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,7 +232,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B2054D6B1AF477C700DC2C00 /* Lantern.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lantern.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2054D6E1AF477C700DC2C00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2054D731AF477C700DC2C00 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B2054D7C1AF477C700DC2C00 /* LanternTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LanternTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,7 +258,7 @@
 		B22766301AEF4DFC0083FE8C /* PageMapper+Validating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PageMapper+Validating.swift"; sourceTree = "<group>"; };
 		B22766321AEF51430083FE8C /* PageInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
 		B22766341AEF67920083FE8C /* UniqueURLArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniqueURLArray.swift; sourceTree = "<group>"; };
-		B22766361AEF9B2D0083FE8C /* MenuAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuAssistant.swift; path = HoverlyticsModel/MenuAssistant.swift; sourceTree = SOURCE_ROOT; };
+		B22766361AEF9B2D0083FE8C /* MenuAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuAssistant.swift; path = Hoverlytics/MenuAssistant.swift; sourceTree = SOURCE_ROOT; };
 		B22766391AEFB6DB0083FE8C /* Dictionary+UpdateClosure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+UpdateClosure.swift"; sourceTree = "<group>"; };
 		B22876261AF3A4D800A8A4A2 /* SiteMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteMenuItem.swift; sourceTree = "<group>"; };
 		B22B7D8F1AC6B9090026AEDB /* Hoverlytics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hoverlytics.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -234,7 +278,6 @@
 		B22B7DBA1AC77EF20026AEDB /* Page.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Page.storyboard; sourceTree = "<group>"; };
 		B22B7DBC1AC782DD0026AEDB /* insertHoverlytics.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = insertHoverlytics.js; sourceTree = "<group>"; };
 		B22B7DBE1AC785B20026AEDB /* Hoverlytics.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Hoverlytics.entitlements; sourceTree = "<group>"; };
-		B22B7DBF1AC785C90026AEDB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		B23966DF1ACD316E00C6A420 /* windowClose.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = windowClose.js; sourceTree = "<group>"; };
 		B23966E11ACD36FF00C6A420 /* userAgent.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = userAgent.js; sourceTree = "<group>"; };
 		B23966E91ACD45BC00C6A420 /* panelAuthorizationChanged.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = panelAuthorizationChanged.js; sourceTree = "<group>"; };
@@ -245,16 +288,19 @@
 		B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueValidation.swift; sourceTree = "<group>"; };
 		B25033111AF5C2C7006A2AE7 /* Ono.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ono.framework; path = Carthage/Build/Mac/Ono.framework; sourceTree = "<group>"; };
 		B25033131AF5C2D0006A2AE7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		B25033541AF5E5B0006A2AE7 /* Lantern.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lantern.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B25033551AF5E5B0006A2AE7 /* Lantern copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Lantern copy-Info.plist"; path = "/Users/pgwsmith/Work/Apps Git/Hoverlytics for Mac/Lantern copy-Info.plist"; sourceTree = "<absolute>"; };
+		B25033561AF5E71A006A2AE7 /* Lantern copy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Lantern copy.entitlements"; sourceTree = "<group>"; };
+		B250336B1AF5EA75006A2AE7 /* DumbStatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DumbStatsViewController.swift; sourceTree = "<group>"; };
 		B2515B7F1AF3C4CA00F6406A /* PopUpButtonAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpButtonAssistant.swift; sourceTree = "<group>"; };
 		B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SiteSettings.storyboard; sourceTree = "<group>"; };
 		B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteSettingsViewController.swift; sourceTree = "<group>"; };
-		B2AD72E21AF4E36A0099FC7C /* ONOXMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ONOXMLDocument.h; path = Carthage/Checkouts/Ono/Source/ONOXMLDocument.h; sourceTree = SOURCE_ROOT; };
-		B2AD72E31AF4E36A0099FC7C /* ONOXMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ONOXMLDocument.m; path = Carthage/Checkouts/Ono/Source/ONOXMLDocument.m; sourceTree = SOURCE_ROOT; };
 		B2B542C01AF0980E00073464 /* NSData+ONOXMLDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+ONOXMLDocument.swift"; sourceTree = "<group>"; };
 		B2B542C21AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ONOXMLDocument+StringEncoding.swift"; sourceTree = "<group>"; };
 		B2B542C61AF0A09600073464 /* SourcePreview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SourcePreview.storyboard; sourceTree = "<group>"; };
 		B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
-		B2C4A9401ACA3203000F1566 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainState.swift; path = HoverlyticsModel/MainState.swift; sourceTree = SOURCE_ROOT; };
+		B2C4A9401ACA3203000F1566 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainState.swift; path = Hoverlytics/MainState.swift; sourceTree = SOURCE_ROOT; };
+		B2D39B061AF5F085003D6738 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		B2D563221AF5BF8A006DE202 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
 		B2E269171AE9DD650044BE04 /* Sidetone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidetone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2E2691A1AE9DD650044BE04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -270,15 +316,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B2054D681AF477C700DC2C00 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B2054D8A1AF477F300DC2C00 /* HoverlyticsModel.framework in Frameworks */,
-				B2054D901AF4782200DC2C00 /* CloudKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B2054D791AF477C700DC2C00 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -291,7 +328,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B25033181AF5C9A5006A2AE7 /* libxml2.dylib in Frameworks */,
-				B22426121AC8F8D000809EF0 /* CloudKit.framework in Frameworks */,
 				B2D563241AF5BF8A006DE202 /* Alamofire.framework in Frameworks */,
 				B25033121AF5C2C7006A2AE7 /* Ono.framework in Frameworks */,
 			);
@@ -309,7 +345,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B22B7DC01AC785C90026AEDB /* CloudKit.framework in Frameworks */,
 				B224260A1AC8F8B200809EF0 /* HoverlyticsModel.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,10 +356,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B25033421AF5E5B0006A2AE7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B25033431AF5E5B0006A2AE7 /* HoverlyticsModel.framework in Frameworks */,
+				B2D39B071AF5F085003D6738 /* CloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B2E269141AE9DD650044BE04 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B25033191AF5E1C2006A2AE7 /* HoverlyticsModel.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,8 +436,6 @@
 				B22766271AEF36DA0083FE8C /* PageMapper+Filtering.swift */,
 				B22766301AEF4DFC0083FE8C /* PageMapper+Validating.swift */,
 				B227662C1AEF382E0083FE8C /* PageMapper+InfoPresenting.swift */,
-				B2AD72E21AF4E36A0099FC7C /* ONOXMLDocument.h */,
-				B2AD72E31AF4E36A0099FC7C /* ONOXMLDocument.m */,
 				B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */,
 				B22425F51AC8F8B200809EF0 /* Supporting Files */,
 			);
@@ -427,10 +470,11 @@
 		B22B7D861AC6B9090026AEDB = {
 			isa = PBXGroup;
 			children = (
+				B2D39B061AF5F085003D6738 /* CloudKit.framework */,
+				B25033561AF5E71A006A2AE7 /* Lantern copy.entitlements */,
 				B25033131AF5C2D0006A2AE7 /* libxml2.dylib */,
 				B25033111AF5C2C7006A2AE7 /* Ono.framework */,
 				B2D563221AF5BF8A006DE202 /* Alamofire.framework */,
-				B22B7DBF1AC785C90026AEDB /* CloudKit.framework */,
 				B22B7D911AC6B9090026AEDB /* Hoverlytics */,
 				B22B7DA41AC6B9090026AEDB /* HoverlyticsTests */,
 				B22425F41AC8F8B200809EF0 /* HoverlyticsModel */,
@@ -440,6 +484,7 @@
 				B2054D6C1AF477C700DC2C00 /* Lantern */,
 				B2054D7F1AF477C700DC2C00 /* LanternTests */,
 				B22B7D901AC6B9090026AEDB /* Products */,
+				B25033551AF5E5B0006A2AE7 /* Lantern copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -452,8 +497,8 @@
 				B22425FD1AC8F8B200809EF0 /* HoverlyticsModelTests.xctest */,
 				B2E269171AE9DD650044BE04 /* Sidetone.app */,
 				B2E269281AE9DD650044BE04 /* SidetoneTests.xctest */,
-				B2054D6B1AF477C700DC2C00 /* Lantern.app */,
 				B2054D7C1AF477C700DC2C00 /* LanternTests.xctest */,
+				B25033541AF5E5B0006A2AE7 /* Lantern.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -477,6 +522,7 @@
 				B22B7DBA1AC77EF20026AEDB /* Page.storyboard */,
 				B22B7DB81AC77D420026AEDB /* PageViewController.swift */,
 				B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */,
+				B250336B1AF5EA75006A2AE7 /* DumbStatsViewController.swift */,
 				B2B542C61AF0A09600073464 /* SourcePreview.storyboard */,
 				B22766251AEE62060083FE8C /* SourcePreviewViewController.swift */,
 				B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */,
@@ -583,7 +629,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2AD72E41AF4E36A0099FC7C /* ONOXMLDocument.h in Headers */,
 				B22425F81AC8F8B200809EF0 /* HoverlyticsModel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -591,25 +636,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		B2054D6A1AF477C700DC2C00 /* Lantern */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B2054D881AF477C700DC2C00 /* Build configuration list for PBXNativeTarget "Lantern" */;
-			buildPhases = (
-				B2054D671AF477C700DC2C00 /* Sources */,
-				B2054D681AF477C700DC2C00 /* Frameworks */,
-				B2054D691AF477C700DC2C00 /* Resources */,
-				B2054D8E1AF477F300DC2C00 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B2054D8D1AF477F300DC2C00 /* PBXTargetDependency */,
-			);
-			name = Lantern;
-			productName = Lantern;
-			productReference = B2054D6B1AF477C700DC2C00 /* Lantern.app */;
-			productType = "com.apple.product-type.application";
-		};
 		B2054D7B1AF477C700DC2C00 /* LanternTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2054D891AF477C700DC2C00 /* Build configuration list for PBXNativeTarget "LanternTests" */;
@@ -621,7 +647,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				B2054D7E1AF477C700DC2C00 /* PBXTargetDependency */,
+				B25033581AF5E73E006A2AE7 /* PBXTargetDependency */,
 			);
 			name = LanternTests;
 			productName = LanternTests;
@@ -636,10 +662,12 @@
 				B22425EF1AC8F8B200809EF0 /* Frameworks */,
 				B22425F01AC8F8B200809EF0 /* Headers */,
 				B22425F11AC8F8B200809EF0 /* Resources */,
+				B250331C1AF5E2F0006A2AE7 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B2D39AFF1AF5EBA3003D6738 /* PBXTargetDependency */,
 			);
 			name = HoverlyticsModel;
 			productName = HoverlyticsModel;
@@ -702,6 +730,25 @@
 			productReference = B22B7DA11AC6B9090026AEDB /* HoverlyticsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		B25033301AF5E5B0006A2AE7 /* Lantern */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B25033511AF5E5B0006A2AE7 /* Build configuration list for PBXNativeTarget "Lantern" */;
+			buildPhases = (
+				B25033311AF5E5B0006A2AE7 /* Sources */,
+				B25033421AF5E5B0006A2AE7 /* Frameworks */,
+				B25033451AF5E5B0006A2AE7 /* Resources */,
+				B250334F1AF5E5B0006A2AE7 /* Embed Frameworks */,
+				B2D39B021AF5EFB8003D6738 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Lantern;
+			productName = Lantern;
+			productReference = B25033541AF5E5B0006A2AE7 /* Lantern.app */;
+			productType = "com.apple.product-type.application";
+		};
 		B2E269161AE9DD650044BE04 /* Sidetone */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2E269341AE9DD660044BE04 /* Build configuration list for PBXNativeTarget "Sidetone" */;
@@ -710,6 +757,7 @@
 				B2E269141AE9DD650044BE04 /* Frameworks */,
 				B2E269151AE9DD650044BE04 /* Resources */,
 				B2E269391AE9DD830044BE04 /* Embed Frameworks */,
+				B2D39B011AF5EFAB003D6738 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -747,21 +795,9 @@
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = "Burnt Caramel";
 				TargetAttributes = {
-					B2054D6A1AF477C700DC2C00 = {
-						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 5278SPSAPR;
-						SystemCapabilities = {
-							com.apple.Sandbox = {
-								enabled = 1;
-							};
-							com.apple.iCloud = {
-								enabled = 1;
-							};
-						};
-					};
 					B2054D7B1AF477C700DC2C00 = {
 						CreatedOnToolsVersion = 6.3.1;
-						TestTargetID = B2054D6A1AF477C700DC2C00;
+						TestTargetID = B25033301AF5E5B0006A2AE7;
 					};
 					B22425F21AC8F8B200809EF0 = {
 						CreatedOnToolsVersion = 6.2;
@@ -786,6 +822,17 @@
 					B22B7DA01AC6B9090026AEDB = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = B22B7D8E1AC6B9090026AEDB;
+					};
+					B25033301AF5E5B0006A2AE7 = {
+						DevelopmentTeam = 5278SPSAPR;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					B2E269161AE9DD650044BE04 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -816,29 +863,13 @@
 				B22425FC1AC8F8B200809EF0 /* HoverlyticsModelTests */,
 				B2E269161AE9DD650044BE04 /* Sidetone */,
 				B2E269271AE9DD650044BE04 /* SidetoneTests */,
-				B2054D6A1AF477C700DC2C00 /* Lantern */,
+				B25033301AF5E5B0006A2AE7 /* Lantern */,
 				B2054D7B1AF477C700DC2C00 /* LanternTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		B2054D691AF477C700DC2C00 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B2054D911AF478EB00DC2C00 /* Main.storyboard in Resources */,
-				B2054D921AF4791D00DC2C00 /* MainView.storyboard in Resources */,
-				B2054DA01AF4793200DC2C00 /* SourcePreview.storyboard in Resources */,
-				B2054DA51AF4794C00DC2C00 /* windowClose.js in Resources */,
-				B2054D741AF477C700DC2C00 /* Images.xcassets in Resources */,
-				B2054DA21AF4793800DC2C00 /* SiteSettings.storyboard in Resources */,
-				B2054DA41AF4794700DC2C00 /* userAgent.js in Resources */,
-				B2054DA31AF4793E00DC2C00 /* console.js in Resources */,
-				B2054DA11AF4793500DC2C00 /* Page.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B2054D7A1AF477C700DC2C00 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -886,6 +917,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B25033451AF5E5B0006A2AE7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B25033461AF5E5B0006A2AE7 /* Main.storyboard in Resources */,
+				B25033471AF5E5B0006A2AE7 /* MainView.storyboard in Resources */,
+				B25033481AF5E5B0006A2AE7 /* SourcePreview.storyboard in Resources */,
+				B25033491AF5E5B0006A2AE7 /* windowClose.js in Resources */,
+				B250334A1AF5E5B0006A2AE7 /* Images.xcassets in Resources */,
+				B250334B1AF5E5B0006A2AE7 /* SiteSettings.storyboard in Resources */,
+				B250334C1AF5E5B0006A2AE7 /* userAgent.js in Resources */,
+				B250334D1AF5E5B0006A2AE7 /* console.js in Resources */,
+				B250334E1AF5E5B0006A2AE7 /* Page.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B2E269151AE9DD650044BE04 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -905,29 +952,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		B2054D671AF477C700DC2C00 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B2054D981AF4792A00DC2C00 /* SiteSettingsViewController.swift in Sources */,
-				B2054D991AF4792A00DC2C00 /* MenuAssistant.swift in Sources */,
-				B2054D951AF4792500DC2C00 /* SiteMenuItem.swift in Sources */,
-				B2054D9C1AF4792F00DC2C00 /* PageViewController.swift in Sources */,
-				B2054D9E1AF4792F00DC2C00 /* SourcePreviewViewController.swift in Sources */,
-				B2054DA61AF4795E00DC2C00 /* NSViewController+PGWSConstraintConvenience.m in Sources */,
-				B2054D961AF4792500DC2C00 /* MainWindowController.swift in Sources */,
-				B2054D931AF4792500DC2C00 /* MainState.swift in Sources */,
-				B2054DAF1AF47C1A00DC2C00 /* AppDelegate.swift in Sources */,
-				B2054D971AF4792500DC2C00 /* ViewController.swift in Sources */,
-				B2054D9D1AF4792F00DC2C00 /* StatsViewController.swift in Sources */,
-				B2054D9F1AF4792F00DC2C00 /* WKUserContentController+bundledScripts.swift in Sources */,
-				B2054D941AF4792500DC2C00 /* MainSection.swift in Sources */,
-				B2054D9A1AF4792A00DC2C00 /* PopUpButtonAssistant.swift in Sources */,
-				B2054D9B1AF4792A00DC2C00 /* SegmentedControlAssistant.swift in Sources */,
-				B2054DA71AF4796100DC2C00 /* NSSegmentedControl+PGWSConvenience.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B2054D781AF477C700DC2C00 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -947,7 +971,6 @@
 				B227663A1AEFB6DB0083FE8C /* Dictionary+UpdateClosure.swift in Sources */,
 				B227662F1AEF42A90083FE8C /* ValidatedStringValue.swift in Sources */,
 				B22766311AEF4DFC0083FE8C /* PageMapper+Validating.swift in Sources */,
-				B2AD72E51AF4E36A0099FC7C /* ONOXMLDocument.m in Sources */,
 				B22766351AEF67920083FE8C /* UniqueURLArray.swift in Sources */,
 				B23EA59E1ACA5F6A009B4032 /* ValueValidation.swift in Sources */,
 				B227662D1AEF382E0083FE8C /* PageMapper+InfoPresenting.swift in Sources */,
@@ -973,6 +996,7 @@
 			files = (
 				B22876271AF3A4D800A8A4A2 /* SiteMenuItem.swift in Sources */,
 				B22876251AF3A3CD00A8A4A2 /* MainState.swift in Sources */,
+				B250336C1AF5EA75006A2AE7 /* DumbStatsViewController.swift in Sources */,
 				B23BE3931AF06AA6008BEDC0 /* SegmentedControlAssistant.swift in Sources */,
 				B22B7D971AC6B9090026AEDB /* ViewController.swift in Sources */,
 				B22766381AEF9B320083FE8C /* MenuAssistant.swift in Sources */,
@@ -998,12 +1022,49 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B25033311AF5E5B0006A2AE7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2D39B041AF5F074003D6738 /* NSViewController+PGWSConstraintConvenience.m in Sources */,
+				B2D39B051AF5F074003D6738 /* NSSegmentedControl+PGWSConvenience.m in Sources */,
+				B2D39B001AF5ECEB003D6738 /* StatsViewController.swift in Sources */,
+				B25033621AF5E7D7006A2AE7 /* SiteMenuItem.swift in Sources */,
+				B25033631AF5E7D7006A2AE7 /* SiteSettingsViewController.swift in Sources */,
+				B25033641AF5E7D7006A2AE7 /* MenuAssistant.swift in Sources */,
+				B25033651AF5E7D7006A2AE7 /* PopUpButtonAssistant.swift in Sources */,
+				B25033661AF5E7D7006A2AE7 /* SegmentedControlAssistant.swift in Sources */,
+				B25033611AF5E7CD006A2AE7 /* WKUserContentController+bundledScripts.swift in Sources */,
+				B25033601AF5E7C4006A2AE7 /* SourcePreviewViewController.swift in Sources */,
+				B250335E1AF5E7BC006A2AE7 /* PageViewController.swift in Sources */,
+				B250335D1AF5E7B5006A2AE7 /* ViewController.swift in Sources */,
+				B250335B1AF5E7AF006A2AE7 /* MainState.swift in Sources */,
+				B250335C1AF5E7AF006A2AE7 /* MainSection.swift in Sources */,
+				B250335A1AF5E7A7006A2AE7 /* MainWindowController.swift in Sources */,
+				B25033591AF5E79F006A2AE7 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B2E269131AE9DD650044BE04 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2E2691E1AE9DD650044BE04 /* ViewController.swift in Sources */,
-				B2E2691C1AE9DD650044BE04 /* AppDelegate.swift in Sources */,
+				B25033201AF5E514006A2AE7 /* AppDelegate.swift in Sources */,
+				B25033211AF5E514006A2AE7 /* MainState.swift in Sources */,
+				B25033221AF5E514006A2AE7 /* MainSection.swift in Sources */,
+				B25033231AF5E514006A2AE7 /* SiteMenuItem.swift in Sources */,
+				B25033241AF5E514006A2AE7 /* MainWindowController.swift in Sources */,
+				B25033251AF5E514006A2AE7 /* ViewController.swift in Sources */,
+				B25033261AF5E514006A2AE7 /* SiteSettingsViewController.swift in Sources */,
+				B25033271AF5E514006A2AE7 /* MenuAssistant.swift in Sources */,
+				B25033281AF5E514006A2AE7 /* PopUpButtonAssistant.swift in Sources */,
+				B25033291AF5E514006A2AE7 /* SegmentedControlAssistant.swift in Sources */,
+				B250332A1AF5E514006A2AE7 /* PageViewController.swift in Sources */,
+				B250332B1AF5E514006A2AE7 /* StatsViewController.swift in Sources */,
+				B250332C1AF5E514006A2AE7 /* SourcePreviewViewController.swift in Sources */,
+				B250332D1AF5E514006A2AE7 /* WKUserContentController+bundledScripts.swift in Sources */,
+				B250332E1AF5E514006A2AE7 /* NSViewController+PGWSConstraintConvenience.m in Sources */,
+				B250332F1AF5E514006A2AE7 /* NSSegmentedControl+PGWSConvenience.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1018,16 +1079,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B2054D7E1AF477C700DC2C00 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B2054D6A1AF477C700DC2C00 /* Lantern */;
-			targetProxy = B2054D7D1AF477C700DC2C00 /* PBXContainerItemProxy */;
-		};
-		B2054D8D1AF477F300DC2C00 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B22425F21AC8F8B200809EF0 /* HoverlyticsModel */;
-			targetProxy = B2054D8C1AF477F300DC2C00 /* PBXContainerItemProxy */;
-		};
 		B22426001AC8F8B200809EF0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B22425F21AC8F8B200809EF0 /* HoverlyticsModel */;
@@ -1047,6 +1098,16 @@
 			isa = PBXTargetDependency;
 			target = B22B7D8E1AC6B9090026AEDB /* Hoverlytics */;
 			targetProxy = B22B7DA21AC6B9090026AEDB /* PBXContainerItemProxy */;
+		};
+		B25033581AF5E73E006A2AE7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B25033301AF5E5B0006A2AE7 /* Lantern */;
+			targetProxy = B25033571AF5E73E006A2AE7 /* PBXContainerItemProxy */;
+		};
+		B2D39AFF1AF5EBA3003D6738 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B25033301AF5E5B0006A2AE7 /* Lantern */;
+			targetProxy = B2D39AFE1AF5EBA3003D6738 /* PBXContainerItemProxy */;
 		};
 		B2E2692A1AE9DD650044BE04 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1075,48 +1136,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		B2054D841AF477C700DC2C00 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_USE_OPTIMIZATION_PROFILE = NO;
-				CODE_SIGN_ENTITLEMENTS = Lantern/Lantern.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Lantern/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				OTHER_SWIFT_FLAGS = "-D DEBUG";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Hoverlytics/Hoverlytics-Bridging-Header.h";
-			};
-			name = Debug;
-		};
-		B2054D851AF477C700DC2C00 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_USE_OPTIMIZATION_PROFILE = NO;
-				CODE_SIGN_ENTITLEMENTS = Lantern/Lantern.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = Lantern/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Hoverlytics/Hoverlytics-Bridging-Header.h";
-			};
-			name = Release;
-		};
 		B2054D861AF477C700DC2C00 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1135,7 +1154,7 @@
 				INFOPLIST_FILE = LanternTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lantern.app/Contents/MacOS/Lantern";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lantern copy.app/Contents/MacOS/Lantern copy";
 			};
 			name = Debug;
 		};
@@ -1152,7 +1171,7 @@
 				INFOPLIST_FILE = LanternTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lantern.app/Contents/MacOS/Lantern";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lantern copy.app/Contents/MacOS/Lantern copy";
 			};
 			name = Release;
 		};
@@ -1426,6 +1445,56 @@
 			};
 			name = Release;
 		};
+		B25033521AF5E5B0006A2AE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_USE_OPTIMIZATION_PROFILE = NO;
+				CODE_SIGN_ENTITLEMENTS = Lantern/Lantern.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Lantern/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
+				PRODUCT_NAME = Lantern;
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Hoverlytics/Hoverlytics-Bridging-Header.h";
+			};
+			name = Debug;
+		};
+		B25033531AF5E5B0006A2AE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_USE_OPTIMIZATION_PROFILE = NO;
+				CODE_SIGN_ENTITLEMENTS = Lantern/Lantern.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Lantern/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = Lantern;
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Hoverlytics/Hoverlytics-Bridging-Header.h";
+			};
+			name = Release;
+		};
 		B2E269301AE9DD660044BE04 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1445,6 +1514,7 @@
 				INFOPLIST_FILE = Sidetone/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Hoverlytics/Hoverlytics-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1462,6 +1532,7 @@
 				INFOPLIST_FILE = Sidetone/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Hoverlytics/Hoverlytics-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -1507,15 +1578,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B2054D881AF477C700DC2C00 /* Build configuration list for PBXNativeTarget "Lantern" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B2054D841AF477C700DC2C00 /* Debug */,
-				B2054D851AF477C700DC2C00 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		B2054D891AF477C700DC2C00 /* Build configuration list for PBXNativeTarget "LanternTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1566,6 +1628,15 @@
 			buildConfigurations = (
 				B22B7DAF1AC6B9090026AEDB /* Debug */,
 				B22B7DB01AC6B9090026AEDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B25033511AF5E5B0006A2AE7 /* Build configuration list for PBXNativeTarget "Lantern" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B25033521AF5E5B0006A2AE7 /* Debug */,
+				B25033531AF5E5B0006A2AE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

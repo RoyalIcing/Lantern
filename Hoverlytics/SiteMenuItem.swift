@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import HoverlyticsModel
 
 
 enum SiteMenuItem {

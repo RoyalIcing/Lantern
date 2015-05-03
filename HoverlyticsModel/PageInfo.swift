@@ -158,7 +158,8 @@ struct PageContentInfoOptions {
 
 public struct PageContentInfo {
 	public let data: NSData
-	public let document: ONOXMLDocument
+	private let document: ONOXMLDocument
+	let stringEncoding: NSStringEncoding
 	
 	public let preBodyByteCount: Int?
 	
@@ -197,6 +198,8 @@ public struct PageContentInfo {
 		var error: NSError?
 		let document = ONOXMLDocument.HTMLDocumentWithData(data, error: &error)
 		
+		self.stringEncoding = document.stringEncodingWithFallback()
+		// Must store document to also save references to all found elements.
 		self.document = document
 		
 		let stringEncoding = document.stringEncodingWithFallback()
@@ -330,15 +333,28 @@ public struct PageContentInfo {
 	}
 	
 	public var stringContent: String? {
-		return data.stringRepresentationUsingONOXMLDocumentHints(document)
+		return NSString(data: data, encoding: stringEncoding) as? String
+		//return data.stringRepresentationUsingONOXMLDocumentHints(document)
 	}
 	
 	public var HTMLHeadStringContent: String? {
-		return HTMLHeadData?.stringRepresentationUsingONOXMLDocumentHints(document)
+		if let data = HTMLHeadData {
+			return NSString(data: data, encoding: stringEncoding) as? String
+		}
+		else {
+			return nil
+		}
+		//return HTMLHeadData?.stringRepresentationUsingONOXMLDocumentHints(document)
 	}
 	
 	public var HTMLBodyStringContent: String? {
-		return HTMLBodyData?.stringRepresentationUsingONOXMLDocumentHints(document)
+		if let data = HTMLBodyData {
+			return NSString(data: data, encoding: stringEncoding) as? String
+		}
+		else {
+			return nil
+		}
+		//return HTMLBodyData?.stringRepresentationUsingONOXMLDocumentHints(document)
 	}
 }
 
