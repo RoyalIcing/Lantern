@@ -289,8 +289,6 @@
 		B25033111AF5C2C7006A2AE7 /* Ono.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ono.framework; path = Carthage/Build/Mac/Ono.framework; sourceTree = "<group>"; };
 		B25033131AF5C2D0006A2AE7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		B25033541AF5E5B0006A2AE7 /* Lantern.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lantern.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B25033551AF5E5B0006A2AE7 /* Lantern copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Lantern copy-Info.plist"; path = "/Users/pgwsmith/Work/Apps Git/Hoverlytics for Mac/Lantern copy-Info.plist"; sourceTree = "<absolute>"; };
-		B25033561AF5E71A006A2AE7 /* Lantern copy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Lantern copy.entitlements"; sourceTree = "<group>"; };
 		B250336B1AF5EA75006A2AE7 /* DumbStatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DumbStatsViewController.swift; sourceTree = "<group>"; };
 		B2515B7F1AF3C4CA00F6406A /* PopUpButtonAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpButtonAssistant.swift; sourceTree = "<group>"; };
 		B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SiteSettings.storyboard; sourceTree = "<group>"; };
@@ -471,7 +469,6 @@
 			isa = PBXGroup;
 			children = (
 				B2D39B061AF5F085003D6738 /* CloudKit.framework */,
-				B25033561AF5E71A006A2AE7 /* Lantern copy.entitlements */,
 				B25033131AF5C2D0006A2AE7 /* libxml2.dylib */,
 				B25033111AF5C2C7006A2AE7 /* Ono.framework */,
 				B2D563221AF5BF8A006DE202 /* Alamofire.framework */,
@@ -484,7 +481,6 @@
 				B2054D6C1AF477C700DC2C00 /* Lantern */,
 				B2054D7F1AF477C700DC2C00 /* LanternTests */,
 				B22B7D901AC6B9090026AEDB /* Products */,
-				B25033551AF5E5B0006A2AE7 /* Lantern copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
