@@ -192,16 +192,25 @@ public struct PageContentInfo {
 	}
 	public let feedLinkElements: [ONOXMLElement]
 	
-	public let externalURLs: Set<NSURL>
+	private let uniqueExternalPageURLs: UniqueURLArray
+	public var externalPageURLs: [NSURL] {
+		return uniqueExternalPageURLs.orderedURLs
+	}
 	public let aExternalLinkElements: [ONOXMLElement]
 	
 	private let uniqueLocalPageURLs: UniqueURLArray
 	public var localPageURLs: [NSURL] {
 		return uniqueLocalPageURLs.orderedURLs
 	}
+	public func containsLocalPageURL(URL: NSURL) -> Bool {
+		return uniqueLocalPageURLs.contains(URL)
+	}
 	public let aLocalLinkElements: [ONOXMLElement]
 	
 	public let imageURLs: Set<NSURL>
+	public func containsImageURL(URL: NSURL) -> Bool {
+		return imageURLs.contains(URL)
+	}
 	public let imageElements: [ONOXMLElement]
 	
 	//public let stylesheetURLs: Set<NSURL>
@@ -275,7 +284,7 @@ public struct PageContentInfo {
 			var aLocalLinkElements = [ONOXMLElement]()
 			var aExternalLinkElements = [ONOXMLElement]()
 			var uniqueLocalPageURLs = UniqueURLArray()
-			var externalURLs = Set<NSURL>()
+			var uniqueExternalPageURLs = UniqueURLArray()
 			
 			var imageElements = [ONOXMLElement]()
 			var imageURLs = Set<NSURL>()
@@ -301,7 +310,7 @@ public struct PageContentInfo {
 					
 					if isExternal {
 						aExternalLinkElements.append(aLinkElement)
-						externalURLs.insert(linkURL)
+						uniqueExternalPageURLs.insertReturningConformedURLIfNew(linkURL)
 					}
 					else {
 						aLocalLinkElements.append(aLinkElement)
@@ -312,7 +321,7 @@ public struct PageContentInfo {
 			self.aLocalLinkElements = aLocalLinkElements
 			self.aExternalLinkElements = aExternalLinkElements
 			self.uniqueLocalPageURLs = uniqueLocalPageURLs
-			self.externalURLs = externalURLs
+			self.uniqueExternalPageURLs = uniqueExternalPageURLs
 			
 			document.enumerateElementsWithCSS("img[src]") { (imgElement, index, stop) in
 				if
@@ -344,7 +353,7 @@ public struct PageContentInfo {
 			uniqueFeedURLs = UniqueURLArray()
 			feedLinkElements = []
 			
-			externalURLs = Set<NSURL>()
+			uniqueExternalPageURLs = UniqueURLArray()
 			aExternalLinkElements = []
 			
 			uniqueLocalPageURLs = UniqueURLArray()

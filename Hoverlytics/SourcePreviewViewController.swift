@@ -87,12 +87,8 @@ class SourcePreviewTabViewController: NSTabViewController {
 		return item
 	}
 	
-	lazy var sourcePreviewStoryboard: NSStoryboard = {
-		NSStoryboard(name: "SourcePreview", bundle: nil)!
-	}()
-	
 	func newSourcePreviewController() -> SourcePreviewViewController {
-		return sourcePreviewStoryboard.instantiateControllerWithIdentifier("Source Preview View Controller") as! SourcePreviewViewController
+		return NSStoryboard.lantern_contentPreviewStoryboard.instantiateControllerWithIdentifier("Source Preview View Controller") as! SourcePreviewViewController
 	}
 	
 	func updateSourceTextForSection(section: SourcePreviewTabItemSection, tabViewItem: NSTabViewItem) {

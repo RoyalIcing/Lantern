@@ -15,15 +15,20 @@ public enum ValidatedStringValue {
 	case ValidString(string: String)
 	case Missing
 	case Empty
-	case Multiple
+	case Multiple([ValidatedStringValue])
 	case Invalid
 	
-	init(string: String) {
-		if string == "" {
-			self = .Empty
+	init(string: String?) {
+		if let string = string {
+			if string == "" {
+				self = .Empty
+			}
+			else {
+				self = .ValidString(string: string)
+			}
 		}
 		else {
-			self = .ValidString(string: string)
+			self = .Missing
 		}
 	}
 }
@@ -55,7 +60,10 @@ extension ValidatedStringValue {
 		case 0:
 			return .Missing
 		default:
-			return .Multiple
+			var values: [ValidatedStringValue] = elements.map { element in
+				return self.validateContentOfElement(element)
+			}
+			return .Multiple(values)
 		}
 	}
 	
@@ -76,7 +84,10 @@ extension ValidatedStringValue {
 		case 0:
 			return .Missing
 		default:
-			return .Multiple
+			var values: [ValidatedStringValue] = elements.map { element in
+				return self.validateAttribute(attribute, ofElement: element)
+			}
+			return .Multiple(values)
 		}
 	}
 }

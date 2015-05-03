@@ -78,7 +78,7 @@
                                     <rect key="frame" x="1" y="17" width="238" height="117"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="b01-9k-OdU" viewBased="YES" indentationPerLevel="16" outlineTableColumn="nV0-mQ-8uj" id="8zm-hh-BVu">
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="b01-9k-OdU" viewBased="YES" indentationPerLevel="16" outlineTableColumn="nV0-mQ-8uj" id="8zm-hh-BVu" customClass="OutlineView" customModule="Hoverlytics" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="688" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>

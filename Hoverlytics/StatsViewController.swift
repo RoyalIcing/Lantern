@@ -60,6 +60,9 @@ enum StatsFilterResponseChoice: Int {
 	case ProblematicHeading = 103
 	case ProblematicMetaDescription = 104
 	
+	case IsLinkedByBrowsedPage = 200
+	case ContainsLinkToBrowsedPage = 201
+	
 	
 	var responseType: PageResponseType? {
 		switch self {
@@ -86,6 +89,17 @@ enum StatsFilterResponseChoice: Int {
 			return .Title
 		case .ProblematicMetaDescription:
 			return .MetaDescription
+		default:
+			return nil
+		}
+	}
+	
+	func pageLinkFilterWithURL(URL: NSURL) -> PageLinkFilter? {
+		switch self {
+		case .IsLinkedByBrowsedPage:
+			return .IsLinkedByURL(URL)
+		case .ContainsLinkToBrowsedPage:
+			return .ContainsLinkToURL(URL)
 		default:
 			return nil
 		}
@@ -118,6 +132,11 @@ extension StatsFilterResponseChoice: MenuItemRepresentative {
 			return "Invalid Page Titles"
 		case .ProblematicMetaDescription:
 			return "Invalid Meta Description"
+			
+		case .IsLinkedByBrowsedPage:
+			return "Is Linked by Browsed Page"
+		case .ContainsLinkToBrowsedPage:
+			return "Contains Link to Browsed Page"
 		}
 	}
 	
@@ -239,6 +258,8 @@ class StatsViewController: NSViewController {
 	
 	var pageMapper: PageMapper?
 	
+	var browsedURL: NSURL?
+	
 	var chosenBaseContentChoice: BaseContentTypeChoice = .LocalHTMLPages
 	var filterToBaseContentType: BaseContentType {
 		return chosenBaseContentChoice.baseContentType
@@ -275,13 +296,19 @@ class StatsViewController: NSViewController {
 	
 	var primaryURL: NSURL! {
 		didSet {
+			browsedURL = primaryURL
 			crawl()
 		}
 	}
 	
-	func crawlNavigatedURL(URL: NSURL) {
+	func didNavigateToURL(URL: NSURL, crawl: Bool) {
 		if let pageMapper = pageMapper {
-			pageMapper.crawlAdditionalURL(URL)
+			browsedURL = URL
+			updateListOfURLs()
+			
+			if crawl {
+				pageMapper.addAdditionalURL(URL)
+			}
 		}
 		else {
 			primaryURL = URL
@@ -329,6 +356,15 @@ class StatsViewController: NSViewController {
 			}
 			else if let validationArea = filterResponseChoice.validationArea {
 				filteredURLs = pageMapper.copyHTMLPageURLsForType(baseContentType, failingToValidateInArea: validationArea)
+			}
+			else if
+				let browsedURL = browsedURL,
+				let pageLinkFilter = filterResponseChoice.pageLinkFilterWithURL(browsedURL)
+			{
+				#if DEBUG
+					println("filtering to browsedURL \(browsedURL)")
+				#endif
+				filteredURLs = pageMapper.copyHTMLPageURLsFilteredBy(pageLinkFilter)
 			}
 			else {
 				fatalError("filterResponseChoice must be set to something valid")
@@ -513,13 +549,33 @@ class StatsViewController: NSViewController {
 	
 	@IBAction func doubleClickSelectedRow(sender: AnyObject?) {
 		let row = outlineView.clickedRow
+		let column = outlineView.clickedColumn
 		if row != -1 {
 			if
 				let URL = outlineView.itemAtRow(row) as? NSURL,
 				let pageInfo = pageMapper?.pageInfoForRequestedURL(URL)
 			{
-				didChooseURLCallback?(URL: URL, pageInfo: pageInfo)
+				// Double clicking requested URL chooses that URL.
+				if column == 0 {
+					didChooseURLCallback?(URL: URL, pageInfo: pageInfo)
+				}
+				else {
+					showStringValuePreviewForResourceAtRow(row, column: column)
+				}
 			}
+		}
+	}
+	
+	@IBAction func pauseCrawling(sender: AnyObject?) {
+		pageMapper?.pauseCrawling()
+	}
+	
+	override func respondsToSelector(selector: Selector) -> Bool {
+		switch selector {
+		case "pauseCrawling:":
+			return pageMapper?.isCrawling ?? false
+		default:
+			return super.respondsToSelector(selector)
 		}
 	}
 }
@@ -580,10 +636,15 @@ extension StatsViewController {
 		let showSourceItem = rowMenu.addItemWithTitle("Show Source", action: "showSourcePreviewForPageAtSelectedRow:", keyEquivalent: "")!
 		showSourceItem.target = self
 		
+		let showStringValueItem = rowMenu.addItemWithTitle("Show This Value", action: "showStringValuePreviewForResourceAtSelectedRow:", keyEquivalent: "")!
+		showStringValueItem.target = self
+		
+		rowMenu.addItem(NSMenuItem.separatorItem())
+		
 		let copyURLItem = rowMenu.addItemWithTitle("Copy URL", action: "copyURLForSelectedRow:", keyEquivalent: "")!
 		copyURLItem.target = self
 		
-		outlineView.menu = rowMenu
+		//outlineView.menu = rowMenu
 	}
 	
 	@IBAction func showSourcePreviewForPageAtSelectedRow(menuItem: NSMenuItem) {
@@ -600,19 +661,56 @@ extension StatsViewController {
 		}
 	}
 	
-	func showSourcePreviewForPageAtRow(row: Int) {
-		if let pageURL = outlineView.itemAtRow(row) as? NSURL
+	@IBAction func showStringValuePreviewForResourceAtSelectedRow(menuItem: NSMenuItem) {
+		let row = outlineView.clickedRow
+		let column = outlineView.clickedColumn
+		if row != -1 && column != -1 {
+			showStringValuePreviewForResourceAtRow(row, column: column)
+		}
+	}
+	
+	func presentedInfoIdentifierForTableColumn(tableColumn: NSTableColumn) -> PagePresentedInfoIdentifier? {
+		return PagePresentedInfoIdentifier(rawValue: tableColumn.identifier)
+	}
+	
+	func showStringValuePreviewForResourceAtRow(row: Int, column: Int) {
+		let tableColumn = outlineView.tableColumns[column] as! NSTableColumn
+		
+		if
+			let presentedInfoIdentifier = presentedInfoIdentifierForTableColumn(tableColumn),
+			let pageURL = outlineView.itemAtRow(row) as? NSURL,
+			let pageMapper = pageMapper
 		{
-			if let pageMapper = pageMapper where pageMapper.hasFinishedRequestingURL(pageURL)
-			{
-				if let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL) {
-					let storyboard = self.storyboard!
-					let sourcePreviewTabViewController = SourcePreviewTabViewController()
-					sourcePreviewTabViewController.pageInfo = pageInfo
-					
-					let rowRect = outlineView.rectOfRow(row)
-					presentViewController(sourcePreviewTabViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSMinYEdge, behavior: .Semitransient)
+			let presentedInfoIdentifier = presentedInfoIdentifier.longerFormInformation ?? presentedInfoIdentifier
+			
+			if let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL) {
+				let validatedStringValue = presentedInfoIdentifier.validatedStringValueInPageInfo(pageInfo, pageMapper: pageMapper)
+				
+				let previewViewController = MultipleStringPreviewViewController.instantiateFromStoryboard()
+				switch validatedStringValue {
+				case .Multiple(let values):
+					previewViewController.validatedStringValues = values
+				default:
+					previewViewController.validatedStringValues = [validatedStringValue]
 				}
+				
+				let rowRect = outlineView.frameOfCellAtColumn(column, row: row)
+				presentViewController(previewViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSMinYEdge, behavior: .Semitransient)
+			}
+		}
+	}
+	
+	func showSourcePreviewForPageAtRow(row: Int) {
+		if
+			let pageURL = outlineView.itemAtRow(row) as? NSURL,
+			let pageMapper = pageMapper where pageMapper.hasFinishedRequestingURL(pageURL)
+		{
+			if let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL) {
+				let sourcePreviewTabViewController = SourcePreviewTabViewController()
+				sourcePreviewTabViewController.pageInfo = pageInfo
+				
+				let rowRect = outlineView.rectOfRow(row)
+				presentViewController(sourcePreviewTabViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSMinYEdge, behavior: .Semitransient)
 			}
 		}
 	}
@@ -645,10 +743,13 @@ extension StatsViewController {
 				.ResponseErrors,
 				nil,
 				.ValidInformation,
-				.ProblematicMIMEType,
+				//.ProblematicMIMEType,
 				.ProblematicPageTitle,
 				.ProblematicHeading,
-				.ProblematicMetaDescription
+				.ProblematicMetaDescription,
+				nil,
+				.IsLinkedByBrowsedPage,
+				.ContainsLinkToBrowsedPage
 			]
 		default:
 			return [
@@ -658,9 +759,9 @@ extension StatsViewController {
 				//.Redirects,
 				.RequestErrors,
 				.ResponseErrors,
-				nil,
-				.ValidInformation,
-				.ProblematicMIMEType,
+				//nil,
+				//.ValidInformation,
+				//.ProblematicMIMEType,
 			]
 		}
 	}
@@ -803,7 +904,11 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 	}
 	
 	func outlineView(outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
-		return filteredURLs[index]
+		if item == nil {
+			return filteredURLs[index]
+		}
+		
+		fatalError("Outline view is only currently one level deep")
 	}
 	
 	func outlineView(outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
@@ -833,7 +938,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 				var validatedStringValue: ValidatedStringValue = .Missing
 				
 				if let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL) {
-					validatedStringValue = identifier.validatedStringValueInPageInfo(pageInfo)
+					validatedStringValue = identifier.validatedStringValueInPageInfo(pageInfo, pageMapper: pageMapper)
 					
 					if
 						let finalURL = pageInfo.finalURL,
@@ -867,10 +972,12 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 				}
 			}
 			else {
-				if identifier == .requestedURL {
-					stringValue = pageURL.relativePath!
-				}
-				else {
+				let validatedStringValue = identifier.validatedStringValueForPendingURL(pageURL)
+				
+				switch validatedStringValue {
+				case .ValidString(let string):
+					stringValue = string
+				default:
 					stringValue = "(loading)"
 					opacity = 0.2
 				}
@@ -883,7 +990,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 				}
 				view.alphaValue = opacity
 				
-				//view.menu = rowMenu
+				view.menu = rowMenu
 
 				return view
 			}

@@ -297,6 +297,30 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Crawler" id="meO-H3-OkP">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Crawler" id="jmO-PR-0cp">
+                                    <items>
+                                        <menuItem title="Pause Crawling" keyEquivalent="." id="YTK-TP-0dC">
+                                            <connections>
+                                                <action selector="pauseCrawling:" target="Ady-hI-5gd" id="scu-Bj-eLS"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Browser" id="VKd-XB-Lw2">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Browser" id="BZK-dL-e5X">
+                                    <items>
+                                        <menuItem title="Reload" keyEquivalent="r" id="ttw-yQ-EUr">
+                                            <connections>
+                                                <action selector="reloadBrowsing:" target="Ady-hI-5gd" id="wdT-EY-lk8"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Window" id="aUF-d1-5bR">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Window" systemMenu="window" id="Td7-aD-5lo">

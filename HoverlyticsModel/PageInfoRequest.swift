@@ -117,7 +117,7 @@ class PageInfoRequestQueue {
 		
 		// Perform the request
 		let requestedURL = infoRequest.URL
-		infoRequest.request = Alamofire
+		infoRequest.request = requestManager
 			.request(.GET, requestedURL)
 			.response(serializer: serializer) { (URLRequest, response, infoReference, error) in
 				if

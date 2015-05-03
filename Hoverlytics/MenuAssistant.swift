@@ -1,6 +1,6 @@
 //
 //  MenuAssistant.swift
-//  Hoverlytics
+//  BurntCocoaUI
 //
 //  Created by Patrick Smith on 28/04/2015.
 //  Copyright (c) 2015 Burnt Caramel. All rights reserved.
@@ -9,6 +9,9 @@
 import Cocoa
 
 
+/**
+What each menu item is represented with. Recommended to be used on an enum. This can either be a model enum directly using an extension, or you can use a specific enum.
+*/
 public protocol MenuItemRepresentative {
 	var title: String { get }
 	var tag: Int? { get }
@@ -17,27 +20,50 @@ public protocol MenuItemRepresentative {
 	var uniqueIdentifier: UniqueIdentifier { get }
 }
 
-
+/**
+MenuAssistant
+*/
 public class MenuAssistant<T: MenuItemRepresentative> {
 	public let menu: NSMenu?
 	
+	/**
+	Create a new menu assistant.
+	
+	You can pass a NSMenu you would like to automatically update. Alternatively, initialize with nil and you can call createItems() yourself, if you were combining the items from several menu assistants for example.
+	
+	:param: menu Pass a NSMenu you would like to automatically update.
+	*/
 	public init(menu: NSMenu?) {
 		self.menu = menu
 	}
 	
+	/// Pass your implementation of MenuItemRepresentative. Use nil for separators.
 	public var menuItemRepresentatives: [T?]!
 	public typealias Item = T
 	public typealias ItemUniqueIdentifier = T.UniqueIdentifier
 	
+	/// Customize the title dynamically, called for each menu item representative.
 	public var titleReturner: ((menuItemRepresentative: T) -> String)?
+	/// Customize the action & target dynamically, called for each menu item representative.
 	public var actionAndTargetReturner: ((menuItemRepresentative: T) -> (action: Selector, target: AnyObject?))?
+	/// Customize the represented object, called for each menu item representative.
 	public var representedObjectReturner: ((menuItemRepresentative: T) -> AnyObject?)?
+	/// Customize the state (NSOnState / NSOffState / NSMixedState), called for each menu item representative.
 	public var stateReturner: ((menuItemRepresentative: T) -> Int)?
+	/// Customize whether the menu item is enabled, called for each menu item representative.
 	public var enabledReturner: ((menuItemRepresentative: T) -> Bool)?
 	
+	/// Menu items are cached so they are not thrown away and recreated every time.
 	private var uniqueIdentifierToMenuItems = [ItemUniqueIdentifier: NSMenuItem]()
 	
+	/**
+	Creates menu items based on the array of representatives
+	*/
 	public func createItems() -> [NSMenuItem] {
+		if menuItemRepresentatives == nil {
+			fatalError("Set .menuItemRepresentatives before calling createItems()")
+		}
+		
 		var previousCachedIdentifiers = Set(uniqueIdentifierToMenuItems.keys)
 		
 		let items = menuItemRepresentatives.map { menuItemRepresentative -> NSMenuItem in
@@ -89,6 +115,9 @@ public class MenuAssistant<T: MenuItemRepresentative> {
 		return items
 	}
 	
+	/**
+	Updates the menu. fatalError() if the receiver was initialized with a menu.
+	*/
 	public func updateMenu() {
 		if let menu = menu {
 			menu.removeAllItems()
@@ -103,6 +132,13 @@ public class MenuAssistant<T: MenuItemRepresentative> {
 		}
 	}
 	
+	/**
+	Find the .uniqueIdentifier for the passed NSMenuItem. fatalError() if the receiver was initialized with a menu.
+	
+	:param: menuItem The menu item inside the receiver’s menu.
+	
+	:returns: The unique identifier for the representative that matched the menu item.
+	*/
 	public func uniqueIdentifierForMenuItem(menuItem menuItemToFind: NSMenuItem) -> ItemUniqueIdentifier? {
 		if let menu = menu {
 			let index = menu.indexOfItem(menuItemToFind)

@@ -44,6 +44,14 @@ class UniqueURLArray: SequenceType {
 		return uniqueURLs.count
 	}
 	
+	func contains(URL: NSURL) -> Bool {
+		if let URL = conformURL(URL) {
+			return uniqueURLs.contains(URL)
+		}
+		
+		return false
+	}
+	
 	func insertReturningConformedURLIfNew(var URL: NSURL) -> NSURL? {
 		if let URL = conformURL(URL) {
 			if !uniqueURLs.contains(URL) {

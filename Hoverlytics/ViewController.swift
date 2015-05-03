@@ -106,15 +106,18 @@ class ViewController: NSViewController
 			
 			if pageViewController.crawlWhileBrowsing {
 				// Can only crawl the initial 'local' website.
-				if let initialHost = self.mainState.initialHost {
-					if URL.host != initialHost {
-						return
+				let isLocal: Bool = {
+					if let initialHost = self.mainState.initialHost {
+						return URL.host == initialHost
 					}
-				}
+					
+					return false
+				}()
+				
 				#if DEBUG
 					println("navigatedURLDidChangeCallback \(URL)")
 				#endif
-				self.statsViewController.crawlNavigatedURL(URL)
+				self.statsViewController.didNavigateToURL(URL, crawl: isLocal)
 			}
 		}
 		
@@ -186,6 +189,18 @@ class ViewController: NSViewController
 				presentViewController(siteSettingsViewController, asPopoverRelativeToRect: button.bounds, ofView: button, preferredEdge: NSMaxYEdge, behavior: .Semitransient)
 			}
 		}
+	}
+	
+	override func supplementalTargetForAction(action: Selector, sender: AnyObject?) -> AnyObject? {
+		if statsViewController.respondsToSelector(action) {
+			return statsViewController
+		}
+		
+		if pageViewController.respondsToSelector(action) {
+			return pageViewController
+		}
+		
+		return super.supplementalTargetForAction(action, sender: sender)
 	}
 	
 	

@@ -13,7 +13,7 @@ import HoverlyticsModel
 private let sectionUserDefaultKey = "mainSection"
 
 
-class MainWindowController: NSWindowController, NSToolbarDelegate {
+class MainWindowController: NSWindowController {
 	
 	let mainState = MainState()
 	typealias MainStateNotification = MainState.Notification
@@ -47,6 +47,8 @@ class MainWindowController: NSWindowController, NSToolbarDelegate {
         super.windowDidLoad()
 		
 		if let window = window {
+			window.delegate = self
+			
 			window.titleVisibility = .Hidden
 			//window.appearance = NSAppearance(named: NSAppearanceNameVibrantDark)
 			//window.appearance = NSAppearance(named: NSAppearanceNameVibrantLight)
@@ -83,6 +85,10 @@ class MainWindowController: NSWindowController, NSToolbarDelegate {
 		
 		return displayName
 	}
+}
+
+extension MainWindowController: NSWindowDelegate {
+	
 }
 
 

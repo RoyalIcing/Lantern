@@ -10,6 +10,22 @@ import Foundation
 import Ono
 
 
+extension NSURL {
+	var burnt_pathWithQuery: String? {
+		if let path = path {
+			if let query = query {
+				return "\(path)?\(query)"
+			}
+			else {
+				return path
+			}
+		}
+		
+		return nil
+	}
+}
+
+
 public enum PagePresentedInfoIdentifier: String {
 	case requestedURL = "requestedURL"
 	case statusCode = "statusCode"
@@ -21,7 +37,20 @@ public enum PagePresentedInfoIdentifier: String {
 	case pageByteCountBeforeBodyTag = "pageBeforeBodyTagBytes"
 	case pageByteCountAfterBodyTag = "pageAfterBodyTagBytes"
 	case internalLinkCount = "internalLinkCount"
+	case internalLinks = "internalLinks"
 	case externalLinkCount = "externalLinkCount"
+	case externalLinks = "externalLinks"
+	
+	public var longerFormInformation: PagePresentedInfoIdentifier? {
+		switch self {
+		case .internalLinkCount:
+			return .internalLinks
+		case .externalLinkCount:
+			return .externalLinks
+		default:
+			return nil
+		}
+	}
 	
 	public func titleForBaseContentType(baseContentType: BaseContentType?) -> String {
 		switch self {
@@ -56,9 +85,9 @@ public enum PagePresentedInfoIdentifier: String {
 			return "<head> Bytes"
 		case .pageByteCountAfterBodyTag:
 			return "<body> Bytes"
-		case .internalLinkCount:
+		case .internalLinkCount, .internalLinks:
 			return "Internal Links"
-		case .externalLinkCount:
+		case .externalLinkCount, .externalLinks:
 			return "External Links"
 		}
 	}
@@ -105,16 +134,53 @@ public enum PagePresentedInfoIdentifier: String {
 		return byteFormatter
 		}()
 	
-	public func validatedStringValueInPageInfo(pageInfo: PageInfo) -> ValidatedStringValue {
+	public func validatedStringValueForPendingURL(requestedURL: NSURL) -> ValidatedStringValue {
 		switch self {
 		case .requestedURL:
-			if let relativePath = pageInfo.requestedURL.relativePath {
-				if let finalURLPath = pageInfo.finalURL?.relativePath where pageInfo.requestedURL.absoluteURL != pageInfo.finalURL?.absoluteURL {
-					return ValidatedStringValue(string: "\(relativePath) (\(finalURLPath))")
+			#if DEBUG && false
+				return ValidatedStringValue(string: "\(requestedURL)")
+			#endif
+			
+			if let requestedPath = requestedURL.burnt_pathWithQuery {
+				return ValidatedStringValue(string: requestedPath)
+			}
+		default:
+			break
+		}
+		
+		return .Missing
+	}
+	
+	public func validatedStringValueInPageInfo(pageInfo: PageInfo, pageMapper: PageMapper) -> ValidatedStringValue {
+		switch self {
+		case .requestedURL:
+			let requestedURL = pageInfo.requestedURL
+			if let requestedPath = pageInfo.requestedURL.burnt_pathWithQuery {
+				if
+					let finalURL = pageInfo.finalURL,
+					let finalURLPath = finalURL.burnt_pathWithQuery where requestedURL.absoluteString != finalURL.absoluteString
+				{
+					if let redirectionInfo = pageMapper.redirectedDestinationURLToInfo[finalURL] {
+						return ValidatedStringValue(string: "\(requestedPath) (\(finalURLPath))")
+					}
+					
+					if
+						let requestedScheme = requestedURL.scheme,
+						let finalScheme = finalURL.scheme
+					{
+						if requestedScheme != finalScheme {
+							return ValidatedStringValue(string: "\(requestedPath) (\(finalURLPath) to \(finalScheme))")
+						}
+					}
+						
+					return ValidatedStringValue(string: "\(requestedPath) (\(finalURLPath))")
 				}
-				else {
-					return ValidatedStringValue(string: relativePath)
-				}
+				
+				#if DEBUG && false
+					return ValidatedStringValue(string: "\(requestedURL) \(pageInfo.finalURL)")
+				#endif
+				
+				return ValidatedStringValue(string: requestedPath)
 			}
 		case .statusCode:
 			return ValidatedStringValue(string: String(pageInfo.statusCode))
@@ -158,10 +224,30 @@ public enum PagePresentedInfoIdentifier: String {
 					string: String(localPageURLs.count)
 				)
 			}
+		case .internalLinks:
+			if let localPageURLs = pageInfo.contentInfo?.localPageURLs {
+				return ValidatedStringValue.Multiple(
+					localPageURLs.map { URL in
+						ValidatedStringValue(
+							string: URL.absoluteString
+						)
+					}
+				)
+			}
 		case .externalLinkCount:
-			if let externalURLs = pageInfo.contentInfo?.externalURLs {
+			if let externalPageURLs = pageInfo.contentInfo?.externalPageURLs {
 				return ValidatedStringValue(
-					string: String(externalURLs.count)
+					string: String(externalPageURLs.count)
+				)
+			}
+		case .externalLinks:
+			if let externalPageURLs = pageInfo.contentInfo?.externalPageURLs {
+				return ValidatedStringValue.Multiple(
+					externalPageURLs.map { URL in
+						ValidatedStringValue(
+							string: URL.absoluteString
+						)
+					}
 				)
 			}
 		}

@@ -106,6 +106,10 @@ class PageViewController: NSViewController {
 		let on = checkButton.state == NSOnState
 		crawlWhileBrowsing = on
 	}
+	
+	@IBAction func reloadBrowsing(sender: AnyObject?) {
+		webViewController.reloadFromOrigin()
+	}
 }
 
 
@@ -205,6 +209,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		webView = WKWebView(frame: NSRect.zeroRect, configuration: webViewConfiguration)
 		webView.navigationDelegate = self
 		webView.UIDelegate = self
+		webView.allowsBackForwardNavigationGestures = true
 		
 		if true {
 			// Required by TypeKit to serve the correct fonts.
@@ -227,6 +232,10 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		webView.loadRequest(URLRequest)
 	}
 	
+	func reloadFromOrigin() {
+		webView.reloadFromOrigin()
+	}
+	
 	private func mainQueue_notify(identifier: PageWebViewControllerNotification, userInfo: [String:AnyObject]? = nil) {
 		let nc = NSNotificationCenter.defaultCenter()
 		nc.postNotificationName(identifier.notificationName, object: self, userInfo: userInfo)
@@ -245,10 +254,6 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		else {
 			super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
 		}
-	}
-	
-	@IBAction func reload(sender: AnyObject) {
-		webView.reload()
 	}
 	
 	// MARK: WKNavigationDelegate

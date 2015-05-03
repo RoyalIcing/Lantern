@@ -40,6 +40,8 @@ public class PageMapper {
 	
 	public internal(set) var additionalURLs = [NSURL]()
 	
+	//var ignoresNoFollows = false
+	
 	
 	internal(set) var requestedURLsUnique = UniqueURLArray()
 	
@@ -76,8 +78,20 @@ public class PageMapper {
 	
 	private let infoRequestQueue: PageInfoRequestQueue
 	
-	//var ignoresNoFollows = false
-	public internal(set) var paused = false
+	private enum State {
+		case Idle
+		case Crawling
+		case Paused
+	}
+	
+	private var state: State = .Idle
+	public var isCrawling: Bool {
+		return state == .Crawling
+	}
+	public var paused: Bool {
+		return state == .Paused
+	}
+	
 	var queuedURLsToRequestWhilePaused = [(NSURL, BaseContentType, UInt)]()
 	
 	public var didUpdateCallback: ((pageURL: NSURL) -> Void)?
@@ -108,29 +122,54 @@ public class PageMapper {
 		}
 	}
 	
-	public func reload() {
-		loadedURLToPageInfo.removeAll()
-		externalURLs.removeAll()
-		requestedLocalPageURLsUnique.removeAll()
+	public func addAdditionalURL(URL: NSURL) {
+		additionalURLs.append(URL)
 		
-		retrieveInfoForPageWithURL(primaryURL, expectedBaseContentType: .LocalHTMLPage, currentDepth: 0)
+		if isCrawling {
+			retrieveInfoForPageWithURL(URL, expectedBaseContentType: .LocalHTMLPage, currentDepth: 0)
+		}
 	}
 	
-	public func crawlAdditionalURL(URL: NSURL) {
-		additionalURLs.append(URL)
-		retrieveInfoForPageWithURL(URL, expectedBaseContentType: .LocalHTMLPage, currentDepth: 0)
+	func clearLoadedInfo() {
+		requestedURLsUnique.removeAll()
+		loadedURLToPageInfo.removeAll()
+		requestedURLToDestinationURL.removeAll()
+		requestedURLToResponseType.removeAll()
+		
+		requestedLocalPageURLsUnique.removeAll()
+		externalURLs.removeAll()
+		requestedImageURLsUnique.removeAll()
+		requestedFeedURLsUnique.removeAll()
+		
+		redirectedSourceURLToInfo.removeAll()
+		redirectedDestinationURLToInfo.removeAll()
+		
+		queuedURLsToRequestWhilePaused.removeAll()
+	}
+	
+	public func reload() {
+		state = .Crawling
+		
+		clearLoadedInfo()
+		
+		retrieveInfoForPageWithURL(primaryURL, expectedBaseContentType: .LocalHTMLPage, currentDepth: 0)
+		
+		for additionalURL in additionalURLs {
+			retrieveInfoForPageWithURL(additionalURL, expectedBaseContentType: .LocalHTMLPage, currentDepth: 0)
+		}
 	}
 	
 	public func pageInfoForRequestedURL(URL: NSURL) -> PageInfo? {
 		if JUST_USE_FINAL_URLS {
-			return loadedURLToPageInfo[URL]
+			if let URL = conformURL(URL) {
+				return loadedURLToPageInfo[URL]
+			}
 		}
 		else if let destinationURL = requestedURLToDestinationURL[URL] {
 			return loadedURLToPageInfo[destinationURL]
 		}
-		else {
-			return nil
-		}
+		
+		return nil
 	}
 	
 	private func retrieveInfoForPageWithURL(pageURL: NSURL, expectedBaseContentType: BaseContentType, currentDepth: UInt) {
@@ -194,10 +233,12 @@ public class PageMapper {
 			
 			let childDepth = currentDepth + 1
 			let processChildren = childDepth <= maximumDepth
-			let crawl = crawlsFoundURLs
+			let crawl = crawlsFoundURLs && isCrawling
 			
 			if let contentInfo = pageInfo.contentInfo where processChildren {
-				externalURLs.unionInPlace(contentInfo.externalURLs)
+				for pageURL in contentInfo.externalPageURLs {
+					externalURLs.insert(pageURL)
+				}
 				
 				for pageURL in contentInfo.localPageURLs {
 					if JUST_USE_FINAL_URLS {
@@ -249,14 +290,14 @@ public class PageMapper {
 		assert(crawlsFoundURLs, "Must have been initialized with crawlsFoundURLs = true")
 		
 		if !paused {
-			paused = true
+			state = .Paused
 		}
 	}
 	
 	public func resumeCrawling() {
 		assert(crawlsFoundURLs, "Must have been initialized with crawlsFoundURLs = true")
 		
-		paused = false
+		state = .Crawling
 		
 		for (pendingURL, baseContentType, currentDepth) in queuedURLsToRequestWhilePaused {
 			retrieveInfoForPageWithURL(pendingURL, expectedBaseContentType: baseContentType, currentDepth: currentDepth)
@@ -265,7 +306,8 @@ public class PageMapper {
 	}
 	
 	public func cancel() {
-		paused = true
+		state = .Idle
+		//clearLoadedInfo()
 		
 		didUpdateCallback = nil
 		
