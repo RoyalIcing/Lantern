@@ -7,13 +7,13 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
-	<string>Alamofire</string>
+	<string>Ono</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.alamofire.Alamofire</string>
+	<string>com.mattt.Ono</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Alamofire</string>
+	<string>Ono</string>
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>

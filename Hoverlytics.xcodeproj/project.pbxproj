@@ -42,7 +42,6 @@
 		B22425FE1AC8F8B200809EF0 /* HoverlyticsModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; };
 		B22426071AC8F8B200809EF0 /* HoverlyticsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426061AC8F8B200809EF0 /* HoverlyticsModelTests.swift */; };
 		B224260A1AC8F8B200809EF0 /* HoverlyticsModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; };
-		B224260B1AC8F8B200809EF0 /* HoverlyticsModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B22426121AC8F8D000809EF0 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B7DBF1AC785C90026AEDB /* CloudKit.framework */; };
 		B22426141AC8F8DB00809EF0 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426131AC8F8DB00809EF0 /* Site.swift */; };
 		B22426161AC8FA2E00809EF0 /* CloudKit+Hoverlytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426151AC8FA2E00809EF0 /* CloudKit+Hoverlytics.swift */; };
@@ -74,20 +73,23 @@
 		B23966E21ACD36FF00C6A420 /* userAgent.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966E11ACD36FF00C6A420 /* userAgent.js */; };
 		B23966EA1ACD45BD00C6A420 /* panelAuthorizationChanged.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966E91ACD45BC00C6A420 /* panelAuthorizationChanged.js */; };
 		B23966EC1ACD518E00C6A420 /* setPanelAuthorizationToken.js in Resources */ = {isa = PBXBuildFile; fileRef = B23966EB1ACD518E00C6A420 /* setPanelAuthorizationToken.js */; };
-		B23BE38C1AEFE062008BEDC0 /* Carthage in Resources */ = {isa = PBXBuildFile; fileRef = B23BE38B1AEFE062008BEDC0 /* Carthage */; };
-		B23BE38F1AEFE080008BEDC0 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B23BE38E1AEFE080008BEDC0 /* Alamofire.framework */; };
-		B23BE3911AEFE083008BEDC0 /* Ono.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B23BE3901AEFE083008BEDC0 /* Ono.framework */; };
 		B23BE3931AF06AA6008BEDC0 /* SegmentedControlAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23BE3921AF06AA6008BEDC0 /* SegmentedControlAssistant.swift */; };
 		B23E29EA1AE73DF6009A94E5 /* console.js in Resources */ = {isa = PBXBuildFile; fileRef = B23E29E91AE73DF6009A94E5 /* console.js */; };
 		B23E29EC1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */; };
 		B23EA59E1ACA5F6A009B4032 /* ValueValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */; };
+		B25033121AF5C2C7006A2AE7 /* Ono.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25033111AF5C2C7006A2AE7 /* Ono.framework */; };
+		B25033151AF5C789006A2AE7 /* HoverlyticsModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B25033181AF5C9A5006A2AE7 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B25033131AF5C2D0006A2AE7 /* libxml2.dylib */; };
 		B2515B801AF3C4CA00F6406A /* PopUpButtonAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2515B7F1AF3C4CA00F6406A /* PopUpButtonAssistant.swift */; };
 		B2A63B5F1AC8DAA0004CEBE1 /* SiteSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */; };
 		B2A63B611AC8DACD004CEBE1 /* SiteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */; };
+		B2AD72E41AF4E36A0099FC7C /* ONOXMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AD72E21AF4E36A0099FC7C /* ONOXMLDocument.h */; };
+		B2AD72E51AF4E36A0099FC7C /* ONOXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AD72E31AF4E36A0099FC7C /* ONOXMLDocument.m */; };
 		B2B542C11AF0980E00073464 /* NSData+ONOXMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B542C01AF0980E00073464 /* NSData+ONOXMLDocument.swift */; };
 		B2B542C31AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B542C21AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift */; };
 		B2B542C71AF0A09600073464 /* SourcePreview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2B542C61AF0A09600073464 /* SourcePreview.storyboard */; };
 		B2C4A93F1ACA31F0000F1566 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */; };
+		B2D563241AF5BF8A006DE202 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D563221AF5BF8A006DE202 /* Alamofire.framework */; };
 		B2E2691C1AE9DD650044BE04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2691B1AE9DD650044BE04 /* AppDelegate.swift */; };
 		B2E2691E1AE9DD650044BE04 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2691D1AE9DD650044BE04 /* ViewController.swift */; };
 		B2E269201AE9DD650044BE04 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2E2691F1AE9DD650044BE04 /* Images.xcassets */; };
@@ -167,7 +169,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B224260B1AC8F8B200809EF0 /* HoverlyticsModel.framework in Embed Frameworks */,
+				B25033151AF5C789006A2AE7 /* HoverlyticsModel.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,21 +239,23 @@
 		B23966E11ACD36FF00C6A420 /* userAgent.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = userAgent.js; sourceTree = "<group>"; };
 		B23966E91ACD45BC00C6A420 /* panelAuthorizationChanged.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = panelAuthorizationChanged.js; sourceTree = "<group>"; };
 		B23966EB1ACD518E00C6A420 /* setPanelAuthorizationToken.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = setPanelAuthorizationToken.js; sourceTree = "<group>"; };
-		B23BE38B1AEFE062008BEDC0 /* Carthage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Carthage; sourceTree = "<group>"; };
-		B23BE38E1AEFE080008BEDC0 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
-		B23BE3901AEFE083008BEDC0 /* Ono.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ono.framework; path = "Carthage/Build/Mac-Manual/Ono.framework"; sourceTree = "<group>"; };
 		B23BE3921AF06AA6008BEDC0 /* SegmentedControlAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlAssistant.swift; sourceTree = "<group>"; };
 		B23E29E91AE73DF6009A94E5 /* console.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = console.js; sourceTree = "<group>"; };
 		B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WKUserContentController+bundledScripts.swift"; sourceTree = "<group>"; };
 		B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueValidation.swift; sourceTree = "<group>"; };
+		B25033111AF5C2C7006A2AE7 /* Ono.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ono.framework; path = Carthage/Build/Mac/Ono.framework; sourceTree = "<group>"; };
+		B25033131AF5C2D0006A2AE7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		B2515B7F1AF3C4CA00F6406A /* PopUpButtonAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpButtonAssistant.swift; sourceTree = "<group>"; };
 		B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SiteSettings.storyboard; sourceTree = "<group>"; };
 		B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteSettingsViewController.swift; sourceTree = "<group>"; };
+		B2AD72E21AF4E36A0099FC7C /* ONOXMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ONOXMLDocument.h; path = Carthage/Checkouts/Ono/Source/ONOXMLDocument.h; sourceTree = SOURCE_ROOT; };
+		B2AD72E31AF4E36A0099FC7C /* ONOXMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ONOXMLDocument.m; path = Carthage/Checkouts/Ono/Source/ONOXMLDocument.m; sourceTree = SOURCE_ROOT; };
 		B2B542C01AF0980E00073464 /* NSData+ONOXMLDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+ONOXMLDocument.swift"; sourceTree = "<group>"; };
 		B2B542C21AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ONOXMLDocument+StringEncoding.swift"; sourceTree = "<group>"; };
 		B2B542C61AF0A09600073464 /* SourcePreview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SourcePreview.storyboard; sourceTree = "<group>"; };
 		B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		B2C4A9401ACA3203000F1566 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainState.swift; path = HoverlyticsModel/MainState.swift; sourceTree = SOURCE_ROOT; };
+		B2D563221AF5BF8A006DE202 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
 		B2E269171AE9DD650044BE04 /* Sidetone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidetone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2E2691A1AE9DD650044BE04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2E2691B1AE9DD650044BE04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -286,9 +290,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B25033181AF5C9A5006A2AE7 /* libxml2.dylib in Frameworks */,
 				B22426121AC8F8D000809EF0 /* CloudKit.framework in Frameworks */,
-				B23BE38F1AEFE080008BEDC0 /* Alamofire.framework in Frameworks */,
-				B23BE3911AEFE083008BEDC0 /* Ono.framework in Frameworks */,
+				B2D563241AF5BF8A006DE202 /* Alamofire.framework in Frameworks */,
+				B25033121AF5C2C7006A2AE7 /* Ono.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +391,8 @@
 				B22766271AEF36DA0083FE8C /* PageMapper+Filtering.swift */,
 				B22766301AEF4DFC0083FE8C /* PageMapper+Validating.swift */,
 				B227662C1AEF382E0083FE8C /* PageMapper+InfoPresenting.swift */,
+				B2AD72E21AF4E36A0099FC7C /* ONOXMLDocument.h */,
+				B2AD72E31AF4E36A0099FC7C /* ONOXMLDocument.m */,
 				B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */,
 				B22425F51AC8F8B200809EF0 /* Supporting Files */,
 			);
@@ -420,12 +427,12 @@
 		B22B7D861AC6B9090026AEDB = {
 			isa = PBXGroup;
 			children = (
-				B23BE3901AEFE083008BEDC0 /* Ono.framework */,
-				B23BE38E1AEFE080008BEDC0 /* Alamofire.framework */,
+				B25033131AF5C2D0006A2AE7 /* libxml2.dylib */,
+				B25033111AF5C2C7006A2AE7 /* Ono.framework */,
+				B2D563221AF5BF8A006DE202 /* Alamofire.framework */,
 				B22B7DBF1AC785C90026AEDB /* CloudKit.framework */,
 				B22B7D911AC6B9090026AEDB /* Hoverlytics */,
 				B22B7DA41AC6B9090026AEDB /* HoverlyticsTests */,
-				B23BE38B1AEFE062008BEDC0 /* Carthage */,
 				B22425F41AC8F8B200809EF0 /* HoverlyticsModel */,
 				B22426031AC8F8B200809EF0 /* HoverlyticsModelTests */,
 				B2E269181AE9DD650044BE04 /* Sidetone */,
@@ -576,6 +583,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2AD72E41AF4E36A0099FC7C /* ONOXMLDocument.h in Headers */,
 				B22425F81AC8F8B200809EF0 /* HoverlyticsModel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -842,7 +850,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B23BE38C1AEFE062008BEDC0 /* Carthage in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -940,6 +947,7 @@
 				B227663A1AEFB6DB0083FE8C /* Dictionary+UpdateClosure.swift in Sources */,
 				B227662F1AEF42A90083FE8C /* ValidatedStringValue.swift in Sources */,
 				B22766311AEF4DFC0083FE8C /* PageMapper+Validating.swift in Sources */,
+				B2AD72E51AF4E36A0099FC7C /* ONOXMLDocument.m in Sources */,
 				B22766351AEF67920083FE8C /* UniqueURLArray.swift in Sources */,
 				B23EA59E1ACA5F6A009B4032 /* ValueValidation.swift in Sources */,
 				B227662D1AEF382E0083FE8C /* PageMapper+InfoPresenting.swift in Sources */,
@@ -1071,6 +1079,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_USE_OPTIMIZATION_PROFILE = NO;
 				CODE_SIGN_ENTITLEMENTS = Lantern/Lantern.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
@@ -1094,6 +1103,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_USE_OPTIMIZATION_PROFILE = NO;
 				CODE_SIGN_ENTITLEMENTS = Lantern/Lantern.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
@@ -1149,6 +1159,7 @@
 		B224260D1AC8F8B200809EF0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
@@ -1161,16 +1172,17 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"(Manual)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"(Manual)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac-Manual",
+					"$(PROJECT_DIR)",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"${SDK_DIR}\"/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = HoverlyticsModel/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1179,6 +1191,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USER_HEADER_SEARCH_PATHS = "";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1187,6 +1200,7 @@
 		B224260E1AC8F8B200809EF0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
@@ -1199,18 +1213,21 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"(Manual)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"(Manual)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac-Manual",
+					"$(PROJECT_DIR)",
 				);
 				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"${SDK_DIR}\"/usr/include/libxml2",
+				);
 				INFOPLIST_FILE = HoverlyticsModel/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
+				USER_HEADER_SEARCH_PATHS = "";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1339,10 +1356,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"(Manual)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"(Manual)",
 				);
 				INFOPLIST_FILE = Hoverlytics/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -1366,10 +1379,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"(Manual)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"(Manual)",
 				);
 				INFOPLIST_FILE = Hoverlytics/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -1377,6 +1386,7 @@
 				PRODUCT_NAME = Hoverlytics;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Hoverlytics/Hoverlytics-Bridging-Header.h";
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 			};
 			name = Release;
 		};

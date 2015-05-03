@@ -225,5 +225,7 @@ public class PageMapper {
 		paused = true
 		
 		didUpdateCallback = nil
+		
+		infoRequestQueue.cancelAll(clearAll: true)
 	}
 }
