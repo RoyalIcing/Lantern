@@ -12,10 +12,31 @@ import Foundation
 let JUST_USE_FINAL_URLS = true
 
 
+public struct MappableURL {
+	public let primaryURL: NSURL
+	public let localHost: String
+}
+
+extension MappableURL {
+	public init?(primaryURL: NSURL) {
+		if let primaryURL = conformURL(primaryURL)?.absoluteURL {
+			if let localHost = primaryURL.host {
+				self.primaryURL = primaryURL
+				self.localHost = localHost
+				return
+			}
+		}
+		
+		return nil
+	}
+}
+
+
 public class PageMapper {
 	public let primaryURL: NSURL
 	public let crawlsFoundURLs: Bool
 	public let maximumDepth: UInt
+	let localHost: String
 	
 	public internal(set) var additionalURLs = [NSURL]()
 	
@@ -49,20 +70,42 @@ public class PageMapper {
 	
 	var baseContentTypeToResponseTypeToURLCount = [BaseContentType: [PageResponseType: UInt]]()
 	
+	public var redirectedSourceURLToInfo = [NSURL: RequestRedirectionInfo]()
+	public var redirectedDestinationURLToInfo = [NSURL: RequestRedirectionInfo]()
+	
+	
+	private let infoRequestQueue: PageInfoRequestQueue
 	
 	//var ignoresNoFollows = false
 	public internal(set) var paused = false
-	var queuedURLsToRequest = [(NSURL, BaseContentType, UInt)]()
+	var queuedURLsToRequestWhilePaused = [(NSURL, BaseContentType, UInt)]()
 	
 	public var didUpdateCallback: ((pageURL: NSURL) -> Void)?
 	
 	private static let defaultMaximumDefault: UInt = 10
 	
 	
-	public init(primaryURL: NSURL, crawlsFoundURLs: Bool = true, maximumDepth: UInt = defaultMaximumDefault) {
-		self.primaryURL = conformURL(primaryURL)!.absoluteURL!
+	public init(mappableURL: MappableURL, crawlsFoundURLs: Bool = true, maximumDepth: UInt = defaultMaximumDefault) {
+		self.primaryURL = mappableURL.primaryURL
+		self.localHost = mappableURL.localHost
 		self.crawlsFoundURLs = crawlsFoundURLs
 		self.maximumDepth = maximumDepth
+		
+		infoRequestQueue = PageInfoRequestQueue()
+		infoRequestQueue.willPerformHTTPRedirection = { [weak self] redirectionInfo in
+			if
+				let pageMapper = self,
+				let sourceURL = redirectionInfo.sourceRequest.URL,
+				let nextURL = redirectionInfo.nextRequest.URL
+			{
+				#if DEBUG
+					println("REDIRECT \(sourceURL) \(nextURL)")
+				#endif
+				
+				pageMapper.redirectedSourceURLToInfo[sourceURL] = redirectionInfo
+				pageMapper.redirectedDestinationURLToInfo[nextURL] = redirectionInfo
+			}
+		}
 	}
 	
 	public func reload() {
@@ -70,7 +113,6 @@ public class PageMapper {
 		externalURLs.removeAll()
 		requestedLocalPageURLsUnique.removeAll()
 		
-		requestedLocalPageURLsUnique.insertReturningConformedURLIfNew(primaryURL)
 		retrieveInfoForPageWithURL(primaryURL, expectedBaseContentType: .LocalHTMLPage, currentDepth: 0)
 	}
 	
@@ -91,28 +133,23 @@ public class PageMapper {
 		}
 	}
 	
-	private let infoRequestQueue = PageInfoRequestQueue()
-	
 	private func retrieveInfoForPageWithURL(pageURL: NSURL, expectedBaseContentType: BaseContentType, currentDepth: UInt) {
+		if linkedURLLooksLikeFileDownload(pageURL) {
+			return
+		}
+		
 		if !paused {
 			if let pageURL = requestedURLsUnique.insertReturningConformedURLIfNew(pageURL) {
-				//#if true
-					let infoRequest = PageInfoRequest(URL: pageURL, completionHandler: { [weak self] (pageInfo) in
-						if let didRetrieveInfo = self?.didRetrieveInfo {
-							didRetrieveInfo(pageInfo, forPageWithRequestedURL: pageURL, expectedBaseContentType: expectedBaseContentType, currentDepth: currentDepth)
-						}
-					})
-					infoRequestQueue.addRequest(infoRequest)
-				/*#else
-					PageInfo.retrieveInfoForPageWithURL(pageURL, completionHandler: { [weak self] (pageInfo) in
-					// completionHandler is called on main queue
-					self?.didRetrieveInfo(pageInfo, forPageWithRequestedURL: pageURL, expectedBaseContentType: expectedBaseContentType, currentDepth: currentDepth)
-					})
-				#endif*/
+				let infoRequest = PageInfoRequest(URL: pageURL, completionHandler: { [weak self] (pageInfo) in
+					if let didRetrieveInfo = self?.didRetrieveInfo {
+						didRetrieveInfo(pageInfo, forPageWithRequestedURL: pageURL, expectedBaseContentType: expectedBaseContentType, currentDepth: currentDepth)
+					}
+				})
+				infoRequestQueue.addRequest(infoRequest)
 			}
 		}
 		else {
-			queuedURLsToRequest.append((pageURL, expectedBaseContentType, currentDepth))
+			queuedURLsToRequestWhilePaused.append((pageURL, expectedBaseContentType, currentDepth))
 		}
 	}
 	
@@ -120,19 +157,25 @@ public class PageMapper {
 		let responseType = PageResponseType(statusCode: pageInfo.statusCode)
 		requestedURLToResponseType[requestedPageURL] = responseType
 		
-		let actualBaseContentType = pageInfo.baseContentType
-		
-		baseContentTypeToResponseTypeToURLCount.updateValueForKey(actualBaseContentType) { responseTypeToURLCount in
-			var responseTypeToURLCount = responseTypeToURLCount ?? [PageResponseType: UInt]()
-			responseTypeToURLCount.updateValueForKey(responseType) { count in
-				return (count ?? 0) + 1
-			}
-			return responseTypeToURLCount
+		if responseType == .Redirects {
+			#if DEBUG
+				println("REDIRECT \(requestedPageURL) \(pageInfo.finalURL)")
+			#endif
 		}
 		
 		if let finalURL = pageInfo.finalURL {
 			requestedURLToDestinationURL[requestedPageURL] = finalURL
 			loadedURLToPageInfo[finalURL] = pageInfo
+			
+			let actualBaseContentType = pageInfo.baseContentType
+			
+			baseContentTypeToResponseTypeToURLCount.updateValueForKey(actualBaseContentType) { responseTypeToURLCount in
+				var responseTypeToURLCount = responseTypeToURLCount ?? [PageResponseType: UInt]()
+				responseTypeToURLCount.updateValueForKey(responseType) { count in
+					return (count ?? 0) + 1
+				}
+				return responseTypeToURLCount
+			}
 			
 			if JUST_USE_FINAL_URLS {
 				switch actualBaseContentType {
@@ -215,10 +258,10 @@ public class PageMapper {
 		
 		paused = false
 		
-		for (pendingURL, baseContentType, currentDepth) in queuedURLsToRequest {
+		for (pendingURL, baseContentType, currentDepth) in queuedURLsToRequestWhilePaused {
 			retrieveInfoForPageWithURL(pendingURL, expectedBaseContentType: baseContentType, currentDepth: currentDepth)
 		}
-		queuedURLsToRequest.removeAll()
+		queuedURLsToRequestWhilePaused.removeAll()
 	}
 	
 	public func cancel() {

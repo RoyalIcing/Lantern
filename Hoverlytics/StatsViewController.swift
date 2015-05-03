@@ -237,7 +237,7 @@ class StatsViewController: NSViewController {
 	var rowMenu: NSMenu!
 	
 	
-	var pageMapper: PageMapper!
+	var pageMapper: PageMapper?
 	
 	var chosenBaseContentChoice: BaseContentTypeChoice = .LocalHTMLPages
 	var filterToBaseContentType: BaseContentType {
@@ -316,7 +316,7 @@ class StatsViewController: NSViewController {
 	var previouslySelectedURLs = [NSURL]()
 	
 	func updateListOfURLs() {
-		if let primaryURL = primaryURL {
+		if let pageMapper = pageMapper {
 			let baseContentType = filterToBaseContentType
 			if filterResponseChoice == .All {
 				filteredURLs = pageMapper.copyURLsWithBaseContentType(baseContentType)
@@ -372,13 +372,18 @@ class StatsViewController: NSViewController {
 	func crawl() {
 		clearPageMapper()
 		
-		if let primaryURL = primaryURL {
-			pageMapper = PageMapper(primaryURL: primaryURL)
+		if
+			let primaryURL = self.primaryURL,
+			let mappableURL = MappableURL(primaryURL: primaryURL)
+		{
+			let pageMapper = PageMapper(mappableURL: mappableURL)
 			pageMapper.didUpdateCallback = { loadedPageURL in
 				self.pageURLDidUpdate(loadedPageURL)
 			}
 			
 			pageMapper.reload()
+			
+			self.pageMapper = pageMapper
 		}
 		else {
 			updateListOfURLs()
@@ -417,7 +422,7 @@ class StatsViewController: NSViewController {
 			}
 		}
 		
-		let columnsRemainingWidth = outlineView.enclosingScrollView!.documentVisibleRect.width - outlineView.outlineTableColumn!.width - 10.0
+		let columnsRemainingWidth = outlineView.enclosingScrollView!.documentVisibleRect.width - outlineView.outlineTableColumn!.width - 12.0
 		let columnWidth = max(columnsRemainingWidth / CGFloat(columnIdentifiers.count), minColumnWidth)
 		
 		var columnIndex = 1 // After outline column
@@ -433,6 +438,7 @@ class StatsViewController: NSViewController {
 				outlineView.addTableColumn(tableColumn)
 			}
 			
+			tableColumn.minWidth = 60.0
 			tableColumn.width = columnWidth
 			updateHeaderOfColumn(tableColumn, withTitleFromIdentifier: identifier)
 			
@@ -510,7 +516,7 @@ class StatsViewController: NSViewController {
 		if row != -1 {
 			if
 				let URL = outlineView.itemAtRow(row) as? NSURL,
-				let pageInfo = pageMapper.pageInfoForRequestedURL(URL)
+				let pageInfo = pageMapper?.pageInfoForRequestedURL(URL)
 			{
 				didChooseURLCallback?(URL: URL, pageInfo: pageInfo)
 			}
@@ -533,12 +539,14 @@ extension StatsViewController: QLPreviewPanelDataSource, QLPreviewPanelDelegate 
 	
 	override func quickLookPreviewItems(sender: AnyObject?)
 	{
-		let selectedRowIndexes = outlineView.selectedRowIndexes
-		if selectedRowIndexes.count == 1 {
-			let row = selectedRowIndexes.firstIndex
-			if let pageURL = outlineView.itemAtRow(row) as? NSURL where pageMapper.hasFinishedRequestingURL(pageURL)
-			{
-				
+		if let pageMapper = pageMapper {
+			let selectedRowIndexes = outlineView.selectedRowIndexes
+			if selectedRowIndexes.count == 1 {
+				let row = selectedRowIndexes.firstIndex
+				if let pageURL = outlineView.itemAtRow(row) as? NSURL where pageMapper.hasFinishedRequestingURL(pageURL)
+				{
+					
+				}
 			}
 		}
 	}
@@ -595,7 +603,7 @@ extension StatsViewController {
 	func showSourcePreviewForPageAtRow(row: Int) {
 		if let pageURL = outlineView.itemAtRow(row) as? NSURL
 		{
-			if pageMapper.hasFinishedRequestingURL(pageURL)
+			if let pageMapper = pageMapper where pageMapper.hasFinishedRequestingURL(pageURL)
 			{
 				if let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL) {
 					let storyboard = self.storyboard!
@@ -632,7 +640,7 @@ extension StatsViewController {
 				.All,
 				nil,
 				.Successful,
-				.Redirects,
+				//.Redirects,
 				.RequestErrors,
 				.ResponseErrors,
 				nil,
@@ -647,7 +655,7 @@ extension StatsViewController {
 				.All,
 				nil,
 				.Successful,
-				.Redirects,
+				//.Redirects,
 				.RequestErrors,
 				.ResponseErrors,
 				nil,
@@ -689,7 +697,7 @@ extension StatsViewController {
 				case .Successful, .Redirects, .RequestErrors, .ResponseErrors:
 					let baseContentType = self.filterToBaseContentType
 					let responseType = choice.responseType!
-					let URLCount = self.pageMapper.numberOfLoadedURLsWithBaseContentType(baseContentType, responseType: responseType)
+					let URLCount = self.pageMapper?.numberOfLoadedURLsWithBaseContentType(baseContentType, responseType: responseType) ?? 0
 					return "\(choice.title) (\(URLCount))"
 				default:
 					return choice.title
@@ -737,7 +745,7 @@ extension StatsViewController {
 					return "\(choice.title) (\(loadedURLCount)/\(requestedURLCount))"
 				}
 				else {*/
-					let loadedURLCount = self.pageMapper.numberOfLoadedURLsWithBaseContentType(baseContentType)
+					let loadedURLCount = self.pageMapper?.numberOfLoadedURLsWithBaseContentType(baseContentType) ?? 0
 					return "\(choice.title) (\(loadedURLCount))"
 				//}
 			}
@@ -815,21 +823,52 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 		{
 			var cellIdentifier = (identifier == .requestedURL ? "requestedURL" : "text")
 			
-			//var validatedStringValue: ValidatedStringValue
-			var stringValue: String?
+			var stringValue: String
+			var suffixString: String?
 			var opacity: CGFloat = 1.0
 			var textColor: NSColor = NSColor.textColor()
 			
-			if pageMapper.hasFinishedRequestingURL(pageURL)
+			if let pageMapper = pageMapper where pageMapper.hasFinishedRequestingURL(pageURL)
 			{
+				var validatedStringValue: ValidatedStringValue = .Missing
+				
 				if let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL) {
-					stringValue = identifier.stringValueInPageInfo(pageInfo)
+					validatedStringValue = identifier.validatedStringValueInPageInfo(pageInfo)
+					
+					if
+						let finalURL = pageInfo.finalURL,
+						let redirectionInfo = pageMapper.redirectedDestinationURLToInfo[finalURL] {
+							if identifier == .statusCode {
+								suffixString = String(redirectionInfo.statusCode)
+							}
+					}
+					
 					textColor = PageResponseType(statusCode: pageInfo.statusCode).cocoaColor
+				}
+				
+				switch validatedStringValue {
+				case .ValidString(let string):
+					stringValue = string
+					if let suffixString = suffixString {
+						stringValue += " " + suffixString
+					}
+				case .Missing:
+					stringValue = "(none)"
+					opacity = 0.3
+				case .Empty:
+					stringValue = "(empty)"
+					opacity = 0.3
+				case .Multiple:
+					stringValue = "(multiple)"
+					opacity = 0.3
+				case .Invalid:
+					stringValue = "(invalid)"
+					opacity = 0.3
 				}
 			}
 			else {
 				if identifier == .requestedURL {
-					stringValue = pageURL.relativePath
+					stringValue = pageURL.relativePath!
 				}
 				else {
 					stringValue = "(loading)"
@@ -837,18 +876,9 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 				}
 			}
 			
-			if stringValue == nil {
-				stringValue = "(none)"
-				opacity = 0.3
-			}
-			else if stringValue == "" {
-				stringValue = "(empty)"
-				opacity = 0.3
-			}
-			
 			if let view = outlineView.makeViewWithIdentifier(cellIdentifier, owner: self) as? NSTableCellView {
 				if let textField = view.textField {
-					textField.stringValue = stringValue!
+					textField.stringValue = stringValue
 					textField.textColor = textColor
 				}
 				view.alphaValue = opacity

@@ -94,7 +94,6 @@
 		B25033641AF5E7D7006A2AE7 /* MenuAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22766361AEF9B2D0083FE8C /* MenuAssistant.swift */; };
 		B25033651AF5E7D7006A2AE7 /* PopUpButtonAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2515B7F1AF3C4CA00F6406A /* PopUpButtonAssistant.swift */; };
 		B25033661AF5E7D7006A2AE7 /* SegmentedControlAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23BE3921AF06AA6008BEDC0 /* SegmentedControlAssistant.swift */; };
-		B250336C1AF5EA75006A2AE7 /* DumbStatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B250336B1AF5EA75006A2AE7 /* DumbStatsViewController.swift */; };
 		B2515B801AF3C4CA00F6406A /* PopUpButtonAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2515B7F1AF3C4CA00F6406A /* PopUpButtonAssistant.swift */; };
 		B2A63B5F1AC8DAA0004CEBE1 /* SiteSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */; };
 		B2A63B611AC8DACD004CEBE1 /* SiteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */; };
@@ -280,7 +279,6 @@
 		B25033111AF5C2C7006A2AE7 /* Ono.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ono.framework; path = Carthage/Build/Mac/Ono.framework; sourceTree = "<group>"; };
 		B25033131AF5C2D0006A2AE7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		B25033541AF5E5B0006A2AE7 /* Lantern.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lantern.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B250336B1AF5EA75006A2AE7 /* DumbStatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DumbStatsViewController.swift; sourceTree = "<group>"; };
 		B2515B7F1AF3C4CA00F6406A /* PopUpButtonAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpButtonAssistant.swift; sourceTree = "<group>"; };
 		B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SiteSettings.storyboard; sourceTree = "<group>"; };
 		B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteSettingsViewController.swift; sourceTree = "<group>"; };
@@ -511,7 +509,6 @@
 				B22B7DBA1AC77EF20026AEDB /* Page.storyboard */,
 				B22B7DB81AC77D420026AEDB /* PageViewController.swift */,
 				B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */,
-				B250336B1AF5EA75006A2AE7 /* DumbStatsViewController.swift */,
 				B2B542C61AF0A09600073464 /* SourcePreview.storyboard */,
 				B22766251AEE62060083FE8C /* SourcePreviewViewController.swift */,
 				B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */,
@@ -1002,7 +999,6 @@
 			files = (
 				B22876271AF3A4D800A8A4A2 /* SiteMenuItem.swift in Sources */,
 				B22876251AF3A3CD00A8A4A2 /* MainState.swift in Sources */,
-				B250336C1AF5EA75006A2AE7 /* DumbStatsViewController.swift in Sources */,
 				B23BE3931AF06AA6008BEDC0 /* SegmentedControlAssistant.swift in Sources */,
 				B22B7D971AC6B9090026AEDB /* ViewController.swift in Sources */,
 				B22766381AEF9B320083FE8C /* MenuAssistant.swift in Sources */,

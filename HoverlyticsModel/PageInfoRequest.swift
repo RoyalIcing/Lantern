@@ -33,9 +33,30 @@ private class PageInfoReference {
 }
 
 class PageInfoRequestQueue {
+	let requestManager: Alamofire.Manager
 	let maximumActiveRequests = 5
 	var activeRequests = [PageInfoRequest]()
 	var pendingRequests = [PageInfoRequest]()
+	var willPerformHTTPRedirection: ((redirectionInfo: RequestRedirectionInfo) -> Void)?
+	
+	init() {
+		let manager = Alamofire.Manager()
+		self.requestManager = manager
+		
+		let managerDelegate = manager.delegate
+		managerDelegate.taskWillPerformHTTPRedirection = { [weak self] session, task, response, request in
+			#if DEBUG
+				println("taskWillPerformHTTPRedirection")
+			#endif
+			
+			if let willPerformHTTPRedirection = self?.willPerformHTTPRedirection {
+				let info = RequestRedirectionInfo(sourceRequest: task.originalRequest, nextRequest: request, statusCode: response.statusCode, MIMEType: MIMETypeString(response.MIMEType))
+				willPerformHTTPRedirection(redirectionInfo: info)
+			}
+			
+			return request
+		}
+	}
 	
 	func addRequest(infoRequest: PageInfoRequest) {
 		if activeRequests.count >= maximumActiveRequests {
@@ -76,9 +97,9 @@ class PageInfoRequestQueue {
 		let serializer: Alamofire.Request.Serializer = { URLRequest, response, data in
 			if
 				let response = response,
-				let data = data,
-				let requestedURL = URLRequest.URL
+				let data = data
 			{
+				let requestedURL = infoRequest.URL
 				let MIMEType = MIMETypeString(response.MIMEType)
 				let baseContentType: BaseContentType = MIMEType?.baseContentType ?? .Unknown
 				

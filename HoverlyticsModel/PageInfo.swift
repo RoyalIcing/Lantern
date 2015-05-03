@@ -17,6 +17,7 @@ public enum BaseContentType {
 	case Text
 	case Image
 	case Feed
+	case Redirect
 }
 
 extension BaseContentType: DebugPrintable {
@@ -32,6 +33,8 @@ extension BaseContentType: DebugPrintable {
 			return "Image"
 		case .Feed:
 			return "Feed"
+		case .Redirect:
+			return "Redirect"
 		}
 	}
 }
@@ -91,11 +94,26 @@ internal func URLIsExternal(URLToTest: NSURL, #localHost: String) -> Bool {
 	return false
 }
 
+private let fileDownloadFileExtensions = Set<String>(["zip", "dmg", "exe", "gz", "tar"])
+
+func linkedURLLooksLikeFileDownload(URL: NSURL) -> Bool {
+	if let path = URL.path {
+		let pathExtension = path.pathExtension
+		if fileDownloadFileExtensions.contains(pathExtension) {
+			return true
+		}
+	}
+	
+	return false
+}
+
 
 
 public struct MIMETypeString {
 	public let stringValue: String
-	
+}
+
+extension MIMETypeString {
 	init?(_ stringValue: String?) {
 		if let stringValue = stringValue {
 			self.stringValue = stringValue
@@ -158,8 +176,8 @@ struct PageContentInfoOptions {
 
 public struct PageContentInfo {
 	public let data: NSData
-	private let document: ONOXMLDocument
-	let stringEncoding: NSStringEncoding
+	private let document: ONOXMLDocument!
+	let stringEncoding: NSStringEncoding!
 	
 	public let preBodyByteCount: Int?
 	
@@ -196,124 +214,151 @@ public struct PageContentInfo {
 		self.data = data
 		
 		var error: NSError?
-		let document = ONOXMLDocument.HTMLDocumentWithData(data, error: &error)
-		
-		self.stringEncoding = document.stringEncodingWithFallback()
-		// Must store document to also save references to all found elements.
-		self.document = document
-		
-		let stringEncoding = document.stringEncodingWithFallback()
-		if let bodyTagData = "<body".dataUsingEncoding(stringEncoding, allowLossyConversion: false) {
-			let bodyTagRange = data.rangeOfData(bodyTagData, options: .allZeros, range: NSMakeRange(0, data.length))
-			if bodyTagRange.location != NSNotFound {
-				preBodyByteCount = bodyTagRange.location
+		if let document = ONOXMLDocument.HTMLDocumentWithData(data, error: &error) {
+			self.stringEncoding = document.stringEncodingWithFallback()
+			// Must store document to also save references to all found elements.
+			self.document = document
+			
+			let stringEncoding = document.stringEncodingWithFallback()
+			if let bodyTagData = "<body".dataUsingEncoding(stringEncoding, allowLossyConversion: false) {
+				let bodyTagRange = data.rangeOfData(bodyTagData, options: .allZeros, range: NSMakeRange(0, data.length))
+				if bodyTagRange.location != NSNotFound {
+					preBodyByteCount = bodyTagRange.location
+				}
+				else {
+					preBodyByteCount = nil
+				}
 			}
 			else {
 				preBodyByteCount = nil
 			}
-		}
-		else {
-			preBodyByteCount = nil
-		}
-		
-		pageTitleElements = document.allElementsWithCSS("head title")
-		
-		metaDescriptionElements = document.allElementsWithCSS("head meta[name][content]") { element in
-			if let name = element["name"] as? String {
-				return name.caseInsensitiveCompare("description") == .OrderedSame
-			}
 			
-			return false
-		}
-		openGraphElements = document.allElementsWithCSS("head meta[property]") { element in
-			if let name = element["property"] as? String {
-				return name.rangeOfString("og:", options: .AnchoredSearch | .CaseInsensitiveSearch) != nil
-			}
+			pageTitleElements = document.allElementsWithCSS("head title")
 			
-			return false
-		}
-		
-		var uniqueFeedURLs = UniqueURLArray()
-		feedLinkElements = document.allElementsWithCSS("head link[type][href]") { element in
-			if
-				let typeRaw = element["type"] as? String,
-				let MIMEType = MIMETypeString(typeRaw.lowercaseString),
-				let linkURLString = element["href"] as? String,
-				let linkURL = NSURL(string: linkURLString, relativeToURL: localURL)
-			{
-				if MIMEType.isFeed {
-					uniqueFeedURLs.insertReturningConformedURLIfNew(linkURL)
-					return true
+			metaDescriptionElements = document.allElementsWithCSS("head meta[name][content]") { element in
+				if let name = element["name"] as? String {
+					return name.caseInsensitiveCompare("description") == .OrderedSame
 				}
+				
+				return false
+			}
+			openGraphElements = document.allElementsWithCSS("head meta[property]") { element in
+				if let name = element["property"] as? String {
+					return name.rangeOfString("og:", options: .AnchoredSearch | .CaseInsensitiveSearch) != nil
+				}
+				
+				return false
 			}
 			
-			return false
-		}
-		self.uniqueFeedURLs = uniqueFeedURLs
-		
-		
-		let localHost = localURL.host!
-		let separateLinksToImageTypes = options.separateLinksToImageTypes
-		
-		var aLocalLinkElements = [ONOXMLElement]()
-		var aExternalLinkElements = [ONOXMLElement]()
-		var uniqueLocalPageURLs = UniqueURLArray()
-		var externalURLs = Set<NSURL>()
-		
-		var imageElements = [ONOXMLElement]()
-		var imageURLs = Set<NSURL>()
-		
-		document.enumerateElementsWithCSS("a[href]") { (aLinkElement, index, stop) in
-			if
-				let linkURLString = aLinkElement["href"] as? String,
-				let linkURL = NSURL(string: linkURLString, relativeToURL: localURL)
-			{
-				if separateLinksToImageTypes {
-					let hasImageType = [".jpg", ".jpeg", ".png", ".gif"].reduce(false, combine: { (hasSoFar, suffix) -> Bool in
-						return hasSoFar || linkURLString.hasSuffix(suffix)
-					})
-					
-					if hasImageType {
-						imageElements.append(aLinkElement)
-						imageURLs.insert(linkURL)
-						return
+			var uniqueFeedURLs = UniqueURLArray()
+			feedLinkElements = document.allElementsWithCSS("head link[type][href]") { element in
+				if
+					let typeRaw = element["type"] as? String,
+					let MIMEType = MIMETypeString(typeRaw.lowercaseString),
+					let linkURLString = element["href"] as? String,
+					let linkURL = NSURL(string: linkURLString, relativeToURL: localURL)
+				{
+					if MIMEType.isFeed {
+						uniqueFeedURLs.insertReturningConformedURLIfNew(linkURL)
+						return true
 					}
 				}
 				
-				let isExternal = URLIsExternal(linkURL, localHost: localHost)
-				
-				if isExternal {
-					aExternalLinkElements.append(aLinkElement)
-					externalURLs.insert(linkURL)
-				}
-				else {
-					aLocalLinkElements.append(aLinkElement)
-					uniqueLocalPageURLs.insertReturningConformedURLIfNew(linkURL)
+				return false
+			}
+			self.uniqueFeedURLs = uniqueFeedURLs
+			
+			
+			let localHost = localURL.host!
+			let separateLinksToImageTypes = options.separateLinksToImageTypes
+			
+			var aLocalLinkElements = [ONOXMLElement]()
+			var aExternalLinkElements = [ONOXMLElement]()
+			var uniqueLocalPageURLs = UniqueURLArray()
+			var externalURLs = Set<NSURL>()
+			
+			var imageElements = [ONOXMLElement]()
+			var imageURLs = Set<NSURL>()
+			
+			document.enumerateElementsWithCSS("a[href]") { (aLinkElement, index, stop) in
+				if
+					let linkURLString = aLinkElement["href"] as? String,
+					let linkURL = NSURL(string: linkURLString, relativeToURL: localURL)
+				{
+					if separateLinksToImageTypes {
+						let hasImageType = [".jpg", ".jpeg", ".png", ".gif"].reduce(false, combine: { (hasSoFar, suffix) -> Bool in
+							return hasSoFar || linkURLString.hasSuffix(suffix)
+						})
+						
+						if hasImageType {
+							imageElements.append(aLinkElement)
+							imageURLs.insert(linkURL)
+							return
+						}
+					}
+					
+					let isExternal = URLIsExternal(linkURL, localHost: localHost)
+					
+					if isExternal {
+						aExternalLinkElements.append(aLinkElement)
+						externalURLs.insert(linkURL)
+					}
+					else {
+						aLocalLinkElements.append(aLinkElement)
+						uniqueLocalPageURLs.insertReturningConformedURLIfNew(linkURL)
+					}
 				}
 			}
-		}
-		self.aLocalLinkElements = aLocalLinkElements
-		self.aExternalLinkElements = aExternalLinkElements
-		self.uniqueLocalPageURLs = uniqueLocalPageURLs
-		self.externalURLs = externalURLs
-		
-		document.enumerateElementsWithCSS("img[src]") { (imgElement, index, stop) in
-			if
-				let imageURLString = imgElement["src"] as? String,
-				let imageURL = NSURL(string: imageURLString, relativeToURL: localURL)
-			{
-				//let isExternal = URLIsExternal(linkURL, localHost: localHost)
-				
-				imageElements.append(imgElement)
-				imageURLs.insert(imageURL)
+			self.aLocalLinkElements = aLocalLinkElements
+			self.aExternalLinkElements = aExternalLinkElements
+			self.uniqueLocalPageURLs = uniqueLocalPageURLs
+			self.externalURLs = externalURLs
+			
+			document.enumerateElementsWithCSS("img[src]") { (imgElement, index, stop) in
+				if
+					let imageURLString = imgElement["src"] as? String,
+					let imageURL = NSURL(string: imageURLString, relativeToURL: localURL)
+				{
+					//let isExternal = URLIsExternal(linkURL, localHost: localHost)
+					
+					imageElements.append(imgElement)
+					imageURLs.insert(imageURL)
+				}
 			}
+			self.imageElements = imageElements
+			self.imageURLs = imageURLs
+			
+			h1Elements = document.allElementsWithCSS("h1")
+			
+			richSnippetElements = [] //TODO:
 		}
-		self.imageElements = imageElements
-		self.imageURLs = imageURLs
-		
-		h1Elements = document.allElementsWithCSS("h1")
-		
-		richSnippetElements = [] //TODO:
+		else {
+			document = nil
+			stringEncoding = nil
+			
+			pageTitleElements = []
+			
+			metaDescriptionElements = []
+			openGraphElements = []
+			
+			uniqueFeedURLs = UniqueURLArray()
+			feedLinkElements = []
+			
+			externalURLs = Set<NSURL>()
+			aExternalLinkElements = []
+			
+			uniqueLocalPageURLs = UniqueURLArray()
+			
+			aLocalLinkElements = []
+			
+			imageURLs = Set<NSURL>()
+			imageElements = []
+			
+			h1Elements = []
+			richSnippetElements = []
+			
+			preBodyByteCount = nil
+		}
 	}
 	
 	public var HTMLHeadData: NSData? {
@@ -368,5 +413,13 @@ public struct PageInfo {
 	public let MIMEType: MIMETypeString?
 	public let bytes: Int
 	
-	public let contentInfo: PageContentInfo!
+	public let contentInfo: PageContentInfo?
+}
+
+
+public struct RequestRedirectionInfo {
+	let sourceRequest: NSURLRequest
+	let nextRequest: NSURLRequest
+	public let statusCode: Int
+	public let MIMEType: MIMETypeString?
 }

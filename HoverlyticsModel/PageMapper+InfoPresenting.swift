@@ -105,45 +105,16 @@ public enum PagePresentedInfoIdentifier: String {
 		return byteFormatter
 		}()
 	
-	public func stringValueInPageInfo(pageInfo: PageInfo) -> String? {
-		switch self {
-		case .requestedURL:
-			return pageInfo.requestedURL.relativePath
-			//return pageInfo.requestedURL.absoluteString
-		case .statusCode:
-			return String(pageInfo.statusCode)
-		case .MIMEType:
-			return pageInfo.MIMEType?.stringValue
-		case .pageTitle:
-			return stringValueForMultipleElementsContent(pageInfo.contentInfo.pageTitleElements)
-		case .h1:
-			return stringValueForMultipleElementsContent(pageInfo.contentInfo.h1Elements)
-		case .metaDescription:
-			return stringValueForMultipleElements(pageInfo.contentInfo.metaDescriptionElements, attribute: "content")
-		case .pageByteCount:
-			return PagePresentedInfoIdentifier.byteFormatter.stringFromByteCount(Int64(pageInfo.bytes))
-		case .pageByteCountBeforeBodyTag:
-			if let byteCountBeforeBody = pageInfo.contentInfo.preBodyByteCount {
-				return PagePresentedInfoIdentifier.byteFormatter.stringFromByteCount(Int64(byteCountBeforeBody))
-			}
-		case .pageByteCountAfterBodyTag:
-			if let byteCountBeforeBody = pageInfo.contentInfo.preBodyByteCount {
-				return PagePresentedInfoIdentifier.byteFormatter.stringFromByteCount(Int64(pageInfo.bytes - byteCountBeforeBody))
-			}
-		case .internalLinkCount:
-			return String(pageInfo.contentInfo.localPageURLs.count)
-		case .externalLinkCount:
-			return String(pageInfo.contentInfo.externalURLs.count)
-		}
-		
-		return nil
-	}
-	
 	public func validatedStringValueInPageInfo(pageInfo: PageInfo) -> ValidatedStringValue {
 		switch self {
 		case .requestedURL:
 			if let relativePath = pageInfo.requestedURL.relativePath {
-				return ValidatedStringValue(string: relativePath)
+				if let finalURLPath = pageInfo.finalURL?.relativePath where pageInfo.requestedURL.absoluteURL != pageInfo.finalURL?.absoluteURL {
+					return ValidatedStringValue(string: "\(relativePath) (\(finalURLPath))")
+				}
+				else {
+					return ValidatedStringValue(string: relativePath)
+				}
 			}
 		case .statusCode:
 			return ValidatedStringValue(string: String(pageInfo.statusCode))
@@ -154,35 +125,45 @@ public enum PagePresentedInfoIdentifier: String {
 				)
 			}
 		case .pageTitle:
-			return ValidatedStringValue.validateContentOfElements(pageInfo.contentInfo.pageTitleElements)
+			if let pageTitleElements = pageInfo.contentInfo?.pageTitleElements {
+				return ValidatedStringValue.validateContentOfElements(pageTitleElements)
+			}
 		case .h1:
-			return ValidatedStringValue.validateContentOfElements(pageInfo.contentInfo.h1Elements)
+			if let h1Elements = pageInfo.contentInfo?.h1Elements {
+				return ValidatedStringValue.validateContentOfElements(h1Elements)
+			}
 		case .metaDescription:
-			return ValidatedStringValue.validateAttribute("content", ofElements: pageInfo.contentInfo.metaDescriptionElements)
+			if let metaDescriptionElements = pageInfo.contentInfo?.metaDescriptionElements {
+				return ValidatedStringValue.validateAttribute("content", ofElements: metaDescriptionElements)
+			}
 		case .pageByteCount:
 			return ValidatedStringValue(
 				string: PagePresentedInfoIdentifier.byteFormatter.stringFromByteCount(Int64(pageInfo.bytes))
 			)
 		case .pageByteCountBeforeBodyTag:
-			if let byteCountBeforeBody = pageInfo.contentInfo.preBodyByteCount {
+			if let byteCountBeforeBody = pageInfo.contentInfo?.preBodyByteCount {
 				return ValidatedStringValue(
 					string: PagePresentedInfoIdentifier.byteFormatter.stringFromByteCount(Int64(byteCountBeforeBody))
 				)
 			}
 		case .pageByteCountAfterBodyTag:
-			if let byteCountBeforeBody = pageInfo.contentInfo.preBodyByteCount {
+			if let byteCountBeforeBody = pageInfo.contentInfo?.preBodyByteCount {
 				return ValidatedStringValue(
 					string: PagePresentedInfoIdentifier.byteFormatter.stringFromByteCount(Int64(pageInfo.bytes - byteCountBeforeBody))
 				)
 			}
 		case .internalLinkCount:
-			return ValidatedStringValue(
-				string: String(pageInfo.contentInfo.localPageURLs.count)
-			)
+			if let localPageURLs = pageInfo.contentInfo?.localPageURLs {
+				return ValidatedStringValue(
+					string: String(localPageURLs.count)
+				)
+			}
 		case .externalLinkCount:
-			return ValidatedStringValue(
-				string: String(pageInfo.contentInfo.externalURLs.count)
-			)
+			if let externalURLs = pageInfo.contentInfo?.externalURLs {
+				return ValidatedStringValue(
+					string: String(externalURLs.count)
+				)
+			}
 		}
 		
 		return .Missing

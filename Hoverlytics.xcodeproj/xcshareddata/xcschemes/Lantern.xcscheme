@@ -14,23 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B2054D6A1AF477C700DC2C00"
+               BlueprintIdentifier = "B25033301AF5E5B0006A2AE7"
                BuildableName = "Lantern.app"
                BlueprintName = "Lantern"
-               ReferencedContainer = "container:Hoverlytics.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B2054D7B1AF477C700DC2C00"
-               BuildableName = "LanternTests.xctest"
-               BlueprintName = "LanternTests"
                ReferencedContainer = "container:Hoverlytics.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,21 +28,11 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B2054D7B1AF477C700DC2C00"
-               BuildableName = "LanternTests.xctest"
-               BlueprintName = "LanternTests"
-               ReferencedContainer = "container:Hoverlytics.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B2054D6A1AF477C700DC2C00"
+            BlueprintIdentifier = "B25033301AF5E5B0006A2AE7"
             BuildableName = "Lantern.app"
             BlueprintName = "Lantern"
             ReferencedContainer = "container:Hoverlytics.xcodeproj">
@@ -76,12 +52,18 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B2054D6A1AF477C700DC2C00"
+            BlueprintIdentifier = "B25033301AF5E5B0006A2AE7"
             BuildableName = "Lantern.app"
             BlueprintName = "Lantern"
             ReferencedContainer = "container:Hoverlytics.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints YES"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -95,7 +77,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B2054D6A1AF477C700DC2C00"
+            BlueprintIdentifier = "B25033301AF5E5B0006A2AE7"
             BuildableName = "Lantern.app"
             BlueprintName = "Lantern"
             ReferencedContainer = "container:Hoverlytics.xcodeproj">

@@ -90,26 +90,30 @@ extension PageInfo {
 			if let MIMEType = MIMEType {
 				return PageInfoValidationResult.validateMIMEType(MIMEType.stringValue)
 			}
-			else {
-				return .Missing
-			}
 		case .Title:
-			return PageInfoValidationResult.validateContentsOfElements(self.contentInfo.pageTitleElements)
+			if let pageTitleElements = contentInfo?.pageTitleElements {
+				return PageInfoValidationResult.validateContentsOfElements(pageTitleElements)
+			}
 		case .H1:
-			return PageInfoValidationResult.validateContentsOfElements(self.contentInfo.h1Elements)
+			if let h1Elements = contentInfo?.h1Elements {
+				return PageInfoValidationResult.validateContentsOfElements(h1Elements)
+			}
 		case .MetaDescription:
-			let metaDescriptionElements = self.contentInfo.metaDescriptionElements
-			switch metaDescriptionElements.count {
-			case 1:
-				let element = metaDescriptionElements[0]
-				let validatedStringValue = ValidatedStringValue.validateAttribute("content", ofElement: element)
-				return PageInfoValidationResult(validatedStringValue: validatedStringValue)
-			case 0:
-				return .Missing
-			default:
-				return .Multiple
+			if let metaDescriptionElements = self.contentInfo?.metaDescriptionElements {
+				switch metaDescriptionElements.count {
+				case 1:
+					let element = metaDescriptionElements[0]
+					let validatedStringValue = ValidatedStringValue.validateAttribute("content", ofElement: element)
+					return PageInfoValidationResult(validatedStringValue: validatedStringValue)
+				case 0:
+					return .Missing
+				default:
+					return .Multiple
+				}
 			}
 		}
+		
+		return .Missing
 	}
 }
 

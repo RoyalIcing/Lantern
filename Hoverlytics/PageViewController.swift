@@ -313,7 +313,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 			}
 		}
 		else if message.name == "console" {
-			#if DEBUG
+			#if DEBUG && false
 			println("CONSOLE")
 			if let messageBody = message.body as? [String: AnyObject] {
 				println("CONSOLE \(messageBody)")

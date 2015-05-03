@@ -98,14 +98,18 @@ class SourcePreviewTabViewController: NSTabViewController {
 	func updateSourceTextForSection(section: SourcePreviewTabItemSection, tabViewItem: NSTabViewItem) {
 		let vc = tabViewItem.viewController as! SourcePreviewViewController
 		
-		let pageInfo = self.pageInfo
-		switch section {
-		case .Main:
-			setSourceText(pageInfo.contentInfo.stringContent, forSourcePreviewViewController: vc)
-		case .HTMLHead:
-			setSourceText(pageInfo.contentInfo.HTMLHeadStringContent, forSourcePreviewViewController: vc)
-		case .HTMLBody:
-			setSourceText(pageInfo.contentInfo.HTMLBodyStringContent, forSourcePreviewViewController: vc)
+		if let contentInfo = self.pageInfo.contentInfo {
+			switch section {
+			case .Main:
+				setSourceText(contentInfo.stringContent, forSourcePreviewViewController: vc)
+			case .HTMLHead:
+				setSourceText(contentInfo.HTMLHeadStringContent, forSourcePreviewViewController: vc)
+			case .HTMLBody:
+				setSourceText(contentInfo.HTMLBodyStringContent, forSourcePreviewViewController: vc)
+			}
+		}
+		else {
+			setSourceText("(none)", forSourcePreviewViewController: vc)
 		}
 	}
 	

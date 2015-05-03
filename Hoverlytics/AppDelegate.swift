@@ -33,6 +33,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		#if DEBUG
 			// Update the bloody Dock icon
 			NSApp.applicationIconImage = nil
+			
+			NSUserDefaults.standardUserDefaults().setBool(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
 		#endif
 	}
 
