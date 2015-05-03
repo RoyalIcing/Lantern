@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0620"
+   LastUpgradeVersion = "0630"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B22425CA1AC8F7CA00809EF0"
-               BuildableName = "HoverlyticsModel.framework"
-               BlueprintName = "HoverlyticsModel"
+               BlueprintIdentifier = "B2054D6A1AF477C700DC2C00"
+               BuildableName = "Lantern.app"
+               BlueprintName = "Lantern"
+               ReferencedContainer = "container:Hoverlytics.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B2054D7B1AF477C700DC2C00"
+               BuildableName = "LanternTests.xctest"
+               BlueprintName = "LanternTests"
                ReferencedContainer = "container:Hoverlytics.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,7 +42,26 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B2054D7B1AF477C700DC2C00"
+               BuildableName = "LanternTests.xctest"
+               BlueprintName = "LanternTests"
+               ReferencedContainer = "container:Hoverlytics.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B2054D6A1AF477C700DC2C00"
+            BuildableName = "Lantern.app"
+            BlueprintName = "Lantern"
+            ReferencedContainer = "container:Hoverlytics.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -39,15 +72,16 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B22425CA1AC8F7CA00809EF0"
-            BuildableName = "HoverlyticsModel.framework"
-            BlueprintName = "HoverlyticsModel"
+            BlueprintIdentifier = "B2054D6A1AF477C700DC2C00"
+            BuildableName = "Lantern.app"
+            BlueprintName = "Lantern"
             ReferencedContainer = "container:Hoverlytics.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -57,15 +91,16 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B22425CA1AC8F7CA00809EF0"
-            BuildableName = "HoverlyticsModel.framework"
-            BlueprintName = "HoverlyticsModel"
+            BlueprintIdentifier = "B2054D6A1AF477C700DC2C00"
+            BuildableName = "Lantern.app"
+            BlueprintName = "Lantern"
             ReferencedContainer = "container:Hoverlytics.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
