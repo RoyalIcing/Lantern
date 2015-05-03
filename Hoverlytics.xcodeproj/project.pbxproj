@@ -209,15 +209,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B2D39B021AF5EFB8003D6738 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B2E269391AE9DD830044BE04 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -299,6 +290,7 @@
 		B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		B2C4A9401ACA3203000F1566 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainState.swift; path = Hoverlytics/MainState.swift; sourceTree = SOURCE_ROOT; };
 		B2D39B061AF5F085003D6738 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		B2D39B081AF601C7003D6738 /* code-sign-frameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "code-sign-frameworks.sh"; sourceTree = "<group>"; };
 		B2D563221AF5BF8A006DE202 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
 		B2E269171AE9DD650044BE04 /* Sidetone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidetone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2E2691A1AE9DD650044BE04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -387,6 +379,7 @@
 				B2054D8F1AF4780500DC2C00 /* Lantern.entitlements */,
 				B2054D731AF477C700DC2C00 /* Images.xcassets */,
 				B2054D6D1AF477C700DC2C00 /* Supporting Files */,
+				B2D39B081AF601C7003D6738 /* code-sign-frameworks.sh */,
 			);
 			path = Lantern;
 			sourceTree = "<group>";
@@ -734,7 +727,7 @@
 				B25033421AF5E5B0006A2AE7 /* Frameworks */,
 				B25033451AF5E5B0006A2AE7 /* Resources */,
 				B250334F1AF5E5B0006A2AE7 /* Embed Frameworks */,
-				B2D39B021AF5EFB8003D6738 /* CopyFiles */,
+				B2D39B091AF60213003D6738 /* Code Sign Embedded Frameworks */,
 			);
 			buildRules = (
 			);
@@ -946,6 +939,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B2D39B091AF60213003D6738 /* Code Sign Embedded Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Code Sign Embedded Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ] ; then\n    exit 0\nfi\n\nLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Patrick Smith (9J837BGA64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/HoverlyticsModel.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/HoverlyticsModel.framework/Versions/A/Frameworks/Alamofire.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/HoverlyticsModel.framework/Versions/A/Frameworks/Ono.framework/Versions/A\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B2054D781AF477C700DC2C00 /* Sources */ = {
@@ -1176,6 +1186,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1217,6 +1228,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
