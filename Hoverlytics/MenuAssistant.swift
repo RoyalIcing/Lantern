@@ -116,9 +116,9 @@ public class MenuAssistant<T: MenuItemRepresentative> {
 	}
 	
 	/**
-	Updates the menu. fatalError() if the receiver was initialized with a menu.
+	Updates the menu. fatalError() if the receiver was not initialized with a menu.
 	*/
-	public func updateMenu() {
+	public func updateMenu() -> NSMenu {
 		if let menu = menu {
 			menu.removeAllItems()
 			
@@ -126,6 +126,8 @@ public class MenuAssistant<T: MenuItemRepresentative> {
 			for menuItem in menuItems {
 				menu.addItem(menuItem)
 			}
+			
+			return menu
 		}
 		else {
 			fatalError("Called .updateMenu() when receiver was not initialized with a menu")

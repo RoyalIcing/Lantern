@@ -112,6 +112,8 @@
 		B2D39B141AF65188003D6738 /* ValidatedStringValue+Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39B121AF65188003D6738 /* ValidatedStringValue+Presentation.swift */; };
 		B2D39B161AF665D5003D6738 /* TableView-OutlineView-Subclass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39B151AF665D5003D6738 /* TableView-OutlineView-Subclass.swift */; };
 		B2D39B171AF665D5003D6738 /* TableView-OutlineView-Subclass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39B151AF665D5003D6738 /* TableView-OutlineView-Subclass.swift */; };
+		B2D39B461AF6F494003D6738 /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39B451AF6F494003D6738 /* ImagePreviewViewController.swift */; };
+		B2D39B471AF6F494003D6738 /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39B451AF6F494003D6738 /* ImagePreviewViewController.swift */; };
 		B2D563241AF5BF8A006DE202 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D563221AF5BF8A006DE202 /* Alamofire.framework */; };
 		B2E269201AE9DD650044BE04 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2E2691F1AE9DD650044BE04 /* Images.xcassets */; };
 		B2E269231AE9DD650044BE04 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2E269211AE9DD650044BE04 /* Main.storyboard */; };
@@ -301,6 +303,7 @@
 		B2D39B0F1AF64FB6003D6738 /* MultipleStringPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipleStringPreviewViewController.swift; sourceTree = "<group>"; };
 		B2D39B121AF65188003D6738 /* ValidatedStringValue+Presentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ValidatedStringValue+Presentation.swift"; sourceTree = "<group>"; };
 		B2D39B151AF665D5003D6738 /* TableView-OutlineView-Subclass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TableView-OutlineView-Subclass.swift"; sourceTree = "<group>"; };
+		B2D39B451AF6F494003D6738 /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
 		B2D563221AF5BF8A006DE202 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
 		B2E269171AE9DD650044BE04 /* Sidetone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidetone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2E2691A1AE9DD650044BE04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -524,10 +527,7 @@
 				B2D39B151AF665D5003D6738 /* TableView-OutlineView-Subclass.swift */,
 				B22B7DB81AC77D420026AEDB /* PageViewController.swift */,
 				B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */,
-				B2B542C61AF0A09600073464 /* ContentPreview.storyboard */,
-				B2D39B0C1AF64EB5003D6738 /* ContentPreview.swift */,
-				B22766251AEE62060083FE8C /* SourcePreviewViewController.swift */,
-				B2D39B0F1AF64FB6003D6738 /* MultipleStringPreviewViewController.swift */,
+				B2D39B441AF6F482003D6738 /* Preview */,
 				B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */,
 				B22B7DBC1AC782DD0026AEDB /* insertHoverlytics.js */,
 				B23966E11ACD36FF00C6A420 /* userAgent.js */,
@@ -586,6 +586,18 @@
 				B23BE3921AF06AA6008BEDC0 /* SegmentedControlAssistant.swift */,
 			);
 			name = "UI Assistants";
+			sourceTree = "<group>";
+		};
+		B2D39B441AF6F482003D6738 /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				B2B542C61AF0A09600073464 /* ContentPreview.storyboard */,
+				B2D39B0C1AF64EB5003D6738 /* ContentPreview.swift */,
+				B22766251AEE62060083FE8C /* SourcePreviewViewController.swift */,
+				B2D39B0F1AF64FB6003D6738 /* MultipleStringPreviewViewController.swift */,
+				B2D39B451AF6F494003D6738 /* ImagePreviewViewController.swift */,
+			);
+			name = Preview;
 			sourceTree = "<group>";
 		};
 		B2E269181AE9DD650044BE04 /* Sidetone */ = {
@@ -1025,6 +1037,7 @@
 				B2A63B611AC8DACD004CEBE1 /* SiteSettingsViewController.swift in Sources */,
 				B22B7DB71AC77CAC0026AEDB /* MainWindowController.swift in Sources */,
 				B23E29EC1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift in Sources */,
+				B2D39B461AF6F494003D6738 /* ImagePreviewViewController.swift in Sources */,
 				B22766261AEE62060083FE8C /* SourcePreviewViewController.swift in Sources */,
 				B22B7DB91AC77D420026AEDB /* PageViewController.swift in Sources */,
 				B2E2693B1AE9E5130044BE04 /* MainSection.swift in Sources */,
@@ -1064,6 +1077,7 @@
 				B250335C1AF5E7AF006A2AE7 /* MainSection.swift in Sources */,
 				B250335A1AF5E7A7006A2AE7 /* MainWindowController.swift in Sources */,
 				B25033591AF5E79F006A2AE7 /* AppDelegate.swift in Sources */,
+				B2D39B471AF6F494003D6738 /* ImagePreviewViewController.swift in Sources */,
 				B2D39B111AF650A1003D6738 /* MultipleStringPreviewViewController.swift in Sources */,
 				B2D39B171AF665D5003D6738 /* TableView-OutlineView-Subclass.swift in Sources */,
 				B2D39B0E1AF64F3C003D6738 /* ContentPreview.swift in Sources */,

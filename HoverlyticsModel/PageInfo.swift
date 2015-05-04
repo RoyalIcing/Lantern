@@ -94,7 +94,7 @@ internal func URLIsExternal(URLToTest: NSURL, #localHost: String) -> Bool {
 	return false
 }
 
-private let fileDownloadFileExtensions = Set<String>(["zip", "dmg", "exe", "gz", "tar"])
+private let fileDownloadFileExtensions = Set<String>(["zip", "dmg", "exe", "pdf", "gz", "tar", "doc", "docx", "xls", "wav", "aiff", "mp3", "mp4", "mov", "avi", "wmv"])
 
 func linkedURLLooksLikeFileDownload(URL: NSURL) -> Bool {
 	if let path = URL.path {

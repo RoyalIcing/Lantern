@@ -254,6 +254,7 @@ class StatsViewController: NSViewController {
 	var baseContentTypeChoicePopUpButtonAssistant: PopUpButtonAssistant<BaseContentTypeChoice>?
 	
 	var rowMenu: NSMenu!
+	var rowMenuAssistant: MenuAssistant<MenuActions>!
 	
 	
 	var pageMapper: PageMapper?
@@ -312,6 +313,26 @@ class StatsViewController: NSViewController {
 		}
 		else {
 			primaryURL = URL
+		}
+	}
+	
+	var clickedRow: Int? {
+		let row = outlineView.clickedRow
+		if row != -1 {
+			return row
+		}
+		else {
+			return nil
+		}
+	}
+	
+	var clickedColumn: Int? {
+		let column = outlineView.clickedColumn
+		if column != -1 {
+			return column
+		}
+		else {
+			return nil
 		}
 	}
 	
@@ -548,16 +569,23 @@ class StatsViewController: NSViewController {
 	}
 	
 	@IBAction func doubleClickSelectedRow(sender: AnyObject?) {
-		let row = outlineView.clickedRow
-		let column = outlineView.clickedColumn
-		if row != -1 {
+		if let row = clickedRow, column = clickedColumn {
 			if
 				let URL = outlineView.itemAtRow(row) as? NSURL,
 				let pageInfo = pageMapper?.pageInfoForRequestedURL(URL)
 			{
 				// Double clicking requested URL chooses that URL.
 				if column == 0 {
-					didChooseURLCallback?(URL: URL, pageInfo: pageInfo)
+					switch pageInfo.baseContentType {
+					case .LocalHTMLPage:
+						didChooseURLCallback?(URL: URL, pageInfo: pageInfo)
+					case .Image:
+						showImagePreviewForResourceAtRow(row)
+					case .Feed:
+						showSourcePreviewForPageAtRow(row)
+					default:
+						break
+					}
 				}
 				else {
 					showStringValuePreviewForResourceAtRow(row, column: column)
@@ -628,44 +656,141 @@ extension StatsViewController: QLPreviewPanelDataSource, QLPreviewPanelDelegate 
 	}
 }
 
+
+extension StatsViewController {
+	enum MenuActions: Selector {
+		case BrowsePage = "browsePageAtSelectedRow:"
+		case ShowSourcePreview = "showSourcePreviewForPageAtSelectedRow:"
+		case ExpandValue = "showStringValuePreviewForResourceAtSelectedRow:"
+		case ShowImagePreview = "showImagePreviewForResourceAtSelectedRow:"
+		
+		case CopyURL = "copyURLForSelectedRow:"
+	}
+}
+
+extension StatsViewController.MenuActions: MenuItemRepresentative {
+	var title: String {
+		switch self {
+		case .BrowsePage:
+			return "Browse Page"
+		case .ShowSourcePreview:
+			return "Show Source"
+		case .ExpandValue:
+			return "Expand This Value"
+		case .ShowImagePreview:
+			return "Show Image Preview"
+		case .CopyURL:
+			return "Copy URL"
+		}
+	}
+	
+	var tag: Int? { return nil }
+	
+	typealias UniqueIdentifier = Selector
+	var uniqueIdentifier: UniqueIdentifier {
+		return rawValue
+	}
+}
+
 extension StatsViewController {
 	func createRowMenu() {
-		// Row Menu
-		rowMenu = NSMenu(title: "Row Menu")
+		let menu = NSMenu(title: "Row Menu")
 		
-		let showSourceItem = rowMenu.addItemWithTitle("Show Source", action: "showSourcePreviewForPageAtSelectedRow:", keyEquivalent: "")!
-		showSourceItem.target = self
+		rowMenuAssistant = MenuAssistant<MenuActions>(menu: menu)
 		
-		let showStringValueItem = rowMenu.addItemWithTitle("Show This Value", action: "showStringValuePreviewForResourceAtSelectedRow:", keyEquivalent: "")!
-		showStringValueItem.target = self
+		rowMenuAssistant.actionAndTargetReturner = { itemRepresentative in
+			return (action: itemRepresentative.rawValue, target: self)
+		}
 		
-		rowMenu.addItem(NSMenuItem.separatorItem())
-		
-		let copyURLItem = rowMenu.addItemWithTitle("Copy URL", action: "copyURLForSelectedRow:", keyEquivalent: "")!
-		copyURLItem.target = self
-		
-		//outlineView.menu = rowMenu
+		self.rowMenu = menu
+	}
+	
+	func rowMenuItemRepresentativesForResourceInfo(info: PageInfo) -> [MenuActions?] {
+		switch info.baseContentType {
+		case .LocalHTMLPage, .Feed:
+			return [
+				.BrowsePage,
+				.ShowSourcePreview,
+				.ExpandValue,
+				nil,
+				.CopyURL
+			]
+		case .Image:
+			if
+				let contentInfo = info.contentInfo
+				// Does not allow SVG preview for now, as needs a WKWebView or similar
+				where info.MIMEType?.stringValue != "image/svg+xml" && NSBitmapImageRep.canInitWithData(contentInfo.data)
+			{
+				return [
+					.ShowImagePreview,
+					.ExpandValue,
+					nil,
+					.CopyURL
+				]
+			}
+			else {
+				fallthrough
+			}
+		default:
+			return [
+				.ExpandValue,
+				nil,
+				.CopyURL
+			]
+		}
+	}
+	
+	func menuForResourceInfo(info: PageInfo) -> NSMenu {
+		rowMenuAssistant.menuItemRepresentatives = rowMenuItemRepresentativesForResourceInfo(info)
+		return rowMenuAssistant.updateMenu()
+	}
+	
+	@IBAction func browsePageAtSelectedRow(sender: AnyObject?) {
+		if let
+			row = clickedRow,
+			URL = outlineView.itemAtRow(row) as? NSURL,
+			pageInfo = pageMapper?.pageInfoForRequestedURL(URL)
+		{
+			didChooseURLCallback?(URL: URL, pageInfo: pageInfo)
+		}
 	}
 	
 	@IBAction func showSourcePreviewForPageAtSelectedRow(menuItem: NSMenuItem) {
-		let row = outlineView.clickedRow
-		if row != -1 {
+		if let row = clickedRow {
 			showSourcePreviewForPageAtRow(row)
 		}
 	}
 	
+	@IBAction func showStringValuePreviewForResourceAtSelectedRow(menuItem: NSMenuItem) {
+		if let row = clickedRow, column = clickedColumn {
+			showStringValuePreviewForResourceAtRow(row, column: column)
+		}
+	}
+	
+	@IBAction func showImagePreviewForResourceAtSelectedRow(menuItem: NSMenuItem) {
+		if let row = clickedRow {
+			showImagePreviewForResourceAtRow(row)
+		}
+	}
+	
 	@IBAction func copyURLForSelectedRow(menuItem: NSMenuItem) {
-		let row = outlineView.clickedRow
-		if row != -1 {
+		if let row = clickedRow {
 			performCopyURLForURLAtRow(row)
 		}
 	}
 	
-	@IBAction func showStringValuePreviewForResourceAtSelectedRow(menuItem: NSMenuItem) {
-		let row = outlineView.clickedRow
-		let column = outlineView.clickedColumn
-		if row != -1 && column != -1 {
-			showStringValuePreviewForResourceAtRow(row, column: column)
+	func showSourcePreviewForPageAtRow(row: Int) {
+		if
+			let pageURL = outlineView.itemAtRow(row) as? NSURL,
+			let pageMapper = pageMapper where pageMapper.hasFinishedRequestingURL(pageURL)
+		{
+			if let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL) {
+				let sourcePreviewTabViewController = SourcePreviewTabViewController()
+				sourcePreviewTabViewController.pageInfo = pageInfo
+				
+				let rowRect = outlineView.rectOfRow(row)
+				presentViewController(sourcePreviewTabViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSMinYEdge, behavior: .Semitransient)
+			}
 		}
 	}
 	
@@ -700,19 +825,26 @@ extension StatsViewController {
 		}
 	}
 	
-	func showSourcePreviewForPageAtRow(row: Int) {
+	func showImagePreviewForResourceAtRow(row: Int) {
 		if
 			let pageURL = outlineView.itemAtRow(row) as? NSURL,
 			let pageMapper = pageMapper where pageMapper.hasFinishedRequestingURL(pageURL)
 		{
-			if let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL) {
-				let sourcePreviewTabViewController = SourcePreviewTabViewController()
-				sourcePreviewTabViewController.pageInfo = pageInfo
+			if
+				let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL),
+				let contentInfo = pageInfo.contentInfo,
+				let image = NSImage(data: contentInfo.data)
+			{
+				let previewViewController = ImagePreviewViewController.instantiateFromStoryboard()
+				previewViewController.image = image
+				previewViewController.MIMEType = pageInfo.MIMEType?.stringValue
+				previewViewController.sourceURL = pageInfo.requestedURL
 				
 				let rowRect = outlineView.rectOfRow(row)
-				presentViewController(sourcePreviewTabViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSMinYEdge, behavior: .Semitransient)
+				presentViewController(previewViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSMinYEdge, behavior: .Semitransient)
 			}
 		}
+
 	}
 	
 	func performCopyURLForURLAtRow(row: Int) {
@@ -928,6 +1060,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 		{
 			var cellIdentifier = (identifier == .requestedURL ? "requestedURL" : "text")
 			
+			var menu: NSMenu?
 			var stringValue: String
 			var suffixString: String?
 			var opacity: CGFloat = 1.0
@@ -949,6 +1082,8 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 					}
 					
 					textColor = PageResponseType(statusCode: pageInfo.statusCode).cocoaColor
+					
+					menu = menuForResourceInfo(pageInfo)
 				}
 				
 				switch validatedStringValue {
@@ -990,7 +1125,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 				}
 				view.alphaValue = opacity
 				
-				view.menu = rowMenu
+				view.menu = menu
 
 				return view
 			}
