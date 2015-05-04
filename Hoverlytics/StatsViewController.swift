@@ -134,7 +134,7 @@ extension StatsFilterResponseChoice: MenuItemRepresentative {
 			return "Invalid Meta Description"
 			
 		case .IsLinkedByBrowsedPage:
-			return "Is Linked by Browsed Page"
+			return "Linked by Browsed Page"
 		case .ContainsLinkToBrowsedPage:
 			return "Contains Link to Browsed Page"
 		}
@@ -336,6 +336,16 @@ class StatsViewController: NSViewController {
 		}
 	}
 	
+	var soloSelectedRow: Int? {
+		let row = outlineView.selectedRow
+		if row != -1 {
+			return row
+		}
+		else {
+			return nil
+		}
+	}
+	
 	var selectedURLs: [NSURL] {
 		get {
 			let outlineView = self.outlineView!
@@ -442,10 +452,9 @@ class StatsViewController: NSViewController {
 			
 			self.pageMapper = pageMapper
 		}
-		else {
-			updateListOfURLs()
-			updateUI()
-		}
+		
+		updateListOfURLs()
+		updateUI()
 	}
 	
 	var updateUIWithProgressOperation: NSBlockOperation!
@@ -568,6 +577,24 @@ class StatsViewController: NSViewController {
 		}
 	}
 	
+	func showPreviewForRow(row: Int) {
+		if
+			let URL = outlineView.itemAtRow(row) as? NSURL,
+			let pageInfo = pageMapper?.pageInfoForRequestedURL(URL)
+		{
+			switch pageInfo.baseContentType {
+			case .LocalHTMLPage:
+				showSourcePreviewForPageAtRow(row)
+			case .Image:
+				showImagePreviewForResourceAtRow(row)
+			case .Feed:
+				showSourcePreviewForPageAtRow(row)
+			default:
+				break
+			}
+		}
+	}
+	
 	@IBAction func doubleClickSelectedRow(sender: AnyObject?) {
 		if let row = clickedRow, column = clickedColumn {
 			if
@@ -579,12 +606,8 @@ class StatsViewController: NSViewController {
 					switch pageInfo.baseContentType {
 					case .LocalHTMLPage:
 						didChooseURLCallback?(URL: URL, pageInfo: pageInfo)
-					case .Image:
-						showImagePreviewForResourceAtRow(row)
-					case .Feed:
-						showSourcePreviewForPageAtRow(row)
 					default:
-						break
+						showPreviewForRow(row)
 					}
 				}
 				else {
@@ -595,7 +618,8 @@ class StatsViewController: NSViewController {
 	}
 	
 	@IBAction func pauseCrawling(sender: AnyObject?) {
-		pageMapper?.pauseCrawling()
+		//pageMapper?.pauseCrawling()
+		pageMapper?.cancel()
 	}
 	
 	override func respondsToSelector(selector: Selector) -> Bool {
@@ -615,6 +639,9 @@ extension StatsViewController: QLPreviewPanelDataSource, QLPreviewPanelDelegate 
 			let u = charactersIgnoringModifiers[charactersIgnoringModifiers.startIndex]
 			
 			if u == Character(" ") {
+				if let row = soloSelectedRow {
+					showPreviewForRow(row)
+				}
 				// TODO: enable again
 				//quickLookPreviewItems(self)
 			}
@@ -832,11 +859,10 @@ extension StatsViewController {
 		{
 			if
 				let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL),
-				let contentInfo = pageInfo.contentInfo,
-				let image = NSImage(data: contentInfo.data)
+				let contentInfo = pageInfo.contentInfo
 			{
 				let previewViewController = ImagePreviewViewController.instantiateFromStoryboard()
-				previewViewController.image = image
+				previewViewController.imageData = contentInfo.data
 				previewViewController.MIMEType = pageInfo.MIMEType?.stringValue
 				previewViewController.sourceURL = pageInfo.requestedURL
 				
@@ -902,11 +928,11 @@ extension StatsViewController {
 		let popUpButton = filterResponseChoicePopUpButton
 		
 		if pageMapper == nil {
-			popUpButton.hidden = true
+			popUpButton.animator().hidden = true
 			return
 		}
 		else {
-			popUpButton.hidden = false
+			popUpButton.animator().hidden = false
 		}
 		
 		var popUpButtonAssistant = filterResponseChoicePopUpButtonAssistant ?? {
@@ -960,11 +986,11 @@ extension StatsViewController {
 		let popUpButton = baseContentTypeChoicePopUpButton
 		
 		if pageMapper == nil {
-			popUpButton.hidden = true
+			popUpButton.animator().hidden = true
 			return
 		}
 		
-		popUpButton.hidden = false
+		popUpButton.animator().hidden = false
 		
 		let popUpButtonAssistant = baseContentTypeChoicePopUpButtonAssistant ?? {
 			let popUpButtonAssistant = PopUpButtonAssistant<BaseContentTypeChoice>(popUpButton: popUpButton)
@@ -998,7 +1024,7 @@ extension StatsViewController {
 		let segmentedControl = columnsModeSegmentedControl
 		
 		if pageMapper != nil {
-			segmentedControl.hidden = false
+			segmentedControl.animator().hidden = false
 			
 			let segmentedControlAssistant = columnsModeSegmentedControlAssistant ?? {
 				let segmentedControlAssistant = SegmentedControlAssistant<StatsColumnsMode>(segmentedControl: segmentedControl)
@@ -1018,7 +1044,7 @@ extension StatsViewController {
 			segmentedControlAssistant.selectedItemRepresentative = selectedColumnsMode
 		}
 		else {
-			segmentedControl.hidden = true
+			segmentedControl.animator().hidden = true
 		}
 	
 		updateColumnsToOnlyShow(selectedColumnsMode.columnIdentifiersForBaseContentType(filterToBaseContentType))

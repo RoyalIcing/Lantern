@@ -121,6 +121,23 @@ class SourcePreviewTabViewController: NSTabViewController {
 			updateSourceTextForSection(section, tabViewItem: tabViewItem)
 		}
 	}
+	
+	override func keyDown(theEvent: NSEvent) {
+		if theEvent.burnt_isSpaceKey {
+			// Just like QuickLook, use space to dismiss.
+			dismissController(nil)
+		}
+	}
+}
+
+extension SourcePreviewTabViewController {
+	func popoverDidShow(notification: NSNotification) {
+		if let window = view.window {
+			window.makeFirstResponder(self)
+		}
+		
+		view.layoutSubtreeIfNeeded()
+	}
 }
 
 extension SourcePreviewTabViewController: NSPopoverDelegate {

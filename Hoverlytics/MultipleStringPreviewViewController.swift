@@ -48,6 +48,15 @@ class MultipleStringPreviewViewController: NSViewController {
 		tableView.reloadData()
 	}
 	
+	override func keyDown(theEvent: NSEvent) {
+		if theEvent.burnt_isSpaceKey {
+			// Just like QuickLook, use space to dismiss.
+			dismissController(nil)
+		}
+	}
+}
+
+extension MultipleStringPreviewViewController {
 	class func instantiateFromStoryboard() -> MultipleStringPreviewViewController {
 		return NSStoryboard.lantern_contentPreviewStoryboard.instantiateControllerWithIdentifier("String Value View Controller") as! MultipleStringPreviewViewController
 	}

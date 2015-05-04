@@ -241,6 +241,11 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		nc.postNotificationName(identifier.notificationName, object: self, userInfo: userInfo)
 	}
 	
+	func didNavigateToURL(URL: NSURL) {
+		self.URL = URL
+		mainQueue_notify(.URLDidChange)
+	}
+	
 	override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
 		if context == &webViewURLObservingContext {
 			switch keyPath {
@@ -258,19 +263,29 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 	
 	// MARK: WKNavigationDelegate
 	
-	func webView(webView: WKWebView, didCommitNavigation navigation: WKNavigation!) {
-		// FIXME: Error with navigation.request for some reason
-		let request = navigation.valueForKey("request") as! NSURLRequest
-		self.URL = request.URL
-		mainQueue_notify(.URLDidChange)
-	}
 	/*
 	func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-		//println("navigationAction \(navigationAction.navigationType) \(navigationAction)")
+		switch navigationAction.navigationType {
+		case .LinkActivated, .BackForward, .Other:
+			if navigationAction.targetFrame?.mainFrame ?? false {
+				let request = navigationAction.request
+				if let URL = request.URL {
+					didNavigateToURL(URL)
+				}
+			}
+		default:
+			break
+		}
 		
 		decisionHandler(.Allow)
 	}
 	*/
+	/*
+	func webView(webView: WKWebView, decidePolicyForNavigationResponse navigationResponse: WKNavigationResponse, decisionHandler: (WKNavigationResponsePolicy) -> Void) {
+		
+	}
+	*/
+	
 	func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
 		#if DEBUG
 			println("didFinishNavigation \(navigation)")

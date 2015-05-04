@@ -39,7 +39,7 @@ extension NSTableView {
 
 class OutlineView: NSOutlineView {
 	override func menuForEvent(event: NSEvent) -> NSMenu? {
-		// Because of weird NSTableView/NSOutlineView behaviour, must set receiver’s menu otherwise the target cannot be found?
+		// Because of weird NSTableView/NSOutlineView behaviour, must set receiver’s menu otherwise the target cannot be found
 		self.menu = burnt_menuForEventFromCellOrRowViews(event)
 		
 		return super.menuForEvent(event)
@@ -48,7 +48,7 @@ class OutlineView: NSOutlineView {
 
 class TableView: NSTableView {
 	override func menuForEvent(event: NSEvent) -> NSMenu? {
-		// Because of weird NSTableView/NSOutlineView behaviour, must set receiver’s menu otherwise the target cannot be found?
+		// Because of weird NSTableView/NSOutlineView behaviour, must set receiver’s menu otherwise the target cannot be found
 		self.menu = burnt_menuForEventFromCellOrRowViews(event)
 		
 		return super.menuForEvent(event)

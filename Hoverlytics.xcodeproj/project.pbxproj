@@ -120,6 +120,8 @@
 		B2E2692F1AE9DD660044BE04 /* SidetoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2692E1AE9DD660044BE04 /* SidetoneTests.swift */; };
 		B2E2693B1AE9E5130044BE04 /* MainSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2693A1AE9E5130044BE04 /* MainSection.swift */; };
 		B2E2693D1AE9E9200044BE04 /* MainView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2E2693C1AE9E9200044BE04 /* MainView.storyboard */; };
+		B2EAB9121AF74D8000A1F185 /* NSEvent+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */; };
+		B2EAB9131AF74DDD00A1F185 /* NSEvent+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -316,6 +318,7 @@
 		B2E2692E1AE9DD660044BE04 /* SidetoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidetoneTests.swift; sourceTree = "<group>"; };
 		B2E2693A1AE9E5130044BE04 /* MainSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSection.swift; sourceTree = "<group>"; };
 		B2E2693C1AE9E9200044BE04 /* MainView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainView.storyboard; sourceTree = "<group>"; };
+		B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSEvent+extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -521,6 +524,7 @@
 				B22B7D961AC6B9090026AEDB /* ViewController.swift */,
 				B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */,
 				B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */,
+				B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */,
 				B23BE3941AF078EC008BEDC0 /* UI Assistants */,
 				B2D39B121AF65188003D6738 /* ValidatedStringValue+Presentation.swift */,
 				B22B7DBA1AC77EF20026AEDB /* Page.storyboard */,
@@ -1037,6 +1041,7 @@
 				B2A63B611AC8DACD004CEBE1 /* SiteSettingsViewController.swift in Sources */,
 				B22B7DB71AC77CAC0026AEDB /* MainWindowController.swift in Sources */,
 				B23E29EC1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift in Sources */,
+				B2EAB9121AF74D8000A1F185 /* NSEvent+extension.swift in Sources */,
 				B2D39B461AF6F494003D6738 /* ImagePreviewViewController.swift in Sources */,
 				B22766261AEE62060083FE8C /* SourcePreviewViewController.swift in Sources */,
 				B22B7DB91AC77D420026AEDB /* PageViewController.swift in Sources */,
@@ -1082,6 +1087,7 @@
 				B2D39B171AF665D5003D6738 /* TableView-OutlineView-Subclass.swift in Sources */,
 				B2D39B0E1AF64F3C003D6738 /* ContentPreview.swift in Sources */,
 				B2D39B141AF65188003D6738 /* ValidatedStringValue+Presentation.swift in Sources */,
+				B2EAB9131AF74DDD00A1F185 /* NSEvent+extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

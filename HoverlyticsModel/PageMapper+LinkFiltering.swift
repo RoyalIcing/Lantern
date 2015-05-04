@@ -23,16 +23,16 @@ extension PageMapper {
 		switch linkFilter {
 		case .IsLinkedByURL(let linkedByURL):
 			if let contentInfo = self.pageInfoForRequestedURL(linkedByURL)?.contentInfo {
-				return URLs.filter { (URL) in
-					return contentInfo.containsLocalPageURL(URL)
+				return URLs.filter { (URLToCheck) in
+					return contentInfo.containsLocalPageURL(URLToCheck)
 				}
 			}
 			else {
 				return []
 			}
 		case .ContainsLinkToURL(let childURL):
-			return URLs.filter { (URL) in
-				if let contentInfo = self.pageInfoForRequestedURL(childURL)?.contentInfo {
+			return URLs.filter { (URLToCheck) in
+				if let contentInfo = self.pageInfoForRequestedURL(URLToCheck)?.contentInfo {
 					return contentInfo.containsLocalPageURL(childURL)
 				}
 				
