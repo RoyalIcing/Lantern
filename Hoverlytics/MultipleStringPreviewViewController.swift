@@ -24,7 +24,7 @@ class MultipleStringPreviewViewController: NSViewController {
 		
 		measuringTableCellView = tableView.makeViewWithIdentifier("stringValue", owner: self) as! MultipleStringPreviewTableCellView
 		
-		tableView.appearance = NSAppearance(named: NSAppearanceNameAqua)
+		view.appearance = NSAppearance(named: NSAppearanceNameAqua)
 	}
 	
 	func createRowMenu() {
@@ -110,9 +110,11 @@ extension MultipleStringPreviewViewController: NSTableViewDataSource, NSTableVie
 		indexField.stringValue = String(row + 1) // 1-based index
 		
 		if visualsAndInteraction {
-			indexField.alphaValue = 0.3
+			let textColor = NSColor.textColor()
 			
-			textField.alphaValue = validatedStringValue.alphaValueForPresentation
+			indexField.textColor = textColor.colorWithAlphaComponent(0.3)
+			
+			textField.textColor = textColor.colorWithAlphaComponent(validatedStringValue.alphaValueForPresentation)
 			
 			view.menu = itemMenu
 		}

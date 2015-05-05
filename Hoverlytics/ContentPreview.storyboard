@@ -19,7 +19,7 @@
                                     <rect key="frame" x="1" y="1" width="223" height="133"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView editable="NO" importsGraphics="NO" findStyle="bar" incrementalSearchingEnabled="YES" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="na3-ew-H5q">
+                                        <textView editable="NO" importsGraphics="NO" findStyle="bar" incrementalSearchingEnabled="YES" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="na3-ew-H5q" customClass="SourcePreviewTextView" customModule="Hoverlytics" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="223" height="298"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" name="shadowColor" catalog="System" colorSpace="catalog"/>

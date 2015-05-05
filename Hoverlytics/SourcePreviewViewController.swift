@@ -82,7 +82,13 @@ class SourcePreviewTabViewController: NSTabViewController {
 	
 	func newSourcePreviewTabViewItem(#section: SourcePreviewTabItemSection) -> NSTabViewItem {
 		let item = NSTabViewItem(identifier: section.stringValue)
-		item.viewController = newSourcePreviewController()
+		
+		let vc = newSourcePreviewController()
+		vc.wantsToDismiss = {
+			self.dismissController(nil)
+		}
+		item.viewController = vc
+		
 		item.label = section.titleWithPageInfo(pageInfo)
 		return item
 	}
@@ -130,16 +136,6 @@ class SourcePreviewTabViewController: NSTabViewController {
 	}
 }
 
-extension SourcePreviewTabViewController {
-	func popoverDidShow(notification: NSNotification) {
-		if let window = view.window {
-			window.makeFirstResponder(self)
-		}
-		
-		view.layoutSubtreeIfNeeded()
-	}
-}
-
 extension SourcePreviewTabViewController: NSPopoverDelegate {
 	func popoverWillShow(notification: NSNotification) {
 		let popover = notification.object as! NSPopover
@@ -147,16 +143,30 @@ extension SourcePreviewTabViewController: NSPopoverDelegate {
 		//popover.appearance = NSAppearance(named: NSAppearanceNameLightContent)
 		//popover.appearance = .HUD
 	}
+	
+	func popoverDidShow(notification: NSNotification) {
+		if let window = view.window where selectedTabViewItemIndex != -1 {
+			let tabViewItem = tabViewItems[selectedTabViewItemIndex] as! NSTabViewItem
+			let vc = tabViewItem.viewController as! SourcePreviewViewController
+			window.makeFirstResponder(vc.textView)
+		}
+		
+		view.layoutSubtreeIfNeeded()
+	}
 }
 
 
 class SourcePreviewViewController: NSViewController {
 	
-	@IBOutlet var textView: NSTextView!
+	@IBOutlet var textView: SourcePreviewTextView!
+	
+	var wantsToDismiss: (() -> Void)?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do view setup here.
+		
+		textView.wantsToDismiss = wantsToDismiss
 	}
 	
 	let defaultTextAttributes: [NSObject: AnyObject] = [
@@ -173,6 +183,21 @@ class SourcePreviewViewController: NSViewController {
 				let newAttributedString = NSAttributedString(string: sourceText, attributes:attributes)
 				textStorage.replaceCharactersInRange(NSMakeRange(0, textStorage.length), withAttributedString: newAttributedString)
 			}
+		}
+	}
+}
+
+
+class SourcePreviewTextView: NSTextView {
+	
+	var wantsToDismiss: (() -> Void)?
+	
+	override func keyDown(theEvent: NSEvent) {
+		if theEvent.burnt_isSpaceKey {
+			wantsToDismiss?()
+		}
+		else {
+			super.keyDown(theEvent)
 		}
 	}
 }

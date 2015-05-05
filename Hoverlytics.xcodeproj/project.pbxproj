@@ -122,6 +122,7 @@
 		B2E2693D1AE9E9200044BE04 /* MainView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2E2693C1AE9E9200044BE04 /* MainView.storyboard */; };
 		B2EAB9121AF74D8000A1F185 /* NSEvent+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */; };
 		B2EAB9131AF74DDD00A1F185 /* NSEvent+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */; };
+		B2EAB9151AF7A12F00A1F185 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = B2EAB9141AF7A12F00A1F185 /* Credits.rtf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -319,6 +320,7 @@
 		B2E2693A1AE9E5130044BE04 /* MainSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSection.swift; sourceTree = "<group>"; };
 		B2E2693C1AE9E9200044BE04 /* MainView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainView.storyboard; sourceTree = "<group>"; };
 		B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSEvent+extension.swift"; sourceTree = "<group>"; };
+		B2EAB9141AF7A12F00A1F185 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -404,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				B2054D6E1AF477C700DC2C00 /* Info.plist */,
+				B2EAB9141AF7A12F00A1F185 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -945,6 +948,7 @@
 				B25033481AF5E5B0006A2AE7 /* ContentPreview.storyboard in Resources */,
 				B25033491AF5E5B0006A2AE7 /* windowClose.js in Resources */,
 				B250334A1AF5E5B0006A2AE7 /* Images.xcassets in Resources */,
+				B2EAB9151AF7A12F00A1F185 /* Credits.rtf in Resources */,
 				B250334B1AF5E5B0006A2AE7 /* SiteSettings.storyboard in Resources */,
 				B250334C1AF5E5B0006A2AE7 /* userAgent.js in Resources */,
 				B250334D1AF5E5B0006A2AE7 /* console.js in Resources */,
