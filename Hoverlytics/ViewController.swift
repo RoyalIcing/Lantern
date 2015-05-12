@@ -20,12 +20,16 @@ class ViewController: NSViewController
 		didSet {
 			startObservingModelManager()
 			updateMainViewForState()
+			startObservingBrowserPreferences()
+			
+			updatePreferredBrowserWidth()
 		}
 	}
 	
 	typealias MainStateNotification = MainState.Notification
 	
 	var mainStateNotificationObservers = [MainStateNotification: AnyObject]()
+	var browserPreferencesObserver: NotificationObserver<BrowserPreferences.Notification>!
 	
 	func startObservingModelManager() {
 		let nc = NSNotificationCenter.defaultCenter()
@@ -36,7 +40,7 @@ class ViewController: NSViewController
 			mainStateNotificationObservers[notificationIdentifier] = observer
 		}
 		
-		addObserver(.ChosenSiteDidChange) { (notification) in
+		addObserver(.ChosenSiteDidChange) { notification in
 			self.updateMainViewForState()
 		}
 	}
@@ -48,6 +52,28 @@ class ViewController: NSViewController
 			nc.removeObserver(observer)
 		}
 		mainStateNotificationObservers.removeAll(keepCapacity: false)
+	}
+	
+	func updatePreferredBrowserWidth() {
+		pageViewController?.preferredBrowserWidth = mainState.browserPreferences.widthChoice.value
+	}
+	
+	func startObservingBrowserPreferences() {
+		browserPreferencesObserver = NotificationObserver<BrowserPreferences.Notification>(object: mainState.browserPreferences)
+		
+		browserPreferencesObserver.addObserver(.WidthChoiceDidChange) { notification in
+			self.updatePreferredBrowserWidth()
+		}
+	}
+	
+	func stopObservingBrowserPreferences() {
+		browserPreferencesObserver.removeAllObservers()
+		browserPreferencesObserver = nil
+	}
+	
+	deinit {
+		stopObservingModelManager()
+		stopObservingBrowserPreferences()
 	}
 	
 	

@@ -58,7 +58,7 @@ class MainWindowController: NSWindowController {
 		mainViewController.mainState = mainState
 		
 		let nc = NSNotificationCenter.defaultCenter()
-		chosenSiteDidChangeObserver = nc.addObserverForName(MainStateNotification.ChosenSiteDidChange.rawValue, object: self, queue: nil) { [unowned self] note in
+		chosenSiteDidChangeObserver = nc.addObserverForName(MainStateNotification.ChosenSiteDidChange.rawValue, object: mainState, queue: nil) { [unowned self] note in
 			self.window?.title = self.windowTitleForDocumentDisplayName("Main")
 		}
     }
@@ -79,11 +79,7 @@ class MainWindowController: NSWindowController {
 	}
 	
 	override func windowTitleForDocumentDisplayName(displayName: String) -> String {
-		if let site = mainState.chosenSite {
-			return site.name
-		}
-		
-		return displayName
+		return mainState.chosenSite?.name ?? displayName
 	}
 }
 

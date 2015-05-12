@@ -61,7 +61,7 @@ public class MenuAssistant<T: MenuItemRepresentative> {
 	*/
 	public func createItems() -> [NSMenuItem] {
 		if menuItemRepresentatives == nil {
-			fatalError("Set .menuItemRepresentatives before calling createItems()")
+			fatalError("Must set .menuItemRepresentatives before calling createItems()")
 		}
 		
 		var previousCachedIdentifiers = Set(uniqueIdentifierToMenuItems.keys)
@@ -95,6 +95,7 @@ public class MenuAssistant<T: MenuItemRepresentative> {
 				
 				item.title = title
 				item.tag = tag
+				item.state = state
 				item.action = action
 				item.target = target
 				item.enabled = enabled
@@ -153,5 +154,59 @@ public class MenuAssistant<T: MenuItemRepresentative> {
 		else {
 			fatalError("Called .uniqueIdentifierForMenuItem() when receiver was not initialized with a menu")
 		}
+	}
+}
+
+
+public class PlaceholderMenuItemAssistant<T: MenuItemRepresentative> {
+	public let menuAssistant: MenuAssistant<T>
+	private let placeholderMenuItem: NSMenuItem
+	private var menuItems: [NSMenuItem]?
+	
+	private init(menuAssistant: MenuAssistant<T>, placeholderMenuItem: NSMenuItem) {
+		self.menuAssistant = menuAssistant
+		self.placeholderMenuItem = placeholderMenuItem
+	}
+	
+	public func update() {
+		assert(placeholderMenuItem.menu != nil, "`placeholderMenuItem` must be in a menu.")
+		
+		placeholderMenuItem.hidden = true
+		let menu = placeholderMenuItem.menu!
+		
+		if let oldMenuItems = menuItems {
+			for oldMenuItem in oldMenuItems {
+				oldMenuItem.menu?.removeItem(oldMenuItem)
+			}
+		}
+		
+		let placeholderIndex = menu.indexOfItem(placeholderMenuItem)
+		
+		let newMenuItems = menuAssistant.createItems()
+		var insertIndex = placeholderIndex + 1
+		for menuItem in newMenuItems {
+			menu.insertItem(menuItem, atIndex: insertIndex)
+			insertIndex++
+		}
+		
+		menuItems = newMenuItems
+	}
+	
+	public func itemRepresentativeForMenuItem(menuItemToFind: NSMenuItem) -> T? {
+		if let menuItems = menuItems {
+			for (index, menuItem) in enumerate(menuItems) {
+				if menuItem === menuItemToFind {
+					return menuAssistant.menuItemRepresentatives[index]
+				}
+			}
+		}
+			
+		return nil
+	}
+}
+
+extension MenuAssistant {
+	public func assistPlaceholderMenuItem(placeholderMenuItem: NSMenuItem) -> PlaceholderMenuItemAssistant<T> {
+		return PlaceholderMenuItemAssistant<T>(menuAssistant: self, placeholderMenuItem: placeholderMenuItem)
 	}
 }

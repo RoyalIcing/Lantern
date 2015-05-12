@@ -1,0 +1,83 @@
+//
+//  CrawlerMenuController.swift
+//  Hoverlytics
+//
+//  Created by Patrick Smith on 12/05/2015.
+//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//
+
+import Cocoa
+
+
+extension CrawlerImageDownloadChoice: MenuItemRepresentative {
+	var tag: Int? { return self.rawValue }
+	
+	typealias UniqueIdentifier = CrawlerImageDownloadChoice
+	var uniqueIdentifier: UniqueIdentifier { return self }
+}
+
+
+class CrawlerMenuController: NSObject, NSUserInterfaceValidations {
+	var imageDownloadMenuItemsAssistant: PlaceholderMenuItemAssistant<CrawlerImageDownloadChoice>!
+	
+	var crawlerPreferencesObserver: NotificationObserver<CrawlerPreferences.Notification>!
+	
+	init(imageDownloadPlaceholderMenuItem: NSMenuItem) {
+		super.init()
+		
+		let imageDownloadMenuAssistant = MenuAssistant<CrawlerImageDownloadChoice>(menu: nil)
+		imageDownloadMenuAssistant.menuItemRepresentatives = [
+			.NeverDownload,
+			.Total1MB,
+			.Total10MB,
+			.Total100MB,
+			.Unlimited
+		]
+		imageDownloadMenuAssistant.actionAndTargetReturner = { [weak self] widthChoice in
+			return (action: "changeImageDownloadChoice:", target: self)
+		}
+		imageDownloadMenuAssistant.stateReturner = { [weak self] imageDownloadChoice in
+			let chosenImageDownloadChoice = CrawlerPreferences.sharedCrawlerPreferences.imageDownloadChoice
+			return (chosenImageDownloadChoice == imageDownloadChoice) ? NSOnState : NSOffState
+		}
+		imageDownloadMenuItemsAssistant = imageDownloadMenuAssistant.assistPlaceholderMenuItem(imageDownloadPlaceholderMenuItem)
+		
+		updateImageDownloadMenu()
+		
+		startObservingCrawlerPreferences()
+	}
+	
+	deinit {
+		stopObservingCrawlerPreferences()
+	}
+	
+	func updateImageDownloadMenu() {
+		imageDownloadMenuItemsAssistant?.update()
+	}
+	
+	func startObservingCrawlerPreferences() {
+		crawlerPreferencesObserver = NotificationObserver<CrawlerPreferences.Notification>(object: CrawlerPreferences.sharedCrawlerPreferences)
+		
+		crawlerPreferencesObserver.addObserver(.ImageDownloadChoiceDidChange) { notification in
+			self.updateImageDownloadMenu()
+		}
+	}
+	
+	func stopObservingCrawlerPreferences() {
+		crawlerPreferencesObserver.removeAllObservers()
+		crawlerPreferencesObserver = nil
+	}
+	
+	@IBAction func changeImageDownloadChoice(sender: AnyObject?) {
+		if let
+			menuItem = sender as? NSMenuItem,
+			imageDownloadChoice = imageDownloadMenuItemsAssistant.itemRepresentativeForMenuItem(menuItem)
+		{
+			CrawlerPreferences.sharedCrawlerPreferences.imageDownloadChoice = imageDownloadChoice
+		}
+	}
+	
+	@objc func validateUserInterfaceItem(anItem: NSValidatedUserInterfaceItem) -> Bool {
+		return true
+	}
+}

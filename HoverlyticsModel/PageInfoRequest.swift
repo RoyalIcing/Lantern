@@ -12,15 +12,25 @@ import Ono
 
 
 public class PageInfoRequest {
-	typealias CompletionHandler = (info: PageInfo) -> Void
+	typealias CompletionHandler = (info: PageInfo, infoRequest: PageInfoRequest) -> Void
 	
 	public let URL: NSURL
+	public let includingContent: Bool
+	public let method: Alamofire.Method
+	public let expectedBaseContentType: BaseContentType
 	let completionHandler: CompletionHandler
 	var request: Alamofire.Request?
 	
-	init(URL: NSURL, completionHandler: CompletionHandler) {
+	init(URL: NSURL, expectedBaseContentType: BaseContentType, includingContent: Bool = false, completionHandler: CompletionHandler) {
 		self.URL = URL
+		self.expectedBaseContentType = expectedBaseContentType
+		self.includingContent = includingContent
+		self.method = includingContent ? .GET : .HEAD
 		self.completionHandler = completionHandler
+	}
+	
+	func copyNotIncludingContent() -> PageInfoRequest {
+		return PageInfoRequest(URL: URL, expectedBaseContentType: expectedBaseContentType, includingContent: false, completionHandler: completionHandler)
 	}
 }
 
@@ -38,6 +48,7 @@ class PageInfoRequestQueue {
 	var activeRequests = [PageInfoRequest]()
 	var pendingRequests = [PageInfoRequest]()
 	var willPerformHTTPRedirection: ((redirectionInfo: RequestRedirectionInfo) -> Void)?
+	var didFinishWithRequest: ((infoRequest: PageInfoRequest) -> Void)?
 	
 	init() {
 		let manager = Alamofire.Manager()
@@ -58,12 +69,42 @@ class PageInfoRequestQueue {
 		}
 	}
 	
-	func addRequest(infoRequest: PageInfoRequest) {
-		if activeRequests.count >= maximumActiveRequests {
-			pendingRequests.append(infoRequest)
+	func addRequestForURL(URL: NSURL, expectedBaseContentType: BaseContentType, includingContent: Bool, highPriority: Bool = false, completionHandler: PageInfoRequest.CompletionHandler) -> PageInfoRequest {
+		let infoRequest = PageInfoRequest(URL: URL, expectedBaseContentType: expectedBaseContentType, includingContent: includingContent, completionHandler: completionHandler)
+		
+		if highPriority || activeRequests.count < maximumActiveRequests {
+			performRequest(infoRequest)
 		}
 		else {
-			performRequest(infoRequest)
+			pendingRequests.append(infoRequest)
+		}
+		
+		return infoRequest
+	}
+	
+	func downgradePendingRequestsToNotIncludeContent(decider: ((PageInfoRequest) -> Bool)) {
+		pendingRequests = pendingRequests.map { request in
+			if request.includingContent && decider(request) {
+				return request.copyNotIncludingContent()
+			}
+			else {
+				return request
+			}
+		}
+	}
+	
+	func cancelRequestForURL(URL: NSURL) {
+		let URLAbsoluteString = URL.absoluteString
+		
+		func requestContainsURL(infoRequest: PageInfoRequest) -> Bool {
+			return infoRequest.URL.absoluteString == URLAbsoluteString
+		}
+		
+		for (index, request) in enumerate(pendingRequests) {
+			if requestContainsURL(request) {
+				pendingRequests.removeAtIndex(index)
+				break
+			}
 		}
 	}
 	
@@ -76,7 +117,7 @@ class PageInfoRequestQueue {
 	}
 	
 	private func activeRequestDidComplete(infoRequest: PageInfoRequest, withInfo info: PageInfo) {
-		infoRequest.completionHandler(info: info)
+		infoRequest.completionHandler(info: info, infoRequest: infoRequest)
 		
 		// Remove from active requests
 		for (index, someRequest) in enumerate(activeRequests) {
@@ -95,19 +136,25 @@ class PageInfoRequestQueue {
 		
 		// An Alamofire serializer to perform the parsing etc on the request’s background queue.
 		let serializer: Alamofire.Request.Serializer = { URLRequest, response, data in
-			if
-				let response = response,
-				let data = data
-			{
+			if let response = response {
 				let requestedURL = infoRequest.URL
 				let MIMEType = MIMETypeString(response.MIMEType)
 				let baseContentType: BaseContentType = MIMEType?.baseContentType ?? .Unknown
 				
-				let contentInfo = PageContentInfo(data: data, localURL: requestedURL)
+				let byteCount: Int?
+				let contentInfo: PageContentInfo?
+				if let data = data where infoRequest.includingContent {
+					byteCount = data.length
+					contentInfo = PageContentInfo(data: data, localURL: requestedURL)
+				}
+				else {
+					byteCount = nil
+					contentInfo = nil
+				}
 				
-				var info = PageInfo(requestedURL: requestedURL, finalURL: response.URL, statusCode: response.statusCode, baseContentType: baseContentType, MIMEType: MIMEType, bytes: data.length, contentInfo: contentInfo)
+				var info = PageInfo(requestedURL: requestedURL, finalURL: response.URL, statusCode: response.statusCode, baseContentType: baseContentType, MIMEType: MIMEType, byteCount: byteCount, contentInfo: contentInfo)
 				
-				// Result expected is AnyObject, so we can’t pass a struct here unfortuntely.
+				// Result expected is AnyObject, so we can’t pass a struct here unfortunately.
 				return (PageInfoReference(info: info), nil)
 			}
 			else {
@@ -118,7 +165,7 @@ class PageInfoRequestQueue {
 		// Perform the request
 		let requestedURL = infoRequest.URL
 		infoRequest.request = requestManager
-			.request(.GET, requestedURL)
+			.request(infoRequest.method, requestedURL)
 			.response(serializer: serializer) { (URLRequest, response, infoReference, error) in
 				if
 					let response = response,

@@ -203,9 +203,14 @@ public enum PagePresentedInfoIdentifier: String {
 				return ValidatedStringValue.validateAttribute("content", ofElements: metaDescriptionElements)
 			}
 		case .pageByteCount:
-			return ValidatedStringValue(
-				string: PagePresentedInfoIdentifier.byteFormatter.stringFromByteCount(Int64(pageInfo.bytes))
-			)
+			if let byteCount = pageInfo.byteCount {
+				return ValidatedStringValue(
+					string: PagePresentedInfoIdentifier.byteFormatter.stringFromByteCount(Int64(byteCount))
+				)
+			}
+			else {
+				return .NotRequested
+			}
 		case .pageByteCountBeforeBodyTag:
 			if let byteCountBeforeBody = pageInfo.contentInfo?.preBodyByteCount {
 				return ValidatedStringValue(
@@ -213,9 +218,12 @@ public enum PagePresentedInfoIdentifier: String {
 				)
 			}
 		case .pageByteCountAfterBodyTag:
-			if let byteCountBeforeBody = pageInfo.contentInfo?.preBodyByteCount {
+			if let
+				byteCount = pageInfo.byteCount,
+				byteCountBeforeBody = pageInfo.contentInfo?.preBodyByteCount
+			{
 				return ValidatedStringValue(
-					string: PagePresentedInfoIdentifier.byteFormatter.stringFromByteCount(Int64(pageInfo.bytes - byteCountBeforeBody))
+					string: PagePresentedInfoIdentifier.byteFormatter.stringFromByteCount(Int64(byteCount - byteCountBeforeBody))
 				)
 			}
 		case .internalLinkCount:

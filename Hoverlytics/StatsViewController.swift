@@ -256,6 +256,9 @@ class StatsViewController: NSViewController {
 	var rowMenu: NSMenu!
 	var rowMenuAssistant: MenuAssistant<MenuActions>!
 	
+	let crawlerPreferences = CrawlerPreferences.sharedCrawlerPreferences
+	var crawlerPreferencesObserver: NotificationObserver<CrawlerPreferences.Notification>!
+	
 	
 	var pageMapper: PageMapper?
 	
@@ -293,12 +296,38 @@ class StatsViewController: NSViewController {
 		createRowMenu()
 		
 		updateUI()
+		
+		startObservingCrawlerPreferences()
     }
+	
+	deinit {
+		stopObservingCrawlerPreferences()
+	}
+	
+	func startObservingCrawlerPreferences() {
+		crawlerPreferencesObserver = NotificationObserver<CrawlerPreferences.Notification>(object: crawlerPreferences)
+		
+		crawlerPreferencesObserver.addObserver(.ImageDownloadChoiceDidChange) { [weak self] notification in
+			self?.updateMaximumImageDownload()
+		}
+	}
+	
+	func stopObservingCrawlerPreferences() {
+		crawlerPreferencesObserver.removeAllObservers()
+		crawlerPreferencesObserver = nil
+	}
 	
 	var primaryURL: NSURL! {
 		didSet {
 			browsedURL = primaryURL
 			crawl()
+		}
+	}
+	
+	func updateMaximumImageDownload() {
+		if let pageMapper = pageMapper {
+			let maximumImageByteCount = crawlerPreferences.imageDownloadChoice.maximumByteCount
+			pageMapper.setMaximumByteCount(maximumImageByteCount, forBaseContentType: .Image)
 		}
 	}
 	
@@ -448,9 +477,11 @@ class StatsViewController: NSViewController {
 				self.pageURLDidUpdate(loadedPageURL)
 			}
 			
-			pageMapper.reload()
-			
 			self.pageMapper = pageMapper
+			
+			updateMaximumImageDownload()
+			
+			pageMapper.reload()
 		}
 		
 		updateListOfURLs()
@@ -578,11 +609,17 @@ class StatsViewController: NSViewController {
 	}
 	
 	func showPreviewForRow(row: Int) {
-		if
-			let URL = outlineView.itemAtRow(row) as? NSURL,
-			let pageInfo = pageMapper?.pageInfoForRequestedURL(URL)
+		if let
+			URL = outlineView.itemAtRow(row) as? NSURL,
+			pageMapper = pageMapper,
+			info = pageMapper.pageInfoForRequestedURL(URL)
 		{
-			switch pageInfo.baseContentType {
+			if info.contentInfo == nil {
+				pageMapper.priorityRequestContentIfNeededForURL(URL, expectedBaseContentType: info.baseContentType)
+				return
+			}
+			
+			switch info.baseContentType {
 			case .LocalHTMLPage:
 				showSourcePreviewForPageAtRow(row)
 			case .Image:
@@ -618,6 +655,11 @@ class StatsViewController: NSViewController {
 	}
 	
 	@IBAction func pauseCrawling(sender: AnyObject?) {
+		//pageMapper?.pauseCrawling()
+		pageMapper?.cancel()
+	}
+	
+	@IBAction func recrawl(sender: AnyObject?) {
 		//pageMapper?.pauseCrawling()
 		pageMapper?.cancel()
 	}
@@ -1113,24 +1155,13 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 				}
 				
 				switch validatedStringValue {
-				case .ValidString(let string):
-					stringValue = string
-					if let suffixString = suffixString {
-						stringValue += " " + suffixString
-					}
-				case .Missing:
-					stringValue = "(none)"
-					opacity = 0.3
-				case .Empty:
-					stringValue = "(empty)"
-					opacity = 0.3
-				case .Multiple:
-					stringValue = "(multiple)"
-					opacity = 0.3
-				case .Invalid:
-					stringValue = "(invalid)"
-					opacity = 0.3
+				case .NotRequested:
+					stringValue = "(not downloaded)"
+				default:
+					stringValue = validatedStringValue.stringValueForPresentation
 				}
+				
+				opacity = validatedStringValue.alphaValueForPresentation
 			}
 			else {
 				let validatedStringValue = identifier.validatedStringValueForPendingURL(pageURL)

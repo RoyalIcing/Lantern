@@ -15,6 +15,13 @@ let NSApp = NSApplication.sharedApplication()
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 	
+	var browserMenuController: BrowserMenuController!
+	@IBOutlet var browserWidthPlaceholderMenuItem: NSMenuItem!
+	
+	var crawlerMenuController: CrawlerMenuController!
+	@IBOutlet var crawlerImageDownloadPlaceholderMenuItem: NSMenuItem!
+	
+	
 	deinit {
 		let nc = NSNotificationCenter.defaultCenter()
 		for observer in windowWillCloseObservers {
@@ -29,6 +36,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		modelManager.didEncounterErrorCallback = { error in
 			NSApp.presentError(error)
 		}
+		
+		browserMenuController = BrowserMenuController(browserWidthPlaceholderMenuItem: browserWidthPlaceholderMenuItem)
+		crawlerMenuController = CrawlerMenuController(imageDownloadPlaceholderMenuItem: crawlerImageDownloadPlaceholderMenuItem)
 		
 		#if DEBUG
 			// Update the bloody Dock icon

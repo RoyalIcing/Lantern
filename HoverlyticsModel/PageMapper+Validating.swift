@@ -12,6 +12,7 @@ import Ono
 
 public enum PageInfoValidationResult {
 	case Valid
+	case NotRequested
 	case Missing
 	case Empty
 	case Multiple
@@ -31,6 +32,8 @@ extension PageInfoValidationResult {
 		switch validatedStringValue{
 		case .ValidString:
 			self = .Valid
+		case .NotRequested:
+			self = .NotRequested
 		case .Missing:
 			self = .Missing
 		case .Empty:

@@ -18,6 +18,7 @@ public enum BaseContentType {
 	case Image
 	case Feed
 	case Redirect
+	case Essential
 }
 
 extension BaseContentType: DebugPrintable {
@@ -35,6 +36,8 @@ extension BaseContentType: DebugPrintable {
 			return "Feed"
 		case .Redirect:
 			return "Redirect"
+		case .Essential:
+			return "Essential"
 		}
 	}
 }
@@ -420,8 +423,8 @@ public struct PageInfo {
 	public let statusCode: Int
 	public let baseContentType: BaseContentType
 	public let MIMEType: MIMETypeString?
-	public let bytes: Int
 	
+	public let byteCount: Int?
 	public let contentInfo: PageContentInfo?
 }
 

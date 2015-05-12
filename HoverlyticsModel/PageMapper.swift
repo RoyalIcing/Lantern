@@ -71,6 +71,8 @@ public class PageMapper {
 	}
 	
 	var baseContentTypeToResponseTypeToURLCount = [BaseContentType: [PageResponseType: UInt]]()
+	var baseContentTypeToSummedByteCount = [BaseContentType: UInt]()
+	var baseContentTypeToMaximumByteCount = [BaseContentType: UInt]()
 	
 	public var redirectedSourceURLToInfo = [NSURL: RequestRedirectionInfo]()
 	public var redirectedDestinationURLToInfo = [NSURL: RequestRedirectionInfo]()
@@ -92,7 +94,7 @@ public class PageMapper {
 		return state == .Paused
 	}
 	
-	var queuedURLsToRequestWhilePaused = [(NSURL, BaseContentType, UInt)]()
+	var queuedURLsToRequestWhilePaused = [(NSURL, BaseContentType, UInt?)]()
 	
 	public var didUpdateCallback: ((pageURL: NSURL) -> Void)?
 	
@@ -145,6 +147,9 @@ public class PageMapper {
 		redirectedDestinationURLToInfo.removeAll()
 		
 		queuedURLsToRequestWhilePaused.removeAll()
+		
+		baseContentTypeToResponseTypeToURLCount.removeAll()
+		baseContentTypeToSummedByteCount.removeAll()
 	}
 	
 	public func reload() {
@@ -172,19 +177,18 @@ public class PageMapper {
 		return nil
 	}
 	
-	private func retrieveInfoForPageWithURL(pageURL: NSURL, expectedBaseContentType: BaseContentType, currentDepth: UInt) {
+	private func retrieveInfoForPageWithURL(pageURL: NSURL, expectedBaseContentType: BaseContentType, currentDepth: UInt?) {
 		if linkedURLLooksLikeFileDownload(pageURL) {
 			return
 		}
 		
 		if !paused {
 			if let pageURL = requestedURLsUnique.insertReturningConformedURLIfNew(pageURL) {
-				let infoRequest = PageInfoRequest(URL: pageURL, completionHandler: { [weak self] (pageInfo) in
-					if let didRetrieveInfo = self?.didRetrieveInfo {
-						didRetrieveInfo(pageInfo, forPageWithRequestedURL: pageURL, expectedBaseContentType: expectedBaseContentType, currentDepth: currentDepth)
-					}
-				})
-				infoRequestQueue.addRequest(infoRequest)
+				let includeContent = !hasReachedMaximumByteLimitForBaseContentType(expectedBaseContentType)
+				
+				infoRequestQueue.addRequestForURL(pageURL, expectedBaseContentType: expectedBaseContentType, includingContent: includeContent) { [weak self] (info, infoRequest) in
+					self?.didRetrieveInfo(info, forPageWithRequestedURL: pageURL, expectedBaseContentType: expectedBaseContentType, currentDepth: currentDepth)
+				}
 			}
 		}
 		else {
@@ -192,7 +196,21 @@ public class PageMapper {
 		}
 	}
 	
-	private func didRetrieveInfo(pageInfo: PageInfo, forPageWithRequestedURL requestedPageURL: NSURL, expectedBaseContentType: BaseContentType, currentDepth: UInt) {
+	public func priorityRequestContentIfNeededForURL(URL: NSURL, expectedBaseContentType: BaseContentType) {
+		if let
+			info = pageInfoForRequestedURL(URL),
+			contentInfo = info.contentInfo
+		{
+			return
+		}
+		
+		infoRequestQueue.cancelRequestForURL(URL)
+		infoRequestQueue.addRequestForURL(URL, expectedBaseContentType: expectedBaseContentType, includingContent: true, highPriority: true) { [weak self] (info, infoRequest) in
+			self?.didRetrieveInfo(info, forPageWithRequestedURL: URL, expectedBaseContentType: expectedBaseContentType, currentDepth: nil)
+		}
+	}
+	
+	private func didRetrieveInfo(pageInfo: PageInfo, forPageWithRequestedURL requestedPageURL: NSURL, expectedBaseContentType: BaseContentType, currentDepth: UInt?) {
 		let responseType = PageResponseType(statusCode: pageInfo.statusCode)
 		requestedURLToResponseType[requestedPageURL] = responseType
 		
@@ -216,6 +234,14 @@ public class PageMapper {
 				return responseTypeToURLCount
 			}
 			
+			baseContentTypeToSummedByteCount.updateValueForKey(actualBaseContentType) { summedByteCount in
+				return (summedByteCount ?? 0) + UInt(pageInfo.byteCount ?? 0)
+			}
+			
+			if hasReachedMaximumByteLimitForBaseContentType(actualBaseContentType) {
+				cancelPendingRequestsForBaseContentType(actualBaseContentType)
+			}
+			
 			if JUST_USE_FINAL_URLS {
 				switch actualBaseContentType {
 				case .LocalHTMLPage:
@@ -231,11 +257,13 @@ public class PageMapper {
 				}
 			}
 			
-			let childDepth = currentDepth + 1
-			let processChildren = childDepth <= maximumDepth
-			let crawl = crawlsFoundURLs && isCrawling
-			
-			if let contentInfo = pageInfo.contentInfo where processChildren {
+			if let
+				childDepth = map(currentDepth, { $0 + 1 }),
+				contentInfo = pageInfo.contentInfo
+				where childDepth <= maximumDepth
+			{
+				let crawl = crawlsFoundURLs && isCrawling
+				
 				for pageURL in contentInfo.externalPageURLs {
 					externalURLs.insert(pageURL)
 				}
@@ -286,6 +314,12 @@ public class PageMapper {
 		self.didUpdateCallback?(pageURL: requestedPageURL)
 	}
 	
+	func cancelPendingRequestsForBaseContentType(type: BaseContentType) {
+		infoRequestQueue.downgradePendingRequestsToNotIncludeContent { request in
+			return request.expectedBaseContentType == type
+		}
+	}
+	
 	public func pauseCrawling() {
 		assert(crawlsFoundURLs, "Must have been initialized with crawlsFoundURLs = true")
 		
@@ -307,10 +341,35 @@ public class PageMapper {
 	
 	public func cancel() {
 		state = .Idle
-		//clearLoadedInfo()
 		
 		didUpdateCallback = nil
 		
 		infoRequestQueue.cancelAll(clearAll: true)
+	}
+	
+	public func summedByteCountForBaseContentType(type: BaseContentType) -> UInt {
+		return baseContentTypeToSummedByteCount[type] ?? 0
+	}
+	
+	public func maximumByteCountForBaseContentType(type: BaseContentType) -> UInt? {
+		return baseContentTypeToMaximumByteCount[type]
+	}
+	
+	public func setMaximumByteCount(maximumByteCount: UInt?, forBaseContentType type: BaseContentType) {
+		if let maximumByteCount = maximumByteCount {
+			baseContentTypeToMaximumByteCount[type] = maximumByteCount
+		}
+		else {
+			baseContentTypeToMaximumByteCount.removeValueForKey(type)
+		}
+	}
+	
+	public func hasReachedMaximumByteLimitForBaseContentType(type: BaseContentType) -> Bool {
+		if let maximumByteCount = maximumByteCountForBaseContentType(type) {
+			return summedByteCountForBaseContentType(type) >= maximumByteCount
+		}
+		else {
+			return false
+		}
 	}
 }

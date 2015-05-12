@@ -306,6 +306,20 @@
                                                 <action selector="pauseCrawling:" target="Ady-hI-5gd" id="scu-Bj-eLS"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="ftT-vi-rSA"/>
+                                        <menuItem title="Image Downloading" id="UjA-JW-3I2">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Image Downloading" id="KvV-c0-4e6">
+                                                <items>
+                                                    <menuItem title="«Image Download Choices»" id="UaH-aw-jcR">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="reloadBrowsing:" target="Ady-hI-5gd" id="8mf-fk-i4c"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -316,6 +330,13 @@
                                         <menuItem title="Reload" keyEquivalent="r" id="ttw-yQ-EUr">
                                             <connections>
                                                 <action selector="reloadBrowsing:" target="Ady-hI-5gd" id="wdT-EY-lk8"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="mBX-35-ciC"/>
+                                        <menuItem title="«Browser Widths»" id="DXJ-on-G4c">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="reloadBrowsing:" target="Ady-hI-5gd" id="bwc-6W-oNC"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -364,7 +385,12 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Hoverlytics" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Hoverlytics" customModuleProvider="target">
+                    <connections>
+                        <outlet property="browserWidthPlaceholderMenuItem" destination="DXJ-on-G4c" id="Gpd-uj-YyZ"/>
+                        <outlet property="crawlerImageDownloadPlaceholderMenuItem" destination="UaH-aw-jcR" id="2qD-8R-FQJ"/>
+                    </connections>
+                </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="-298"/>
@@ -373,8 +399,9 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="MainWindowController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="MainWindow" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="documentWindow" frameAutosaveName="MainWindow" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES" fullSizeContentView="YES"/>
+                        <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
                         <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="900" height="700"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
@@ -399,9 +426,9 @@
                                 <toolbarItem implicitItemIdentifier="33AB0BAC-0F75-433B-8547-5F52502A2215" explicitItemIdentifier="chosenSite" label="Chosen Site" paletteLabel="Chosen Site" id="UDa-Tt-8U7">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="90" height="28"/>
-                                    <size key="maxSize" width="120" height="28"/>
+                                    <size key="maxSize" width="200" height="28"/>
                                     <popUpButton key="view" verticalHuggingPriority="750" id="59e-QT-hKj">
-                                        <rect key="frame" x="0.0" y="14" width="120" height="28"/>
+                                        <rect key="frame" x="0.0" y="14" width="160" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KXe-1B-nPu">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>

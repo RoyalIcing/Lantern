@@ -15,6 +15,7 @@ public enum ValidatedStringValue {
 	case ValidString(string: String)
 	case Missing
 	case Empty
+	case NotRequested
 	case Multiple([ValidatedStringValue])
 	case Invalid
 	

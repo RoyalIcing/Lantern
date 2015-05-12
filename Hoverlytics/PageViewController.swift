@@ -14,7 +14,7 @@ import HoverlyticsModel
 typealias PageViewControllerGoogleOAuth2TokenCallback = (tokenJSONString: String) -> Void
 
 
-class PageViewController: NSViewController {
+public class PageViewController: NSViewController {
 	@IBOutlet var URLField: NSTextField!
 	@IBOutlet var crawlWhileBrowsingCheckButton: NSButton!
 	var webViewController: PageWebViewController!
@@ -30,7 +30,15 @@ class PageViewController: NSViewController {
 	let minimumWidth: CGFloat = 600.0
 	let minimumHeight: CGFloat = 200.0
 	
-	override func viewDidLoad() {
+	var preferredBrowserWidth: CGFloat? {
+		didSet {
+			if let webViewController = webViewController {
+				webViewController.preferredBrowserWidth = preferredBrowserWidth
+			}
+		}
+	}
+	
+	override public func viewDidLoad() {
 		super.viewDidLoad()
 		
 		view.addConstraint(NSLayoutConstraint(item: view, attribute: .Width, relatedBy: .GreaterThanOrEqual, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: minimumWidth))
@@ -70,10 +78,12 @@ class PageViewController: NSViewController {
 		#endif
 		webViewController.prepare()
 		
+		webViewController.preferredBrowserWidth = preferredBrowserWidth
+		
 		startObservingWebViewController()
 	}
 	
-	override func prepareForSegue(segue: NSStoryboardSegue, sender: AnyObject?) {
+	override public func prepareForSegue(segue: NSStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == "webViewController" {
 			webViewController = segue.destinationController as! PageWebViewController
 			prepareWebViewController(webViewController)
@@ -136,6 +146,23 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 	var hoverlyticsPanelDocumentReadyCallback: (() -> Void)?
 	var GoogleOAuth2TokenJSONString: String?
 	var hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback: PageViewControllerGoogleOAuth2TokenCallback?
+	
+	private var preferredBrowserWidthContraint: NSLayoutConstraint?
+	private var minimumWidthContraint: NSLayoutConstraint?
+	var preferredBrowserWidth: CGFloat? {
+		didSet {
+			if let preferredBrowserWidthContraint = preferredBrowserWidthContraint {
+				view.removeConstraint(preferredBrowserWidthContraint)
+				self.preferredBrowserWidthContraint = nil
+			}
+			
+			if let preferredBrowserWidth = preferredBrowserWidth {
+				let constraint = NSLayoutConstraint(item: webView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: preferredBrowserWidth)
+				view.addConstraint(constraint)
+				preferredBrowserWidthContraint = constraint
+			}
+		}
+	}
 	
 	func prepare() {
 		let preferences = WKPreferences()
@@ -216,9 +243,27 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 			webView.setValue("Safari/600.4.10", forKey: "applicationNameForUserAgent")
 		}
 		
-		self.fillViewWithChildView(webView)
+		//fillViewWithChildView(webView)
+		view.addSubview(webView)
+		
+		webView.translatesAutoresizingMaskIntoConstraints = false
+		
+		let minimumWidthContraint = NSLayoutConstraint(item: webView, attribute: .Width, relatedBy: .LessThanOrEqual, toItem: view, attribute: .Width, multiplier: 1.0, constant: 0.0)
+		minimumWidthContraint.priority = 750
+		view.addConstraint(
+			minimumWidthContraint
+		)
+		self.minimumWidthContraint = minimumWidthContraint
+		
+		addLayoutConstraintToMatchAttribute(.Width, withChildView:webView, identifier:"width", priority: 250)
+		addLayoutConstraintToMatchAttribute(.Height, withChildView:webView, identifier:"height")
+		addLayoutConstraintToMatchAttribute(.CenterX, withChildView:webView, identifier:"centerX")
+		addLayoutConstraintToMatchAttribute(.Top, withChildView:webView, identifier:"top")
 		
 		webView.addObserver(self, forKeyPath: "URL", options: .New, context: &webViewURLObservingContext)
+		
+		view.wantsLayer = true
+		view.layer?.backgroundColor = NSColor.blackColor().CGColor
 	}
 	
 	deinit {
