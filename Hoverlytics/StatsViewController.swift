@@ -1156,7 +1156,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 				
 				switch validatedStringValue {
 				case .NotRequested:
-					stringValue = "(not downloaded)"
+					stringValue = "(double-click to download)"
 				default:
 					stringValue = validatedStringValue.stringValueForPresentation
 				}

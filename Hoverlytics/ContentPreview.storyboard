@@ -97,7 +97,7 @@
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0T0-5a-Kma">
                                                                     <rect key="frame" x="39" y="5" width="400" height="17"/>
-                                                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Table View Cell" id="wix-5i-WeT">
+                                                                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Table View Cell" id="wix-5i-WeT">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -257,7 +257,7 @@
                             <rect key="frame" x="1" y="1" width="166" height="79"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <ikImageView wantsLayer="YES" fixedFrame="YES" doubleClickOpensImageEditPanel="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SQa-fu-iDq">
+                                <ikImageView wantsLayer="YES" fixedFrame="YES" zoomFactor="0.0" doubleClickOpensImageEditPanel="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SQa-fu-iDq">
                                     <rect key="frame" x="65" y="41" width="400" height="350"/>
                                     <gestureRecognizers>
                                         <clickGestureRecognizer delaysPrimaryMouseButtonEvents="YES" numberOfClicksRequired="1" id="cba-gt-68r">
