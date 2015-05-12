@@ -52,7 +52,7 @@
 		B25020611B01B66400ABAE96 /* CrawlerMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B250205E1B01B3AE00ABAE96 /* CrawlerMenuController.swift */; };
 		B25020621B01C00400ABAE96 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */; };
 		B25020631B01C15900ABAE96 /* HoverlyticsModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; };
-		B25020641B01C15900ABAE96 /* HoverlyticsModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B25020681B01F4E000ABAE96 /* HoverlyticsModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B25033121AF5C2C7006A2AE7 /* Ono.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25033111AF5C2C7006A2AE7 /* Ono.framework */; };
 		B25033151AF5C789006A2AE7 /* HoverlyticsModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* HoverlyticsModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B25033181AF5C9A5006A2AE7 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B25033131AF5C2D0006A2AE7 /* libxml2.dylib */; };
@@ -210,7 +210,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B25020641B01C15900ABAE96 /* HoverlyticsModel.framework in Embed Frameworks */,
+				B25020681B01F4E000ABAE96 /* HoverlyticsModel.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -796,8 +796,8 @@
 				B25033311AF5E5B0006A2AE7 /* Sources */,
 				B25033421AF5E5B0006A2AE7 /* Frameworks */,
 				B25033451AF5E5B0006A2AE7 /* Resources */,
-				B2D39B091AF60213003D6738 /* Code Sign Embedded Frameworks */,
 				B25020671B01C15A00ABAE96 /* Embed Frameworks */,
+				B2D39B091AF60213003D6738 /* Code Sign Embedded Frameworks */,
 			);
 			buildRules = (
 			);
