@@ -13,8 +13,8 @@ import Quartz
 
 enum BaseContentTypeChoice: Int {
 	case LocalHTMLPages = 1
-	case Images = 2
-	case Feeds = 3
+	case Images
+	case Feeds
 	
 	var baseContentType: BaseContentType {
 		switch self {
@@ -39,7 +39,6 @@ extension BaseContentTypeChoice: MenuItemRepresentative {
 			return "Feeds"
 		}
 	}
-	var tag: Int? { return rawValue }
 	
 	typealias UniqueIdentifier = BaseContentTypeChoice
 	var uniqueIdentifier: UniqueIdentifier { return self }
@@ -251,7 +250,7 @@ class StatsViewController: NSViewController {
 	var filterResponseChoicePopUpButtonAssistant: PopUpButtonAssistant<StatsFilterResponseChoice>?
 	
 	@IBOutlet var baseContentTypeChoicePopUpButton: NSPopUpButton!
-	var baseContentTypeChoicePopUpButtonAssistant: PopUpButtonAssistant<BaseContentTypeChoice>?
+	var baseContentTypeChoicePopUpButtonAssistant: PopUpButtonAssistant<BaseContentTypeChoice>!
 	
 	var rowMenu: NSMenu!
 	var rowMenuAssistant: MenuAssistant<MenuActions>!
@@ -564,13 +563,11 @@ class StatsViewController: NSViewController {
 	}
 	
 	@IBAction func changeBaseContentTypeFilter(sender: NSPopUpButton) {
-		let menuItem = sender.selectedItem!
-		let tag = menuItem.tag
-		
-		let contentChoice = BaseContentTypeChoice(rawValue: tag)!
-		chosenBaseContentChoice = contentChoice
-		
-		updateUI(baseContentType: false)
+		if let contentChoice = baseContentTypeChoicePopUpButtonAssistant.selectedItemRepresentative {
+			chosenBaseContentChoice = contentChoice
+			
+			updateUI(baseContentType: false)
+		}
 	}
 	
 	@IBAction func changeResponseTypeFilter(sender: NSPopUpButton) {
@@ -602,8 +599,7 @@ class StatsViewController: NSViewController {
 	#endif
 	
 	@IBAction func changeColumnsMode(sender: NSSegmentedControl) {
-		let tag = sender.tagOfSelectedSegment()
-		if let columnsMode = StatsColumnsMode(rawValue: tag) {
+		if let columnsMode = columnsModeSegmentedControlAssistant?.selectedItemRepresentative {
 			changeColumnsMode(columnsMode)
 		}
 	}
@@ -767,7 +763,7 @@ extension StatsViewController {
 		
 		rowMenuAssistant = MenuAssistant<MenuActions>(menu: menu)
 		
-		rowMenuAssistant.actionAndTargetReturner = { itemRepresentative in
+		rowMenuAssistant.customization.actionAndTarget = { itemRepresentative in
 			return (action: itemRepresentative.rawValue, target: self)
 		}
 		
@@ -811,7 +807,7 @@ extension StatsViewController {
 	
 	func menuForResourceInfo(info: PageInfo) -> NSMenu {
 		rowMenuAssistant.menuItemRepresentatives = rowMenuItemRepresentativesForResourceInfo(info)
-		return rowMenuAssistant.updateMenu()
+		return rowMenuAssistant.update()
 	}
 	
 	@IBAction func browsePageAtSelectedRow(sender: AnyObject?) {
@@ -981,7 +977,7 @@ extension StatsViewController {
 			let popUpButtonAssistant = PopUpButtonAssistant<StatsFilterResponseChoice>(popUpButton: popUpButton)
 			
 			let menuAssistant = popUpButtonAssistant.menuAssistant
-			menuAssistant.titleReturner = { choice in
+			menuAssistant.customization.title = { choice in
 				switch choice {
 				case .All:
 					let baseContentType = self.filterToBaseContentType
@@ -1003,6 +999,9 @@ extension StatsViewController {
 				default:
 					return choice.title
 				}
+			}
+			menuAssistant.customization.tag = { choice in
+				return choice.rawValue
 			}
 			
 			self.filterResponseChoicePopUpButtonAssistant = popUpButtonAssistant
@@ -1038,17 +1037,10 @@ extension StatsViewController {
 			let popUpButtonAssistant = PopUpButtonAssistant<BaseContentTypeChoice>(popUpButton: popUpButton)
 			
 			let menuAssistant = popUpButtonAssistant.menuAssistant
-			menuAssistant.titleReturner = { choice in
+			menuAssistant.customization.title = { choice in
 				let baseContentType = choice.baseContentType
-				/*if false {
-					let requestedURLCount = self.pageMapper.numberOfRequestedURLsWithBaseContentType(baseContentType)
-					let loadedURLCount = self.pageMapper.numberOfLoadedURLsWithBaseContentType(baseContentType)
-					return "\(choice.title) (\(loadedURLCount)/\(requestedURLCount))"
-				}
-				else {*/
-					let loadedURLCount = self.pageMapper?.numberOfLoadedURLsWithBaseContentType(baseContentType) ?? 0
-					return "\(choice.title) (\(loadedURLCount))"
-				//}
+				let loadedURLCount = self.pageMapper?.numberOfLoadedURLsWithBaseContentType(baseContentType) ?? 0
+				return "\(choice.title) (\(loadedURLCount))"
 			}
 			
 			self.baseContentTypeChoicePopUpButtonAssistant = popUpButtonAssistant
@@ -1071,9 +1063,13 @@ extension StatsViewController {
 			let segmentedControlAssistant = columnsModeSegmentedControlAssistant ?? {
 				let segmentedControlAssistant = SegmentedControlAssistant<StatsColumnsMode>(segmentedControl: segmentedControl)
 				
+				segmentedControlAssistant.customization.tag = { choice in
+					return choice.rawValue
+				}
+				
 				self.columnsModeSegmentedControlAssistant = segmentedControlAssistant
 				return segmentedControlAssistant
-				}()
+			}()
 			
 			segmentedControlAssistant.segmentedItemRepresentatives = allowedColumnsModes
 			segmentedControlAssistant.update()
@@ -1083,7 +1079,7 @@ extension StatsViewController {
 				changeColumnsMode(allowedColumnsModes[0], updateUI: false)
 			}
 			
-			segmentedControlAssistant.selectedItemRepresentative = selectedColumnsMode
+			segmentedControlAssistant.selectedUniqueIdentifier = selectedColumnsMode
 		}
 		else {
 			segmentedControl.animator().hidden = true

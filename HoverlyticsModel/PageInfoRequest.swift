@@ -69,17 +69,21 @@ class PageInfoRequestQueue {
 		}
 	}
 	
-	func addRequestForURL(URL: NSURL, expectedBaseContentType: BaseContentType, includingContent: Bool, highPriority: Bool = false, completionHandler: PageInfoRequest.CompletionHandler) -> PageInfoRequest {
-		let infoRequest = PageInfoRequest(URL: URL, expectedBaseContentType: expectedBaseContentType, includingContent: includingContent, completionHandler: completionHandler)
-		
-		if highPriority || activeRequests.count < maximumActiveRequests {
-			performRequest(infoRequest)
+	func addRequestForURL(URL: NSURL, expectedBaseContentType: BaseContentType, includingContent: Bool, highPriority: Bool = false, completionHandler: PageInfoRequest.CompletionHandler) -> PageInfoRequest? {
+		if let URL = URL.absoluteURL where URL.host != nil {
+			let infoRequest = PageInfoRequest(URL: URL, expectedBaseContentType: expectedBaseContentType, includingContent: includingContent, completionHandler: completionHandler)
+			
+			if highPriority || activeRequests.count < maximumActiveRequests {
+				performRequest(infoRequest)
+			}
+			else {
+				pendingRequests.append(infoRequest)
+			}
+			
+			return infoRequest
 		}
-		else {
-			pendingRequests.append(infoRequest)
-		}
 		
-		return infoRequest
+		return nil
 	}
 	
 	func downgradePendingRequestsToNotIncludeContent(decider: ((PageInfoRequest) -> Bool)) {

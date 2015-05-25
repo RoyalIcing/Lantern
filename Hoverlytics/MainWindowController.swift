@@ -198,7 +198,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			let popUpButtonAssistant = PopUpButtonAssistant<SiteMenuItem>(popUpButton: popUpButton)
 			
 			let menuAssistant = popUpButtonAssistant.menuAssistant
-			menuAssistant.enabledReturner = { siteChoice in
+			menuAssistant.customization.enabled = { siteChoice in
 				switch siteChoice {
 				case .LoadingSavedSites, .NoSavedSitesYet:
 					return false
@@ -210,7 +210,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			self.sitesPopUpButtonAssistant = popUpButtonAssistant
 			
 			return popUpButtonAssistant
-			}()
+		}()
 		
 		popUpButtonAssistant.menuItemRepresentatives = siteChoices
 		popUpButtonAssistant.update()

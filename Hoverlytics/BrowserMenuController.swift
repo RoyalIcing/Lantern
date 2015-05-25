@@ -29,22 +29,21 @@ class BrowserMenuController: NSObject, NSUserInterfaceValidations {
 	init(browserWidthPlaceholderMenuItem: NSMenuItem) {
 		super.init()
 		
-		let widthMenuAssistant = MenuAssistant<BrowserWidthChoice>(menu: nil)
-		widthMenuAssistant.menuItemRepresentatives = [
+		widthMenuItemsAssistant = PlaceholderMenuItemAssistant<BrowserWidthChoice>(placeholderMenuItem: browserWidthPlaceholderMenuItem)
+		widthMenuItemsAssistant.menuItemRepresentatives = [
 			.SlimMobile,
 			.MediumMobile,
 			.MediumTabletPortrait,
 			.MediumTabletLandscape,
 			.FullWidth
 		]
-		widthMenuAssistant.actionAndTargetReturner = { [weak self] widthChoice in
+		widthMenuItemsAssistant.customization.actionAndTarget = { [weak self] widthChoice in
 			return (action: "changeWidthChoice:", target: self)
 		}
-		widthMenuAssistant.stateReturner = { [weak self] widthChoice in
+		widthMenuItemsAssistant.customization.state = { [weak self] widthChoice in
 			let chosenWidthChoice = BrowserPreferences.sharedBrowserPreferences.widthChoice
 			return (chosenWidthChoice == widthChoice) ? NSOnState : NSOffState
 		}
-		widthMenuItemsAssistant = widthMenuAssistant.assistPlaceholderMenuItem(browserWidthPlaceholderMenuItem)
 		
 		updateWidthMenu()
 		
@@ -56,7 +55,7 @@ class BrowserMenuController: NSObject, NSUserInterfaceValidations {
 	}
 	
 	func updateWidthMenu() {
-		widthMenuItemsAssistant?.update()
+		widthMenuItemsAssistant.update()
 	}
 	
 	func startObservingBrowserPreferences() {

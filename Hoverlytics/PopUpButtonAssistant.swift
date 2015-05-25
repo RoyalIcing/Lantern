@@ -1,6 +1,6 @@
 //
 //  PopUpButtonAssistant.swift
-//  Hoverlytics
+//  BurntCocoaUI
 //
 //  Created by Patrick Smith on 2/05/2015.
 //  Copyright (c) 2015 Burnt Caramel. All rights reserved.
@@ -12,17 +12,21 @@ import Cocoa
 // Uses MenuAssistant’s MenuItemRepresentative protocol
 
 public class PopUpButtonAssistant<T: MenuItemRepresentative> {
+	public typealias Item = T
+	public typealias ItemUniqueIdentifier = Item.UniqueIdentifier
+	
 	public let popUpButton: NSPopUpButton
-	public let menuAssistant: MenuAssistant<T>
+	public let menuAssistant: MenuAssistant<Item>
 	
 	public init(popUpButton: NSPopUpButton) {
 		self.popUpButton = popUpButton
-		menuAssistant = MenuAssistant<T>(menu: popUpButton.menu)
+		menuAssistant = MenuAssistant<Item>(menu: popUpButton.menu!)
 	}
 	
-	public typealias ItemUniqueIdentifier = T.UniqueIdentifier
-	
-	public var menuItemRepresentatives: [T?]! {
+	/**
+	Pass an array of item representatives for each menu item. Use nil for separators.
+	*/
+	public var menuItemRepresentatives: [Item?]! {
 		get {
 			return menuAssistant.menuItemRepresentatives
 		}
@@ -31,11 +35,16 @@ public class PopUpButtonAssistant<T: MenuItemRepresentative> {
 		}
 	}
 	
+	/**
+	Populates the menu of the pop-up button with menu items created for each member of `menuItemRepresentatives`. The selected item will remain selected if its menu item is still present after updating.
+	*/
 	public func update() {
+		// Get current selected item
 		let selectedItem = popUpButton.selectedItem
 		
-		menuAssistant.updateMenu()
+		menuAssistant.update()
 		
+		// Restore selected item
 		if let selectedItem = selectedItem {
 			let selectedItemIndex = popUpButton.indexOfItem(selectedItem)
 			if selectedItemIndex != -1 {
@@ -44,28 +53,23 @@ public class PopUpButtonAssistant<T: MenuItemRepresentative> {
 		}
 	}
 	
-	public func itemRepresentativeForMenuItemAtIndex(menuItemIndex: Int) -> T? {
-		return menuItemRepresentatives[menuItemIndex]
-	}
-	
-	public func uniqueIdentifierForMenuItemAtIndex(menuItemIndex: Int) -> ItemUniqueIdentifier? {
-		return itemRepresentativeForMenuItemAtIndex(menuItemIndex)?.uniqueIdentifier
-	}
-	
-	var selectedItemRepresentative: T? {
+	/**
+	The item representative for the selected menu item, or nil if no menu item is selected.
+	*/
+	var selectedItemRepresentative: Item? {
 		get {
 			let index = popUpButton.indexOfSelectedItem
 			if index != -1 {
-				return itemRepresentativeForMenuItemAtIndex(index)
+				return menuAssistant.itemRepresentativeForMenuItemAtIndex(index)
 			}
 			
 			return nil
 		}
-		set(newItemRepresentative) {
-			selectedUniqueIdentifier = newItemRepresentative?.uniqueIdentifier
-		}
 	}
 	
+	/**
+	The unique identifier for the selected menu item, or nil if no menu item is selected.
+	*/
 	var selectedUniqueIdentifier: ItemUniqueIdentifier? {
 		get {
 			return selectedItemRepresentative?.uniqueIdentifier

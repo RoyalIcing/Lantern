@@ -10,40 +10,26 @@ import Foundation
 import CloudKit
 
 
-private enum ErrorCode: Int {
+private enum Error: Int {
 	case NameIsEmpty = 10
 	
 	case HomePageURLIsEmpty = 20
-	case HomePageURLIsInvalid
-}
-
-private enum Error {
-	case NameIsEmpty
-	
-	case HomePageURLIsEmpty
 	case HomePageURLIsInvalid
 	
 	static let domain = "HoverlyticsApp.SiteSettingsViewController.errorDomain"
 	
 	var errorCode: Int {
-		switch self {
-		case NameIsEmpty:
-			return ErrorCode.NameIsEmpty.rawValue
-		case HomePageURLIsEmpty:
-			return ErrorCode.HomePageURLIsEmpty.rawValue
-		case HomePageURLIsInvalid:
-			return ErrorCode.HomePageURLIsInvalid.rawValue
-		}
+		return rawValue
 	}
 	
 	var description: String {
 		switch self {
 		case NameIsEmpty:
-			return "Please enter a name for your site"
+			return NSLocalizedString("Please enter a name for your site", comment: "Site NameIsEmpty error description")
 		case HomePageURLIsEmpty:
-			return "Please enter a URL for your site’s home page"
+			return NSLocalizedString("Please enter a URL for your site’s home page", comment: "Site HomePageURLIsEmpty error description")
 		case HomePageURLIsInvalid:
-			return "Please enter a valid URL for your site’s home page"
+			return NSLocalizedString("Please enter a valid URL for your site’s home page", comment: "Site HomePageURLIsInvalid error description")
 		}
 	}
 	
@@ -51,7 +37,7 @@ private enum Error {
 		let userInfo = [
 			NSLocalizedDescriptionKey: self.description
 		]
-		return NSError(domain: Error.domain, code: self.errorCode, userInfo: userInfo)
+		return NSError(domain: Error.domain, code: errorCode, userInfo: userInfo)
 	}
 }
 
@@ -77,7 +63,30 @@ public func ==(lhs: SiteValues, rhs: SiteValues) -> Bool {
 }
 
 extension SiteValues {
+	private init(fromStoredValues values: ValueStoring) {
+		if let versionNumber = values["version"] as? NSNumber {
+			version = UInt(versionNumber.unsignedIntegerValue)
+		}
+		else {
+			version = SiteValues.currentVersion
+		}
+		name = values["name"] as! String
+		homePageURL = NSURL(string: values["homePageURL"] as! String)!
+	}
+	
+	private func updateStoredValues(var values: ValueStoring) -> ValueStoring {
+		values["version"] = version
+		values["name"] = name
+		values["homePageURL"] = homePageURL.absoluteString!
+		
+		return values
+	}
+}
+
+extension SiteValues {
 	init(fromRecord record: CKRecord) {
+		self.init(fromStoredValues: record.values)
+		/*
 		if let versionNumber = record.objectForKey("version") as? NSNumber {
 			version = UInt(versionNumber.unsignedIntegerValue)
 		}
@@ -86,18 +95,30 @@ extension SiteValues {
 		}
 		name = record.objectForKey("name") as! String
 		homePageURL = NSURL(string: record.objectForKey("homePageURL") as! String)!
+		*/
 	}
 	
 	func updateValuesInRecord(record: CKRecord) {
-		record.setObject(version, forKey: "version")
-		record.setObject(name, forKey: "name")
-		record.setObject(homePageURL.absoluteString!, forKey: "homePageURL")
+		var values = record.values
+		updateStoredValues(values)
 	}
 	
 	func createRecord() -> CKRecord {
 		let record = CKRecord(recordType: RecordType.Site.identifier)
 		updateValuesInRecord(record);
 		return record
+	}
+}
+
+extension SiteValues {
+	init(fromJSON JSON: [String: AnyObject]) {
+		let JSONValues = RecordJSON(dictionary: JSON as! RecordJSON.Dictionary)
+		self.init(fromStoredValues: JSONValues)
+	}
+	
+	func createJSON() -> [String: AnyObject] {
+		let JSONValues = updateStoredValues(RecordJSON()) as! RecordJSON
+		return JSONValues.dictionary
 	}
 }
 
@@ -111,10 +132,9 @@ public class Site {
 		}
 	}
 	
-	private init(values: SiteValues, record: CKRecord?) {
+	private init(values: SiteValues, record: CKRecord) {
 		self.values = values
-		
-		self.record = record ?? values.createRecord()
+		self.record = record
 	}
 	
 	convenience init(record: CKRecord) {
@@ -122,7 +142,7 @@ public class Site {
 	}
 	
 	convenience init(values: SiteValues) {
-		self.init(values: values, record: nil)
+		self.init(values: values, record: values.createRecord())
 	}
 	
 	public var name: String { return values.name }

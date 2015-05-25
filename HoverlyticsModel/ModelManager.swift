@@ -147,9 +147,6 @@ public class ModelManager {
 	}
 	
 	func updateAllSites(allSites: [Site]?) {
-		#if DEBUG
-			println("updateAllSites before \(self.allSites?.count) after \(allSites?.count)")
-		#endif
 		self.runOnForegroundQueue {
 			self.allSites = allSites
 			self.notifyAllSitesDidChange()
@@ -185,6 +182,9 @@ public class ModelManager {
 		
 		let operation = CKModifyRecordsOperation(recordsToSave: [site.record], recordIDsToDelete: nil)
 		operation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
+			if let error = error {
+				self.background_didEncounterError(error)
+			}
 			//self.queryAllSites()
 			//self.mainQueue_notify(.AllSitesDidChange)
 		}

@@ -8,6 +8,8 @@
 
 import Cocoa
 import HoverlyticsModel
+import Fabric
+import Crashlytics
 
 
 let NSApp = NSApplication.sharedApplication()
@@ -31,6 +33,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	}
 
 	func applicationDidFinishLaunching(aNotification: NSNotification) {
+		Fabric.with([Crashlytics()])
+		
 		// Create shared manager to ensure quickest start up time.
 		let modelManager = HoverlyticsModel.ModelManager.sharedManager
 		modelManager.didEncounterErrorCallback = { error in

@@ -9,8 +9,11 @@
 import Foundation
 
 
-func conformURL(URL: NSURL) -> NSURL? {
+func conformURL(URL: NSURL, requireHost: Bool = true) -> NSURL? {
 	if let URLComponents = NSURLComponents(URL: URL, resolvingAgainstBaseURL: true) {
+		if requireHost && URLComponents.host == nil {
+			return nil
+		}
 		// Remove #fragments
 		URLComponents.fragment = nil
 		// Home page should always have trailing slash

@@ -25,22 +25,21 @@ class CrawlerMenuController: NSObject, NSUserInterfaceValidations {
 	init(imageDownloadPlaceholderMenuItem: NSMenuItem) {
 		super.init()
 		
-		let imageDownloadMenuAssistant = MenuAssistant<CrawlerImageDownloadChoice>(menu: nil)
-		imageDownloadMenuAssistant.menuItemRepresentatives = [
+		imageDownloadMenuItemsAssistant = PlaceholderMenuItemAssistant<CrawlerImageDownloadChoice>(placeholderMenuItem: imageDownloadPlaceholderMenuItem)
+		imageDownloadMenuItemsAssistant.menuItemRepresentatives = [
 			.NeverDownload,
 			.Total1MB,
 			.Total10MB,
 			.Total100MB,
 			.Unlimited
 		]
-		imageDownloadMenuAssistant.actionAndTargetReturner = { [weak self] widthChoice in
+		imageDownloadMenuItemsAssistant.customization.actionAndTarget = { [weak self] widthChoice in
 			return (action: "changeImageDownloadChoice:", target: self)
 		}
-		imageDownloadMenuAssistant.stateReturner = { [weak self] imageDownloadChoice in
+		imageDownloadMenuItemsAssistant.customization.state = { [weak self] imageDownloadChoice in
 			let chosenImageDownloadChoice = CrawlerPreferences.sharedCrawlerPreferences.imageDownloadChoice
 			return (chosenImageDownloadChoice == imageDownloadChoice) ? NSOnState : NSOffState
 		}
-		imageDownloadMenuItemsAssistant = imageDownloadMenuAssistant.assistPlaceholderMenuItem(imageDownloadPlaceholderMenuItem)
 		
 		updateImageDownloadMenu()
 		
