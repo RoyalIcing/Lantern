@@ -1,0 +1,10 @@
+framework module BurntList {
+  umbrella header "BurntList.h"
+
+  export *
+  module * { export * }
+}
+
+module BurntList.Swift {
+    header "BurntList-Swift.h"
+}

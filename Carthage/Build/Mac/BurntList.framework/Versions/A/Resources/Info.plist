@@ -3,40 +3,38 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>13F34</string>
+	<string>14D136</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
-	<string>Fabric</string>
+	<string>BurntList</string>
 	<key>CFBundleIdentifier</key>
-	<string>io.fabric.sdk.mac</string>
+	<string>com.burntcaramel.BurntList</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Fabric</string>
+	<string>BurntList</string>
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2.6</string>
+	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>18</string>
+	<string>1</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
-	<string>6A2008a</string>
+	<string>6D1002</string>
 	<key>DTPlatformVersion</key>
 	<string>GM</string>
 	<key>DTSDKBuild</key>
-	<string>14A382</string>
+	<string>14D125</string>
 	<key>DTSDKName</key>
 	<string>macosx10.10</string>
 	<key>DTXcode</key>
-	<string>0611</string>
+	<string>0631</string>
 	<key>DTXcodeBuild</key>
-	<string>6A2008a</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2015 Twitter. All rights reserved.</string>
+	<string>6D1002</string>
 </dict>
 </plist>

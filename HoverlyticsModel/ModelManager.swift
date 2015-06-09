@@ -56,8 +56,10 @@ private extension ModelCollectionAllObjectsSubscriptions {
 
 
 public class ModelManager {
-	let container = CKContainer.hoverlyticsContainer()
-	let database = CKContainer.hoverlyticsContainer().privateCloudDatabase
+	#if USE_CLOUD_KIT
+		let container = CKContainer.hoverlyticsContainer()
+		let database = CKContainer.hoverlyticsContainer().privateCloudDatabase
+	#endif
 	//let database = container.privateCloudDatabase
 	var isAvailable = false
 	var ubiquityIdentityDidChangeObserver: AnyObject!
@@ -68,16 +70,22 @@ public class ModelManager {
 		let fm = NSFileManager.defaultManager()
 		let nc = NSNotificationCenter.defaultCenter()
 		let mainQueue = NSOperationQueue.mainQueue()
-		ubiquityIdentityDidChangeObserver = nc.addObserverForName(NSUbiquityIdentityDidChangeNotification, object: fm, queue: mainQueue) { (note) in
-			self.updateAccountStatus()
-		}
 		
-		updateAccountStatus()
+		#if USE_CLOUD_KIT
+			ubiquityIdentityDidChangeObserver = nc.addObserverForName(NSUbiquityIdentityDidChangeNotification, object: fm, queue: mainQueue) { (note) in
+				self.updateAccountStatus()
+			}
+			
+			updateAccountStatus()
+		#endif
 	}
 	
 	deinit {
 		let nc = NSNotificationCenter.defaultCenter()
-		nc.removeObserver(ubiquityIdentityDidChangeObserver)
+		
+		#if USE_CLOUD_KIT
+			nc.removeObserver(ubiquityIdentityDidChangeObserver)
+		#endif
 	}
 	
 	public class var sharedManager: ModelManager {
@@ -127,6 +135,7 @@ public class ModelManager {
 		}
 	}
 	
+	#if USE_CLOUD_KIT
 	func updateAccountStatus() {
 		container.accountStatusWithCompletionHandler { (accountStatus, error) -> Void in
 			self.isAvailable = (accountStatus == .Available)
@@ -139,6 +148,7 @@ public class ModelManager {
 			}
 		}
 	}
+	#endif
 	
 	public var allSites: [Site]! = nil
 	
@@ -154,6 +164,7 @@ public class ModelManager {
 	}
 	
 	func queryAllSites() {
+		#if USE_CLOUD_KIT
 		if isAvailable {
 			let predicate = NSPredicate(value: true)
 			let query = CKQuery(recordType: RecordType.Site.identifier, predicate: predicate)
@@ -175,9 +186,11 @@ public class ModelManager {
 		else {
 			self.updateAllSites(nil)
 		}
+		#endif
 	}
 	
 	public func createSiteWithValues(siteValues: SiteValues) {
+		#if USE_CLOUD_KIT
 		let site = Site(values: siteValues)
 		
 		let operation = CKModifyRecordsOperation(recordsToSave: [site.record], recordIDsToDelete: nil)
@@ -194,9 +207,11 @@ public class ModelManager {
 		var allSites = self.allSites
 		allSites.append(site)
 		updateAllSites(allSites)
+		#endif
 	}
 	
 	private func saveSite(site: Site) {
+		#if USE_CLOUD_KIT
 		let operation = CKModifyRecordsOperation(recordsToSave: [site.record], recordIDsToDelete: nil)
 		operation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
 			if let error = error {
@@ -207,6 +222,7 @@ public class ModelManager {
 		database.addOperation(operation)
 		
 		notifyAllSitesDidChange()
+		#endif
 	}
 	
 	public func updateSiteWithValues(site: Site, siteValues: SiteValues) {
@@ -229,6 +245,7 @@ public class ModelManager {
 	}
 	
 	public func removeSite(site: Site) {
+		#if USE_CLOUD_KIT
 		let record = site.record
 		let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: [record.recordID])
 		operation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
@@ -247,5 +264,8 @@ public class ModelManager {
 				break
 			}
 		}
+		#else
+		
+		#endif
 	}
 }
