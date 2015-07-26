@@ -1,3 +1,5 @@
-github "Alamofire/Alamofire" >= 1.2
-github "mattt/Ono" "c94fd5ec2e303be4be5c6c9c81ed5f3e810ab436"
+github "Alamofire/Alamofire" >= 1.3
+github "mattt/Ono" >= 1.2.2
+github "burntcaramel/BurntFoundation" >= 0.1
+github "burntcaramel/BurntCocoaUI" >= 0.2
 github "burntcaramel/BurntList" >= 0.1

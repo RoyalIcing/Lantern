@@ -139,7 +139,7 @@ class PageInfoRequestQueue {
 		activeRequests.append(infoRequest)
 		
 		// An Alamofire serializer to perform the parsing etc on the request’s background queue.
-		let serializer: Alamofire.Request.Serializer = { URLRequest, response, data in
+		let serializer = GenericResponseSerializer<PageInfo> { URLRequest, response, data in
 			if let response = response {
 				let requestedURL = infoRequest.URL
 				let MIMEType = MIMETypeString(response.MIMEType)
@@ -156,10 +156,9 @@ class PageInfoRequestQueue {
 					contentInfo = nil
 				}
 				
-				var info = PageInfo(requestedURL: requestedURL, finalURL: response.URL, statusCode: response.statusCode, baseContentType: baseContentType, MIMEType: MIMEType, byteCount: byteCount, contentInfo: contentInfo)
+				let info = PageInfo(requestedURL: requestedURL, finalURL: response.URL, statusCode: response.statusCode, baseContentType: baseContentType, MIMEType: MIMEType, byteCount: byteCount, contentInfo: contentInfo)
 				
-				// Result expected is AnyObject, so we can’t pass a struct here unfortunately.
-				return (PageInfoReference(info: info), nil)
+				return (info, nil)
 			}
 			else {
 				return (nil, nil)
@@ -170,12 +169,11 @@ class PageInfoRequestQueue {
 		let requestedURL = infoRequest.URL
 		infoRequest.request = requestManager
 			.request(infoRequest.method, requestedURL)
-			.response(serializer: serializer) { (URLRequest, response, infoReference, error) in
-				if
-					let response = response,
-					let infoReference = infoReference as? PageInfoReference
+			.response(responseSerializer: serializer) { (URLRequest, response, info, error) in
+				if let
+					response = response,
+					info = info
 				{
-					let info = infoReference.info
 					self.activeRequestDidComplete(infoRequest, withInfo: info)
 				}
 		}
