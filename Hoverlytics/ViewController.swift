@@ -97,10 +97,14 @@ class ViewController: NSViewController
 			let initialURL = site.homePageURL
 			mainState.initialHost = initialURL.host
 			
-			pageViewController.GoogleOAuth2TokenJSONString = site.GoogleAPIOAuth2TokenJSONString
-			pageViewController.hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback = { [unowned self] tokenJSONString in
+			#if false
+				pageViewController.GoogleOAuth2TokenJSONString = site.GoogleAPIOAuth2TokenJSONString
+				pageViewController.hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback = { [unowned self] tokenJSONString in
 				self.modelManager.setGoogleOAuth2TokenJSONString(tokenJSONString, forSite: site)
-			}
+				}
+			#endif
+			
+				
 			pageViewController.loadURL(initialURL)
 			
 			

@@ -57,11 +57,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	}
 	
 	
-	func application(application: NSApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-		let modelManager = HoverlyticsModel.ModelManager.sharedManager
-		modelManager.handleRemoteNotification(userInfo)
-	}
-	
 	
 	lazy var mainStoryboard: NSStoryboard = {
 		return NSStoryboard(name: "Main", bundle: nil)!

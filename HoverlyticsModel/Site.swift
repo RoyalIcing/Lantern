@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CloudKit
 
 
 private enum Error: Int {
@@ -16,7 +15,7 @@ private enum Error: Int {
 	case HomePageURLIsEmpty = 20
 	case HomePageURLIsInvalid
 	
-	static let domain = "HoverlyticsApp.SiteSettingsViewController.errorDomain"
+	static let domain = "LanternApp.SiteSettingsViewController.errorDomain"
 	
 	var errorCode: Int {
 		return rawValue
@@ -63,7 +62,7 @@ public func ==(lhs: SiteValues, rhs: SiteValues) -> Bool {
 }
 
 extension SiteValues {
-	private init(fromStoredValues values: ValueStoring) {
+	private init(fromStoredValues values: ValueStorable) {
 		if let versionNumber = values["version"] as? NSNumber {
 			version = UInt(versionNumber.unsignedIntegerValue)
 		}
@@ -74,7 +73,7 @@ extension SiteValues {
 		homePageURL = NSURL(string: values["homePageURL"] as! String)!
 	}
 	
-	private func updateStoredValues(var values: ValueStoring) -> ValueStoring {
+	private func updateStoredValues(var values: ValueStorable) -> ValueStorable {
 		values["version"] = version
 		values["name"] = name
 		values["homePageURL"] = homePageURL.absoluteString!
@@ -84,35 +83,8 @@ extension SiteValues {
 }
 
 extension SiteValues {
-	init(fromRecord record: CKRecord) {
-		self.init(fromStoredValues: record.values)
-		/*
-		if let versionNumber = record.objectForKey("version") as? NSNumber {
-			version = UInt(versionNumber.unsignedIntegerValue)
-		}
-		else {
-			version = SiteValues.currentVersion
-		}
-		name = record.objectForKey("name") as! String
-		homePageURL = NSURL(string: record.objectForKey("homePageURL") as! String)!
-		*/
-	}
-	
-	func updateValuesInRecord(record: CKRecord) {
-		var values = record.values
-		updateStoredValues(values)
-	}
-	
-	func createRecord() -> CKRecord {
-		let record = CKRecord(recordType: RecordType.Site.identifier)
-		updateValuesInRecord(record);
-		return record
-	}
-}
-
-extension SiteValues {
 	init(fromJSON JSON: [String: AnyObject]) {
-		let JSONValues = RecordJSON(dictionary: JSON as! RecordJSON.Dictionary)
+		let JSONValues = RecordJSON(dictionary: JSON)
 		self.init(fromStoredValues: JSONValues)
 	}
 	
@@ -124,38 +96,21 @@ extension SiteValues {
 
 
 public class Site {
-	var record: CKRecord!
+	let UUID: NSUUID
 	
 	public internal(set) var values: SiteValues {
 		didSet {
-			values.updateValuesInRecord(record)
+			
 		}
 	}
 	
-	private init(values: SiteValues, record: CKRecord) {
+	init(values: SiteValues) {
 		self.values = values
-		self.record = record
-	}
-	
-	convenience init(record: CKRecord) {
-		self.init(values: SiteValues(fromRecord: record), record: record)
-	}
-	
-	convenience init(values: SiteValues) {
-		self.init(values: values, record: values.createRecord())
+		UUID = NSUUID()
 	}
 	
 	public var name: String { return values.name }
 	public var homePageURL: NSURL { return values.homePageURL }
 	
-	public var identifier: String { return record.recordID.recordName }
-	
-	public internal(set) var GoogleAPIOAuth2TokenJSONString: String? {
-		get {
-			return record.objectForKey("GoogleAPIOAuth2TokenJSONString") as! String?
-		}
-		set {
-			return record.setObject(newValue, forKey: "GoogleAPIOAuth2TokenJSONString")
-		}
-	}
+	public var identifier: String { return UUID.UUIDString }
 }
