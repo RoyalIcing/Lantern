@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import BurntFoundation
 import HoverlyticsModel
 import Quartz
 

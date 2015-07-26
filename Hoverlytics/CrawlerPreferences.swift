@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import BurntFoundation
 
 
 private func bytesForMegabytes(MB: UInt) -> UInt {
@@ -71,14 +72,14 @@ class CrawlerPreferences {
 	
 	var imageDownloadChoice: CrawlerImageDownloadChoice = .Total10MB {
 		didSet {
-			ud.setChoice(imageDownloadChoice)
+			ud.setIntChoice(imageDownloadChoice)
 			
 			notify(.ImageDownloadChoiceDidChange)
 		}
 	}
 	
 	func updateFromDefaults() {
-		imageDownloadChoice = ud.choiceWithFallback(imageDownloadChoice)
+		imageDownloadChoice = ud.intChoiceWithFallback(imageDownloadChoice)
 	}
 	
 	init() {

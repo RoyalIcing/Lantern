@@ -83,8 +83,17 @@ typedef struct _NSZone NSZone;
 #  define SWIFT_NULLABILITY(X)
 #endif
 #if defined(__has_feature) && __has_feature(modules)
+@import Foundation;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
 #pragma clang diagnostic ignored "-Wduplicate-method-arg"
+
+@interface NSNotificationCenter (SWIFT_EXTENSION(BurntFoundation))
+@end
+
+
+@interface NSUserDefaults (SWIFT_EXTENSION(BurntFoundation))
+@end
+
 #pragma clang diagnostic pop

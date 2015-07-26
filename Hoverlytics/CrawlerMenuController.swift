@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import BurntFoundation
 
 
 extension CrawlerImageDownloadChoice: MenuItemRepresentative {

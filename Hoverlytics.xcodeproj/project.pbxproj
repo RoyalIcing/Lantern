@@ -50,7 +50,6 @@
 		B23E29EA1AE73DF6009A94E5 /* console.js in Resources */ = {isa = PBXBuildFile; fileRef = B23E29E91AE73DF6009A94E5 /* console.js */; };
 		B23E29EC1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */; };
 		B23EA59E1ACA5F6A009B4032 /* ValueValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */; };
-		B250205C1B01AE7F00ABAE96 /* ChoiceUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B250205A1B01AE4700ABAE96 /* ChoiceUserDefaults.swift */; };
 		B250205D1B01AE8700ABAE96 /* CrawlerPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25020581B01AD3600ABAE96 /* CrawlerPreferences.swift */; };
 		B25020611B01B66400ABAE96 /* CrawlerMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B250205E1B01B3AE00ABAE96 /* CrawlerMenuController.swift */; };
 		B25020621B01C00400ABAE96 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */; };
@@ -102,6 +101,12 @@
 		B2515B801AF3C4CA00F6406A /* PopUpButtonAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2515B7F1AF3C4CA00F6406A /* PopUpButtonAssistant.swift */; };
 		B268DC971B1B569C0095BBB9 /* EnabledFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = B268DC961B1B569C0095BBB9 /* EnabledFeatures.swift */; };
 		B27F48C91B64D25B003F1215 /* ValueStorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27F48C81B64D25B003F1215 /* ValueStorable.swift */; };
+		B27F48CC1B64DF8A003F1215 /* BurntCocoaUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */; };
+		B27F48CD1B64DF8A003F1215 /* BurntFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27F48CB1B64DF8A003F1215 /* BurntFoundation.framework */; };
+		B27F48CE1B64E452003F1215 /* BurntCocoaUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */; };
+		B27F48CF1B64E452003F1215 /* BurntCocoaUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B27F48D01B64E452003F1215 /* BurntFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27F48CB1B64DF8A003F1215 /* BurntFoundation.framework */; };
+		B27F48D11B64E452003F1215 /* BurntFoundation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B27F48CB1B64DF8A003F1215 /* BurntFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B28EC65B1B04540000857622 /* MenuItemsAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28EC65A1B04540000857622 /* MenuItemsAssistant.swift */; };
 		B28EC65C1B04540000857622 /* MenuItemsAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28EC65A1B04540000857622 /* MenuItemsAssistant.swift */; };
 		B28EC65E1B04540800857622 /* PlaceholderMenuItemAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28EC65D1B04540800857622 /* PlaceholderMenuItemAssistant.swift */; };
@@ -125,8 +130,6 @@
 		B2D39B471AF6F494003D6738 /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39B451AF6F494003D6738 /* ImagePreviewViewController.swift */; };
 		B2D563241AF5BF8A006DE202 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D563221AF5BF8A006DE202 /* Alamofire.framework */; };
 		B2E000001B007F500073CB8A /* BrowserMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E0FFFF1B007F500073CB8A /* BrowserMenuController.swift */; };
-		B2E000021B0092AF0073CB8A /* NotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E000011B0092AF0073CB8A /* NotificationObserver.swift */; };
-		B2E000031B0092AF0073CB8A /* NotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E000011B0092AF0073CB8A /* NotificationObserver.swift */; };
 		B2E0FFFC1AFB37580073CB8A /* SiteEssentialsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E0FFFB1AFB37580073CB8A /* SiteEssentialsInfo.swift */; };
 		B2E0FFFE1B0078590073CB8A /* BrowserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E0FFFD1B0078580073CB8A /* BrowserPreferences.swift */; };
 		B2E269201AE9DD650044BE04 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2E2691F1AE9DD650044BE04 /* Images.xcassets */; };
@@ -219,7 +222,9 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B2ECF3241B1B523800A96024 /* BurntList.framework in Embed Frameworks */,
+				B27F48CF1B64E452003F1215 /* BurntCocoaUI.framework in Embed Frameworks */,
 				B25020681B01F4E000ABAE96 /* HoverlyticsModel.framework in Embed Frameworks */,
+				B27F48D11B64E452003F1215 /* BurntFoundation.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,7 +317,6 @@
 		B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WKUserContentController+bundledScripts.swift"; sourceTree = "<group>"; };
 		B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueValidation.swift; sourceTree = "<group>"; };
 		B25020581B01AD3600ABAE96 /* CrawlerPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrawlerPreferences.swift; sourceTree = "<group>"; };
-		B250205A1B01AE4700ABAE96 /* ChoiceUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoiceUserDefaults.swift; sourceTree = "<group>"; };
 		B250205E1B01B3AE00ABAE96 /* CrawlerMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrawlerMenuController.swift; sourceTree = "<group>"; };
 		B25033111AF5C2C7006A2AE7 /* Ono.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ono.framework; path = Carthage/Build/Mac/Ono.framework; sourceTree = "<group>"; };
 		B25033131AF5C2D0006A2AE7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -320,6 +324,8 @@
 		B2515B7F1AF3C4CA00F6406A /* PopUpButtonAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpButtonAssistant.swift; sourceTree = "<group>"; };
 		B268DC961B1B569C0095BBB9 /* EnabledFeatures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnabledFeatures.swift; sourceTree = "<group>"; };
 		B27F48C81B64D25B003F1215 /* ValueStorable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueStorable.swift; sourceTree = "<group>"; };
+		B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BurntCocoaUI.framework; path = Carthage/Build/Mac/BurntCocoaUI.framework; sourceTree = "<group>"; };
+		B27F48CB1B64DF8A003F1215 /* BurntFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BurntFoundation.framework; path = Carthage/Build/Mac/BurntFoundation.framework; sourceTree = "<group>"; };
 		B28EC65A1B04540000857622 /* MenuItemsAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemsAssistant.swift; sourceTree = "<group>"; };
 		B28EC65D1B04540800857622 /* PlaceholderMenuItemAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderMenuItemAssistant.swift; sourceTree = "<group>"; };
 		B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SiteSettings.storyboard; sourceTree = "<group>"; };
@@ -338,7 +344,6 @@
 		B2D39B151AF665D5003D6738 /* TableView-OutlineView-Subclass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TableView-OutlineView-Subclass.swift"; sourceTree = "<group>"; };
 		B2D39B451AF6F494003D6738 /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
 		B2D563221AF5BF8A006DE202 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
-		B2E000011B0092AF0073CB8A /* NotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationObserver.swift; sourceTree = "<group>"; };
 		B2E0FFFB1AFB37580073CB8A /* SiteEssentialsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteEssentialsInfo.swift; sourceTree = "<group>"; };
 		B2E0FFFD1B0078580073CB8A /* BrowserPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserPreferences.swift; sourceTree = "<group>"; };
 		B2E0FFFF1B007F500073CB8A /* BrowserMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserMenuController.swift; sourceTree = "<group>"; };
@@ -407,9 +412,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2ECF3231B1B523800A96024 /* BurntList.framework in Frameworks */,
+				B27F48CE1B64E452003F1215 /* BurntCocoaUI.framework in Frameworks */,
 				B25020631B01C15900ABAE96 /* HoverlyticsModel.framework in Frameworks */,
 				B20DB38B1B0F020500E57532 /* Crashlytics.framework in Frameworks */,
+				B27F48CD1B64DF8A003F1215 /* BurntFoundation.framework in Frameworks */,
 				B20DB3891B0F020500E57532 /* Fabric.framework in Frameworks */,
+				B27F48CC1B64DF8A003F1215 /* BurntCocoaUI.framework in Frameworks */,
+				B27F48D01B64E452003F1215 /* BurntFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,7 +577,6 @@
 				B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */,
 				B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */,
 				B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */,
-				B28EC6601B04542700857622 /* Foundation Extensions */,
 				B23BE3941AF078EC008BEDC0 /* UI Assistants */,
 				B2D39B121AF65188003D6738 /* ValidatedStringValue+Presentation.swift */,
 				B22B7DBA1AC77EF20026AEDB /* Page.storyboard */,
@@ -647,15 +655,6 @@
 			name = Preferences;
 			sourceTree = "<group>";
 		};
-		B28EC6601B04542700857622 /* Foundation Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				B2E000011B0092AF0073CB8A /* NotificationObserver.swift */,
-				B250205A1B01AE4700ABAE96 /* ChoiceUserDefaults.swift */,
-			);
-			name = "Foundation Extensions";
-			sourceTree = "<group>";
-		};
 		B2D39B441AF6F482003D6738 /* Preview */ = {
 			isa = PBXGroup;
 			children = (
@@ -671,6 +670,8 @@
 		B2D9D8881B253D3100217300 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */,
+				B27F48CB1B64DF8A003F1215 /* BurntFoundation.framework */,
 				B2ECF3221B1B523800A96024 /* BurntList.framework */,
 				B20DB3861B0F020500E57532 /* Fabric.framework */,
 				B20DB3871B0F020500E57532 /* Crashlytics.framework */,
@@ -1136,7 +1137,6 @@
 				B22766381AEF9B320083FE8C /* MenuAssistant.swift in Sources */,
 				B22B7D951AC6B9090026AEDB /* AppDelegate.swift in Sources */,
 				B2A63B611AC8DACD004CEBE1 /* SiteSettingsViewController.swift in Sources */,
-				B2E000021B0092AF0073CB8A /* NotificationObserver.swift in Sources */,
 				B22B7DB71AC77CAC0026AEDB /* MainWindowController.swift in Sources */,
 				B23E29EC1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift in Sources */,
 				B2EAB9121AF74D8000A1F185 /* NSEvent+extension.swift in Sources */,
@@ -1175,8 +1175,6 @@
 				B25033641AF5E7D7006A2AE7 /* MenuAssistant.swift in Sources */,
 				B25033651AF5E7D7006A2AE7 /* PopUpButtonAssistant.swift in Sources */,
 				B25033661AF5E7D7006A2AE7 /* SegmentedControlAssistant.swift in Sources */,
-				B250205C1B01AE7F00ABAE96 /* ChoiceUserDefaults.swift in Sources */,
-				B2E000031B0092AF0073CB8A /* NotificationObserver.swift in Sources */,
 				B25033611AF5E7CD006A2AE7 /* WKUserContentController+bundledScripts.swift in Sources */,
 				B25033601AF5E7C4006A2AE7 /* SourcePreviewViewController.swift in Sources */,
 				B250335E1AF5E7BC006A2AE7 /* PageViewController.swift in Sources */,

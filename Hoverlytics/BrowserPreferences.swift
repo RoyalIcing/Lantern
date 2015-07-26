@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import BurntFoundation
 
 
 enum BrowserWidthChoice: Int {
@@ -67,14 +68,14 @@ class BrowserPreferences {
 	
 	var widthChoice: BrowserWidthChoice = .FullWidth {
 		didSet {
-			ud.setChoice(widthChoice)
+			ud.setIntChoice(widthChoice)
 			
 			notify(.WidthChoiceDidChange)
 		}
 	}
 	
 	func updateFromDefaults() {
-		widthChoice = ud.choiceWithFallback(widthChoice)
+		widthChoice = ud.intChoiceWithFallback(widthChoice)
 	}
 	
 	init() {

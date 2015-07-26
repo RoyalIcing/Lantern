@@ -7,17 +7,17 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
-	<string>Ono</string>
+	<string>BurntCocoaUI</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.mattt.Ono</string>
+	<string>com.burntcaramel.BurntCocoaUI</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Ono</string>
+	<string>BurntCocoaUI</string>
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>0.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -36,10 +36,7 @@
 	<string>0640</string>
 	<key>DTXcodeBuild</key>
 	<string>6E35b</string>
-	<key>UIDeviceFamily</key>
-	<array>
-		<integer>1</integer>
-		<integer>2</integer>
-	</array>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2015 Burnt Caramel. All rights reserved.</string>
 </dict>
 </plist>

@@ -1,0 +1,10 @@
+framework module BurntFoundation {
+  umbrella header "BurntFoundation.h"
+
+  export *
+  module * { export * }
+}
+
+module BurntFoundation.Swift {
+    header "BurntFoundation-Swift.h"
+}

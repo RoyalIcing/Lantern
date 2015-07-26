@@ -1,0 +1,10 @@
+framework module BurntCocoaUI {
+  umbrella header "BurntCocoaUI.h"
+
+  export *
+  module * { export * }
+}
+
+module BurntCocoaUI.Swift {
+    header "BurntCocoaUI-Swift.h"
+}
