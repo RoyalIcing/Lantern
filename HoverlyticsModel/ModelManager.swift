@@ -118,6 +118,18 @@ public class ModelManager {
 		sitesList?.appendItems([siteValues])
 	}
 	
+	private var sitesListUUIDIndexFinder: PrimaryIndexIterativeFinder<Int, SiteValues, NSUUID>? {
+		if let sitesList = sitesList {
+			let UUIDExtractor = ItemValueExtractorOf { (item: SiteValues) in
+				return item.UUID
+			}
+			return PrimaryIndexIterativeFinder(collectionAccessor: { sitesList }, valueExtractor: UUIDExtractor)
+		}
+		else {
+			return nil
+		}
+	}
+	
 	private var sitesListEditableAssistant: EditableListFinderAssistant<ArrayList<SiteValues>, PrimaryIndexIterativeFinder<Int, SiteValues, NSUUID>>? {
 		if let sitesList = sitesList {
 			let UUIDExtractor = ItemValueExtractorOf { (item: SiteValues) in
@@ -132,7 +144,11 @@ public class ModelManager {
 	}
 	
 	public func updateSiteWithUUID(UUID: NSUUID, withValues siteValues: SiteValues) {
-		sitesListEditableAssistant?.replaceItemWhoseValueIs(UUID, with: siteValues)
+		//sitesListEditableAssistant?.replaceItemWhoseValueIs(UUID, with: siteValues)
+		if let index = sitesListUUIDIndexFinder?[UUID] {
+			println("UPDATE SITE \(index)")
+			sitesList?.replaceItemAtIndex(index, with: siteValues)
+		}
 	}
 	
 	public func removeSiteWithUUID(UUID: NSUUID) {
