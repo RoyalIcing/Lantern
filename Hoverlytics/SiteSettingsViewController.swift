@@ -27,9 +27,9 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 		homePageURLField.stringValue = ""
 	}
 	
-	var site: Site! {
+	var site: SiteValues! {
 		didSet {
-			updateUIWithSiteValues(site.values)
+			updateUIWithSiteValues(site)
 		}
 	}
 	
@@ -46,7 +46,7 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	}
 	
 	@IBAction func removeSite(sender: NSButton) {
-		modelManager.removeSite(site)
+		modelManager.removeSiteWithUUID(site.UUID)
 		self.dismissController(nil)
 		prepareForReuse()
 	}

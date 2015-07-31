@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import BurntList
 
 
 private enum Error: Int {
@@ -43,15 +44,18 @@ private enum Error: Int {
 
 public struct SiteValues: Equatable {
 	public let version: UInt
+	public let UUID: NSUUID
+	
 	public let name: String
 	public let homePageURL: NSURL
 	
 	static let currentVersion: UInt = 1
 	
-	public init(name: String, homePageURL: NSURL) {
+	public init(name: String, homePageURL: NSURL, UUID: NSUUID = NSUUID()) {
 		self.version = SiteValues.currentVersion
 		self.name = name
 		self.homePageURL = homePageURL
+		self.UUID = UUID
 	}
 }
 
@@ -71,6 +75,7 @@ extension SiteValues {
 		}
 		name = values["name"] as! String
 		homePageURL = NSURL(string: values["homePageURL"] as! String)!
+		UUID = NSUUID(UUIDString: values["UUID"] as! String)!
 	}
 	
 	private func updateStoredValues(var values: ValueStorable) -> ValueStorable {
@@ -94,23 +99,32 @@ extension SiteValues {
 	}
 }
 
-
-public class Site {
-	let UUID: NSUUID
-	
-	public internal(set) var values: SiteValues {
-		didSet {
-			
+extension SiteValues: JSONTransformable {
+	public init?(fromJSON JSON: AnyObject) {
+		if let JSON = JSON as? [String: AnyObject] {
+			self.init(fromJSON: JSON)
+		}
+		else {
+			//self.init(values: values)
+			return nil
 		}
 	}
 	
+	public func toJSON() -> AnyObject {
+		return createJSON()
+	}
+}
+
+
+public class Site {
+	public internal(set) var values: SiteValues
+	
 	init(values: SiteValues) {
 		self.values = values
-		UUID = NSUUID()
 	}
 	
 	public var name: String { return values.name }
 	public var homePageURL: NSURL { return values.homePageURL }
 	
-	public var identifier: String { return UUID.UUIDString }
+	public var identifier: String { return values.UUID.UUIDString }
 }

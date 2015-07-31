@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		
 		// Create shared manager to ensure quickest start up time.
 		let modelManager = HoverlyticsModel.ModelManager.sharedManager
-		modelManager.didEncounterErrorCallback = { error in
+		modelManager.errorReceiver.errorCallback = { error in
 			NSApp.presentError(error)
 		}
 		

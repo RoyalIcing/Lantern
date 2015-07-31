@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import BurntFoundation
+import BurntList
 
 
 enum RecordType: String {
@@ -27,15 +29,65 @@ public enum ModelManagerNotification: String {
 }
 
 
+public class ErrorReceiver {
+	public var errorCallback: ((error: NSError) -> Void)?
+	
+	func receiveError(error: NSError) {
+		errorCallback?(error: error)
+	}
+}
+
+
 public class ModelManager {
 	var isAvailable = false
 	
-	public var didEncounterErrorCallback: ((error: NSError) -> Void)?
+	public let errorReceiver = ErrorReceiver()
+	
+	private var storeDirectory: SystemDirectory
+	
+	private var sitesList: ArrayList<SiteValues>?
+	private var sitesListStore: ListJSONFileStore<ArrayList<SiteValues>>?
+	private var sitesListObserver: ListObserverOf<SiteValues>!
+	public var allSites: [SiteValues]? {
+		return sitesList?.allItems
+	}
+	
 	
 	init() {
 		let fm = NSFileManager.defaultManager()
 		let nc = NSNotificationCenter.defaultCenter()
 		let mainQueue = NSOperationQueue.mainQueue()
+		
+		sitesList = ArrayList(items: [SiteValues]())
+		
+		let listJSONTransformer = DictionaryKeyJSONTransformer(dictionaryKey: "items", objectCoercer: { (value: [AnyObject]) in
+			value as NSArray
+		})
+		let storeOptions = ListJSONFileStoreOptions(listJSONTransformer: listJSONTransformer)
+		
+		storeDirectory = SystemDirectory(pathComponents: ["v1"], inUserDirectory: .ApplicationSupportDirectory, errorReceiver: errorReceiver.receiveError, useBundleIdentifier: true)
+		storeDirectory.useOnQueue(dispatch_get_main_queue()) { directoryURL in
+			println("\(directoryURL)")
+			let JSONURL = directoryURL.URLByAppendingPathComponent("sites.json")
+			
+			let store = ListJSONFileStore(creatingList: { items in
+				return ArrayList<SiteValues>(items: items)
+				}, loadedFromURL: JSONURL, options: storeOptions)
+			store.ensureLoaded{ (list, error) in
+				if let list = list {
+					list.addObserver(self.sitesListObserver)
+					self.sitesList = list
+					self.notifyAllSitesDidChange()
+				}
+			}
+			
+			self.sitesListStore = store
+		}
+		
+		sitesListObserver = ListObserverOf<SiteValues> { [unowned self] changes in
+			self.notifyAllSitesDidChange()
+		}
+
 	}
 	
 	deinit {
@@ -49,8 +101,12 @@ public class ModelManager {
 		return Helper.sharedManager
 	}
 	
+	func onSystemDirectoryError(error: NSError) {
+		
+	}
+	
 	func updateMainProperties() {
-		queryAllSites()
+		
 	}
 	
 	private func runOnForegroundQueue(currentlyOnForegroundQueue: Bool = false, block: () -> Void) {
@@ -67,55 +123,32 @@ public class ModelManager {
 		nc.postNotificationName(identifier.notificationName, object: self, userInfo: userInfo)
 	}
 	
-	func didEncounterError(error: NSError) {
-		didEncounterErrorCallback?(error: error)
-	}
-	
-	private func background_didEncounterError(error: NSError) {
-		self.runOnForegroundQueue {
-			self.didEncounterError(error)
-		}
-	}
-	
-	public var allSites: [Site]! = nil
-	
 	func notifyAllSitesDidChange() {
 		self.mainQueue_notify(.AllSitesDidChange)
 	}
 	
-	func updateAllSites(allSites: [Site]?) {
-		self.runOnForegroundQueue {
-			self.allSites = allSites
-			self.notifyAllSitesDidChange()
-		}
-	}
-	
-	func queryAllSites() {
-		
-	}
-	
 	public func createSiteWithValues(siteValues: SiteValues) {
-		
+		sitesList?.appendItems([siteValues])
 	}
 	
-	private func saveSite(site: Site) {
-		
-	}
-	
-	public func updateSiteWithValues(site: Site, siteValues: SiteValues) {
-		if site.values == siteValues {
-			return
+	private var sitesListEditableAssistant: EditableListFinderAssistant<ArrayList<SiteValues>, PrimaryIndexIterativeFinder<Int, SiteValues, NSUUID>>? {
+		if let sitesList = sitesList {
+			let UUIDExtractor = ItemValueExtractorOf { (item: SiteValues) in
+				return item.UUID
+			}
+			let sitesListUUIDIndexFinder = PrimaryIndexIterativeFinder(collectionAccessor: { sitesList }, valueExtractor: UUIDExtractor)
+			return EditableListFinderAssistant(list: sitesList, primaryIndexFinder: sitesListUUIDIndexFinder)
 		}
-		
-		site.values = siteValues
-		
-		saveSite(site)
-		
-		// Just do this now to immediately update the UI.
-		notifyAllSitesDidChange()
+		else {
+			return nil
+		}
 	}
 	
-	public func removeSite(site: Site) {
-		
+	public func updateSiteWithUUID(UUID: NSUUID, withValues siteValues: SiteValues) {
+		sitesListEditableAssistant?.replaceItemWhoseValueIs(UUID, with: siteValues)
+	}
+	
+	public func removeSiteWithUUID(UUID: NSUUID) {
+		sitesListEditableAssistant?.removeItemsWithValues(Set([UUID]))
 	}
 }

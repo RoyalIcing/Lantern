@@ -11,7 +11,7 @@ import HoverlyticsModel
 
 
 enum SiteChoice {
-	case SavedSite(Site)
+	case SavedSite(SiteValues)
 	case Custom
 }
 
@@ -22,7 +22,7 @@ func ==(lhs: SiteChoice, rhs: SiteChoice) -> Bool {
 	case (.Custom, .Custom):
 		return true
 	case (.SavedSite(let lSite), .SavedSite(let rSite)):
-		return lSite.identifier == rSite.identifier
+		return lSite.UUID == rSite.UUID
 	default:
 		return false
 	}
@@ -42,7 +42,7 @@ class MainState {
 		}
 	}
 	
-	var chosenSite: Site? {
+	var chosenSite: SiteValues? {
 		switch siteChoice {
 		case .SavedSite(let site):
 			return site

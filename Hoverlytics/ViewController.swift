@@ -85,11 +85,11 @@ class ViewController: NSViewController
 	var pageViewController: PageViewController!
 	var statsViewController: StatsViewController!
 	
-	var lastChosenSite: Site!
+	var lastChosenSite: SiteValues?
 	
 	func updateMainViewForState() {
 		let site = mainState?.chosenSite
-		if site === lastChosenSite {
+		if site?.UUID === lastChosenSite?.UUID {
 			return
 		}
 		lastChosenSite = site
@@ -213,7 +213,7 @@ class ViewController: NSViewController
 				siteSettingsViewController.willClose = { siteSettingsViewController in
 					let (siteValues, error) = siteSettingsViewController.copySiteValuesFromUI()
 					if let siteValues = siteValues {
-						modelManager.updateSiteWithValues(chosenSite, siteValues: siteValues)
+						modelManager.updateSiteWithUUID(chosenSite.UUID, withValues: siteValues)
 					}
 				}
 				

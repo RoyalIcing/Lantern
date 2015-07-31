@@ -44,7 +44,7 @@ extension SiteMenuItem: MenuItemRepresentative {
 		case .Choice(let siteChoice):
 			switch siteChoice {
 			case .SavedSite(let site):
-				return site.identifier
+				return site.UUID.UUIDString
 			case .Custom:
 				return "Custom"
 			}
