@@ -181,11 +181,13 @@ class ViewController: NSViewController
 	lazy var addSiteViewController: SiteSettingsViewController = {
 		let vc = self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Add Site View Controller") as! SiteSettingsViewController
 		vc.modelManager = self.modelManager
+		vc.mainState = self.mainState
 		return vc
 	}()
 	lazy var siteSettingsViewController: SiteSettingsViewController = {
 		let vc = self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Site Settings View Controller") as! SiteSettingsViewController
 		vc.modelManager = self.modelManager
+		vc.mainState = self.mainState
 		return vc
 	}()
 	

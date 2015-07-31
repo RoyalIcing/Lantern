@@ -13,6 +13,7 @@ import HoverlyticsModel
 class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	
 	var modelManager: ModelManager!
+	var mainState: MainState!
 	@IBOutlet var nameField: NSTextField!
 	@IBOutlet var homePageURLField: NSTextField!
 	var willClose: ((viewController: SiteSettingsViewController) -> Void)?
@@ -37,6 +38,7 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 		let (siteValues, error) = copySiteValuesFromUI()
 		if let siteValues = siteValues {
 			modelManager.createSiteWithValues(siteValues)
+			mainState.siteChoice = .SavedSite(siteValues)
 			self.dismissController(nil)
 			prepareForReuse()
 		}

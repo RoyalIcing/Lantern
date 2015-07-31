@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import BurntFoundation
 import HoverlyticsModel
 
 
@@ -16,7 +17,6 @@ private let sectionUserDefaultKey = "mainSection"
 class MainWindowController: NSWindowController {
 	
 	let mainState = MainState()
-	typealias MainStateNotification = MainState.Notification
 	
 	let modelManager = HoverlyticsModel.ModelManager.sharedManager
 	
@@ -58,7 +58,7 @@ class MainWindowController: NSWindowController {
 		mainViewController.mainState = mainState
 		
 		let nc = NSNotificationCenter.defaultCenter()
-		chosenSiteDidChangeObserver = nc.addObserverForName(MainStateNotification.ChosenSiteDidChange.rawValue, object: mainState, queue: nil) { [unowned self] note in
+		chosenSiteDidChangeObserver = nc.addObserverForName(MainState.Notification.ChosenSiteDidChange.rawValue, object: mainState, queue: nil) { [unowned self] note in
 			self.window?.title = self.windowTitleForDocumentDisplayName("Main")
 		}
     }
@@ -99,6 +99,7 @@ struct ToolbarItem<ControlClass: NSControl> {
 class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	let toolbar: NSToolbar
 	let mainState: MainState
+	let mainStateObserver: NotificationObserver<MainState.Notification>
 	let modelManager: HoverlyticsModel.ModelManager
 	
 	init(toolbar: NSToolbar, mainState: MainState, modelManager: HoverlyticsModel.ModelManager) {
@@ -106,7 +107,16 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		self.mainState = mainState
 		self.modelManager = modelManager
 		
+		mainStateObserver = NotificationObserver<MainState.Notification>(object: mainState)
+		
 		super.init()
+		
+		mainStateObserver.addObserver(.ChosenSiteDidChange) { [unowned self] notification in
+			if let chosenSite = self.mainState.chosenSite {
+				let choice = SiteMenuItem.Choice(.SavedSite(chosenSite))
+				self.sitesPopUpButtonAssistant?.selectedUniqueIdentifier = choice.uniqueIdentifier
+			}
+		}
 		
 		toolbar.delegate = self
 		
