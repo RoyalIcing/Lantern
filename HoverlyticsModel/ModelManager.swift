@@ -54,10 +54,6 @@ public class ModelManager {
 	
 	
 	init() {
-		let fm = NSFileManager.defaultManager()
-		let nc = NSNotificationCenter.defaultCenter()
-		let mainQueue = NSOperationQueue.mainQueue()
-		
 		sitesList = ArrayList(items: [SiteValues]())
 		
 		let listJSONTransformer = DictionaryKeyJSONTransformer(dictionaryKey: "items", objectCoercer: { (value: [AnyObject]) in
@@ -107,15 +103,6 @@ public class ModelManager {
 	
 	func updateMainProperties() {
 		
-	}
-	
-	private func runOnForegroundQueue(currentlyOnForegroundQueue: Bool = false, block: () -> Void) {
-		if currentlyOnForegroundQueue {
-			block()
-		}
-		else {
-			NSOperationQueue.mainQueue().addOperationWithBlock(block)
-		}
 	}
 	
 	private func mainQueue_notify(identifier: ModelManagerNotification, userInfo: [String:AnyObject]? = nil) {

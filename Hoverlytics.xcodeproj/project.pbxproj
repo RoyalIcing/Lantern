@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B2054D831AF477C700DC2C00 /* LanternTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2054D821AF477C700DC2C00 /* LanternTests.swift */; };
 		B2054DB11AF494A300DC2C00 /* PageInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2054DB01AF494A300DC2C00 /* PageInfoRequest.swift */; };
-		B20DB2961B0C6B1C00E57532 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D39B061AF5F085003D6738 /* CloudKit.framework */; };
 		B20DB3881B0F020500E57532 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DB3861B0F020500E57532 /* Fabric.framework */; };
 		B20DB3891B0F020500E57532 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DB3861B0F020500E57532 /* Fabric.framework */; };
 		B20DB38A1B0F020500E57532 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DB3871B0F020500E57532 /* Crashlytics.framework */; };
@@ -335,7 +334,6 @@
 		B2B542C61AF0A09600073464 /* ContentPreview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContentPreview.storyboard; sourceTree = "<group>"; };
 		B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		B2C4A9401ACA3203000F1566 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainState.swift; path = Hoverlytics/MainState.swift; sourceTree = SOURCE_ROOT; };
-		B2D39B061AF5F085003D6738 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		B2D39B081AF601C7003D6738 /* code-sign-frameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "code-sign-frameworks.sh"; sourceTree = "<group>"; };
 		B2D39B0A1AF64533003D6738 /* PageMapper+LinkFiltering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PageMapper+LinkFiltering.swift"; sourceTree = "<group>"; };
 		B2D39B0C1AF64EB5003D6738 /* ContentPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPreview.swift; sourceTree = "<group>"; };
@@ -375,7 +373,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B20DB2961B0C6B1C00E57532 /* CloudKit.framework in Frameworks */,
 				B25033181AF5C9A5006A2AE7 /* libxml2.dylib in Frameworks */,
 				B2D563241AF5BF8A006DE202 /* Alamofire.framework in Frameworks */,
 				B25033121AF5C2C7006A2AE7 /* Ono.framework in Frameworks */,
@@ -675,7 +672,6 @@
 				B2ECF3221B1B523800A96024 /* BurntList.framework */,
 				B20DB3861B0F020500E57532 /* Fabric.framework */,
 				B20DB3871B0F020500E57532 /* Crashlytics.framework */,
-				B2D39B061AF5F085003D6738 /* CloudKit.framework */,
 				B25033131AF5C2D0006A2AE7 /* libxml2.dylib */,
 				B25033111AF5C2C7006A2AE7 /* Ono.framework */,
 				B2D563221AF5BF8A006DE202 /* Alamofire.framework */,
