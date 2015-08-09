@@ -1,5 +1,5 @@
 github "Alamofire/Alamofire" "1.3.0"
 github "burntcaramel/BurntCocoaUI" "0.2.1"
 github "burntcaramel/BurntFoundation" "0.1.5"
-github "burntcaramel/BurntList" "cd14591eea4ae59ba9dd6d62297f52dc9526dd69"
+github "burntcaramel/BurntList" "0.2.2"
 github "mattt/Ono" "1.2.2"
