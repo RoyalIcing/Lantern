@@ -334,6 +334,7 @@
 		B2B542C61AF0A09600073464 /* ContentPreview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContentPreview.storyboard; sourceTree = "<group>"; };
 		B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		B2C4A9401ACA3203000F1566 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainState.swift; path = Hoverlytics/MainState.swift; sourceTree = SOURCE_ROOT; };
+		B2D24FB41B738FA30001B557 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		B2D39B081AF601C7003D6738 /* code-sign-frameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "code-sign-frameworks.sh"; sourceTree = "<group>"; };
 		B2D39B0A1AF64533003D6738 /* PageMapper+LinkFiltering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PageMapper+LinkFiltering.swift"; sourceTree = "<group>"; };
 		B2D39B0C1AF64EB5003D6738 /* ContentPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPreview.swift; sourceTree = "<group>"; };
@@ -667,6 +668,7 @@
 		B2D9D8881B253D3100217300 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2D24FB41B738FA30001B557 /* Cartfile */,
 				B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */,
 				B27F48CB1B64DF8A003F1215 /* BurntFoundation.framework */,
 				B2ECF3221B1B523800A96024 /* BurntList.framework */,
