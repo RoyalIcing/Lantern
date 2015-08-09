@@ -8,9 +8,10 @@
 
 import Cocoa
 import BurntFoundation
+import BurntCocoaUI
 
 
-extension BrowserWidthChoice: MenuItemRepresentative {
+extension BrowserWidthChoice: UIChoiceRepresentative {
 	var tag: Int? { return self.rawValue }
 	
 	typealias UniqueIdentifier = BrowserWidthChoice

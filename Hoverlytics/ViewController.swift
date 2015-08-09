@@ -209,13 +209,14 @@ class ViewController: NSViewController
 		else {
 			if let chosenSite = mainState?.chosenSite {
 				siteSettingsViewController.site = chosenSite
-				//siteSettingsViewController.updateUIWithSiteValues(chosenSite.values)
+				siteSettingsViewController.updateUIWithSiteValues(chosenSite)
 				
 				let modelManager = self.modelManager
 				siteSettingsViewController.willClose = { siteSettingsViewController in
-					let (siteValues, error) = siteSettingsViewController.copySiteValuesFromUI()
+					let UUID = chosenSite.UUID
+					let (siteValues, error) = siteSettingsViewController.copySiteValuesFromUI(UUID: UUID)
 					if let siteValues = siteValues {
-						modelManager.updateSiteWithUUID(chosenSite.UUID, withValues: siteValues)
+						modelManager.updateSiteWithUUID(UUID, withValues: siteValues)
 					}
 				}
 				

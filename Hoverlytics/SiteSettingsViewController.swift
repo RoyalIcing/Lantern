@@ -61,7 +61,7 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 		homePageURLField.stringValue = siteValues.homePageURL.absoluteString!
 	}
 	
-	func copySiteValuesFromUI() -> (SiteValues?, NSError?) {
+	func copySiteValuesFromUI(UUID: NSUUID? = nil) -> (SiteValues?, NSError?) {
 		// Make sure view has loaded
 		let view = self.view
 		
@@ -86,7 +86,7 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 		}
 		let homePageURL = validatedHomePageURL.URL!
 		
-		let siteValues = SiteValues(name: name, homePageURL: homePageURL)
+		let siteValues = SiteValues(name: name, homePageURL: homePageURL, UUID: UUID ?? NSUUID())
 		return (siteValues, nil)
 	}
 	

@@ -8,6 +8,7 @@
 
 import Foundation
 import HoverlyticsModel
+import BurntCocoaUI
 
 
 enum SiteMenuItem {
@@ -16,7 +17,7 @@ enum SiteMenuItem {
 	case NoSavedSitesYet
 }
 
-extension SiteMenuItem: MenuItemRepresentative {
+extension SiteMenuItem: UIChoiceRepresentative {
 	var title: String {
 		switch self {
 		case .Choice(let siteChoice):
@@ -53,5 +54,23 @@ extension SiteMenuItem: MenuItemRepresentative {
 		case .NoSavedSitesYet:
 			return "NoSavedSitesYet"
 		}
+	}
+}
+
+extension SiteMenuItem: DebugPrintable {
+	var debugDescription: String {
+		switch self {
+		case .Choice(let siteChoice):
+			switch siteChoice {
+			case .SavedSite(let site):
+				return "\(site.name) \(site.UUID.UUIDString)"
+			default:
+				break
+			}
+		default:
+			break
+		}
+		
+		return uniqueIdentifier
 	}
 }

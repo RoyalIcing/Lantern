@@ -8,9 +8,10 @@
 
 import Cocoa
 import BurntFoundation
+import BurntCocoaUI
 
 
-extension CrawlerImageDownloadChoice: MenuItemRepresentative {
+extension CrawlerImageDownloadChoice: UIChoiceRepresentative {
 	var tag: Int? { return self.rawValue }
 	
 	typealias UniqueIdentifier = CrawlerImageDownloadChoice

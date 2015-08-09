@@ -8,6 +8,7 @@
 
 import Cocoa
 import BurntFoundation
+import BurntCocoaUI
 import HoverlyticsModel
 import Quartz
 
@@ -29,7 +30,7 @@ enum BaseContentTypeChoice: Int {
 	}
 }
 
-extension BaseContentTypeChoice: MenuItemRepresentative {
+extension BaseContentTypeChoice: UIChoiceRepresentative {
 	var title: String {
 		switch self {
 		case .LocalHTMLPages:
@@ -106,7 +107,7 @@ enum StatsFilterResponseChoice: Int {
 	}
 }
 
-extension StatsFilterResponseChoice: MenuItemRepresentative {
+extension StatsFilterResponseChoice: UIChoiceRepresentative {
 	var title: String {
 		switch self {
 		case .All:
@@ -189,7 +190,7 @@ enum StatsColumnsMode: Int {
 	}
 }
 
-extension StatsColumnsMode: SegmentedItemRepresentative {
+extension StatsColumnsMode: UIChoiceRepresentative {
 	var tag: Int? { return rawValue }
 	
 	typealias UniqueIdentifier = StatsColumnsMode
@@ -734,7 +735,7 @@ extension StatsViewController {
 	}
 }
 
-extension StatsViewController.MenuActions: MenuItemRepresentative {
+extension StatsViewController.MenuActions: UIChoiceRepresentative {
 	var title: String {
 		switch self {
 		case .BrowsePage:

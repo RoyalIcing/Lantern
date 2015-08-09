@@ -63,7 +63,6 @@ public class ModelManager {
 		
 		storeDirectory = SystemDirectory(pathComponents: ["v1"], inUserDirectory: .ApplicationSupportDirectory, errorReceiver: errorReceiver.receiveError, useBundleIdentifier: true)
 		storeDirectory.useOnQueue(dispatch_get_main_queue()) { directoryURL in
-			println("\(directoryURL)")
 			let JSONURL = directoryURL.URLByAppendingPathComponent("sites.json")
 			
 			let store = ListJSONFileStore(creatingList: { items in
@@ -146,7 +145,6 @@ public class ModelManager {
 	public func updateSiteWithUUID(UUID: NSUUID, withValues siteValues: SiteValues) {
 		//sitesListEditableAssistant?.replaceItemWhoseValueIs(UUID, with: siteValues)
 		if let index = sitesListUUIDIndexFinder?[UUID] {
-			println("UPDATE SITE \(index)")
 			sitesList?.replaceItemAtIndex(index, with: siteValues)
 		}
 	}

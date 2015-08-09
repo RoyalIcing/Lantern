@@ -106,9 +106,7 @@ class ImagePreviewViewController: NSViewController {
 				width: min(screenSize.width, windowSize.width),
 				height: min(screenSize.height, windowSize.height)
 			)
-			
-			println("updateViewConstraints \(imageSize) maximumSize \(maximumSize) superview \(view.superview)")
-			
+	
 			let contentSizeConstraints = [
 				//layoutConstraintWithView(imageView, attribute: .Width, relatedBy: .GreaterThanOrEqual, constant: imageSize.width, required: false),
 				//layoutConstraintWithView(imageView, attribute: .Height, relatedBy: .GreaterThanOrEqual, constant: imageSize.height, required: false),

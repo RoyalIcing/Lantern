@@ -8,6 +8,7 @@
 
 import Cocoa
 import BurntFoundation
+import BurntCocoaUI
 import HoverlyticsModel
 
 
@@ -224,72 +225,6 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		
 		popUpButtonAssistant.menuItemRepresentatives = siteChoices
 		popUpButtonAssistant.update()
-		
-		
-		#if false
-		let previouslySelectedItem = sitesPopUpButton.selectedItem
-		var previouslySelectedSite = previouslySelectedItem?.representedObject as? Site
-		
-		func removeNextItemWithTag(tag: Int) -> Bool {
-			let index = sitesPopUpButton.indexOfItemWithTag(tag)
-			if index == -1 {
-				return false
-			}
-			else {
-				sitesPopUpButton.removeItemAtIndex(index)
-				return true
-			}
-		}
-		
-		while removeNextItemWithTag(siteTag) {}
-		
-		sitesPopUpButton.target = self
-		sitesPopUpButton.action = "chosenSiteDidChange:"
-		
-		let menu = sitesPopUpButton.menu!
-		if let allSites = modelManager.allSites {
-			if allSites.count == 0 {
-				let menuItem = NSMenuItem(title: "(No Sites)", action: nil, keyEquivalent: "")
-				menuItem.tag = siteTag
-				menu.insertItem(menuItem, atIndex: 0)
-			}
-			else {
-				let allSites = allSites.sorted({ $0.name < $1.name })
-				for site in allSites {
-					let menuItem = NSMenuItem(title: site.name, action: nil, keyEquivalent: "")
-					menuItem.representedObject = site
-					menuItem.tag = siteTag
-					menu.addItem(menuItem)
-				}
-				
-				// Select first item by default
-				if previouslySelectedSite == nil {
-					let defaultSelectedSite = allSites[0]
-					mainState.chosenSite = defaultSelectedSite
-					previouslySelectedSite = defaultSelectedSite
-				}
-			}
-		}
-		else {
-			let menuItem = NSMenuItem(title: "(Loading Sites)", action: nil, keyEquivalent: "")
-			menuItem.tag = siteTag
-			menu.insertItem(menuItem, atIndex: 0)
-		}
-		
-		#if DEBUG
-			//println("popup previously selected \(previouslySelectedSite?.name)")
-		#endif
-		
-		if let previouslySelectedSite = previouslySelectedSite {
-			let index = sitesPopUpButton.indexOfItemWithRepresentedObject(previouslySelectedSite)
-			if index != -1 {
-				sitesPopUpButton.selectItemAtIndex(index)
-			}
-		}
-		else {
-			updateChosenSiteState()
-		}
-		#endif
 	}
 	
 	func updateUIForSites() {
