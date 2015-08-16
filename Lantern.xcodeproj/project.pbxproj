@@ -212,7 +212,7 @@
 		B2054DB01AF494A300DC2C00 /* PageInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInfoRequest.swift; sourceTree = "<group>"; };
 		B20DB3861B0F020500E57532 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		B20DB3871B0F020500E57532 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatsViewController.swift; path = ../Hoverlytics/StatsViewController.swift; sourceTree = "<group>"; };
+		B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		B2134AAD1AE9F97F00ACDDE3 /* PageMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageMapper.swift; sourceTree = "<group>"; };
 		B22425F31AC8F8B200809EF0 /* LanternModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LanternModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22425F61AC8F8B200809EF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -229,30 +229,30 @@
 		B22766321AEF51430083FE8C /* PageInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
 		B22766341AEF67920083FE8C /* UniqueURLArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniqueURLArray.swift; sourceTree = "<group>"; };
 		B22766391AEFB6DB0083FE8C /* Dictionary+UpdateClosure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+UpdateClosure.swift"; sourceTree = "<group>"; };
-		B22876261AF3A4D800A8A4A2 /* SiteMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SiteMenuItem.swift; path = ../Hoverlytics/SiteMenuItem.swift; sourceTree = "<group>"; };
+		B22876261AF3A4D800A8A4A2 /* SiteMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteMenuItem.swift; sourceTree = "<group>"; };
 		B22B7D8F1AC6B9090026AEDB /* Hoverlytics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hoverlytics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22B7D931AC6B9090026AEDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B22B7D941AC6B9090026AEDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../Hoverlytics/AppDelegate.swift; sourceTree = "<group>"; };
-		B22B7D961AC6B9090026AEDB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../Hoverlytics/ViewController.swift; sourceTree = "<group>"; };
+		B22B7D941AC6B9090026AEDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B22B7D961AC6B9090026AEDB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B22B7D981AC6B9090026AEDB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B22B7D9B1AC6B9090026AEDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B22B7DA11AC6B9090026AEDB /* HoverlyticsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoverlyticsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22B7DA61AC6B9090026AEDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B22B7DA71AC6B9090026AEDB /* Hoverlytics_for_MacTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hoverlytics_for_MacTests.swift; sourceTree = "<group>"; };
-		B22B7DB11AC6B9860026AEDB /* Lantern-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Lantern-Bridging-Header.h"; path = "../Hoverlytics/Lantern-Bridging-Header.h"; sourceTree = "<group>"; };
+		B22B7DB11AC6B9860026AEDB /* Lantern-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lantern-Bridging-Header.h"; sourceTree = "<group>"; };
 		B22B7DB21AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSViewController+PGWSConstraintConvenience.h"; sourceTree = "<group>"; };
 		B22B7DB31AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSViewController+PGWSConstraintConvenience.m"; sourceTree = "<group>"; };
-		B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainWindowController.swift; path = ../Hoverlytics/MainWindowController.swift; sourceTree = "<group>"; };
-		B22B7DB81AC77D420026AEDB /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageViewController.swift; path = ../Hoverlytics/PageViewController.swift; sourceTree = "<group>"; };
-		B22B7DBA1AC77EF20026AEDB /* Page.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Page.storyboard; path = ../Hoverlytics/Page.storyboard; sourceTree = "<group>"; };
-		B22B7DBC1AC782DD0026AEDB /* insertHoverlytics.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = insertHoverlytics.js; path = ../Hoverlytics/insertHoverlytics.js; sourceTree = "<group>"; };
+		B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		B22B7DB81AC77D420026AEDB /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		B22B7DBA1AC77EF20026AEDB /* Page.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Page.storyboard; sourceTree = "<group>"; };
+		B22B7DBC1AC782DD0026AEDB /* insertHoverlytics.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = insertHoverlytics.js; sourceTree = "<group>"; };
 		B22B7DBE1AC785B20026AEDB /* Hoverlytics.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Hoverlytics.entitlements; sourceTree = "<group>"; };
-		B23966DF1ACD316E00C6A420 /* windowClose.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = windowClose.js; path = ../Hoverlytics/windowClose.js; sourceTree = "<group>"; };
-		B23966E11ACD36FF00C6A420 /* userAgent.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = userAgent.js; path = ../Hoverlytics/userAgent.js; sourceTree = "<group>"; };
-		B23966E91ACD45BC00C6A420 /* panelAuthorizationChanged.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = panelAuthorizationChanged.js; path = ../Hoverlytics/panelAuthorizationChanged.js; sourceTree = "<group>"; };
-		B23966EB1ACD518E00C6A420 /* setPanelAuthorizationToken.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = setPanelAuthorizationToken.js; path = ../Hoverlytics/setPanelAuthorizationToken.js; sourceTree = "<group>"; };
-		B23E29E91AE73DF6009A94E5 /* console.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = console.js; path = ../Hoverlytics/console.js; sourceTree = "<group>"; };
-		B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "WKUserContentController+bundledScripts.swift"; path = "../Hoverlytics/WKUserContentController+bundledScripts.swift"; sourceTree = "<group>"; };
+		B23966DF1ACD316E00C6A420 /* windowClose.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = windowClose.js; sourceTree = "<group>"; };
+		B23966E11ACD36FF00C6A420 /* userAgent.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = userAgent.js; sourceTree = "<group>"; };
+		B23966E91ACD45BC00C6A420 /* panelAuthorizationChanged.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = panelAuthorizationChanged.js; sourceTree = "<group>"; };
+		B23966EB1ACD518E00C6A420 /* setPanelAuthorizationToken.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = setPanelAuthorizationToken.js; sourceTree = "<group>"; };
+		B23E29E91AE73DF6009A94E5 /* console.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = console.js; sourceTree = "<group>"; };
+		B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WKUserContentController+bundledScripts.swift"; sourceTree = "<group>"; };
 		B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueValidation.swift; sourceTree = "<group>"; };
 		B25020581B01AD3600ABAE96 /* CrawlerPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrawlerPreferences.swift; sourceTree = "<group>"; };
 		B250205E1B01B3AE00ABAE96 /* CrawlerMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrawlerMenuController.swift; sourceTree = "<group>"; };
@@ -263,28 +263,28 @@
 		B27F48C81B64D25B003F1215 /* ValueStorable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueStorable.swift; sourceTree = "<group>"; };
 		B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BurntCocoaUI.framework; path = Carthage/Build/Mac/BurntCocoaUI.framework; sourceTree = "<group>"; };
 		B27F48CB1B64DF8A003F1215 /* BurntFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BurntFoundation.framework; path = Carthage/Build/Mac/BurntFoundation.framework; sourceTree = "<group>"; };
-		B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SiteSettings.storyboard; path = ../Hoverlytics/SiteSettings.storyboard; sourceTree = "<group>"; };
-		B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SiteSettingsViewController.swift; path = ../Hoverlytics/SiteSettingsViewController.swift; sourceTree = "<group>"; };
+		B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SiteSettings.storyboard; sourceTree = "<group>"; };
+		B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteSettingsViewController.swift; sourceTree = "<group>"; };
 		B2B542C01AF0980E00073464 /* NSData+ONOXMLDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+ONOXMLDocument.swift"; sourceTree = "<group>"; };
 		B2B542C21AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ONOXMLDocument+StringEncoding.swift"; sourceTree = "<group>"; };
 		B2B542C61AF0A09600073464 /* ContentPreview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContentPreview.storyboard; sourceTree = "<group>"; };
 		B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
-		B2C4A9401ACA3203000F1566 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainState.swift; path = Hoverlytics/MainState.swift; sourceTree = SOURCE_ROOT; };
+		B2C4A9401ACA3203000F1566 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainState.swift; sourceTree = "<group>"; };
 		B2D24FB41B738FA30001B557 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		B2D39B081AF601C7003D6738 /* code-sign-frameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "code-sign-frameworks.sh"; sourceTree = "<group>"; };
 		B2D39B0A1AF64533003D6738 /* PageMapper+LinkFiltering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PageMapper+LinkFiltering.swift"; sourceTree = "<group>"; };
 		B2D39B0C1AF64EB5003D6738 /* ContentPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPreview.swift; sourceTree = "<group>"; };
 		B2D39B0F1AF64FB6003D6738 /* MultipleStringPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipleStringPreviewViewController.swift; sourceTree = "<group>"; };
-		B2D39B121AF65188003D6738 /* ValidatedStringValue+Presentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ValidatedStringValue+Presentation.swift"; path = "../Hoverlytics/ValidatedStringValue+Presentation.swift"; sourceTree = "<group>"; };
-		B2D39B151AF665D5003D6738 /* TableView-OutlineView-Subclass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TableView-OutlineView-Subclass.swift"; path = "../Hoverlytics/TableView-OutlineView-Subclass.swift"; sourceTree = "<group>"; };
+		B2D39B121AF65188003D6738 /* ValidatedStringValue+Presentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ValidatedStringValue+Presentation.swift"; sourceTree = "<group>"; };
+		B2D39B151AF665D5003D6738 /* TableView-OutlineView-Subclass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TableView-OutlineView-Subclass.swift"; sourceTree = "<group>"; };
 		B2D39B451AF6F494003D6738 /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
 		B2D563221AF5BF8A006DE202 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
 		B2E0FFFB1AFB37580073CB8A /* SiteEssentialsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteEssentialsInfo.swift; sourceTree = "<group>"; };
 		B2E0FFFD1B0078580073CB8A /* BrowserPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserPreferences.swift; sourceTree = "<group>"; };
 		B2E0FFFF1B007F500073CB8A /* BrowserMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserMenuController.swift; sourceTree = "<group>"; };
-		B2E2693A1AE9E5130044BE04 /* MainSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainSection.swift; path = ../Hoverlytics/MainSection.swift; sourceTree = "<group>"; };
-		B2E2693C1AE9E9200044BE04 /* MainView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainView.storyboard; path = ../Hoverlytics/MainView.storyboard; sourceTree = "<group>"; };
-		B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSEvent+extension.swift"; path = "../Hoverlytics/NSEvent+extension.swift"; sourceTree = "<group>"; };
+		B2E2693A1AE9E5130044BE04 /* MainSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSection.swift; sourceTree = "<group>"; };
+		B2E2693C1AE9E9200044BE04 /* MainView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainView.storyboard; sourceTree = "<group>"; };
+		B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSEvent+extension.swift"; sourceTree = "<group>"; };
 		B2EAB9141AF7A12F00A1F185 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		B2ECF3221B1B523800A96024 /* BurntList.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BurntList.framework; path = Carthage/Build/Mac/BurntList.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -533,7 +533,6 @@
 				B22B7DB31AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m */,
 			);
 			name = Categories;
-			path = ../Hoverlytics;
 			sourceTree = "<group>";
 		};
 		B25020601B01B3B200ABAE96 /* Preferences */ = {
@@ -545,7 +544,6 @@
 				B2E0FFFF1B007F500073CB8A /* BrowserMenuController.swift */,
 			);
 			name = Preferences;
-			path = ../Hoverlytics;
 			sourceTree = "<group>";
 		};
 		B2D39B441AF6F482003D6738 /* Preview */ = {
@@ -558,7 +556,6 @@
 				B2D39B451AF6F494003D6738 /* ImagePreviewViewController.swift */,
 			);
 			name = Preview;
-			path = ../Hoverlytics;
 			sourceTree = "<group>";
 		};
 		B2D9D8881B253D3100217300 /* Frameworks */ = {
@@ -1026,7 +1023,6 @@
 				B22B7D9B1AC6B9090026AEDB /* Base */,
 			);
 			name = Main.storyboard;
-			path = ../Hoverlytics;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
