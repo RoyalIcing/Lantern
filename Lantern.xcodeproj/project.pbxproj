@@ -412,7 +412,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		B22425F41AC8F8B200809EF0 /* HoverlyticsModel */ = {
+		B22425F41AC8F8B200809EF0 /* LanternModel */ = {
 			isa = PBXGroup;
 			children = (
 				B268DC961B1B569C0095BBB9 /* EnabledFeatures.swift */,
@@ -436,7 +436,7 @@
 				B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */,
 				B22425F51AC8F8B200809EF0 /* Supporting Files */,
 			);
-			path = HoverlyticsModel;
+			path = LanternModel;
 			sourceTree = "<group>";
 		};
 		B22425F51AC8F8B200809EF0 /* Supporting Files */ = {
@@ -447,13 +447,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		B22426031AC8F8B200809EF0 /* HoverlyticsModelTests */ = {
+		B22426031AC8F8B200809EF0 /* LanternModelTests */ = {
 			isa = PBXGroup;
 			children = (
 				B22426061AC8F8B200809EF0 /* HoverlyticsModelTests.swift */,
 				B22426041AC8F8B200809EF0 /* Supporting Files */,
 			);
-			path = HoverlyticsModelTests;
+			path = LanternModelTests;
 			sourceTree = "<group>";
 		};
 		B22426041AC8F8B200809EF0 /* Supporting Files */ = {
@@ -470,8 +470,8 @@
 				B2D9D8881B253D3100217300 /* Frameworks */,
 				B22B7D911AC6B9090026AEDB /* Hoverlytics */,
 				B22B7DA41AC6B9090026AEDB /* HoverlyticsTests */,
-				B22425F41AC8F8B200809EF0 /* HoverlyticsModel */,
-				B22426031AC8F8B200809EF0 /* HoverlyticsModelTests */,
+				B22425F41AC8F8B200809EF0 /* LanternModel */,
+				B22426031AC8F8B200809EF0 /* LanternModelTests */,
 				B2054D6C1AF477C700DC2C00 /* Lantern */,
 				B2054D7F1AF477C700DC2C00 /* LanternTests */,
 				B22B7D901AC6B9090026AEDB /* Products */,
