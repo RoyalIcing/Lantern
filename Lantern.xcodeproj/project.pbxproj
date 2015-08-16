@@ -239,7 +239,7 @@
 		B22B7DA11AC6B9090026AEDB /* HoverlyticsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoverlyticsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22B7DA61AC6B9090026AEDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B22B7DA71AC6B9090026AEDB /* Hoverlytics_for_MacTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hoverlytics_for_MacTests.swift; sourceTree = "<group>"; };
-		B22B7DB11AC6B9860026AEDB /* Hoverlytics-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Hoverlytics-Bridging-Header.h"; path = "../Hoverlytics/Hoverlytics-Bridging-Header.h"; sourceTree = "<group>"; };
+		B22B7DB11AC6B9860026AEDB /* Lantern-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Lantern-Bridging-Header.h"; path = "../Hoverlytics/Lantern-Bridging-Header.h"; sourceTree = "<group>"; };
 		B22B7DB21AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSViewController+PGWSConstraintConvenience.h"; sourceTree = "<group>"; };
 		B22B7DB31AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSViewController+PGWSConstraintConvenience.m"; sourceTree = "<group>"; };
 		B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainWindowController.swift; path = ../Hoverlytics/MainWindowController.swift; sourceTree = "<group>"; };
@@ -378,7 +378,7 @@
 				B23966EB1ACD518E00C6A420 /* setPanelAuthorizationToken.js */,
 				B23E29E91AE73DF6009A94E5 /* console.js */,
 				B22B7DB51AC6B98A0026AEDB /* Categories */,
-				B22B7DB11AC6B9860026AEDB /* Hoverlytics-Bridging-Header.h */,
+				B22B7DB11AC6B9860026AEDB /* Lantern-Bridging-Header.h */,
 				B2054D731AF477C700DC2C00 /* Images.xcassets */,
 				B2054D6D1AF477C700DC2C00 /* Supporting Files */,
 				B2D39B081AF601C7003D6738 /* code-sign-frameworks.sh */,
@@ -1100,7 +1100,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"${SDK_DIR}\"/usr/include/libxml2",
 				);
-				INFOPLIST_FILE = HoverlyticsModel/Info.plist;
+				INFOPLIST_FILE = LanternModel/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
@@ -1138,7 +1138,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"${SDK_DIR}\"/usr/include/libxml2",
 				);
-				INFOPLIST_FILE = HoverlyticsModel/Info.plist;
+				INFOPLIST_FILE = LanternModel/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = LanternModel;
@@ -1370,7 +1370,7 @@
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = Lantern;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Hoverlytics/Hoverlytics-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Lantern/Lantern-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1393,7 +1393,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = Lantern;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Hoverlytics/Hoverlytics-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Lantern/Lantern-Bridging-Header.h";
 			};
 			name = Release;
 		};
