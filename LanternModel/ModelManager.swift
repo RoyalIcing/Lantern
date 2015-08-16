@@ -21,7 +21,7 @@ enum RecordType: String {
 
 
 public enum ModelManagerNotification: String {
-	case AllSitesDidChange = "HoverlyticsModel.ModelManager.AllSitesDidChangeNotification"
+	case AllSitesDidChange = "LanternModel.ModelManager.AllSitesDidChangeNotification"
 	
 	public var notificationName: String {
 		return self.rawValue

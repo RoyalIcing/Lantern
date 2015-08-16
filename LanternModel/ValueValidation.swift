@@ -9,7 +9,7 @@
 import Foundation
 
 
-public let ValueValidationErrorDomain = "HoverlyticsModel.ValueValidation.errorDomain"
+public let ValueValidationErrorDomain = "LanternModel.ValueValidation.errorDomain"
 
 public enum ValueValidationErrorCode: Int {
 	case StringIsEmpty = 10

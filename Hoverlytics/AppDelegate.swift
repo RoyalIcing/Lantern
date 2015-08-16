@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import HoverlyticsModel
+import LanternModel
 import Fabric
 import Crashlytics
 
@@ -36,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		Fabric.with([Crashlytics()])
 		
 		// Create shared manager to ensure quickest start up time.
-		let modelManager = HoverlyticsModel.ModelManager.sharedManager
+		let modelManager = LanternModel.ModelManager.sharedManager
 		modelManager.errorReceiver.errorCallback = { error in
 			NSApp.presentError(error)
 		}

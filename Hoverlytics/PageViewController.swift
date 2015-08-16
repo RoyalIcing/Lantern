@@ -8,7 +8,7 @@
 
 import Cocoa
 import WebKit
-import HoverlyticsModel
+import LanternModel
 
 
 typealias PageViewControllerGoogleOAuth2TokenCallback = (tokenJSONString: String) -> Void
@@ -107,7 +107,7 @@ public class PageViewController: NSViewController {
 	}
 	
 	@IBAction func URLFieldChanged(textField: NSTextField) {
-		if let URL = HoverlyticsModel.detectWebURL(fromString: textField.stringValue) {
+		if let URL = LanternModel.detectWebURL(fromString: textField.stringValue) {
 			loadURL(URL)
 		}
 	}

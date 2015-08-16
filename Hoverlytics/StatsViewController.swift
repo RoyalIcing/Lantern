@@ -9,7 +9,7 @@
 import Cocoa
 import BurntFoundation
 import BurntCocoaUI
-import HoverlyticsModel
+import LanternModel
 import Quartz
 
 

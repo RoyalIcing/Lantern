@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import HoverlyticsModel
+import LanternModel
 
 
 extension ValidatedStringValue {

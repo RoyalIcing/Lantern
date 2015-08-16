@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import HoverlyticsModel
+import LanternModel
 
 
 enum SiteChoice {
@@ -54,7 +54,7 @@ class MainState {
 	var initialHost: String?
 	
 	enum Notification: String {
-		case ChosenSiteDidChange = "HoverlyticsModel.MainState.ChosenSiteDidChangeNotification"
+		case ChosenSiteDidChange = "LanternModel.MainState.ChosenSiteDidChangeNotification"
 		
 		var notificationName: String {
 			return self.rawValue

@@ -1,6 +1,6 @@
 //
-//  HoverlyticsModelTests.swift
-//  HoverlyticsModelTests
+//  LanternModelTests.swift
+//  LanternModelTests
 //
 //  Created by Patrick Smith on 30/03/2015.
 //  Copyright (c) 2015 Burnt Caramel. All rights reserved.
@@ -9,7 +9,7 @@
 import Cocoa
 import XCTest
 
-class HoverlyticsModelTests: XCTestCase {
+class LanternModelTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

@@ -8,12 +8,12 @@
 
 import Cocoa
 import BurntFoundation
-import HoverlyticsModel
+import LanternModel
 
 
 class ViewController: NSViewController
 {
-	var modelManager: HoverlyticsModel.ModelManager!
+	var modelManager: LanternModel.ModelManager!
 	
 	var section: MainSection!
 	

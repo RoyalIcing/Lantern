@@ -9,7 +9,7 @@
 import Cocoa
 import BurntFoundation
 import BurntCocoaUI
-import HoverlyticsModel
+import LanternModel
 
 
 private let sectionUserDefaultKey = "mainSection"
@@ -19,7 +19,7 @@ class MainWindowController: NSWindowController {
 	
 	let mainState = MainState()
 	
-	let modelManager = HoverlyticsModel.ModelManager.sharedManager
+	let modelManager = LanternModel.ModelManager.sharedManager
 	
 	var mainViewController: ViewController! {
 		return contentViewController as! ViewController
@@ -101,9 +101,9 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	let toolbar: NSToolbar
 	let mainState: MainState
 	let mainStateObserver: NotificationObserver<MainState.Notification>
-	let modelManager: HoverlyticsModel.ModelManager
+	let modelManager: LanternModel.ModelManager
 	
-	init(toolbar: NSToolbar, mainState: MainState, modelManager: HoverlyticsModel.ModelManager) {
+	init(toolbar: NSToolbar, mainState: MainState, modelManager: LanternModel.ModelManager) {
 		self.toolbar = toolbar
 		self.mainState = mainState
 		self.modelManager = modelManager
@@ -134,7 +134,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		let nc = NSNotificationCenter.defaultCenter()
 		let mainQueue = NSOperationQueue.mainQueue()
 		
-		func addObserver(notificationIdentifier: HoverlyticsModel.ModelManagerNotification, block: (NSNotification!) -> Void) {
+		func addObserver(notificationIdentifier: LanternModel.ModelManagerNotification, block: (NSNotification!) -> Void) {
 			let observer = nc.addObserverForName(notificationIdentifier.notificationName, object: modelManager, queue: mainQueue, usingBlock: block)
 			modelManagerNotificationObservers[notificationIdentifier] = observer
 		}

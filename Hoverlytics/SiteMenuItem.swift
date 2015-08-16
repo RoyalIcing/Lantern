@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import HoverlyticsModel
+import LanternModel
 import BurntCocoaUI
 
 
