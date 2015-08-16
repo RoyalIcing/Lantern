@@ -17,7 +17,7 @@
                BlueprintIdentifier = "B2E269161AE9DD650044BE04"
                BuildableName = "Sidetone.app"
                BlueprintName = "Sidetone"
-               ReferencedContainer = "container:Hoverlytics.xcodeproj">
+               ReferencedContainer = "container:Lantern.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -31,7 +31,7 @@
                BlueprintIdentifier = "B2E269271AE9DD650044BE04"
                BuildableName = "SidetoneTests.xctest"
                BlueprintName = "SidetoneTests"
-               ReferencedContainer = "container:Hoverlytics.xcodeproj">
+               ReferencedContainer = "container:Lantern.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,7 +49,7 @@
                BlueprintIdentifier = "B2E269271AE9DD650044BE04"
                BuildableName = "SidetoneTests.xctest"
                BlueprintName = "SidetoneTests"
-               ReferencedContainer = "container:Hoverlytics.xcodeproj">
+               ReferencedContainer = "container:Lantern.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -59,7 +59,7 @@
             BlueprintIdentifier = "B2E269161AE9DD650044BE04"
             BuildableName = "Sidetone.app"
             BlueprintName = "Sidetone"
-            ReferencedContainer = "container:Hoverlytics.xcodeproj">
+            ReferencedContainer = "container:Lantern.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -79,7 +79,7 @@
             BlueprintIdentifier = "B2E269161AE9DD650044BE04"
             BuildableName = "Sidetone.app"
             BlueprintName = "Sidetone"
-            ReferencedContainer = "container:Hoverlytics.xcodeproj">
+            ReferencedContainer = "container:Lantern.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -98,7 +98,7 @@
             BlueprintIdentifier = "B2E269161AE9DD650044BE04"
             BuildableName = "Sidetone.app"
             BlueprintName = "Sidetone"
-            ReferencedContainer = "container:Hoverlytics.xcodeproj">
+            ReferencedContainer = "container:Lantern.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

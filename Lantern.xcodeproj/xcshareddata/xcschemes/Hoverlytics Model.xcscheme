@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B22425F21AC8F8B200809EF0"
-               BuildableName = "HoverlyticsModel.framework"
-               BlueprintName = "HoverlyticsModel"
-               ReferencedContainer = "container:Hoverlytics.xcodeproj">
+               BuildableName = "LanternModel.framework"
+               BlueprintName = "LanternModel"
+               ReferencedContainer = "container:Lantern.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B22425F21AC8F8B200809EF0"
-            BuildableName = "HoverlyticsModel.framework"
-            BlueprintName = "HoverlyticsModel"
-            ReferencedContainer = "container:Hoverlytics.xcodeproj">
+            BuildableName = "LanternModel.framework"
+            BlueprintName = "LanternModel"
+            ReferencedContainer = "container:Lantern.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B22425F21AC8F8B200809EF0"
-            BuildableName = "HoverlyticsModel.framework"
-            BlueprintName = "HoverlyticsModel"
-            ReferencedContainer = "container:Hoverlytics.xcodeproj">
+            BuildableName = "LanternModel.framework"
+            BlueprintName = "LanternModel"
+            ReferencedContainer = "container:Lantern.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

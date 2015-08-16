@@ -17,7 +17,7 @@
                BlueprintIdentifier = "B25033301AF5E5B0006A2AE7"
                BuildableName = "Lantern.app"
                BlueprintName = "Lantern"
-               ReferencedContainer = "container:Hoverlytics.xcodeproj">
+               ReferencedContainer = "container:Lantern.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "B25033301AF5E5B0006A2AE7"
             BuildableName = "Lantern.app"
             BlueprintName = "Lantern"
-            ReferencedContainer = "container:Hoverlytics.xcodeproj">
+            ReferencedContainer = "container:Lantern.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -55,7 +55,7 @@
             BlueprintIdentifier = "B25033301AF5E5B0006A2AE7"
             BuildableName = "Lantern.app"
             BlueprintName = "Lantern"
-            ReferencedContainer = "container:Hoverlytics.xcodeproj">
+            ReferencedContainer = "container:Lantern.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -80,7 +80,7 @@
             BlueprintIdentifier = "B25033301AF5E5B0006A2AE7"
             BuildableName = "Lantern.app"
             BlueprintName = "Lantern"
-            ReferencedContainer = "container:Hoverlytics.xcodeproj">
+            ReferencedContainer = "container:Lantern.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
