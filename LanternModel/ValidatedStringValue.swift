@@ -61,10 +61,9 @@ extension ValidatedStringValue {
 		case 0:
 			return .Missing
 		default:
-			var values: [ValidatedStringValue] = elements.map { element in
+			return .Multiple(elements.map { element in
 				return self.validateContentOfElement(element)
-			}
-			return .Multiple(values)
+			})
 		}
 	}
 	
