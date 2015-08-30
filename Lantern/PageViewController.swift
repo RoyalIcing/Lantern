@@ -119,9 +119,11 @@ enum PageWebViewControllerNotification: String {
 	}
 }
 
-
-let PageWebViewController_receiveWindowCloseMessageIdentifier = "windowDidClose"
-let PageWebViewController_googleAPIAuthorizationChangedMessageIdentifier = "googleAPIAuthorizationChanged"
+enum MessageIdentifier: String {
+	case receiveWindowClose = "windowDidClose"
+	case googleAPIAuthorizationChanged = "googleAPIAuthorizationChanged"
+	case console = "console"
+}
 
 private var webViewURLObservingContext = 0
 
@@ -198,7 +200,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		if allowsClosing {
 			addBundledUserScript("windowClose", injectAtStart: true)
 			
-			userContentController.addScriptMessageHandler(self, name: PageWebViewController_receiveWindowCloseMessageIdentifier)
+			userContentController.addScriptMessageHandler(self, name: MessageIdentifier.receiveWindowClose.rawValue)
 		}
 		
 		if wantsHoverlyticsScript {
@@ -216,7 +218,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 			
 			addBundledUserScript("panelAuthorizationChanged", injectAtEnd: true, forMainFrameOnly: false)
 			
-			userContentController.addScriptMessageHandler(self, name: PageWebViewController_googleAPIAuthorizationChangedMessageIdentifier)
+			userContentController.addScriptMessageHandler(self, name: MessageIdentifier.googleAPIAuthorizationChanged.rawValue)
 		}
 			
 		webViewConfiguration.userContentController = userContentController
@@ -347,31 +349,32 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 	// MARK: WKScriptMessageHandler
 	
 	func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
-		if message.name == PageWebViewController_receiveWindowCloseMessageIdentifier {
-			if allowsClosing {
-				dismissController(nil)
-			}
-		}
-		else if message.name == PageWebViewController_googleAPIAuthorizationChangedMessageIdentifier {
-			if let body = message.body as? [String:AnyObject] {
-				if body["googleClientAPILoaded"] != nil {
-					//println("googleClientAPILoaded \(body)")
+		if let messageIdentifier = MessageIdentifier(rawValue: message.name) {
+			switch messageIdentifier {
+			case .receiveWindowClose:
+				if allowsClosing {
+					dismissController(nil)
 				}
-				else if let tokenJSONString = body["tokenJSONString"] as? String {
-					hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback?(tokenJSONString: tokenJSONString)
-					#if DEBUG
-						println("tokenJSONString \(tokenJSONString)")
-					#endif
+			case .googleAPIAuthorizationChanged:
+				if let body = message.body as? [String:AnyObject] {
+					if body["googleClientAPILoaded"] != nil {
+						//println("googleClientAPILoaded \(body)")
+					}
+					else if let tokenJSONString = body["tokenJSONString"] as? String {
+						hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback?(tokenJSONString: tokenJSONString)
+						#if DEBUG
+							println("tokenJSONString \(tokenJSONString)")
+						#endif
+					}
 				}
+			case .console:
+				#if DEBUG && false
+					println("CONSOLE")
+					if let messageBody = message.body as? [String: AnyObject] {
+						println("CONSOLE \(messageBody)")
+					}
+				#endif
 			}
-		}
-		else if message.name == "console" {
-			#if DEBUG && false
-			println("CONSOLE")
-			if let messageBody = message.body as? [String: AnyObject] {
-				println("CONSOLE \(messageBody)")
-			}
-			#endif
 		}
 		else {
 			println("Unhandled script message \(message.name)")

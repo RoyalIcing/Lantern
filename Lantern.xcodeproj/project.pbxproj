@@ -263,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				B2054D8F1AF4780500DC2C00 /* Lantern.entitlements */,
+				B2054D731AF477C700DC2C00 /* Images.xcassets */,
 				B22B7D941AC6B9090026AEDB /* AppDelegate.swift */,
 				B22B7D9A1AC6B9090026AEDB /* Main.storyboard */,
 				B2E2693C1AE9E9200044BE04 /* MainView.storyboard */,
@@ -290,7 +291,6 @@
 				B23E29E91AE73DF6009A94E5 /* console.js */,
 				B22B7DB51AC6B98A0026AEDB /* Categories */,
 				B22B7DB11AC6B9860026AEDB /* Lantern-Bridging-Header.h */,
-				B2054D731AF477C700DC2C00 /* Images.xcassets */,
 				B2054D6D1AF477C700DC2C00 /* Supporting Files */,
 				B2D39B081AF601C7003D6738 /* code-sign-frameworks.sh */,
 			);
