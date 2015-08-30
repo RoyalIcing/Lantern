@@ -660,7 +660,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ] ; then\n    exit 0\nfi\n\nLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Patrick Smith (9J837BGA64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/HoverlyticsModel.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/HoverlyticsModel.framework/Versions/A/Frameworks/Alamofire.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/HoverlyticsModel.framework/Versions/A/Frameworks/Ono.framework/Versions/A\"";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ] ; then\n    exit 0\nfi\n\nLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Patrick Smith (9J837BGA64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/LanternModel.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/LanternModel.framework/Versions/A/Frameworks/Alamofire.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/LanternModel.framework/Versions/A/Frameworks/Ono.framework/Versions/A\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
