@@ -9,6 +9,7 @@
 import Cocoa
 import WebKit
 import LanternModel
+import BurntFoundation
 
 
 typealias PageViewControllerGoogleOAuth2TokenCallback = (tokenJSONString: String) -> Void
@@ -45,29 +46,14 @@ public class PageViewController: NSViewController {
 		view.addConstraint(NSLayoutConstraint(item: view, attribute: .Height, relatedBy: .GreaterThanOrEqual, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: minimumHeight))
 	}
 	
-	var webViewControllerNotificationObservers = [PageWebViewControllerNotification: AnyObject]()
+	var webViewControllerNotificationObserver: NotificationObserver<PageWebViewControllerNotification>!
+	//var webViewControllerNotificationObservers = [PageWebViewControllerNotification: AnyObject]()
 	
 	func startObservingWebViewController() {
-		let nc = NSNotificationCenter.defaultCenter()
-		let mainQueue = NSOperationQueue.mainQueue()
-		
-		func addObserver(notificationIdentifier: PageWebViewControllerNotification, block: (NSNotification!) -> Void) {
-			let observer = nc.addObserverForName(notificationIdentifier.notificationName, object: webViewController, queue: mainQueue, usingBlock: block)
-			webViewControllerNotificationObservers[notificationIdentifier] = observer
+		webViewControllerNotificationObserver = NotificationObserver<PageWebViewControllerNotification>(object: webViewController)
+		webViewControllerNotificationObserver.addObserver(.URLDidChange) { [weak self] notification in
+			self?.navigatedURLDidChange()
 		}
-		
-		addObserver(.URLDidChange) { (notification) in
-			self.navigatedURLDidChange(self.webViewController.URL)
-		}
-	}
-	
-	func stopObservingWebViewController() {
-		let nc = NSNotificationCenter.defaultCenter()
-		
-		for (notificationIdentifier, observer) in webViewControllerNotificationObservers {
-			nc.removeObserver(observer)
-		}
-		webViewControllerNotificationObservers.removeAll(keepCapacity: false)
 	}
 	
 	func prepareWebViewController(webViewController: PageWebViewController) {
