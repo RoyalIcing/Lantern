@@ -76,7 +76,9 @@ public class PageViewController: NSViewController {
 		}
 	}
 	
-	func navigatedURLDidChange(URL: NSURL) {
+	func navigatedURLDidChange() {
+		let URL = webViewController.URL
+		
 		navigatedURLDidChangeCallback?(URL: URL)
 		
 		updateUIForURL(URL)
