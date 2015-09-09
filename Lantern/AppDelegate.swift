@@ -84,4 +84,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBAction func newDocument(sender: AnyObject?) {
 		self.applicationOpenUntitledFile(NSApp)
 	}
+	
+	@IBAction func forkOnGitHub(sender: AnyObject?) {
+		let URL = NSURL(string: "https://github.com/BurntCaramel/Lantern")!
+		NSWorkspace.sharedWorkspace().openURL(URL)
+	}
 }
