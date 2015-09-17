@@ -94,7 +94,7 @@ class ImagePreviewViewController: NSViewController {
 				view.removeConstraints(self.contentSizeConstraints)
 			}
 			
-			func layoutConstraintWithView(view: NSView, #attribute: NSLayoutAttribute, #relatedBy: NSLayoutRelation, #constant: CGFloat) -> NSLayoutConstraint {
+			func layoutConstraintWithView(view: NSView, attribute: NSLayoutAttribute, relatedBy: NSLayoutRelation, constant: CGFloat) -> NSLayoutConstraint {
 				let constraint = NSLayoutConstraint(item: imageView, attribute: attribute, relatedBy: relatedBy, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: constant)
 				return constraint
 			}
@@ -229,12 +229,12 @@ class ImagePreviewInnerViewController: NSViewController {
 		
 		var imageSize = imageView.imageSize()
 		#if DEBUG
-			println("imageSize \(imageSize)")
+			print("imageSize \(imageSize)")
 		#endif
 		
 		if var screenSize = view.window?.screen?.visibleFrame.size {
 			#if DEBUG
-				println("screenSize \(screenSize)")
+				print("screenSize \(screenSize)")
 			#endif
 			screenSize.width -= 13.0 * 2.0 + 8.0
 			screenSize.height -= 13.0 * 2.0 + 32.0
@@ -248,7 +248,7 @@ class ImagePreviewInnerViewController: NSViewController {
 		//imageSize.height -= 32.0
 		
 		#if DEBUG
-			println("preferredContentSize \(imageSize)")
+			print("preferredContentSize \(imageSize)")
 		#endif
 		
 		imageView.autoresizes = false

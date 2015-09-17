@@ -61,7 +61,7 @@ class SourcePreviewTabViewController: NSTabViewController {
 		// This crashes for some reason
 		// self.tabViewItems = tabViewItems
 		
-		let existingItems = self.tabViewItems as! [NSTabViewItem]
+		let existingItems = self.tabViewItems 
 		for existingItem in existingItems {
 			removeTabViewItem(existingItem)
 		}
@@ -80,7 +80,7 @@ class SourcePreviewTabViewController: NSTabViewController {
 		updateWithSections([.HTMLHead, .HTMLBody])
 	}
 	
-	func newSourcePreviewTabViewItem(#section: SourcePreviewTabItemSection) -> NSTabViewItem {
+	func newSourcePreviewTabViewItem(section section: SourcePreviewTabItemSection) -> NSTabViewItem {
 		let item = NSTabViewItem(identifier: section.stringValue)
 		
 		let vc = newSourcePreviewController()
@@ -119,7 +119,7 @@ class SourcePreviewTabViewController: NSTabViewController {
 		vc.sourceText = sourceText ?? "(None)"
 	}
 	
-	override func tabView(tabView: NSTabView, willSelectTabViewItem tabViewItem: NSTabViewItem) {
+	override func tabView(tabView: NSTabView, willSelectTabViewItem tabViewItem: NSTabViewItem?) {
 		if
 			let identifier = tabViewItem.identifier as? String,
 			let section = SourcePreviewTabItemSection(rawValue: identifier)
@@ -146,7 +146,7 @@ extension SourcePreviewTabViewController: NSPopoverDelegate {
 	
 	func popoverDidShow(notification: NSNotification) {
 		if let window = view.window where selectedTabViewItemIndex != -1 {
-			let tabViewItem = tabViewItems[selectedTabViewItemIndex] as! NSTabViewItem
+			let tabViewItem = tabViewItems[selectedTabViewItemIndex] 
 			let vc = tabViewItem.viewController as! SourcePreviewViewController
 			window.makeFirstResponder(vc.textView)
 		}

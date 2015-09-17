@@ -197,7 +197,7 @@ extension StatsColumnsMode: UIChoiceRepresentative {
 	var uniqueIdentifier: UniqueIdentifier { return self }
 }
 
-extension StatsColumnsMode: Printable {
+extension StatsColumnsMode: CustomStringConvertible {
 	var description: String {
 		return title
 	}
@@ -379,7 +379,7 @@ class StatsViewController: NSViewController {
 	var selectedURLs: [NSURL] {
 		get {
 			let outlineView = self.outlineView!
-			var selectedRowIndexes = outlineView.selectedRowIndexes
+			let selectedRowIndexes = outlineView.selectedRowIndexes
 			var result = [NSURL]()
 			selectedRowIndexes.enumerateIndexesUsingBlock { (row, stopPointer) in
 				if let item = outlineView.itemAtRow(row) as? NSURL {
@@ -390,7 +390,7 @@ class StatsViewController: NSViewController {
 		}
 		set {
 			let outlineView = self.outlineView!
-			var newRowIndexes = NSMutableIndexSet()
+			let newRowIndexes = NSMutableIndexSet()
 			for URL in newValue {
 				let row = outlineView.rowForItem(URL)
 				if row != -1 {
@@ -423,7 +423,7 @@ class StatsViewController: NSViewController {
 				let pageLinkFilter = filterResponseChoice.pageLinkFilterWithURL(browsedURL)
 			{
 				#if DEBUG
-					println("filtering to browsedURL \(browsedURL)")
+					print("filtering to browsedURL \(browsedURL)")
 				#endif
 				filteredURLs = pageMapper.copyHTMLPageURLsFilteredBy(pageLinkFilter)
 			}
@@ -568,7 +568,7 @@ class StatsViewController: NSViewController {
 		if let contentChoice = baseContentTypeChoicePopUpButtonAssistant.selectedItemRepresentative {
 			chosenBaseContentChoice = contentChoice
 			
-			updateUI(baseContentType: false)
+			updateUI(false)
 		}
 	}
 	
@@ -856,7 +856,7 @@ extension StatsViewController {
 				sourcePreviewTabViewController.pageInfo = pageInfo
 				
 				let rowRect = outlineView.rectOfRow(row)
-				presentViewController(sourcePreviewTabViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSMinYEdge, behavior: .Semitransient)
+				presentViewController(sourcePreviewTabViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSRectEdge.MinY, behavior: .Semitransient)
 			}
 		}
 	}
@@ -866,7 +866,7 @@ extension StatsViewController {
 	}
 	
 	func showStringValuePreviewForResourceAtRow(row: Int, column: Int) {
-		let tableColumn = outlineView.tableColumns[column] as! NSTableColumn
+		let tableColumn = outlineView.tableColumns[column] 
 		
 		if
 			let presentedInfoIdentifier = presentedInfoIdentifierForTableColumn(tableColumn),
@@ -887,7 +887,7 @@ extension StatsViewController {
 				}
 				
 				let rowRect = outlineView.frameOfCellAtColumn(column, row: row)
-				presentViewController(previewViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSMinYEdge, behavior: .Semitransient)
+				presentViewController(previewViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSRectEdge.MinY, behavior: .Semitransient)
 			}
 		}
 	}
@@ -907,7 +907,7 @@ extension StatsViewController {
 				previewViewController.sourceURL = pageInfo.requestedURL
 				
 				let rowRect = outlineView.rectOfRow(row)
-				presentViewController(previewViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSMinYEdge, behavior: .Semitransient)
+				presentViewController(previewViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSRectEdge.MinY, behavior: .Semitransient)
 			}
 		}
 
@@ -923,7 +923,7 @@ extension StatsViewController {
 			//println("Copying \(success) \(pasteboard) \(URL)")
 			pasteboard.declareTypes([NSURLPboardType, NSStringPboardType], owner: nil)
 			URL.writeToPasteboard(pasteboard)
-			pasteboard.setString(URL.absoluteString!, forType: NSStringPboardType)
+			pasteboard.setString(URL.absoluteString, forType: NSStringPboardType)
 		}
 	}
 }

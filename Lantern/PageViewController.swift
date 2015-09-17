@@ -91,7 +91,7 @@ public class PageViewController: NSViewController {
 	}
 	
 	func updateUIForURL(URL: NSURL) {
-		URLField.stringValue = URL.absoluteString!
+		URLField.stringValue = URL.absoluteString
 	}
 	
 	@IBAction func URLFieldChanged(textField: NSTextField) {
@@ -167,11 +167,11 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		
 		func addBundledUserScript(scriptNameInBundle: String, injectAtStart: Bool = false, injectAtEnd: Bool = false, forMainFrameOnly: Bool = true, sourceReplacements: [String:String]? = nil) {
 			let scriptURL = NSBundle.mainBundle().URLForResource(scriptNameInBundle, withExtension: "js")!
-			let scriptSource = NSMutableString(contentsOfURL: scriptURL, usedEncoding: nil, error: nil)!
+			let scriptSource = try! NSMutableString(contentsOfURL: scriptURL, usedEncoding: nil)
 			
 			if let sourceReplacements = sourceReplacements {
 				func replaceInTemplate(find target: String, replace replacement: String) {
-					scriptSource.replaceOccurrencesOfString(target, withString: replacement, options: NSStringCompareOptions(0), range: NSMakeRange(0, scriptSource.length))
+					scriptSource.replaceOccurrencesOfString(target, withString: replacement, options: NSStringCompareOptions(rawValue: 0), range: NSMakeRange(0, scriptSource.length))
 				}
 				
 				for (placeholderID, value) in sourceReplacements {
@@ -223,7 +223,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 			
 		webViewConfiguration.userContentController = userContentController
 		
-		webView = WKWebView(frame: NSRect.zeroRect, configuration: webViewConfiguration)
+		webView = WKWebView(frame: NSRect.zero, configuration: webViewConfiguration)
 		webView.navigationDelegate = self
 		webView.UIDelegate = self
 		webView.allowsBackForwardNavigationGestures = true
@@ -281,7 +281,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		mainQueue_notify(.URLDidChange)
 	}
 	
-	override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+	override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
 		if context == &webViewURLObservingContext {
 			switch keyPath {
 			case "URL":
@@ -323,7 +323,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 	
 	func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
 		#if DEBUG
-			println("didFinishNavigation \(navigation)")
+			print("didFinishNavigation \(navigation)")
 		#endif
 	}
 	
@@ -363,7 +363,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 					else if let tokenJSONString = body["tokenJSONString"] as? String {
 						hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback?(tokenJSONString: tokenJSONString)
 						#if DEBUG
-							println("tokenJSONString \(tokenJSONString)")
+							print("tokenJSONString \(tokenJSONString)")
 						#endif
 					}
 				}
@@ -377,7 +377,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 			}
 		}
 		else {
-			println("Unhandled script message \(message.name)")
+			print("Unhandled script message \(message.name)")
 		}
 	}
 	

@@ -166,7 +166,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		]
 		
 		if let allSites = modelManager.allSites {
-			let allSites = allSites.sorted({ $0.name < $1.name })
+			let allSites = allSites.sort({ $0.name < $1.name })
 			
 			if allSites.count == 0 {
 				result.append(

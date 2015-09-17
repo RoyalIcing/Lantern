@@ -24,7 +24,7 @@ private let nonWhitespaceCharacterSet = whitespaceCharacterSet.invertedSet
 
 private func stringIsJustWhitespace(string: String) -> Bool {
 	// Return range if non-whitespace characters are present, nil if no non-whitespace characters are present.
-	return string.rangeOfCharacterFromSet(nonWhitespaceCharacterSet, options: .allZeros, range: nil) == nil
+	return string.rangeOfCharacterFromSet(nonWhitespaceCharacterSet, options: [], range: nil) == nil
 }
 
 extension PageInfoValidationResult {
@@ -124,7 +124,7 @@ extension PageInfo {
 public extension PageMapper {
 	public func copyHTMLPageURLsWhichCompletelyValidateForType(type: BaseContentType) -> [NSURL] {
 		let validationAreas = PageInfoValidationArea.allAreas
-		var URLs = copyURLsWithBaseContentType(type, withResponseType: .Successful)
+		let URLs = copyURLsWithBaseContentType(type, withResponseType: .Successful)
 		
 		return URLs.filter { (URL) in
 			if let pageInfo = self.loadedURLToPageInfo[URL] {
@@ -139,7 +139,7 @@ public extension PageMapper {
 	}
 	
 	public func copyHTMLPageURLsForType(type: BaseContentType, failingToValidateInArea validationArea: PageInfoValidationArea) -> [NSURL] {
-		var URLs = copyURLsWithBaseContentType(type, withResponseType: .Successful)
+		let URLs = copyURLsWithBaseContentType(type, withResponseType: .Successful)
 		
 		return URLs.filter { (URL) in
 			if let pageInfo = self.loadedURLToPageInfo[URL] {

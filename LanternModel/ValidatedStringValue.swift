@@ -48,7 +48,7 @@ extension ValidatedStringValue {
 	}
 	
 	static func validateContentOfElement(element: ONOXMLElement) -> ValidatedStringValue {
-		var stringValue = element.stringValue()
+		let stringValue = element.stringValue()
 		
 		return self.init(string: stringValue, trimmingSpace: true, combineSpaces: true)
 	}
@@ -84,7 +84,7 @@ extension ValidatedStringValue {
 		case 0:
 			return .Missing
 		default:
-			var values: [ValidatedStringValue] = elements.map { element in
+			let values: [ValidatedStringValue] = elements.map { element in
 				return self.validateAttribute(attribute, ofElement: element)
 			}
 			return .Multiple(values)

@@ -72,9 +72,14 @@ public enum ValidationError {
 
 public func detectWebURL(fromString URLString: String) -> NSURL? {
 	var error: NSError?
-	let dataDetector = NSDataDetector(types: NSTextCheckingType.Link.rawValue, error: &error)
+	let dataDetector: NSDataDetector?
+	do {
+		dataDetector = try NSDataDetector(types: NSTextCheckingType.Link.rawValue)
+	} catch let error1 as NSError {
+		return nil
+	}
 	
-	if let result = dataDetector?.firstMatchInString(URLString, options: NSMatchingOptions.allZeros, range: NSMakeRange(0, (URLString as NSString).length)) {
+	if let result = dataDetector?.firstMatchInString(URLString, options: NSMatchingOptions(), range: NSMakeRange(0, (URLString as NSString).length)) {
 		return result.URL
 	}
 	else {
