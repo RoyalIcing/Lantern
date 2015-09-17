@@ -12,7 +12,7 @@ import Ono
 
 extension NSData {
 	func stringRepresentationUsingONOXMLDocumentHints(document: ONOXMLDocument) -> String? {
-		var stringEncoding = document.stringEncodingWithFallback()
+		let stringEncoding = document.stringEncodingWithFallback()
 		return NSString(data: self, encoding: stringEncoding) as? String
 	}
 }

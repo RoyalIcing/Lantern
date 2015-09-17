@@ -57,7 +57,7 @@ class PageInfoRequestQueue {
 		let managerDelegate = manager.delegate
 		managerDelegate.taskWillPerformHTTPRedirection = { [weak self] session, task, response, request in
 			#if DEBUG
-				println("taskWillPerformHTTPRedirection")
+				print("taskWillPerformHTTPRedirection")
 			#endif
 			
 			if let willPerformHTTPRedirection = self?.willPerformHTTPRedirection {
@@ -104,7 +104,7 @@ class PageInfoRequestQueue {
 			return infoRequest.URL.absoluteString == URLAbsoluteString
 		}
 		
-		for (index, request) in enumerate(pendingRequests) {
+		for (index, request) in pendingRequests.enumerate() {
 			if requestContainsURL(request) {
 				pendingRequests.removeAtIndex(index)
 				break
@@ -124,7 +124,7 @@ class PageInfoRequestQueue {
 		infoRequest.completionHandler(info: info, infoRequest: infoRequest)
 		
 		// Remove from active requests
-		for (index, someRequest) in enumerate(activeRequests) {
+		for (index, someRequest) in activeRequests.enumerate() {
 			if someRequest === infoRequest {
 				activeRequests.removeAtIndex(index)
 				break
@@ -191,7 +191,7 @@ class PageInfoRequestQueue {
 		}
 		else {
 			// Put imcomplete requests back on the queue
-			pendingRequests.splice(activeRequests, atIndex: 0)
+			pendingRequests.insertContentsOf(activeRequests, atIndex: 0)
 		}
 		
 		activeRequests.removeAll()

@@ -59,7 +59,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	
 	lazy var mainStoryboard: NSStoryboard = {
-		return NSStoryboard(name: "Main", bundle: nil)!
+		return NSStoryboard(name: "Main", bundle: nil)
 	}()
 	
 	var mainWindowControllers = [MainWindowController]()
@@ -73,7 +73,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		
 		let nc = NSNotificationCenter.defaultCenter()
 		windowWillCloseObservers.append(nc.addObserverForName(NSWindowWillCloseNotification, object: windowController.window!, queue: nil, usingBlock: { [unowned self] note in
-			if let index = find(self.mainWindowControllers, windowController) {
+			if let index = self.mainWindowControllers.indexOf(windowController) {
 				self.mainWindowControllers.removeAtIndex(index)
 			}
 		}))

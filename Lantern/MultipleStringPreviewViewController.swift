@@ -125,7 +125,7 @@ extension MultipleStringPreviewViewController: NSTableViewDataSource, NSTableVie
 		
 		setUpTableCellView(cellView, tableColumn: nil, row: row, visualsAndInteraction: false)
 		
-		let tableColumn = tableView.tableColumns[0] as! NSTableColumn
+		let tableColumn = tableView.tableColumns[0] 
 		let cellWidth = tableColumn.width
 		cellView.setFrameSize(NSSize(width: cellWidth, height: 100.0))
 		cellView.layoutSubtreeIfNeeded()

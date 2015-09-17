@@ -10,7 +10,7 @@ import Cocoa
 
 
 // Globals are lazy in Swift
-var contentPreviewStoryboard: NSStoryboard = NSStoryboard(name: "ContentPreview", bundle: nil)!
+var contentPreviewStoryboard: NSStoryboard = NSStoryboard(name: "ContentPreview", bundle: nil)
 
 extension NSStoryboard {
 	class var lantern_contentPreviewStoryboard: NSStoryboard {

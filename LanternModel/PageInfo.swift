@@ -21,7 +21,7 @@ public enum BaseContentType {
 	case Essential
 }
 
-extension BaseContentType: DebugPrintable {
+extension BaseContentType: CustomDebugStringConvertible {
 	 public var debugDescription: String {
 		switch self {
 		case .Unknown:
@@ -87,7 +87,7 @@ extension PageResponseType {
 
 
 
-internal func URLIsExternal(URLToTest: NSURL, #localHost: String) -> Bool {
+internal func URLIsExternal(URLToTest: NSURL, localHost: String) -> Bool {
 	if let host = URLToTest.host {
 		if host.caseInsensitiveCompare(localHost) != .OrderedSame {
 			return true
@@ -164,7 +164,7 @@ extension MIMETypeString {
 	}
 }
 
-extension MIMETypeString: Printable {
+extension MIMETypeString: CustomStringConvertible {
 	public var description: String {
 		return stringValue
 	}
@@ -226,14 +226,15 @@ public struct PageContentInfo {
 		self.data = data
 		
 		var error: NSError?
-		if let document = ONOXMLDocument.HTMLDocumentWithData(data, error: &error) {
+		do {
+			let document = try ONOXMLDocument.HTMLDocumentWithData(data)
 			self.stringEncoding = document.stringEncodingWithFallback()
 			// Must store document to also save references to all found elements.
 			self.document = document
 			
 			let stringEncoding = document.stringEncodingWithFallback()
 			if let bodyTagData = "<body".dataUsingEncoding(stringEncoding, allowLossyConversion: false) {
-				let bodyTagRange = data.rangeOfData(bodyTagData, options: .allZeros, range: NSMakeRange(0, data.length))
+				let bodyTagRange = data.rangeOfData(bodyTagData, options: [], range: NSMakeRange(0, data.length))
 				if bodyTagRange.location != NSNotFound {
 					preBodyByteCount = bodyTagRange.location
 				}
@@ -256,13 +257,13 @@ public struct PageContentInfo {
 			}
 			openGraphElements = document.allElementsWithCSS("head meta[property]") { element in
 				if let name = element["property"] as? String {
-					return name.rangeOfString("og:", options: .AnchoredSearch | .CaseInsensitiveSearch) != nil
+					return name.rangeOfString("og:", options: [.AnchoredSearch, .CaseInsensitiveSearch]) != nil
 				}
 				
 				return false
 			}
 			
-			var uniqueFeedURLs = UniqueURLArray()
+			let uniqueFeedURLs = UniqueURLArray()
 			feedLinkElements = document.allElementsWithCSS("head link[type][href]") { element in
 				if
 					let typeRaw = element["type"] as? String,
@@ -286,8 +287,8 @@ public struct PageContentInfo {
 			
 			var aLocalLinkElements = [ONOXMLElement]()
 			var aExternalLinkElements = [ONOXMLElement]()
-			var uniqueLocalPageURLs = UniqueURLArray()
-			var uniqueExternalPageURLs = UniqueURLArray()
+			let uniqueLocalPageURLs = UniqueURLArray()
+			let uniqueExternalPageURLs = UniqueURLArray()
 			
 			var imageElements = [ONOXMLElement]()
 			var imageURLs = Set<NSURL>()
@@ -343,8 +344,8 @@ public struct PageContentInfo {
 			h1Elements = document.allElementsWithCSS("h1")
 			
 			richSnippetElements = [] //TODO:
-		}
-		else {
+		} catch let error1 as NSError {
+			error = error1
 			document = nil
 			stringEncoding = nil
 			

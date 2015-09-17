@@ -79,7 +79,7 @@ class ViewController: NSViewController
 	
 	
 	lazy var pageStoryboard: NSStoryboard = {
-		NSStoryboard(name: "Page", bundle: nil)!
+		NSStoryboard(name: "Page", bundle: nil)
 	}()
 	var mainSplitViewController: NSSplitViewController!
 	var pageViewController: PageViewController!
@@ -146,7 +146,7 @@ class ViewController: NSViewController
 				}()
 				
 				#if DEBUG
-					println("navigatedURLDidChangeCallback \(URL)")
+					print("navigatedURLDidChangeCallback \(URL)")
 				#endif
 				self.statsViewController.didNavigateToURL(URL, crawl: isLocal)
 			}
@@ -177,7 +177,7 @@ class ViewController: NSViewController
 	}
 	
 	
-	lazy var siteSettingsStoryboard = NSStoryboard(name: "SiteSettings", bundle: nil)!
+	lazy var siteSettingsStoryboard = NSStoryboard(name: "SiteSettings", bundle: nil)
 	lazy var addSiteViewController: SiteSettingsViewController = {
 		let vc = self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Add Site View Controller") as! SiteSettingsViewController
 		vc.modelManager = self.modelManager
@@ -197,7 +197,7 @@ class ViewController: NSViewController
 			dismissViewController(addSiteViewController)
 		}
 		else {
-			presentViewController(addSiteViewController, asPopoverRelativeToRect: relativeView.bounds, ofView: relativeView, preferredEdge: NSMaxYEdge, behavior: .Semitransient)
+			presentViewController(addSiteViewController, asPopoverRelativeToRect: relativeView.bounds, ofView: relativeView, preferredEdge: NSRectEdge.MaxY, behavior: .Semitransient)
 		}
 	}
 	
@@ -220,7 +220,7 @@ class ViewController: NSViewController
 					}
 				}
 				
-				presentViewController(siteSettingsViewController, asPopoverRelativeToRect: button.bounds, ofView: button, preferredEdge: NSMaxYEdge, behavior: .Semitransient)
+				presentViewController(siteSettingsViewController, asPopoverRelativeToRect: button.bounds, ofView: button, preferredEdge: NSRectEdge.MaxY, behavior: .Semitransient)
 			}
 		}
 	}

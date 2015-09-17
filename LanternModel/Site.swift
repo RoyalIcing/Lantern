@@ -70,7 +70,7 @@ extension SiteValues {
 	
 	private func updateStoredValues(var values: ValueStorable) -> ValueStorable {
 		values["name"] = name
-		values["homePageURL"] = homePageURL.absoluteString!
+		values["homePageURL"] = homePageURL.absoluteString
 		values["UUID"] = UUID.UUIDString
 		
 		return values

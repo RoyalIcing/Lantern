@@ -543,6 +543,8 @@
 		B22B7D871AC6B9090026AEDB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Burnt Caramel";
 				TargetAttributes = {

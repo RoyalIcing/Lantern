@@ -115,7 +115,7 @@ public class PageMapper {
 				let nextURL = redirectionInfo.nextRequest.URL
 			{
 				#if DEBUG
-					println("REDIRECT \(sourceURL) \(nextURL)")
+					print("REDIRECT \(sourceURL) \(nextURL)")
 				#endif
 				
 				pageMapper.redirectedSourceURLToInfo[sourceURL] = redirectionInfo
@@ -216,7 +216,7 @@ public class PageMapper {
 		
 		if responseType == .Redirects {
 			#if DEBUG
-				println("REDIRECT \(requestedPageURL) \(pageInfo.finalURL)")
+				print("REDIRECT \(requestedPageURL) \(pageInfo.finalURL)")
 			#endif
 		}
 		
@@ -258,7 +258,7 @@ public class PageMapper {
 			}
 			
 			if let
-				childDepth = map(currentDepth, { $0 + 1 }),
+				childDepth = currentDepth.map({ $0 + 1 }),
 				contentInfo = pageInfo.contentInfo
 				where childDepth <= maximumDepth
 			{
@@ -344,7 +344,7 @@ public class PageMapper {
 		
 		didUpdateCallback = nil
 		
-		infoRequestQueue.cancelAll(clearAll: true)
+		infoRequestQueue.cancelAll(true)
 	}
 	
 	public func summedByteCountForBaseContentType(type: BaseContentType) -> UInt {

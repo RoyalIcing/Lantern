@@ -55,7 +55,7 @@ class UniqueURLArray: SequenceType {
 		return false
 	}
 	
-	func insertReturningConformedURLIfNew(var URL: NSURL) -> NSURL? {
+	func insertReturningConformedURLIfNew(URL: NSURL) -> NSURL? {
 		if let URL = conformURL(URL) {
 			if !uniqueURLs.contains(URL) {
 				uniqueURLs.insert(URL)
@@ -72,7 +72,7 @@ class UniqueURLArray: SequenceType {
 			if let setIndex = uniqueURLs.indexOf(URL) {
 				uniqueURLs.removeAtIndex(setIndex)
 				
-				if let arrayIndex = find(orderedURLs, URL) {
+				if let arrayIndex = orderedURLs.indexOf(URL) {
 					orderedURLs.removeAtIndex(arrayIndex)
 				}
 			}
@@ -85,7 +85,7 @@ class UniqueURLArray: SequenceType {
 	}
 }
 
-extension UniqueURLArray: Printable {
+extension UniqueURLArray: CustomStringConvertible {
 	var description: String {
 		return uniqueURLs.description
 	}
