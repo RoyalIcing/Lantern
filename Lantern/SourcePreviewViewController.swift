@@ -120,9 +120,10 @@ class SourcePreviewTabViewController: NSTabViewController {
 	}
 	
 	override func tabView(tabView: NSTabView, willSelectTabViewItem tabViewItem: NSTabViewItem?) {
-		if
-			let identifier = tabViewItem.identifier as? String,
-			let section = SourcePreviewTabItemSection(rawValue: identifier)
+		if let
+			tabViewItem = tabViewItem,
+			identifier = tabViewItem.identifier as? String,
+			section = SourcePreviewTabItemSection(rawValue: identifier)
 		{
 			updateSourceTextForSection(section, tabViewItem: tabViewItem)
 		}
@@ -169,14 +170,14 @@ class SourcePreviewViewController: NSViewController {
 		textView.wantsToDismiss = wantsToDismiss
 	}
 	
-	let defaultTextAttributes: [NSObject: AnyObject] = [
+	let defaultTextAttributes: [String: AnyObject] = [
 		NSFontAttributeName: NSFont(name: "Menlo", size: 11.0)!,
 		NSForegroundColorAttributeName: NSColor.highlightColor()
 	]
 	
 	var sourceText: String! {
 		didSet {
-			let view = self.view // Make sure view has loaded
+			_ = self.view // Make sure view has loaded
 			
 			if let textStorage = textView.textStorage {
 				let attributes = defaultTextAttributes

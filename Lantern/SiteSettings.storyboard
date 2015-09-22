@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
     </dependencies>
     <scenes>
         <!--Site Settings-->
         <scene sceneID="2nV-nl-Dg5">
             <objects>
-                <viewController title="Site Settings" storyboardIdentifier="Site Settings View Controller" showSeguePresentationStyle="single" id="CU5-0T-cmJ" customClass="SiteSettingsViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Site Settings" storyboardIdentifier="Site Settings View Controller" showSeguePresentationStyle="single" id="CU5-0T-cmJ" customClass="SiteSettingsViewController" customModule="Lantern" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="i5p-pL-hHv">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="194"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -87,7 +87,7 @@
         <!--Add Site-->
         <scene sceneID="3lj-hP-Yw6">
             <objects>
-                <viewController title="Add Site" storyboardIdentifier="Add Site View Controller" showSeguePresentationStyle="single" id="ont-Pv-J5Y" customClass="SiteSettingsViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Add Site" storyboardIdentifier="Add Site View Controller" showSeguePresentationStyle="single" id="ont-Pv-J5Y" customClass="SiteSettingsViewController" customModule="Lantern" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Qx0-hQ-3T0">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="194"/>
                         <autoresizingMask key="autoresizingMask"/>

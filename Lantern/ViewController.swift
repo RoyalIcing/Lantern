@@ -49,7 +49,7 @@ class ViewController: NSViewController
 	func stopObservingModelManager() {
 		let nc = NSNotificationCenter.defaultCenter()
 		
-		for (notificationIdentifier, observer) in mainStateNotificationObservers {
+		for (_, observer) in mainStateNotificationObservers {
 			nc.removeObserver(observer)
 		}
 		mainStateNotificationObservers.removeAll(keepCapacity: false)
@@ -177,7 +177,8 @@ class ViewController: NSViewController
 	}
 	
 	
-	lazy var siteSettingsStoryboard = NSStoryboard(name: "SiteSettings", bundle: nil)
+	//lazy var siteSettingsStoryboard = NSStoryboard(name: "SiteSettings", bundle: nil)
+	var siteSettingsStoryboard = NSStoryboard(name: "SiteSettings", bundle: nil)
 	lazy var addSiteViewController: SiteSettingsViewController = {
 		let vc = self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Add Site View Controller") as! SiteSettingsViewController
 		vc.modelManager = self.modelManager
