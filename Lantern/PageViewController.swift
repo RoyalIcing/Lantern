@@ -282,6 +282,8 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 	}
 	
 	override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+		guard let keyPath = keyPath else { return }
+		
 		if context == &webViewURLObservingContext {
 			switch keyPath {
 			case "URL":

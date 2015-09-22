@@ -145,7 +145,7 @@ class ImagePreviewViewController: NSViewController {
 extension ImagePreviewViewController {
 	class func instantiateFromStoryboard() -> ImagePreviewViewController {
 		let vc =  NSStoryboard.lantern_contentPreviewStoryboard.instantiateControllerWithIdentifier("Image View Controller") as! ImagePreviewViewController
-		let view = vc.view // Stupid NSViewController
+		_ = vc.view // Stupid NSViewController
 		return vc
 	}
 }
@@ -269,11 +269,11 @@ class ImagePreviewInnerViewController: NSViewController {
 	
 	var imageData: NSData? {
 		didSet {
-			let view = self.view // Stupid NSViewController
+			_ = self.view // Stupid NSViewController
 			
 			if let imageData = self.imageData {
 				dispatch_async(backgroundQueue) {
-					let coreGraphicsImageSource = CGImageSourceCreateWithData(imageData, nil)
+					guard let coreGraphicsImageSource = CGImageSourceCreateWithData(imageData, nil) else { return }
 					
 					let viewedCoreGraphicsImage = CGImageSourceCreateImageAtIndex(coreGraphicsImageSource, 0, nil)
 					let imageProperties = CGImageSourceCopyPropertiesAtIndex(coreGraphicsImageSource, 0, nil) as? [NSString: AnyObject]

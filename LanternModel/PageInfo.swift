@@ -100,8 +100,7 @@ internal func URLIsExternal(URLToTest: NSURL, localHost: String) -> Bool {
 private let fileDownloadFileExtensions = Set<String>(["zip", "dmg", "exe", "pdf", "gz", "tar", "doc", "docx", "xls", "wav", "aiff", "mp3", "mp4", "mov", "avi", "wmv"])
 
 func linkedURLLooksLikeFileDownload(URL: NSURL) -> Bool {
-	if let path = URL.path {
-		let pathExtension = path.pathExtension
+	if let pathExtension = URL.pathExtension {
 		if fileDownloadFileExtensions.contains(pathExtension) {
 			return true
 		}

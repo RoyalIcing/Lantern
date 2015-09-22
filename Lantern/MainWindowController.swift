@@ -30,7 +30,7 @@ class MainWindowController: NSWindowController {
 		didSet {
 			toolbarAssistant = MainWindowToolbarAssistant(toolbar: toolbar, mainState: mainState, modelManager: modelManager)
 			
-			toolbarAssistant.prepareNewSiteButton = { [unowned self] button in
+			toolbarAssistant.prepareNewSiteButton = { button in
 				button.target = nil
 				button.action = "showAddSite:"
 			}
@@ -147,7 +147,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	func stopObservingModelManager() {
 		let nc = NSNotificationCenter.defaultCenter()
 		
-		for (notificationIdentifier, observer) in modelManagerNotificationObservers {
+		for (_, observer) in modelManagerNotificationObservers {
 			nc.removeObserver(observer)
 		}
 		modelManagerNotificationObservers.removeAll(keepCapacity: false)
@@ -199,13 +199,13 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		}
 		
 		
-		var popUpButton = sitesPopUpButton;
+		let popUpButton = sitesPopUpButton;
 		
 		popUpButton.target = self
 		popUpButton.action = "chosenSiteDidChange:"
 		
 		
-		var popUpButtonAssistant = sitesPopUpButtonAssistant ?? {
+		let popUpButtonAssistant = sitesPopUpButtonAssistant ?? {
 			let popUpButtonAssistant = PopUpButtonAssistant<SiteMenuItem>(popUpButton: popUpButton)
 			
 			let menuAssistant = popUpButtonAssistant.menuAssistant

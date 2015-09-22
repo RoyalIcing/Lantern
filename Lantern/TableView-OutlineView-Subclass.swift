@@ -16,7 +16,7 @@ extension NSTableView {
 		let point = convertPoint(event.locationInWindow, fromView: nil)
 		let row = rowAtPoint(point)
 		if row != -1 {
-			if let rowView = rowViewAtRow(row, makeIfNecessary: true) as? NSTableRowView {
+			if let rowView = rowViewAtRow(row, makeIfNecessary: true) {
 				let column = columnAtPoint(point)
 				if column != -1 {
 					if let cellView = rowView.viewAtColumn(column) as? NSTableCellView {

@@ -68,11 +68,15 @@ public class ModelManager {
 			let store = ListJSONFileStore(creatingList: { items in
 				return ArrayList<SiteValues>(items: items)
 				}, loadedFromURL: JSONURL, options: storeOptions)
-			store.ensureLoaded{ (list, error) in
-				if let list = list {
+			store.ensureLoaded { getList in
+				do {
+					let list = try getList()
 					list.addObserver(self.sitesListObserver)
 					self.sitesList = list
 					self.notifyAllSitesDidChange()
+				}
+				catch {
+					
 				}
 			}
 			
@@ -83,10 +87,6 @@ public class ModelManager {
 			self.notifyAllSitesDidChange()
 		}
 
-	}
-	
-	deinit {
-		let nc = NSNotificationCenter.defaultCenter()
 	}
 	
 	public class var sharedManager: ModelManager {

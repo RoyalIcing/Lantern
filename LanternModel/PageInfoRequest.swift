@@ -60,8 +60,11 @@ class PageInfoRequestQueue {
 				print("taskWillPerformHTTPRedirection")
 			#endif
 			
-			if let willPerformHTTPRedirection = self?.willPerformHTTPRedirection {
-				let info = RequestRedirectionInfo(sourceRequest: task.originalRequest, nextRequest: request, statusCode: response.statusCode, MIMEType: MIMETypeString(response.MIMEType))
+			if let
+				willPerformHTTPRedirection = self?.willPerformHTTPRedirection,
+				originalRequest = task.originalRequest
+			{
+				let info = RequestRedirectionInfo(sourceRequest: originalRequest, nextRequest: request, statusCode: response.statusCode, MIMEType: MIMETypeString(response.MIMEType))
 				willPerformHTTPRedirection(redirectionInfo: info)
 			}
 			
@@ -70,7 +73,8 @@ class PageInfoRequestQueue {
 	}
 	
 	func addRequestForURL(URL: NSURL, expectedBaseContentType: BaseContentType, includingContent: Bool, highPriority: Bool = false, completionHandler: PageInfoRequest.CompletionHandler) -> PageInfoRequest? {
-		if let URL = URL.absoluteURL where URL.host != nil {
+		let URL = URL.absoluteURL
+		if URL.host != nil {
 			let infoRequest = PageInfoRequest(URL: URL, expectedBaseContentType: expectedBaseContentType, includingContent: includingContent, completionHandler: completionHandler)
 			
 			if highPriority || activeRequests.count < maximumActiveRequests {
@@ -158,10 +162,12 @@ class PageInfoRequestQueue {
 				
 				let info = PageInfo(requestedURL: requestedURL, finalURL: response.URL, statusCode: response.statusCode, baseContentType: baseContentType, MIMEType: MIMEType, byteCount: byteCount, contentInfo: contentInfo)
 				
-				return (info, nil)
+				return .Success(info)
 			}
 			else {
-				return (nil, nil)
+				let failureReason = "Data could not be serialized. Input data was nil."
+				let error = Alamofire.Error.errorWithCode(Alamofire.Error.Code.DataSerializationFailed, failureReason: failureReason)
+				return .Failure(data, error)
 			}
 		}
 		
@@ -169,14 +175,11 @@ class PageInfoRequestQueue {
 		let requestedURL = infoRequest.URL
 		infoRequest.request = requestManager
 			.request(infoRequest.method, requestedURL)
-			.response(responseSerializer: serializer) { (URLRequest, response, info, error) in
-				if let
-					response = response,
-					info = info
-				{
+			.response(responseSerializer: serializer, completionHandler: { (URLRequest, response, result) in
+				if case let .Success(info) = result {
 					self.activeRequestDidComplete(infoRequest, withInfo: info)
 				}
-		}
+		})
 	}
 	
 	func cancelAll(clearAll: Bool = true) {
@@ -191,7 +194,7 @@ class PageInfoRequestQueue {
 		}
 		else {
 			// Put imcomplete requests back on the queue
-			pendingRequests.insertContentsOf(activeRequests, atIndex: 0)
+			pendingRequests.insertContentsOf(activeRequests, at: 0)
 		}
 		
 		activeRequests.removeAll()

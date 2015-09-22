@@ -55,17 +55,17 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	
 	func updateUIWithSiteValues(siteValues: SiteValues) {
 		// Make sure view has loaded
-		let view = self.view
+		_ = self.view
 		
 		nameField.stringValue = siteValues.name
-		homePageURLField.stringValue = siteValues.homePageURL.absoluteString!
+		homePageURLField.stringValue = siteValues.homePageURL.absoluteString
 	}
 	
-	func copySiteValuesFromUI(UUID: NSUUID? = nil) -> (SiteValues?, NSError?) {
+	func copySiteValuesFromUI(UUID UUID: NSUUID? = nil) -> (SiteValues?, NSError?) {
 		// Make sure view has loaded
-		let view = self.view
+		_ = self.view
 		
-		let errorDomain = "SiteSettingsViewController.validationErrorDomain"
+		//let errorDomain = "SiteSettingsViewController.validationErrorDomain"
 		
 		let name = nameField.stringValue
 		let validatedName = ValidationError.validateString(name, identifier: "Name")

@@ -505,7 +505,7 @@ class StatsViewController: NSViewController {
 	
 	private func updateColumnsToOnlyShow(columnIdentifiers: [PagePresentedInfoIdentifier]) {
 		func updateHeaderOfColumn(column: NSTableColumn, withTitleFromIdentifier identifier: PagePresentedInfoIdentifier) {
-			(column.headerCell as! NSTableHeaderCell).stringValue = identifier.titleForBaseContentType(filterToBaseContentType)
+			column.headerCell.stringValue = identifier.titleForBaseContentType(filterToBaseContentType)
 		}
 		
 		let minColumnWidth: CGFloat = 130.0
@@ -975,7 +975,7 @@ extension StatsViewController {
 			popUpButton.animator().hidden = false
 		}
 		
-		var popUpButtonAssistant = filterResponseChoicePopUpButtonAssistant ?? {
+		let popUpButtonAssistant = filterResponseChoicePopUpButtonAssistant ?? {
 			let popUpButtonAssistant = PopUpButtonAssistant<StatsFilterResponseChoice>(popUpButton: popUpButton)
 			
 			let menuAssistant = popUpButtonAssistant.menuAssistant
@@ -1124,7 +1124,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 			let identifierString = tableColumn?.identifier,
 			let identifier = PagePresentedInfoIdentifier(rawValue: identifierString)
 		{
-			var cellIdentifier = (identifier == .requestedURL ? "requestedURL" : "text")
+			let cellIdentifier = (identifier == .requestedURL ? "requestedURL" : "text")
 			
 			var menu: NSMenu?
 			var stringValue: String
@@ -1175,6 +1175,10 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 			
 			if let view = outlineView.makeViewWithIdentifier(cellIdentifier, owner: self) as? NSTableCellView {
 				if let textField = view.textField {
+					if let suffixString = suffixString {
+						stringValue += " \(suffixString)"
+					}
+					
 					textField.stringValue = stringValue
 					textField.textColor = textColor
 				}

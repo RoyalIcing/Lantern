@@ -42,7 +42,7 @@ class BrowserMenuController: NSObject, NSUserInterfaceValidations {
 		widthMenuItemsAssistant.customization.actionAndTarget = { [weak self] widthChoice in
 			return (action: "changeWidthChoice:", target: self)
 		}
-		widthMenuItemsAssistant.customization.state = { [weak self] widthChoice in
+		widthMenuItemsAssistant.customization.state = { widthChoice in
 			let chosenWidthChoice = BrowserPreferences.sharedBrowserPreferences.widthChoice
 			return (chosenWidthChoice == widthChoice) ? NSOnState : NSOffState
 		}
