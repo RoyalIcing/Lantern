@@ -215,9 +215,12 @@ class ViewController: NSViewController
 				let modelManager = self.modelManager
 				siteSettingsViewController.willClose = { siteSettingsViewController in
 					let UUID = chosenSite.UUID
-					let (siteValues, error) = siteSettingsViewController.copySiteValuesFromUI(UUID: UUID)
-					if let siteValues = siteValues {
+					do {
+						let siteValues = try siteSettingsViewController.copySiteValuesFromUI(UUID: UUID)
 						modelManager.updateSiteWithUUID(UUID, withValues: siteValues)
+					}
+					catch {
+						NSApplication.sharedApplication().presentError(error as NSError, modalForWindow: self.view.window!, delegate: nil, didPresentSelector: nil, contextInfo: nil)
 					}
 				}
 				
