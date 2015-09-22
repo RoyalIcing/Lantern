@@ -9,6 +9,7 @@
 import Cocoa
 import WebKit
 import LanternModel
+import BurntFoundation
 
 
 typealias PageViewControllerGoogleOAuth2TokenCallback = (tokenJSONString: String) -> Void
@@ -45,29 +46,14 @@ public class PageViewController: NSViewController {
 		view.addConstraint(NSLayoutConstraint(item: view, attribute: .Height, relatedBy: .GreaterThanOrEqual, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: minimumHeight))
 	}
 	
-	var webViewControllerNotificationObservers = [PageWebViewControllerNotification: AnyObject]()
+	var webViewControllerNotificationObserver: NotificationObserver<PageWebViewControllerNotification>!
+	//var webViewControllerNotificationObservers = [PageWebViewControllerNotification: AnyObject]()
 	
 	func startObservingWebViewController() {
-		let nc = NSNotificationCenter.defaultCenter()
-		let mainQueue = NSOperationQueue.mainQueue()
-		
-		func addObserver(notificationIdentifier: PageWebViewControllerNotification, block: (NSNotification!) -> Void) {
-			let observer = nc.addObserverForName(notificationIdentifier.notificationName, object: webViewController, queue: mainQueue, usingBlock: block)
-			webViewControllerNotificationObservers[notificationIdentifier] = observer
+		webViewControllerNotificationObserver = NotificationObserver<PageWebViewControllerNotification>(object: webViewController)
+		webViewControllerNotificationObserver.addObserver(.URLDidChange) { [weak self] notification in
+			self?.navigatedURLDidChange()
 		}
-		
-		addObserver(.URLDidChange) { (notification) in
-			self.navigatedURLDidChange(self.webViewController.URL)
-		}
-	}
-	
-	func stopObservingWebViewController() {
-		let nc = NSNotificationCenter.defaultCenter()
-		
-		for (notificationIdentifier, observer) in webViewControllerNotificationObservers {
-			nc.removeObserver(observer)
-		}
-		webViewControllerNotificationObservers.removeAll(keepCapacity: false)
 	}
 	
 	func prepareWebViewController(webViewController: PageWebViewController) {
@@ -90,7 +76,9 @@ public class PageViewController: NSViewController {
 		}
 	}
 	
-	func navigatedURLDidChange(URL: NSURL) {
+	func navigatedURLDidChange() {
+		let URL = webViewController.URL
+		
 		navigatedURLDidChangeCallback?(URL: URL)
 		
 		updateUIForURL(URL)
@@ -103,7 +91,7 @@ public class PageViewController: NSViewController {
 	}
 	
 	func updateUIForURL(URL: NSURL) {
-		URLField.stringValue = URL.absoluteString!
+		URLField.stringValue = URL.absoluteString
 	}
 	
 	@IBAction func URLFieldChanged(textField: NSTextField) {
@@ -131,9 +119,11 @@ enum PageWebViewControllerNotification: String {
 	}
 }
 
-
-let PageWebViewController_receiveWindowCloseMessageIdentifier = "windowDidClose"
-let PageWebViewController_googleAPIAuthorizationChangedMessageIdentifier = "googleAPIAuthorizationChanged"
+enum MessageIdentifier: String {
+	case receiveWindowClose = "windowDidClose"
+	case googleAPIAuthorizationChanged = "googleAPIAuthorizationChanged"
+	case console = "console"
+}
 
 private var webViewURLObservingContext = 0
 
@@ -177,11 +167,11 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		
 		func addBundledUserScript(scriptNameInBundle: String, injectAtStart: Bool = false, injectAtEnd: Bool = false, forMainFrameOnly: Bool = true, sourceReplacements: [String:String]? = nil) {
 			let scriptURL = NSBundle.mainBundle().URLForResource(scriptNameInBundle, withExtension: "js")!
-			let scriptSource = NSMutableString(contentsOfURL: scriptURL, usedEncoding: nil, error: nil)!
+			let scriptSource = try! NSMutableString(contentsOfURL: scriptURL, usedEncoding: nil)
 			
 			if let sourceReplacements = sourceReplacements {
 				func replaceInTemplate(find target: String, replace replacement: String) {
-					scriptSource.replaceOccurrencesOfString(target, withString: replacement, options: NSStringCompareOptions(0), range: NSMakeRange(0, scriptSource.length))
+					scriptSource.replaceOccurrencesOfString(target, withString: replacement, options: NSStringCompareOptions(rawValue: 0), range: NSMakeRange(0, scriptSource.length))
 				}
 				
 				for (placeholderID, value) in sourceReplacements {
@@ -210,7 +200,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		if allowsClosing {
 			addBundledUserScript("windowClose", injectAtStart: true)
 			
-			userContentController.addScriptMessageHandler(self, name: PageWebViewController_receiveWindowCloseMessageIdentifier)
+			userContentController.addScriptMessageHandler(self, name: MessageIdentifier.receiveWindowClose.rawValue)
 		}
 		
 		if wantsHoverlyticsScript {
@@ -228,12 +218,12 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 			
 			addBundledUserScript("panelAuthorizationChanged", injectAtEnd: true, forMainFrameOnly: false)
 			
-			userContentController.addScriptMessageHandler(self, name: PageWebViewController_googleAPIAuthorizationChangedMessageIdentifier)
+			userContentController.addScriptMessageHandler(self, name: MessageIdentifier.googleAPIAuthorizationChanged.rawValue)
 		}
 			
 		webViewConfiguration.userContentController = userContentController
 		
-		webView = WKWebView(frame: NSRect.zeroRect, configuration: webViewConfiguration)
+		webView = WKWebView(frame: NSRect.zero, configuration: webViewConfiguration)
 		webView.navigationDelegate = self
 		webView.UIDelegate = self
 		webView.allowsBackForwardNavigationGestures = true
@@ -291,7 +281,9 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		mainQueue_notify(.URLDidChange)
 	}
 	
-	override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+	override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+		guard let keyPath = keyPath else { return }
+		
 		if context == &webViewURLObservingContext {
 			switch keyPath {
 			case "URL":
@@ -333,7 +325,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 	
 	func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
 		#if DEBUG
-			println("didFinishNavigation \(navigation)")
+			print("didFinishNavigation \(navigation)")
 		#endif
 	}
 	
@@ -359,34 +351,35 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 	// MARK: WKScriptMessageHandler
 	
 	func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
-		if message.name == PageWebViewController_receiveWindowCloseMessageIdentifier {
-			if allowsClosing {
-				dismissController(nil)
-			}
-		}
-		else if message.name == PageWebViewController_googleAPIAuthorizationChangedMessageIdentifier {
-			if let body = message.body as? [String:AnyObject] {
-				if body["googleClientAPILoaded"] != nil {
-					//println("googleClientAPILoaded \(body)")
+		if let messageIdentifier = MessageIdentifier(rawValue: message.name) {
+			switch messageIdentifier {
+			case .receiveWindowClose:
+				if allowsClosing {
+					dismissController(nil)
 				}
-				else if let tokenJSONString = body["tokenJSONString"] as? String {
-					hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback?(tokenJSONString: tokenJSONString)
-					#if DEBUG
-						println("tokenJSONString \(tokenJSONString)")
-					#endif
+			case .googleAPIAuthorizationChanged:
+				if let body = message.body as? [String:AnyObject] {
+					if body["googleClientAPILoaded"] != nil {
+						//println("googleClientAPILoaded \(body)")
+					}
+					else if let tokenJSONString = body["tokenJSONString"] as? String {
+						hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback?(tokenJSONString: tokenJSONString)
+						#if DEBUG
+							print("tokenJSONString \(tokenJSONString)")
+						#endif
+					}
 				}
+			case .console:
+				#if DEBUG && false
+					println("CONSOLE")
+					if let messageBody = message.body as? [String: AnyObject] {
+						println("CONSOLE \(messageBody)")
+					}
+				#endif
 			}
-		}
-		else if message.name == "console" {
-			#if DEBUG && false
-			println("CONSOLE")
-			if let messageBody = message.body as? [String: AnyObject] {
-				println("CONSOLE \(messageBody)")
-			}
-			#endif
 		}
 		else {
-			println("Unhandled script message \(message.name)")
+			print("Unhandled script message \(message.name)")
 		}
 	}
 	

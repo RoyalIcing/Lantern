@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>7C530460-06FB-4D0C-81F5-3318564DDC8B</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Lantern</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>2F4F68DFA0550A2C87C14C3AC2F3397F1F46A29B</key>
 		<string>burntcaramel.git.beanstalkapp.com:/burntcaramel/hoverlytics-for-mac.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Lantern.xcodeproj</string>
+	<string>Lantern.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2F4F68DFA0550A2C87C14C3AC2F3397F1F46A29B</key>

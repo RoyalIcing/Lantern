@@ -49,7 +49,7 @@ class ViewController: NSViewController
 	func stopObservingModelManager() {
 		let nc = NSNotificationCenter.defaultCenter()
 		
-		for (notificationIdentifier, observer) in mainStateNotificationObservers {
+		for (_, observer) in mainStateNotificationObservers {
 			nc.removeObserver(observer)
 		}
 		mainStateNotificationObservers.removeAll(keepCapacity: false)
@@ -79,7 +79,7 @@ class ViewController: NSViewController
 	
 	
 	lazy var pageStoryboard: NSStoryboard = {
-		NSStoryboard(name: "Page", bundle: nil)!
+		NSStoryboard(name: "Page", bundle: nil)
 	}()
 	var mainSplitViewController: NSSplitViewController!
 	var pageViewController: PageViewController!
@@ -146,7 +146,7 @@ class ViewController: NSViewController
 				}()
 				
 				#if DEBUG
-					println("navigatedURLDidChangeCallback \(URL)")
+					print("navigatedURLDidChangeCallback \(URL)")
 				#endif
 				self.statsViewController.didNavigateToURL(URL, crawl: isLocal)
 			}
@@ -177,7 +177,8 @@ class ViewController: NSViewController
 	}
 	
 	
-	lazy var siteSettingsStoryboard = NSStoryboard(name: "SiteSettings", bundle: nil)!
+	//lazy var siteSettingsStoryboard = NSStoryboard(name: "SiteSettings", bundle: nil)
+	var siteSettingsStoryboard = NSStoryboard(name: "SiteSettings", bundle: nil)
 	lazy var addSiteViewController: SiteSettingsViewController = {
 		let vc = self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Add Site View Controller") as! SiteSettingsViewController
 		vc.modelManager = self.modelManager
@@ -197,7 +198,7 @@ class ViewController: NSViewController
 			dismissViewController(addSiteViewController)
 		}
 		else {
-			presentViewController(addSiteViewController, asPopoverRelativeToRect: relativeView.bounds, ofView: relativeView, preferredEdge: NSMaxYEdge, behavior: .Semitransient)
+			presentViewController(addSiteViewController, asPopoverRelativeToRect: relativeView.bounds, ofView: relativeView, preferredEdge: NSRectEdge.MaxY, behavior: .Semitransient)
 		}
 	}
 	
@@ -214,13 +215,16 @@ class ViewController: NSViewController
 				let modelManager = self.modelManager
 				siteSettingsViewController.willClose = { siteSettingsViewController in
 					let UUID = chosenSite.UUID
-					let (siteValues, error) = siteSettingsViewController.copySiteValuesFromUI(UUID: UUID)
-					if let siteValues = siteValues {
+					do {
+						let siteValues = try siteSettingsViewController.copySiteValuesFromUI(UUID: UUID)
 						modelManager.updateSiteWithUUID(UUID, withValues: siteValues)
+					}
+					catch {
+						NSApplication.sharedApplication().presentError(error as NSError, modalForWindow: self.view.window!, delegate: nil, didPresentSelector: nil, contextInfo: nil)
 					}
 				}
 				
-				presentViewController(siteSettingsViewController, asPopoverRelativeToRect: button.bounds, ofView: button, preferredEdge: NSMaxYEdge, behavior: .Semitransient)
+				presentViewController(siteSettingsViewController, asPopoverRelativeToRect: button.bounds, ofView: button, preferredEdge: NSRectEdge.MaxY, behavior: .Semitransient)
 			}
 		}
 	}

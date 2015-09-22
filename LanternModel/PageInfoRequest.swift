@@ -57,11 +57,14 @@ class PageInfoRequestQueue {
 		let managerDelegate = manager.delegate
 		managerDelegate.taskWillPerformHTTPRedirection = { [weak self] session, task, response, request in
 			#if DEBUG
-				println("taskWillPerformHTTPRedirection")
+				print("taskWillPerformHTTPRedirection")
 			#endif
 			
-			if let willPerformHTTPRedirection = self?.willPerformHTTPRedirection {
-				let info = RequestRedirectionInfo(sourceRequest: task.originalRequest, nextRequest: request, statusCode: response.statusCode, MIMEType: MIMETypeString(response.MIMEType))
+			if let
+				willPerformHTTPRedirection = self?.willPerformHTTPRedirection,
+				originalRequest = task.originalRequest
+			{
+				let info = RequestRedirectionInfo(sourceRequest: originalRequest, nextRequest: request, statusCode: response.statusCode, MIMEType: MIMETypeString(response.MIMEType))
 				willPerformHTTPRedirection(redirectionInfo: info)
 			}
 			
@@ -70,7 +73,8 @@ class PageInfoRequestQueue {
 	}
 	
 	func addRequestForURL(URL: NSURL, expectedBaseContentType: BaseContentType, includingContent: Bool, highPriority: Bool = false, completionHandler: PageInfoRequest.CompletionHandler) -> PageInfoRequest? {
-		if let URL = URL.absoluteURL where URL.host != nil {
+		let URL = URL.absoluteURL
+		if URL.host != nil {
 			let infoRequest = PageInfoRequest(URL: URL, expectedBaseContentType: expectedBaseContentType, includingContent: includingContent, completionHandler: completionHandler)
 			
 			if highPriority || activeRequests.count < maximumActiveRequests {
@@ -104,7 +108,7 @@ class PageInfoRequestQueue {
 			return infoRequest.URL.absoluteString == URLAbsoluteString
 		}
 		
-		for (index, request) in enumerate(pendingRequests) {
+		for (index, request) in pendingRequests.enumerate() {
 			if requestContainsURL(request) {
 				pendingRequests.removeAtIndex(index)
 				break
@@ -124,7 +128,7 @@ class PageInfoRequestQueue {
 		infoRequest.completionHandler(info: info, infoRequest: infoRequest)
 		
 		// Remove from active requests
-		for (index, someRequest) in enumerate(activeRequests) {
+		for (index, someRequest) in activeRequests.enumerate() {
 			if someRequest === infoRequest {
 				activeRequests.removeAtIndex(index)
 				break
@@ -158,10 +162,12 @@ class PageInfoRequestQueue {
 				
 				let info = PageInfo(requestedURL: requestedURL, finalURL: response.URL, statusCode: response.statusCode, baseContentType: baseContentType, MIMEType: MIMEType, byteCount: byteCount, contentInfo: contentInfo)
 				
-				return (info, nil)
+				return .Success(info)
 			}
 			else {
-				return (nil, nil)
+				let failureReason = "Data could not be serialized. Input data was nil."
+				let error = Alamofire.Error.errorWithCode(Alamofire.Error.Code.DataSerializationFailed, failureReason: failureReason)
+				return .Failure(data, error)
 			}
 		}
 		
@@ -169,14 +175,11 @@ class PageInfoRequestQueue {
 		let requestedURL = infoRequest.URL
 		infoRequest.request = requestManager
 			.request(infoRequest.method, requestedURL)
-			.response(responseSerializer: serializer) { (URLRequest, response, info, error) in
-				if let
-					response = response,
-					info = info
-				{
+			.response(responseSerializer: serializer, completionHandler: { (URLRequest, response, result) in
+				if case let .Success(info) = result {
 					self.activeRequestDidComplete(infoRequest, withInfo: info)
 				}
-		}
+		})
 	}
 	
 	func cancelAll(clearAll: Bool = true) {
@@ -191,7 +194,7 @@ class PageInfoRequestQueue {
 		}
 		else {
 			// Put imcomplete requests back on the queue
-			pendingRequests.splice(activeRequests, atIndex: 0)
+			pendingRequests.insertContentsOf(activeRequests, at: 0)
 		}
 		
 		activeRequests.removeAll()

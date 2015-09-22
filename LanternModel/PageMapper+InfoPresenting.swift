@@ -164,13 +164,10 @@ public enum PagePresentedInfoIdentifier: String {
 						return ValidatedStringValue(string: "\(requestedPath) (\(finalURLPath))")
 					}
 					
-					if
-						let requestedScheme = requestedURL.scheme,
-						let finalScheme = finalURL.scheme
-					{
-						if requestedScheme != finalScheme {
-							return ValidatedStringValue(string: "\(requestedPath) (\(finalURLPath) to \(finalScheme))")
-						}
+					let requestedScheme = requestedURL.scheme
+					let finalScheme = finalURL.scheme
+					if requestedScheme != finalScheme {
+						return ValidatedStringValue(string: "\(requestedPath) (\(finalURLPath) to \(finalScheme))")
 					}
 						
 					return ValidatedStringValue(string: "\(requestedPath) (\(finalURLPath))")

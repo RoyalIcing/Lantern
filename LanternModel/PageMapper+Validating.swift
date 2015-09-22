@@ -24,7 +24,7 @@ private let nonWhitespaceCharacterSet = whitespaceCharacterSet.invertedSet
 
 private func stringIsJustWhitespace(string: String) -> Bool {
 	// Return range if non-whitespace characters are present, nil if no non-whitespace characters are present.
-	return string.rangeOfCharacterFromSet(nonWhitespaceCharacterSet, options: .allZeros, range: nil) == nil
+	return string.rangeOfCharacterFromSet(nonWhitespaceCharacterSet, options: [], range: nil) == nil
 }
 
 extension PageInfoValidationResult {
@@ -124,38 +124,33 @@ extension PageInfo {
 public extension PageMapper {
 	public func copyHTMLPageURLsWhichCompletelyValidateForType(type: BaseContentType) -> [NSURL] {
 		let validationAreas = PageInfoValidationArea.allAreas
-		var URLs = copyURLsWithBaseContentType(type, withResponseType: .Successful)
+		let URLs = copyURLsWithBaseContentType(type, withResponseType: .Successful)
 		
-		return URLs.filter { (URL) in
-			if let pageInfo = self.loadedURLToPageInfo[URL] {
-				for validationArea in validationAreas {
-					let validationResult = pageInfo.validateArea(validationArea)
-					return validationResult == .Valid
-				}
+		return URLs.filter { URL in
+			guard let pageInfo = self.loadedURLToPageInfo[URL] else { return false }
+			
+			let containsInvalidResult = validationAreas.contains { validationArea in
+				return pageInfo.validateArea(validationArea) != .Valid
 			}
 			
-			return false
+			return !containsInvalidResult
 		}
 	}
 	
 	public func copyHTMLPageURLsForType(type: BaseContentType, failingToValidateInArea validationArea: PageInfoValidationArea) -> [NSURL] {
-		var URLs = copyURLsWithBaseContentType(type, withResponseType: .Successful)
+		let URLs = copyURLsWithBaseContentType(type, withResponseType: .Successful)
 		
-		return URLs.filter { (URL) in
-			if let pageInfo = self.loadedURLToPageInfo[URL] {
-				let validationResult = pageInfo.validateArea(validationArea)
-				var isValid: Bool
-				switch validationResult {
-				case .Valid:
-					return false
-				case .Missing:
-					return validationArea.isRequired // Only invalid if it is required
-				default:
-					return true
-				}
-			}
+		return URLs.filter { URL in
+			guard let pageInfo = self.loadedURLToPageInfo[URL] else { return false }
 			
-			return false
+			switch pageInfo.validateArea(validationArea) {
+			case .Valid:
+				return false
+			case .Missing:
+				return validationArea.isRequired // Only invalid if it is required
+			default:
+				return true
+			}
 		}
 	}
 }

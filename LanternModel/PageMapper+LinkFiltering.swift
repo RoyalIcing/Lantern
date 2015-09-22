@@ -18,7 +18,7 @@ public enum PageLinkFilter {
 
 extension PageMapper {
 	public func copyHTMLPageURLsFilteredBy(linkFilter: PageLinkFilter) -> [NSURL] {
-		var URLs = copyURLsWithBaseContentType(.LocalHTMLPage, withResponseType: .Successful)
+		let URLs = copyURLsWithBaseContentType(.LocalHTMLPage, withResponseType: .Successful)
 		
 		switch linkFilter {
 		case .IsLinkedByURL(let linkedByURL):

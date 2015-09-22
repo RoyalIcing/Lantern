@@ -263,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				B2054D8F1AF4780500DC2C00 /* Lantern.entitlements */,
+				B2054D731AF477C700DC2C00 /* Images.xcassets */,
 				B22B7D941AC6B9090026AEDB /* AppDelegate.swift */,
 				B22B7D9A1AC6B9090026AEDB /* Main.storyboard */,
 				B2E2693C1AE9E9200044BE04 /* MainView.storyboard */,
@@ -290,7 +291,6 @@
 				B23E29E91AE73DF6009A94E5 /* console.js */,
 				B22B7DB51AC6B98A0026AEDB /* Categories */,
 				B22B7DB11AC6B9860026AEDB /* Lantern-Bridging-Header.h */,
-				B2054D731AF477C700DC2C00 /* Images.xcassets */,
 				B2054D6D1AF477C700DC2C00 /* Supporting Files */,
 				B2D39B081AF601C7003D6738 /* code-sign-frameworks.sh */,
 			);
@@ -543,6 +543,8 @@
 		B22B7D871AC6B9090026AEDB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Burnt Caramel";
 				TargetAttributes = {
@@ -584,10 +586,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B22425F21AC8F8B200809EF0 /* LanternModel */,
-				B22425FC1AC8F8B200809EF0 /* LanternModelTests */,
 				B25033301AF5E5B0006A2AE7 /* Lantern */,
 				B2054D7B1AF477C700DC2C00 /* LanternTests */,
+				B22425F21AC8F8B200809EF0 /* LanternModel */,
+				B22425FC1AC8F8B200809EF0 /* LanternModelTests */,
 			);
 		};
 /* End PBXProject section */
@@ -660,7 +662,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ] ; then\n    exit 0\nfi\n\nLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Patrick Smith (9J837BGA64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/HoverlyticsModel.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/HoverlyticsModel.framework/Versions/A/Frameworks/Alamofire.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/HoverlyticsModel.framework/Versions/A/Frameworks/Ono.framework/Versions/A\"";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ] ; then\n    exit 0\nfi\n\nLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Patrick Smith (9J837BGA64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/LanternModel.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/LanternModel.framework/Versions/A/Frameworks/Alamofire.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/LanternModel.framework/Versions/A/Frameworks/Ono.framework/Versions/A\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

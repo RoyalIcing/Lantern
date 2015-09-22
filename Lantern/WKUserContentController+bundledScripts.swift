@@ -15,11 +15,11 @@ extension WKUserContentController {
 		assert(injectAtStart || injectAtEnd, "User script must either be injected at start or at end. Add injectAtStart: true or injectAtEnd: true")
 		
 		let scriptURL = NSBundle.mainBundle().URLForResource(scriptNameInBundle, withExtension: "js")!
-		let scriptSource = NSMutableString(contentsOfURL: scriptURL, usedEncoding: nil, error: nil)!
+		let scriptSource = try! NSMutableString(contentsOfURL: scriptURL, usedEncoding: nil)
 		
 		if let sourceReplacements = sourceReplacements {
 			func replaceInTemplate(find target: String, replace replacement: String) {
-				scriptSource.replaceOccurrencesOfString(target, withString: replacement, options: NSStringCompareOptions(0), range: NSMakeRange(0, scriptSource.length))
+				scriptSource.replaceOccurrencesOfString(target, withString: replacement, options: NSStringCompareOptions(rawValue: 0), range: NSMakeRange(0, scriptSource.length))
 			}
 			
 			for (placeholderID, value) in sourceReplacements {

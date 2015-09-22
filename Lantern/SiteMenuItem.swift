@@ -57,7 +57,7 @@ extension SiteMenuItem: UIChoiceRepresentative {
 	}
 }
 
-extension SiteMenuItem: DebugPrintable {
+extension SiteMenuItem: CustomDebugStringConvertible {
 	var debugDescription: String {
 		switch self {
 		case .Choice(let siteChoice):

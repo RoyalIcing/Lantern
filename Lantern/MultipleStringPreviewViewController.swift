@@ -43,7 +43,7 @@ class MultipleStringPreviewViewController: NSViewController {
 	
 	func reloadValues() {
 		// Stupid NSViewController
-		let view = self.view
+		_ = self.view
 		
 		tableView.reloadData()
 	}
@@ -125,7 +125,7 @@ extension MultipleStringPreviewViewController: NSTableViewDataSource, NSTableVie
 		
 		setUpTableCellView(cellView, tableColumn: nil, row: row, visualsAndInteraction: false)
 		
-		let tableColumn = tableView.tableColumns[0] as! NSTableColumn
+		let tableColumn = tableView.tableColumns[0] 
 		let cellWidth = tableColumn.width
 		cellView.setFrameSize(NSSize(width: cellWidth, height: 100.0))
 		cellView.layoutSubtreeIfNeeded()
@@ -157,7 +157,7 @@ extension MultipleStringPreviewViewController: NSTableViewDataSource, NSTableVie
 
 extension MultipleStringPreviewViewController: NSPopoverDelegate {
 	func popoverWillShow(notification: NSNotification) {
-		let popover = notification.object as! NSPopover
+		//let popover = notification.object as! NSPopover
 		//popover.appearance = NSAppearance(named: NSAppearanceNameVibrantDark)
 		//popover.appearance = NSAppearance(named: NSAppearanceNameLightContent)
 		//popover.appearance = .HUD

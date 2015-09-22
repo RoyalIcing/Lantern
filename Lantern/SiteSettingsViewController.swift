@@ -35,15 +35,15 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	}
 	
 	@IBAction func createSite(sender: NSButton) {
-		let (siteValues, error) = copySiteValuesFromUI()
-		if let siteValues = siteValues {
+		do {
+			let siteValues = try copySiteValuesFromUI()
 			modelManager.createSiteWithValues(siteValues)
 			mainState.siteChoice = .SavedSite(siteValues)
 			self.dismissController(nil)
 			prepareForReuse()
 		}
-		else if let error = error {
-			NSApplication.sharedApplication().presentError(error, modalForWindow: self.view.window!, delegate: nil, didPresentSelector: nil, contextInfo: nil)
+		catch {
+			NSApplication.sharedApplication().presentError(error as NSError, modalForWindow: self.view.window!, delegate: nil, didPresentSelector: nil, contextInfo: nil)
 		}
 	}
 	
@@ -55,39 +55,20 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	
 	func updateUIWithSiteValues(siteValues: SiteValues) {
 		// Make sure view has loaded
-		let view = self.view
+		_ = self.view
 		
 		nameField.stringValue = siteValues.name
-		homePageURLField.stringValue = siteValues.homePageURL.absoluteString!
+		homePageURLField.stringValue = siteValues.homePageURL.absoluteString
 	}
 	
-	func copySiteValuesFromUI(UUID: NSUUID? = nil) -> (SiteValues?, NSError?) {
+	func copySiteValuesFromUI(UUID UUID: NSUUID? = nil) throws -> SiteValues {
 		// Make sure view has loaded
-		let view = self.view
+		_ = self.view
 		
-		let errorDomain = "SiteSettingsViewController.validationErrorDomain"
+		let name = try ValidationError.validateString(nameField.stringValue, identifier: "Name")
+		let homePageURL = try ValidationError.validateURLString(homePageURLField.stringValue, identifier: "Home Page URL")
 		
-		let name = nameField.stringValue
-		let validatedName = ValidationError.validateString(name, identifier: "Name")
-		if let error = validatedName.error {
-			return (nil, error)
-		}
-		/*if let error = ValueValidation.InputtedString(name).validateReturningCocoaError {
-			return (nil, error)
-		}*/
-		
-		let homePageURLString = homePageURLField.stringValue
-		/*if let error = ValueValidation.InputtedURLString(name).validateReturningCocoaError {
-			return (nil, error)
-		}*/
-		let validatedHomePageURL = ValidationError.validateURLString(homePageURLString, identifier: "Home Page URL")
-		if let error = validatedHomePageURL.error {
-			return (nil, error)
-		}
-		let homePageURL = validatedHomePageURL.URL!
-		
-		let siteValues = SiteValues(name: name, homePageURL: homePageURL, UUID: UUID ?? NSUUID())
-		return (siteValues, nil)
+		return SiteValues(name: name, homePageURL: homePageURL, UUID: UUID ?? NSUUID())
 	}
 	
 	// MARK NSPopoverDelegate

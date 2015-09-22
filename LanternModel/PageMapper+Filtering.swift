@@ -29,7 +29,7 @@ public extension PageMapper {
 		}
 			// Else any response type: tally them up.
 		else if let responseTypeToURLCount = baseContentTypeToResponseTypeToURLCount[baseContentType] {
-			return reduce(responseTypeToURLCount, UInt(0), { (totalSoFar, dictIndex) -> UInt in
+			return responseTypeToURLCount.reduce(UInt(0), combine: { (totalSoFar, dictIndex) -> UInt in
 				let (responseType, URLCount) = dictIndex
 				return totalSoFar + URLCount
 			})
@@ -53,7 +53,7 @@ public extension PageMapper {
 	}
 	
 	public func copyURLsWithBaseContentType(type: BaseContentType, withResponseType responseType: PageResponseType) -> [NSURL] {
-		var URLs: [NSURL] = copyURLsWithBaseContentType(type)
+		let URLs: [NSURL] = copyURLsWithBaseContentType(type)
 		
 		return URLs.filter { (URL) in
 			if

@@ -66,7 +66,7 @@ public class SiteEssentialInfoRequest {
 		resourceRequests = [String: PageInfoRequest]()
 		resourceInfos = [String: PageInfo]()
 		
-		func addResourceRequest(#pathComponent: String, identifier: String? = nil) {
+		func addResourceRequest(pathComponent pathComponent: String, identifier: String? = nil) {
 			let identifier = identifier ?? pathComponent
 			
 			func requestCompletionHandler(info: PageInfo) {
