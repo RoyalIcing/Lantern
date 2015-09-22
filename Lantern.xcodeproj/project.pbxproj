@@ -586,10 +586,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B22425F21AC8F8B200809EF0 /* LanternModel */,
-				B22425FC1AC8F8B200809EF0 /* LanternModelTests */,
 				B25033301AF5E5B0006A2AE7 /* Lantern */,
 				B2054D7B1AF477C700DC2C00 /* LanternTests */,
+				B22425F21AC8F8B200809EF0 /* LanternModel */,
+				B22425FC1AC8F8B200809EF0 /* LanternModelTests */,
 			);
 		};
 /* End PBXProject section */
