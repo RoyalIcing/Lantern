@@ -51,13 +51,10 @@ public enum ValidationError: ErrorType {
 	}
 	
 	public static func validateString(string: String, identifier: String) throws -> String {
-		print("validateString \(string)")
 		let string = string.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
 		if string.isEmpty {
 			throw self.StringIsEmpty(string: string, identifier: identifier).cocoaError
 		}
-		
-		print("validateString b \(string)")
 		
 		return string
 	}
