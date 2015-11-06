@@ -54,7 +54,8 @@ enum CrawlerImageDownloadChoice: Int {
 }
 
 extension CrawlerImageDownloadChoice: UserDefaultsChoiceRepresentable {
-	static var defaultsKey = "crawlerPreferences.imageDownloadChoice"
+	static var identifier = "crawlerPreferences.imageDownloadChoice"
+	static var defaultValue: CrawlerImageDownloadChoice = .Total10MB
 }
 
 
@@ -72,14 +73,14 @@ class CrawlerPreferences {
 	
 	var imageDownloadChoice: CrawlerImageDownloadChoice = .Total10MB {
 		didSet {
-			ud.setIntChoice(imageDownloadChoice)
+			ud.setChoice(imageDownloadChoice)
 			
 			notify(.ImageDownloadChoiceDidChange)
 		}
 	}
 	
 	func updateFromDefaults() {
-		imageDownloadChoice = ud.intChoiceWithFallback(imageDownloadChoice)
+		imageDownloadChoice = ud.choice(CrawlerImageDownloadChoice)
 	}
 	
 	init() {

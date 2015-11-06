@@ -63,13 +63,13 @@ class BrowserMenuController: NSObject, NSUserInterfaceValidations {
 	func startObservingBrowserPreferences() {
 		browserPreferencesObserver = NotificationObserver<BrowserPreferences.Notification>(object: BrowserPreferences.sharedBrowserPreferences)
 		
-		browserPreferencesObserver.addObserver(.WidthChoiceDidChange) { notification in
+		browserPreferencesObserver.observe(.WidthChoiceDidChange) { notification in
 			self.updateWidthMenu()
 		}
 	}
 	
 	func stopObservingBrowserPreferences() {
-		browserPreferencesObserver.removeAllObservers()
+		browserPreferencesObserver.stopObserving()
 		browserPreferencesObserver = nil
 	}
 	

@@ -59,13 +59,13 @@ class CrawlerMenuController: NSObject, NSUserInterfaceValidations {
 	func startObservingCrawlerPreferences() {
 		crawlerPreferencesObserver = NotificationObserver<CrawlerPreferences.Notification>(object: CrawlerPreferences.sharedCrawlerPreferences)
 		
-		crawlerPreferencesObserver.addObserver(.ImageDownloadChoiceDidChange) { notification in
+		crawlerPreferencesObserver.observe(.ImageDownloadChoiceDidChange) { notification in
 			self.updateImageDownloadMenu()
 		}
 	}
 	
 	func stopObservingCrawlerPreferences() {
-		crawlerPreferencesObserver.removeAllObservers()
+		crawlerPreferencesObserver.stopObserving()
 		crawlerPreferencesObserver = nil
 	}
 	

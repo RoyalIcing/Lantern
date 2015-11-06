@@ -112,7 +112,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		
 		super.init()
 		
-		mainStateObserver.addObserver(.ChosenSiteDidChange) { [unowned self] notification in
+		mainStateObserver.observe(.ChosenSiteDidChange) { [unowned self] _ in
 			if let chosenSite = self.mainState.chosenSite {
 				let choice = SiteMenuItem.Choice(.SavedSite(chosenSite))
 				self.sitesPopUpButtonAssistant?.selectedUniqueIdentifier = choice.uniqueIdentifier
