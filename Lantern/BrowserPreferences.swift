@@ -49,7 +49,8 @@ enum BrowserWidthChoice: Int {
 }
 
 extension BrowserWidthChoice: UserDefaultsChoiceRepresentable {
-	static var defaultsKey = "browserPreferences.widthChoice"
+	static var identifier = "browserPreferences.widthChoice"
+	static var defaultValue: BrowserWidthChoice = .FullWidth
 }
 
 
@@ -68,14 +69,14 @@ class BrowserPreferences {
 	
 	var widthChoice: BrowserWidthChoice = .FullWidth {
 		didSet {
-			ud.setIntChoice(widthChoice)
+			ud.setChoice(widthChoice)
 			
 			notify(.WidthChoiceDidChange)
 		}
 	}
 	
 	func updateFromDefaults() {
-		widthChoice = ud.intChoiceWithFallback(widthChoice)
+		widthChoice = ud.choice(BrowserWidthChoice)
 	}
 	
 	init() {

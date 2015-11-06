@@ -51,7 +51,7 @@ public class PageViewController: NSViewController {
 	
 	func startObservingWebViewController() {
 		webViewControllerNotificationObserver = NotificationObserver<PageWebViewControllerNotification>(object: webViewController)
-		webViewControllerNotificationObserver.addObserver(.URLDidChange) { [weak self] notification in
+		webViewControllerNotificationObserver.observe(.URLDidChange) { [weak self] _ in
 			self?.navigatedURLDidChange()
 		}
 	}

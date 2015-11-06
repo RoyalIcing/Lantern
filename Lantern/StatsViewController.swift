@@ -308,13 +308,13 @@ class StatsViewController: NSViewController {
 	func startObservingCrawlerPreferences() {
 		crawlerPreferencesObserver = NotificationObserver<CrawlerPreferences.Notification>(object: crawlerPreferences)
 		
-		crawlerPreferencesObserver.addObserver(.ImageDownloadChoiceDidChange) { [weak self] notification in
+		crawlerPreferencesObserver.observe(.ImageDownloadChoiceDidChange) { [weak self] notification in
 			self?.updateMaximumImageDownload()
 		}
 	}
 	
 	func stopObservingCrawlerPreferences() {
-		crawlerPreferencesObserver.removeAllObservers()
+		crawlerPreferencesObserver.stopObserving()
 		crawlerPreferencesObserver = nil
 	}
 	

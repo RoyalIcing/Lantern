@@ -62,13 +62,13 @@ class ViewController: NSViewController
 	func startObservingBrowserPreferences() {
 		browserPreferencesObserver = NotificationObserver<BrowserPreferences.Notification>(object: mainState.browserPreferences)
 		
-		browserPreferencesObserver.addObserver(.WidthChoiceDidChange) { notification in
+		browserPreferencesObserver.observe(.WidthChoiceDidChange) { notification in
 			self.updatePreferredBrowserWidth()
 		}
 	}
 	
 	func stopObservingBrowserPreferences() {
-		browserPreferencesObserver.removeAllObservers()
+		browserPreferencesObserver.stopObserving()
 		browserPreferencesObserver = nil
 	}
 	
