@@ -87,7 +87,7 @@ extension PageResponseType {
 
 
 
-internal func URLIsExternal(URLToTest: NSURL, #localHost: String) -> Bool {
+internal func URLIsExternal(URLToTest: NSURL, localHost: String) -> Bool {
 	if let host = URLToTest.host {
 		if host.caseInsensitiveCompare(localHost) != .OrderedSame {
 			return true
