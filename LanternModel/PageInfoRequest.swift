@@ -143,7 +143,9 @@ class PageInfoRequestQueue {
 		activeRequests.append(infoRequest)
 		
 		// An Alamofire serializer to perform the parsing etc on the request’s background queue.
-		let serializer = GenericResponseSerializer<PageInfo> { URLRequest, response, data in
+		let serializer = ResponseSerializer<PageInfo, NSError> { URLRequest, response, data, error in
+			guard error == nil else { return .Failure(error!) }
+			
 			if let response = response {
 				let requestedURL = infoRequest.URL
 				let MIMEType = MIMETypeString(response.MIMEType)
@@ -167,7 +169,7 @@ class PageInfoRequestQueue {
 			else {
 				let failureReason = "Data could not be serialized. Input data was nil."
 				let error = Alamofire.Error.errorWithCode(Alamofire.Error.Code.DataSerializationFailed, failureReason: failureReason)
-				return .Failure(data, error)
+				return .Failure(error)
 			}
 		}
 		
@@ -175,8 +177,8 @@ class PageInfoRequestQueue {
 		let requestedURL = infoRequest.URL
 		infoRequest.request = requestManager
 			.request(infoRequest.method, requestedURL)
-			.response(responseSerializer: serializer, completionHandler: { (URLRequest, response, result) in
-				if case let .Success(info) = result {
+			.response(responseSerializer: serializer, completionHandler: { response in
+				if case let .Success(info) = response.result {
 					self.activeRequestDidComplete(infoRequest, withInfo: info)
 				}
 		})
