@@ -9,7 +9,7 @@
 import Foundation
 
 
-let JUST_USE_FINAL_URLS = true
+private let JUST_USE_FINAL_URLS = true
 
 
 public struct MappableURL {
@@ -19,15 +19,15 @@ public struct MappableURL {
 
 extension MappableURL {
 	public init?(primaryURL: NSURL) {
-		if let primaryURL = conformURL(primaryURL)?.absoluteURL {
-			if let localHost = primaryURL.host {
-				self.primaryURL = primaryURL
-				self.localHost = localHost
-				return
-			}
+		guard let
+			primaryURL = conformURL(primaryURL)?.absoluteURL,
+			localHost = primaryURL.host
+		else {
+			return nil
 		}
 		
-		return nil
+		self.primaryURL = primaryURL
+		self.localHost = localHost
 	}
 }
 
