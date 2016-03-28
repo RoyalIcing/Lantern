@@ -417,7 +417,7 @@ public struct PageContentInfo {
 
 
 
-public struct PageInfo {
+public struct ResourceInfo {
 	public let requestedURL: NSURL
 	public let finalURL: NSURL?
 	public let statusCode: Int
@@ -427,6 +427,8 @@ public struct PageInfo {
 	public let byteCount: Int?
 	public let contentInfo: PageContentInfo?
 }
+
+public typealias PageInfo = ResourceInfo
 
 
 public struct RequestRedirectionInfo {
