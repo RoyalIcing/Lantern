@@ -1,0 +1,10 @@
+framework module Grain {
+  umbrella header "Grain.h"
+
+  export *
+  module * { export * }
+}
+
+module Grain.Swift {
+    header "Grain-Swift.h"
+}
