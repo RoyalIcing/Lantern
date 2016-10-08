@@ -38,7 +38,7 @@ public class ErrorReceiver {
 }
 
 
-enum SiteListProgression : StageProtocol {
+enum SitesLoadingProgression : StageProtocol {
 	case none
 	case loadFromFile(fileURL: URL)
 	case jsonData(Data)
@@ -51,7 +51,7 @@ enum SiteListProgression : StageProtocol {
 		case invalidJSON(json: Any)
 	}
 	
-	func next() -> Deferred<SiteListProgression> {
+	func next() -> Deferred<SitesLoadingProgression> {
 		switch self {
 		case let .loadFromFile(fileURL):
 			return .unit{
@@ -120,50 +120,120 @@ enum SiteListProgression : StageProtocol {
 	}
 }
 
+enum SitesSavingProgression : StageProtocol {
+	case saveToFile(fileURL: URL, sites: [SiteValues])
+	case serializeJSON([String: Any], fileURL: URL)
+	case writeData(Data, fileURL: URL)
+	case savedFile(fileURL: URL)
+	
+	typealias Result = URL
+	
+	enum ErrorKind : Error {
+		case invalidJSON
+		case jsonSerialization(error: Error)
+		case fileWriting(error: Error)
+	}
+	
+	func next() -> Deferred<SitesSavingProgression> {
+		switch self {
+		case let .saveToFile(fileURL, sites):
+			return .unit{
+				let json = [
+					"items": sites.map{ $0.toJSON() }
+				] as [String: [[String: Any]]]
+				return .serializeJSON(json, fileURL: fileURL)
+			}
+		case let .serializeJSON(json, fileURL):
+			return .unit{
+				do {
+					if !JSONSerialization.isValidJSONObject(json) {
+						throw ErrorKind.invalidJSON
+					}
+					return try .writeData(JSONSerialization.data(withJSONObject: json), fileURL: fileURL)
+				}
+				catch {
+					throw ErrorKind.jsonSerialization(error: error)
+				}
+			}
+		case let .writeData(data, fileURL):
+			return .unit{
+				try data.write(to: fileURL, options: .atomic)
+				return .savedFile(fileURL: fileURL)
+			}
+		case .savedFile:
+			completedStage(self)
+		}
+	}
+	
+	var result: Result? {
+		guard case let .savedFile(fileURL) = self else { return nil }
+		return fileURL
+	}
+}
+
 public class ModelManager {
 	var isAvailable = false
 	
 	public let errorReceiver = ErrorReceiver()
 	
 	fileprivate var storeDirectory: SystemDirectory
+	fileprivate var sitesURL: URL?
 	
-	fileprivate var siteListProgression: SiteListProgression
+	fileprivate var sitesLoadingProgression: SitesLoadingProgression = .none {
+		didSet {
+			let progression = sitesLoadingProgression
+			notifyAllSitesDidChange()
+			
+			switch progression {
+			case .loadFromFile:
+				progression.execute { [weak self] useResult in
+					guard let receiver = self else { return }
+					do {
+						let sites = try useResult()
+						receiver.sitesLoadingProgression = .sitesList(sitesList: sites, needsSaving: false)
+					}
+					catch let error {
+						print("Error loading local sites \(error)")
+					}
+				}
+			case let .sitesList(sites, needsSaving):
+				if needsSaving, let sitesURL = sitesURL {
+					sitesSavingProgression = .saveToFile(fileURL: sitesURL, sites: sites)
+				}
+			default: break
+			}
+		}
+	}
+	fileprivate var sitesSavingProgression: SitesSavingProgression? {
+		didSet(newValue) {
+			sitesSavingProgression?.execute { useResult in
+				do {
+					let _ = try useResult()
+				}
+				catch let error {
+					print("Error saving local sites \(error)")
+				}
+			}
+		}
+	}
 	
 	public var allSites: [SiteValues]? {
-		return siteListProgression.result
+		return sitesLoadingProgression.result
 	}
 	
 	
 	init() {
-		siteListProgression = .none
-		
 		storeDirectory = SystemDirectory(pathComponents: ["v1"], inUserDirectory: .applicationSupportDirectory, errorReceiver: errorReceiver.receiveError, useBundleIdentifier: true)
 		storeDirectory.useOnQueue(DispatchQueue.main) { directoryURL in
 			let jsonURL = directoryURL.appendingPathComponent("sites.json")
+			self.sitesURL = jsonURL
 			
-			let siteListProgression = SiteListProgression.loadFromFile(fileURL: jsonURL)
-			NSLog("LOADING SITES")
-			siteListProgression.execute { [weak self] useResult in
-				NSLog("LOADED SITES")
-				guard let receiver = self else { return }
-				do {
-					print("Sites:")
-					let sites = try useResult()
-					print(sites)
-					receiver.siteListProgression = .sitesList(sitesList: sites, needsSaving: false)
-					receiver.notifyAllSitesDidChange()
-				}
-				catch let error {
-					print("Error loading local sites \(error)")
-				}
-			}
-			
-			self.siteListProgression = siteListProgression
+			self.sitesLoadingProgression = SitesLoadingProgression.loadFromFile(fileURL: jsonURL)
 		}
 
 	}
 	
-	open class var sharedManager: ModelManager {
+	public class var sharedManager: ModelManager {
 		struct Helper {
 			static let sharedManager = ModelManager()
 		}
@@ -178,7 +248,7 @@ public class ModelManager {
 		
 	}
 	
-	fileprivate func mainQueue_notify(_ identifier: ModelManagerNotification, userInfo: [String:AnyObject]? = nil) {
+	fileprivate func mainQueue_notify(_ identifier: ModelManagerNotification, userInfo: [String: Any]? = nil) {
 		let nc = NotificationCenter.default
 		nc.post(name: Notification.Name(rawValue: identifier.notificationName), object: self, userInfo: userInfo)
 	}
@@ -187,15 +257,15 @@ public class ModelManager {
 		self.mainQueue_notify(.allSitesDidChange)
 	}
 	
-	open func createSiteWithValues(_ siteValues: SiteValues) {
-		siteListProgression.add(siteValues)
+	public func createSiteWithValues(_ siteValues: SiteValues) {
+		sitesLoadingProgression.add(siteValues)
 	}
 	
-	open func updateSiteWithUUID(_ uuid: Foundation.UUID, withValues siteValues: SiteValues) {
-		siteListProgression.update(siteValues, uuid: uuid)
+	public func updateSiteWithUUID(_ uuid: Foundation.UUID, withValues siteValues: SiteValues) {
+		sitesLoadingProgression.update(siteValues, uuid: uuid)
 	}
 	
-	open func removeSiteWithUUID(_ uuid: Foundation.UUID) {
-		siteListProgression.remove(uuid: uuid)
+	public func removeSiteWithUUID(_ uuid: Foundation.UUID) {
+		sitesLoadingProgression.remove(uuid: uuid)
 	}
 }

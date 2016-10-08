@@ -69,9 +69,9 @@ extension SiteValues {
 	
 	fileprivate func updateStoredValues(_ values: ValueStorable) -> ValueStorable {
 		var values = values
-		values["name"] = name as AnyObject?
-		values["homePageURL"] = homePageURL.absoluteString as AnyObject?
-		values["UUID"] = UUID.uuidString as AnyObject?
+		values["name"] = name
+		values["homePageURL"] = homePageURL.absoluteString
+		values["UUID"] = UUID.uuidString
 		
 		return values
 	}
@@ -83,8 +83,11 @@ extension SiteValues {
 		self.init(fromStoredValues: jsonValues)
 	}
 	
-	func createJSON() -> [String: Any] {
-		let jsonValues = updateStoredValues(RecordJSON()) as! RecordJSON
-		return jsonValues.dictionary
+	func toJSON() -> [String: Any] {
+		return [
+			"name": name,
+			"homePageURL": homePageURL.absoluteString,
+			"UUID": UUID.uuidString
+		]
 	}
 }
