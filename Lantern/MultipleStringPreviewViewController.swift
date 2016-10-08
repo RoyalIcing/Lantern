@@ -1,9 +1,9 @@
 //
-//  MultipleStringPreviewViewController.swift
-//  Hoverlytics
+//	MultipleStringPreviewViewController.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 3/05/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 3/05/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Cocoa
@@ -19,10 +19,10 @@ class MultipleStringPreviewViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		tableView.setDataSource(self)
-		tableView.setDelegate(self)
+		tableView.dataSource = self
+		tableView.delegate = self
 		
-		measuringTableCellView = tableView.makeViewWithIdentifier("stringValue", owner: self) as! MultipleStringPreviewTableCellView
+		measuringTableCellView = tableView.make(withIdentifier: "stringValue", owner: self) as! MultipleStringPreviewTableCellView
 		
 		view.appearance = NSAppearance(named: NSAppearanceNameAqua)
 	}
@@ -31,7 +31,7 @@ class MultipleStringPreviewViewController: NSViewController {
 		// Row Menu
 		itemMenu = NSMenu(title: "Values Menu")
 		
-		let copyValueItem = itemMenu.addItemWithTitle("Copy Value", action: "copyValueForSelectedRow:", keyEquivalent: "")!
+		let copyValueItem = itemMenu.addItem(withTitle: "Copy Value", action: #selector(MultipleStringPreviewViewController.copyValueForSelectedRow(_:)), keyEquivalent: "")
 		copyValueItem.target = self
 	}
 	
@@ -48,32 +48,32 @@ class MultipleStringPreviewViewController: NSViewController {
 		tableView.reloadData()
 	}
 	
-	override func keyDown(theEvent: NSEvent) {
+	override func keyDown(with theEvent: NSEvent) {
 		if theEvent.burnt_isSpaceKey {
 			// Just like QuickLook, use space to dismiss.
-			dismissController(nil)
+			dismiss(nil)
 		}
 	}
 }
 
 extension MultipleStringPreviewViewController {
 	class func instantiateFromStoryboard() -> MultipleStringPreviewViewController {
-		return NSStoryboard.lantern_contentPreviewStoryboard.instantiateControllerWithIdentifier("String Value View Controller") as! MultipleStringPreviewViewController
+		return NSStoryboard.lantern_contentPreviewStoryboard.instantiateController(withIdentifier: "String Value View Controller") as! MultipleStringPreviewViewController
 	}
 }
 
 extension MultipleStringPreviewViewController {
-	@IBAction func copyValueForSelectedRow(menuItem: NSMenuItem) {
+	@IBAction func copyValueForSelectedRow(_ menuItem: NSMenuItem) {
 		let row = tableView.clickedRow
 		if row != -1 {
 			performCopyValueForItemAtRow(row)
 		}
 	}
 	
-	func performCopyValueForItemAtRow(row: Int) {
+	func performCopyValueForItemAtRow(_ row: Int) {
 		switch validatedStringValues[row] {
-		case .ValidString(let stringValue):
-			let pasteboard = NSPasteboard.generalPasteboard()
+		case .validString(let stringValue):
+			let pasteboard = NSPasteboard.general()
 			pasteboard.clearContents()
 
 			pasteboard.declareTypes([NSStringPboardType], owner: nil)
@@ -85,13 +85,13 @@ extension MultipleStringPreviewViewController {
 }
 
 extension MultipleStringPreviewViewController: NSTableViewDataSource, NSTableViewDelegate {
-	func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+	func numberOfRows(in tableView: NSTableView) -> Int {
 		return validatedStringValues.count
 	}
 	
-	func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
+	func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
 		switch validatedStringValues[row] {
-		case .ValidString(let stringValue):
+		case .validString(let stringValue):
 			return stringValue
 		default:
 			break
@@ -100,7 +100,7 @@ extension MultipleStringPreviewViewController: NSTableViewDataSource, NSTableVie
 		return nil
 	}
 	
-	func setUpTableCellView(view: MultipleStringPreviewTableCellView, tableColumn: NSTableColumn?, row: Int, visualsAndInteraction: Bool = true) {
+	func setUpTableCellView(_ view: MultipleStringPreviewTableCellView, tableColumn: NSTableColumn?, row: Int, visualsAndInteraction: Bool = true) {
 		let validatedStringValue = validatedStringValues[row]
 		
 		let textField = view.textField!
@@ -110,38 +110,38 @@ extension MultipleStringPreviewViewController: NSTableViewDataSource, NSTableVie
 		indexField.stringValue = String(row + 1) // 1-based index
 		
 		if visualsAndInteraction {
-			let textColor = NSColor.textColor()
+			let textColor = NSColor.textColor
 			
-			indexField.textColor = textColor.colorWithAlphaComponent(0.3)
+			indexField.textColor = textColor.withAlphaComponent(0.3)
 			
-			textField.textColor = textColor.colorWithAlphaComponent(validatedStringValue.alphaValueForPresentation)
+			textField.textColor = textColor.withAlphaComponent(validatedStringValue.alphaValueForPresentation)
 			
 			view.menu = itemMenu
 		}
 	}
 	
-	func tableView(tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+	func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
 		let cellView = measuringTableCellView
 		
-		setUpTableCellView(cellView, tableColumn: nil, row: row, visualsAndInteraction: false)
+		setUpTableCellView(cellView!, tableColumn: nil, row: row, visualsAndInteraction: false)
 		
 		let tableColumn = tableView.tableColumns[0] 
 		let cellWidth = tableColumn.width
-		cellView.setFrameSize(NSSize(width: cellWidth, height: 100.0))
-		cellView.layoutSubtreeIfNeeded()
+		cellView?.setFrameSize(NSSize(width: cellWidth, height: 100.0))
+		cellView?.layoutSubtreeIfNeeded()
 		
-		let textField = cellView.textField!
-		textField.preferredMaxLayoutWidth = textField.bounds.width
+		let textField = cellView?.textField!
+		textField?.preferredMaxLayoutWidth = (textField?.bounds.width)!
 		
 		let extraPadding: CGFloat = 5.0 + 5.0
 		
-		let height = textField.intrinsicContentSize.height + extraPadding
+		let height = (textField?.intrinsicContentSize.height)! + extraPadding
 		
 		return height
 	}
 	
-	func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
-		if let view = tableView.makeViewWithIdentifier("stringValue", owner: self) as? MultipleStringPreviewTableCellView {
+	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+		if let view = tableView.make(withIdentifier: "stringValue", owner: self) as? MultipleStringPreviewTableCellView {
 			setUpTableCellView(view, tableColumn: tableColumn, row: row)
 			
 			return view
@@ -150,13 +150,13 @@ extension MultipleStringPreviewViewController: NSTableViewDataSource, NSTableVie
 		return nil
 	}
 	
-	func tableView(tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+	func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
 		return false
 	}
 }
 
 extension MultipleStringPreviewViewController: NSPopoverDelegate {
-	func popoverWillShow(notification: NSNotification) {
+	func popoverWillShow(_ notification: Notification) {
 		//let popover = notification.object as! NSPopover
 		//popover.appearance = NSAppearance(named: NSAppearanceNameVibrantDark)
 		//popover.appearance = NSAppearance(named: NSAppearanceNameLightContent)

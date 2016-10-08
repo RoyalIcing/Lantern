@@ -1,9 +1,9 @@
 //
-//  ONOXMLDocument+StringEncoding.swift
-//  Hoverlytics
+//	ONOXMLDocument+StringEncoding.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 29/04/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 29/04/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
@@ -11,11 +11,11 @@ import Ono
 
 
 extension ONOXMLDocument {
-	func stringEncodingWithFallback(fallback: NSStringEncoding = NSUTF8StringEncoding) -> NSStringEncoding {
+	func stringEncodingWithFallback(_ fallback: String.Encoding = String.Encoding.utf8) -> String.Encoding {
 		var stringEncoding = self.stringEncoding
 		if stringEncoding == 0 {
-			stringEncoding = fallback
+			stringEncoding = fallback.rawValue
 		}
-		return stringEncoding
+		return String.Encoding(rawValue: stringEncoding)
 	}
 }

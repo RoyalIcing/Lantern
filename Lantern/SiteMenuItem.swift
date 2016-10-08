@@ -1,9 +1,9 @@
 //
-//  SiteMenuItem.swift
-//  Hoverlytics
+//	SiteMenuItem.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 1/05/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 1/05/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
@@ -12,24 +12,24 @@ import BurntCocoaUI
 
 
 enum SiteMenuItem {
-	case Choice(SiteChoice)
-	case LoadingSavedSites
-	case NoSavedSitesYet
+	case choice(SiteChoice)
+	case loadingSavedSites
+	case noSavedSitesYet
 }
 
 extension SiteMenuItem: UIChoiceRepresentative {
 	var title: String {
 		switch self {
-		case .Choice(let siteChoice):
+		case .choice(let siteChoice):
 			switch siteChoice {
-			case .SavedSite(let site):
+			case .savedSite(let site):
 				return site.name
-			case .Custom:
+			case .custom:
 				return "Enter URL Below"
 			}
-		case .LoadingSavedSites:
+		case .loadingSavedSites:
 			return "(Loading Saved Sites)"
-		case .NoSavedSitesYet:
+		case .noSavedSitesYet:
 			return "(No Saved Sites Yet)"
 		}
 	}
@@ -42,16 +42,16 @@ extension SiteMenuItem: UIChoiceRepresentative {
 	
 	var uniqueIdentifier: UniqueIdentifier {
 		switch self {
-		case .Choice(let siteChoice):
+		case .choice(let siteChoice):
 			switch siteChoice {
-			case .SavedSite(let site):
-				return site.UUID.UUIDString
-			case .Custom:
+			case .savedSite(let site):
+				return site.UUID.uuidString
+			case .custom:
 				return "Custom"
 			}
-		case .LoadingSavedSites:
+		case .loadingSavedSites:
 			return "LoadingSavedSites"
-		case .NoSavedSitesYet:
+		case .noSavedSitesYet:
 			return "NoSavedSitesYet"
 		}
 	}
@@ -60,10 +60,10 @@ extension SiteMenuItem: UIChoiceRepresentative {
 extension SiteMenuItem: CustomDebugStringConvertible {
 	var debugDescription: String {
 		switch self {
-		case .Choice(let siteChoice):
+		case .choice(let siteChoice):
 			switch siteChoice {
-			case .SavedSite(let site):
-				return "\(site.name) \(site.UUID.UUIDString)"
+			case .savedSite(let site):
+				return "\(site.name) \(site.UUID.uuidString)"
 			default:
 				break
 			}

@@ -1,9 +1,9 @@
 //
-//  ValidatedStringValue+Presentation.swift
-//  Hoverlytics
+//	ValidatedStringValue+Presentation.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 3/05/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 3/05/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Cocoa
@@ -15,7 +15,7 @@ extension ValidatedStringValue {
 	
 	var alphaValueForPresentation: CGFloat {
 		switch self {
-		case .ValidString:
+		case .validString:
 			return 1.0
 		default:
 			return 0.3
@@ -24,17 +24,17 @@ extension ValidatedStringValue {
 	
 	var stringValueForPresentation: String {
 		switch self {
-		case .ValidString(let stringValue):
+		case .validString(let stringValue):
 			return stringValue
-		case .NotRequested:
+		case .notRequested:
 			return "(not requested)"
-		case .Missing:
+		case .missing:
 			return "(none)"
-		case .Empty:
+		case .empty:
 			return "(empty)"
-		case .Multiple:
+		case .multiple:
 			return "(multiple)"
-		case .Invalid:
+		case .invalid:
 			return "(invalid)"
 		}
 	}

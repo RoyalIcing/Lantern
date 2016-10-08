@@ -1,9 +1,9 @@
 //
-//  BrowserMenuAssistant.swift
-//  Hoverlytics
+//	BrowserMenuAssistant.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 11/05/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 11/05/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Cocoa
@@ -33,14 +33,14 @@ class BrowserMenuController: NSObject, NSUserInterfaceValidations {
 		
 		widthMenuItemsAssistant = PlaceholderMenuItemAssistant<BrowserWidthChoice>(placeholderMenuItem: browserWidthPlaceholderMenuItem)
 		widthMenuItemsAssistant.menuItemRepresentatives = [
-			.SlimMobile,
-			.MediumMobile,
-			.MediumTabletPortrait,
-			.MediumTabletLandscape,
-			.FullWidth
+			.slimMobile,
+			.mediumMobile,
+			.mediumTabletPortrait,
+			.mediumTabletLandscape,
+			.fullWidth
 		]
 		widthMenuItemsAssistant.customization.actionAndTarget = { [weak self] widthChoice in
-			return (action: "changeWidthChoice:", target: self)
+			return (action: #selector(BrowserMenuController.changeWidthChoice(_:)), target: self)
 		}
 		widthMenuItemsAssistant.customization.state = { widthChoice in
 			let chosenWidthChoice = BrowserPreferences.sharedBrowserPreferences.widthChoice
@@ -73,16 +73,16 @@ class BrowserMenuController: NSObject, NSUserInterfaceValidations {
 		browserPreferencesObserver = nil
 	}
 	
-	@IBAction func changeWidthChoice(sender: AnyObject?) {
+	@IBAction func changeWidthChoice(_ sender: AnyObject?) {
 		if let
 			menuItem = sender as? NSMenuItem,
-			widthChoice = widthMenuItemsAssistant.itemRepresentativeForMenuItem(menuItem)
+			let widthChoice = widthMenuItemsAssistant.itemRepresentative(for: menuItem)
 		{
 			BrowserPreferences.sharedBrowserPreferences.widthChoice = widthChoice
 		}
 	}
 	
-	@objc func validateUserInterfaceItem(anItem: NSValidatedUserInterfaceItem) -> Bool {
+	@objc func validateUserInterfaceItem(_ anItem: NSValidatedUserInterfaceItem) -> Bool {
 		return true
 	}
 }

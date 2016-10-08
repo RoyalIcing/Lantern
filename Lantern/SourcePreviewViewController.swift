@@ -1,9 +1,9 @@
 //
-//  SourcePreviewViewController.swift
-//  Hoverlytics
+//	SourcePreviewViewController.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 27/04/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 27/04/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Cocoa
@@ -17,7 +17,7 @@ enum SourcePreviewTabItemSection: String {
 	
 	var stringValue: String { return rawValue }
 	
-	func titleWithPageInfo(pageInfo: PageInfo) -> String {
+	func titleWithPageInfo(_ pageInfo: PageInfo) -> String {
 		switch self {
 		case .Main:
 			if let MIMEType = pageInfo.MIMEType {
@@ -45,7 +45,7 @@ class SourcePreviewTabViewController: NSTabViewController {
 	var pageInfo: PageInfo! {
 		didSet {
 			switch pageInfo.baseContentType {
-			case .LocalHTMLPage:
+			case .localHTMLPage:
 				updateForHTMLPreview()
 			default:
 				updateForGeneralPreview()
@@ -53,7 +53,7 @@ class SourcePreviewTabViewController: NSTabViewController {
 		}
 	}
 	
-	func updateWithSections(sections: [SourcePreviewTabItemSection]) {
+	func updateWithSections(_ sections: [SourcePreviewTabItemSection]) {
 		let tabViewItems = sections.map { section in
 			self.newSourcePreviewTabViewItem(section: section)
 		}
@@ -80,12 +80,12 @@ class SourcePreviewTabViewController: NSTabViewController {
 		updateWithSections([.HTMLHead, .HTMLBody])
 	}
 	
-	func newSourcePreviewTabViewItem(section section: SourcePreviewTabItemSection) -> NSTabViewItem {
+	func newSourcePreviewTabViewItem(section: SourcePreviewTabItemSection) -> NSTabViewItem {
 		let item = NSTabViewItem(identifier: section.stringValue)
 		
 		let vc = newSourcePreviewController()
 		vc.wantsToDismiss = {
-			self.dismissController(nil)
+			self.dismiss(nil)
 		}
 		item.viewController = vc
 		
@@ -94,10 +94,10 @@ class SourcePreviewTabViewController: NSTabViewController {
 	}
 	
 	func newSourcePreviewController() -> SourcePreviewViewController {
-		return NSStoryboard.lantern_contentPreviewStoryboard.instantiateControllerWithIdentifier("Source Preview View Controller") as! SourcePreviewViewController
+		return NSStoryboard.lantern_contentPreviewStoryboard.instantiateController(withIdentifier: "Source Preview View Controller") as! SourcePreviewViewController
 	}
 	
-	func updateSourceTextForSection(section: SourcePreviewTabItemSection, tabViewItem: NSTabViewItem) {
+	func updateSourceTextForSection(_ section: SourcePreviewTabItemSection, tabViewItem: NSTabViewItem) {
 		let vc = tabViewItem.viewController as! SourcePreviewViewController
 		
 		if let contentInfo = self.pageInfo.contentInfo {
@@ -115,38 +115,38 @@ class SourcePreviewTabViewController: NSTabViewController {
 		}
 	}
 	
-	func setSourceText(sourceText: String?, forSourcePreviewViewController vc: SourcePreviewViewController) {
+	func setSourceText(_ sourceText: String?, forSourcePreviewViewController vc: SourcePreviewViewController) {
 		vc.sourceText = sourceText ?? "(None)"
 	}
 	
-	override func tabView(tabView: NSTabView, willSelectTabViewItem tabViewItem: NSTabViewItem?) {
+	override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
 		if let
 			tabViewItem = tabViewItem,
-			identifier = tabViewItem.identifier as? String,
-			section = SourcePreviewTabItemSection(rawValue: identifier)
+			let identifier = tabViewItem.identifier as? String,
+			let section = SourcePreviewTabItemSection(rawValue: identifier)
 		{
 			updateSourceTextForSection(section, tabViewItem: tabViewItem)
 		}
 	}
 	
-	override func keyDown(theEvent: NSEvent) {
+	override func keyDown(with theEvent: NSEvent) {
 		if theEvent.burnt_isSpaceKey {
 			// Just like QuickLook, use space to dismiss.
-			dismissController(nil)
+			dismiss(nil)
 		}
 	}
 }
 
 extension SourcePreviewTabViewController: NSPopoverDelegate {
-	func popoverWillShow(notification: NSNotification) {
+	func popoverWillShow(_ notification: Notification) {
 		let popover = notification.object as! NSPopover
 		popover.appearance = NSAppearance(named: NSAppearanceNameVibrantDark)
 		//popover.appearance = NSAppearance(named: NSAppearanceNameLightContent)
 		//popover.appearance = .HUD
 	}
 	
-	func popoverDidShow(notification: NSNotification) {
-		if let window = view.window where selectedTabViewItemIndex != -1 {
+	func popoverDidShow(_ notification: Notification) {
+		if let window = view.window , selectedTabViewItemIndex != -1 {
 			let tabViewItem = tabViewItems[selectedTabViewItemIndex] 
 			let vc = tabViewItem.viewController as! SourcePreviewViewController
 			window.makeFirstResponder(vc.textView)
@@ -172,7 +172,7 @@ class SourcePreviewViewController: NSViewController {
 	
 	let defaultTextAttributes: [String: AnyObject] = [
 		NSFontAttributeName: NSFont(name: "Menlo", size: 11.0)!,
-		NSForegroundColorAttributeName: NSColor.highlightColor()
+		NSForegroundColorAttributeName: NSColor.highlightColor
 	]
 	
 	var sourceText: String! {
@@ -182,7 +182,7 @@ class SourcePreviewViewController: NSViewController {
 			if let textStorage = textView.textStorage {
 				let attributes = defaultTextAttributes
 				let newAttributedString = NSAttributedString(string: sourceText, attributes:attributes)
-				textStorage.replaceCharactersInRange(NSMakeRange(0, textStorage.length), withAttributedString: newAttributedString)
+				textStorage.replaceCharacters(in: NSMakeRange(0, textStorage.length), with: newAttributedString)
 			}
 		}
 	}
@@ -193,12 +193,12 @@ class SourcePreviewTextView: NSTextView {
 	
 	var wantsToDismiss: (() -> Void)?
 	
-	override func keyDown(theEvent: NSEvent) {
+	override func keyDown(with theEvent: NSEvent) {
 		if theEvent.burnt_isSpaceKey {
 			wantsToDismiss?()
 		}
 		else {
-			super.keyDown(theEvent)
+			super.keyDown(with: theEvent)
 		}
 	}
 }

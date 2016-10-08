@@ -1,14 +1,14 @@
 //
-//  ModelManager.swift
-//  Hoverlytics
+//	ModelManager.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 31/03/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 31/03/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
 import BurntFoundation
-import BurntList
+import Grain
 
 
 enum RecordType: String {
@@ -21,7 +21,7 @@ enum RecordType: String {
 
 
 public enum ModelManagerNotification: String {
-	case AllSitesDidChange = "LanternModel.ModelManager.AllSitesDidChangeNotification"
+	case allSitesDidChange = "LanternModel.ModelManager.AllSitesDidChangeNotification"
 	
 	public var notificationName: String {
 		return self.rawValue
@@ -30,73 +30,147 @@ public enum ModelManagerNotification: String {
 
 
 public class ErrorReceiver {
-	public var errorCallback: ((error: NSError) -> Void)?
+	open var errorCallback: ((_ error: NSError) -> Void)?
 	
-	func receiveError(error: NSError) {
-		errorCallback?(error: error)
+	func receiveError(_ error: NSError) {
+		errorCallback?(error)
 	}
 }
 
+
+enum SiteListProgression : StageProtocol {
+	case none
+	case loadFromFile(fileURL: URL)
+	case jsonData(Data)
+	case json(Any)
+	case sitesList(sitesList: [SiteValues], needsSaving: Bool)
+	
+	typealias Result = [SiteValues]
+		
+	enum ErrorKind : Error {
+		case invalidJSON(json: Any)
+	}
+	
+	func next() -> Deferred<SiteListProgression> {
+		switch self {
+		case let .loadFromFile(fileURL):
+			return .unit{
+				try .jsonData(Data(contentsOf: fileURL, options: .mappedIfSafe))
+			}
+		case let .jsonData(data):
+			return .unit{
+				try .json(JSONSerialization.jsonObject(with: data, options: []))
+			}
+		case let .json(json):
+			return .unit{
+				guard
+					let jsonDictionary = json as? [String: Any],
+					let itemsJSON = jsonDictionary["items"] as? [Any]
+					else { throw ErrorKind.invalidJSON(json: json) }
+				let sitesList = try itemsJSON.map { (json: Any) -> SiteValues in
+					guard let jsonObject = json as? [String: Any]
+						else { throw ErrorKind.invalidJSON(json: json) }
+					
+					return SiteValues(fromJSON: jsonObject)
+				}
+				return .sitesList(sitesList: sitesList, needsSaving: false)
+			}
+		case .sitesList, .none:
+			completedStage(self)
+		}
+	}
+	
+	var result: Result? {
+		guard case let .sitesList(result, _) = self else { return nil }
+		return result
+	}
+	
+	mutating func add(_ siteValues: SiteValues) {
+		switch self {
+		case var .sitesList(sitesList, _):
+			sitesList.append(siteValues)
+			self = .sitesList(sitesList: sitesList, needsSaving: true)
+		default:
+			break
+		}
+	}
+	
+	mutating func update(_ siteValues: SiteValues, uuid: Foundation.UUID) {
+		switch self {
+		case var .sitesList(sitesList, _):
+			guard let index = sitesList.index(where: { $0.UUID == uuid })
+				else { return }
+			sitesList[index] = siteValues
+			self = .sitesList(sitesList: sitesList, needsSaving: true)
+		default:
+			break
+		}
+	}
+	
+	mutating func remove(uuid: Foundation.UUID) {
+		switch self {
+		case var .sitesList(sitesList, _):
+			guard let index = sitesList.index(where: { $0.UUID == uuid })
+				else { return }
+			sitesList.remove(at: index)
+			self = .sitesList(sitesList: sitesList, needsSaving: true)
+		default:
+			break
+		}
+	}
+}
 
 public class ModelManager {
 	var isAvailable = false
 	
 	public let errorReceiver = ErrorReceiver()
 	
-	private var storeDirectory: SystemDirectory
+	fileprivate var storeDirectory: SystemDirectory
 	
-	private var sitesList: ArrayList<SiteValues>?
-	private var sitesListStore: ListJSONFileStore<ArrayList<SiteValues>>?
-	private var sitesListObserver: ListObserverOf<SiteValues>!
+	fileprivate var siteListProgression: SiteListProgression
+	
 	public var allSites: [SiteValues]? {
-		return sitesList?.allItems
+		return siteListProgression.result
 	}
 	
 	
 	init() {
-		sitesList = ArrayList(items: [SiteValues]())
+		siteListProgression = .none
 		
-		let listJSONTransformer = DictionaryKeyJSONTransformer(dictionaryKey: "items", objectCoercer: { (value: [AnyObject]) in
-			value as NSArray
-		})
-		let storeOptions = ListJSONFileStoreOptions(listJSONTransformer: listJSONTransformer)
-		
-		storeDirectory = SystemDirectory(pathComponents: ["v1"], inUserDirectory: .ApplicationSupportDirectory, errorReceiver: errorReceiver.receiveError, useBundleIdentifier: true)
-		storeDirectory.useOnQueue(dispatch_get_main_queue()) { directoryURL in
-			let JSONURL = directoryURL.URLByAppendingPathComponent("sites.json")
+		storeDirectory = SystemDirectory(pathComponents: ["v1"], inUserDirectory: .applicationSupportDirectory, errorReceiver: errorReceiver.receiveError, useBundleIdentifier: true)
+		storeDirectory.useOnQueue(DispatchQueue.main) { directoryURL in
+			let jsonURL = directoryURL.appendingPathComponent("sites.json")
 			
-			let store = ListJSONFileStore(creatingList: { items in
-				return ArrayList<SiteValues>(items: items)
-				}, loadedFromURL: JSONURL, options: storeOptions)
-			store.ensureLoaded { getList in
+			let siteListProgression = SiteListProgression.loadFromFile(fileURL: jsonURL)
+			NSLog("LOADING SITES")
+			siteListProgression.execute { [weak self] useResult in
+				NSLog("LOADED SITES")
+				guard let receiver = self else { return }
 				do {
-					let list = try getList()
-					list.addObserver(self.sitesListObserver)
-					self.sitesList = list
-					self.notifyAllSitesDidChange()
+					print("Sites:")
+					let sites = try useResult()
+					print(sites)
+					receiver.siteListProgression = .sitesList(sitesList: sites, needsSaving: false)
+					receiver.notifyAllSitesDidChange()
 				}
-				catch {
-					
+				catch let error {
+					print("Error loading local sites \(error)")
 				}
 			}
 			
-			self.sitesListStore = store
-		}
-		
-		sitesListObserver = ListObserverOf<SiteValues> { [unowned self] changes in
-			self.notifyAllSitesDidChange()
+			self.siteListProgression = siteListProgression
 		}
 
 	}
 	
-	public class var sharedManager: ModelManager {
+	open class var sharedManager: ModelManager {
 		struct Helper {
 			static let sharedManager = ModelManager()
 		}
 		return Helper.sharedManager
 	}
 	
-	func onSystemDirectoryError(error: NSError) {
+	func onSystemDirectoryError(_ error: NSError) {
 		
 	}
 	
@@ -104,52 +178,24 @@ public class ModelManager {
 		
 	}
 	
-	private func mainQueue_notify(identifier: ModelManagerNotification, userInfo: [String:AnyObject]? = nil) {
-		let nc = NSNotificationCenter.defaultCenter()
-		nc.postNotificationName(identifier.notificationName, object: self, userInfo: userInfo)
+	fileprivate func mainQueue_notify(_ identifier: ModelManagerNotification, userInfo: [String:AnyObject]? = nil) {
+		let nc = NotificationCenter.default
+		nc.post(name: Notification.Name(rawValue: identifier.notificationName), object: self, userInfo: userInfo)
 	}
 	
 	func notifyAllSitesDidChange() {
-		self.mainQueue_notify(.AllSitesDidChange)
+		self.mainQueue_notify(.allSitesDidChange)
 	}
 	
-	public func createSiteWithValues(siteValues: SiteValues) {
-		sitesList?.appendItems([siteValues])
+	open func createSiteWithValues(_ siteValues: SiteValues) {
+		siteListProgression.add(siteValues)
 	}
 	
-	private var sitesListUUIDIndexFinder: PrimaryIndexIterativeFinder<Int, SiteValues, NSUUID>? {
-		if let sitesList = sitesList {
-			let UUIDExtractor = ItemValueExtractorOf { (item: SiteValues) in
-				return item.UUID
-			}
-			return PrimaryIndexIterativeFinder(collectionAccessor: { sitesList }, valueExtractor: UUIDExtractor)
-		}
-		else {
-			return nil
-		}
+	open func updateSiteWithUUID(_ uuid: Foundation.UUID, withValues siteValues: SiteValues) {
+		siteListProgression.update(siteValues, uuid: uuid)
 	}
 	
-	private var sitesListEditableAssistant: EditableListFinderAssistant<ArrayList<SiteValues>, PrimaryIndexIterativeFinder<Int, SiteValues, NSUUID>>? {
-		if let sitesList = sitesList {
-			let UUIDExtractor = ItemValueExtractorOf { (item: SiteValues) in
-				return item.UUID
-			}
-			let sitesListUUIDIndexFinder = PrimaryIndexIterativeFinder(collectionAccessor: { sitesList }, valueExtractor: UUIDExtractor)
-			return EditableListFinderAssistant(list: sitesList, primaryIndexFinder: sitesListUUIDIndexFinder)
-		}
-		else {
-			return nil
-		}
-	}
-	
-	public func updateSiteWithUUID(UUID: NSUUID, withValues siteValues: SiteValues) {
-		//sitesListEditableAssistant?.replaceItemWhoseValueIs(UUID, with: siteValues)
-		if let index = sitesListUUIDIndexFinder?[UUID] {
-			sitesList?.replaceItemAtIndex(index, with: siteValues)
-		}
-	}
-	
-	public func removeSiteWithUUID(UUID: NSUUID) {
-		sitesListEditableAssistant?.removeItemsWithValues(Set([UUID]))
+	open func removeSiteWithUUID(_ uuid: Foundation.UUID) {
+		siteListProgression.remove(uuid: uuid)
 	}
 }

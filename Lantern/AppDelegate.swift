@@ -1,9 +1,9 @@
 //
-//  AppDelegate.swift
-//  Hoverlytics for Mac
+//	AppDelegate.swift
+//	Hoverlytics for Mac
 //
-//  Created by Patrick Smith on 28/03/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 28/03/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Cocoa
@@ -12,7 +12,7 @@ import Fabric
 import Crashlytics
 
 
-let NSApp = NSApplication.sharedApplication()
+let NSApp = NSApplication.shared()
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -25,14 +25,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	
 	deinit {
-		let nc = NSNotificationCenter.defaultCenter()
+		let nc = NotificationCenter.default
 		for observer in windowWillCloseObservers {
 			nc.removeObserver(observer)
 		}
 		windowWillCloseObservers.removeAll()
 	}
 
-	func applicationDidFinishLaunching(aNotification: NSNotification) {
+	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		Fabric.with([Crashlytics()])
 		
 		// Create shared manager to ensure quickest start up time.
@@ -48,11 +48,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			// Update the bloody Dock icon
 			NSApp.applicationIconImage = nil
 			
-			NSUserDefaults.standardUserDefaults().setBool(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
+			UserDefaults.standard.set(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
 		#endif
 	}
 
-	func applicationWillTerminate(aNotification: NSNotification) {
+	func applicationWillTerminate(_ aNotification: Notification) {
 		// Insert code here to tear down your application
 	}
 	
@@ -65,28 +65,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	var mainWindowControllers = [MainWindowController]()
 	var windowWillCloseObservers = [AnyObject]()
 
-	func applicationOpenUntitledFile(sender: NSApplication) -> Bool {
+	func applicationOpenUntitledFile(_ sender: NSApplication) -> Bool {
 		let windowController = mainStoryboard.instantiateInitialController() as! MainWindowController
 		windowController.showWindow(nil)
 		
 		mainWindowControllers.append(windowController)
 		
-		let nc = NSNotificationCenter.defaultCenter()
-		windowWillCloseObservers.append(nc.addObserverForName(NSWindowWillCloseNotification, object: windowController.window!, queue: nil, usingBlock: { [unowned self] note in
-			if let index = self.mainWindowControllers.indexOf(windowController) {
-				self.mainWindowControllers.removeAtIndex(index)
+		let nc = NotificationCenter.default
+		windowWillCloseObservers.append(nc.addObserver(forName: NSNotification.Name.NSWindowWillClose, object: windowController.window!, queue: nil, using: { [unowned self] note in
+			if let index = self.mainWindowControllers.index(of: windowController) {
+				self.mainWindowControllers.remove(at: index)
 			}
 		}))
 		
 		return true
 	}
 	
-	@IBAction func newDocument(sender: AnyObject?) {
+	@IBAction func newDocument(_ sender: AnyObject?) {
 		self.applicationOpenUntitledFile(NSApp)
 	}
 	
-	@IBAction func forkOnGitHub(sender: AnyObject?) {
-		let URL = NSURL(string: "https://github.com/BurntCaramel/Lantern")!
-		NSWorkspace.sharedWorkspace().openURL(URL)
+	@IBAction func forkOnGitHub(_ sender: AnyObject?) {
+		let URL = Foundation.URL(string: "https://github.com/BurntCaramel/Lantern")!
+		NSWorkspace.shared().open(URL)
 	}
 }

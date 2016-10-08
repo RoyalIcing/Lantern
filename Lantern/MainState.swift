@@ -1,9 +1,9 @@
 //
-//  MainState.swift
-//  Hoverlytics
+//	MainState.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 31/03/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 31/03/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
@@ -11,17 +11,17 @@ import LanternModel
 
 
 enum SiteChoice {
-	case SavedSite(SiteValues)
-	case Custom
+	case savedSite(SiteValues)
+	case custom
 }
 
 extension SiteChoice: Equatable {}
 
 func ==(lhs: SiteChoice, rhs: SiteChoice) -> Bool {
 	switch (lhs, rhs) {
-	case (.Custom, .Custom):
+	case (.custom, .custom):
 		return true
-	case (.SavedSite(let lSite), .SavedSite(let rSite)):
+	case (.savedSite(let lSite), .savedSite(let rSite)):
 		return lSite.UUID == rSite.UUID
 	default:
 		return false
@@ -33,7 +33,7 @@ class MainState {
 	let crawlerPreferences = CrawlerPreferences.sharedCrawlerPreferences
 	let browserPreferences = BrowserPreferences.sharedBrowserPreferences
 	
-	var siteChoice: SiteChoice = .Custom {
+	var siteChoice: SiteChoice = .custom {
 		didSet {
 			if siteChoice == oldValue {
 				return
@@ -44,7 +44,7 @@ class MainState {
 	
 	var chosenSite: SiteValues? {
 		switch siteChoice {
-		case .SavedSite(let site):
+		case .savedSite(let site):
 			return site
 		default:
 			return nil
@@ -61,8 +61,8 @@ class MainState {
 		}
 	}
 	
-	func mainQueue_notify(identifier: Notification, userInfo: [String:AnyObject]? = nil) {
-		let nc = NSNotificationCenter.defaultCenter()
-		nc.postNotificationName(identifier.notificationName, object: self, userInfo: userInfo)
+	func mainQueue_notify(_ identifier: Notification, userInfo: [String:AnyObject]? = nil) {
+		let nc = NotificationCenter.default
+		nc.post(name: Foundation.Notification.Name(rawValue: identifier.notificationName), object: self, userInfo: userInfo)
 	}
 }

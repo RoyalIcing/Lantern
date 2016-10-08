@@ -1,20 +1,19 @@
 //
-//  Site.swift
-//  Hoverlytics
+//	Site.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 30/03/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 30/03/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
-import BurntList
 
 
 private enum Error: Int {
-	case NameIsEmpty = 10
+	case nameIsEmpty = 10
 	
-	case HomePageURLIsEmpty = 20
-	case HomePageURLIsInvalid
+	case homePageURLIsEmpty = 20
+	case homePageURLIsInvalid
 	
 	static let domain = "LanternApp.SiteSettingsViewController.errorDomain"
 	
@@ -24,11 +23,11 @@ private enum Error: Int {
 	
 	var description: String {
 		switch self {
-		case NameIsEmpty:
+		case .nameIsEmpty:
 			return NSLocalizedString("Please enter a name for your site", comment: "Site NameIsEmpty error description")
-		case HomePageURLIsEmpty:
+		case .homePageURLIsEmpty:
 			return NSLocalizedString("Please enter a URL for your site’s home page", comment: "Site HomePageURLIsEmpty error description")
-		case HomePageURLIsInvalid:
+		case .homePageURLIsInvalid:
 			return NSLocalizedString("Please enter a valid URL for your site’s home page", comment: "Site HomePageURLIsInvalid error description")
 		}
 	}
@@ -43,12 +42,12 @@ private enum Error: Int {
 
 
 public struct SiteValues: Equatable {
-	public let UUID: NSUUID
+	public let UUID: Foundation.UUID
 	
 	public let name: String
-	public let homePageURL: NSURL
+	public let homePageURL: URL
 	
-	public init(name: String, homePageURL: NSURL, UUID: NSUUID = NSUUID()) {
+	public init(name: String, homePageURL: URL, UUID: Foundation.UUID = Foundation.UUID()) {
 		self.name = name
 		self.homePageURL = homePageURL
 		self.UUID = UUID
@@ -62,45 +61,30 @@ public func ==(lhs: SiteValues, rhs: SiteValues) -> Bool {
 }
 
 extension SiteValues {
-	private init(fromStoredValues values: ValueStorable) {
+	fileprivate init(fromStoredValues values: ValueStorable) {
 		name = values["name"] as! String
-		homePageURL = NSURL(string: values["homePageURL"] as! String)!
-		UUID = NSUUID(UUIDString: values["UUID"] as! String)!
+		homePageURL = URL(string: values["homePageURL"] as! String)!
+		UUID = Foundation.UUID(uuidString: values["UUID"] as! String)!
 	}
 	
-	private func updateStoredValues(var values: ValueStorable) -> ValueStorable {
-		values["name"] = name
-		values["homePageURL"] = homePageURL.absoluteString
-		values["UUID"] = UUID.UUIDString
+	fileprivate func updateStoredValues(_ values: ValueStorable) -> ValueStorable {
+		var values = values
+		values["name"] = name as AnyObject?
+		values["homePageURL"] = homePageURL.absoluteString as AnyObject?
+		values["UUID"] = UUID.uuidString as AnyObject?
 		
 		return values
 	}
 }
 
 extension SiteValues {
-	init(fromJSON JSON: [String: AnyObject]) {
-		let JSONValues = RecordJSON(dictionary: JSON)
-		self.init(fromStoredValues: JSONValues)
+	init(fromJSON json: [String: Any]) {
+		let jsonValues = RecordJSON(dictionary: json)
+		self.init(fromStoredValues: jsonValues)
 	}
 	
-	func createJSON() -> [String: AnyObject] {
-		let JSONValues = updateStoredValues(RecordJSON()) as! RecordJSON
-		return JSONValues.dictionary
-	}
-}
-
-extension SiteValues: JSONTransformable {
-	public init?(fromJSON JSON: AnyObject) {
-		if let JSON = JSON as? [String: AnyObject] {
-			self.init(fromJSON: JSON)
-		}
-		else {
-			//self.init(values: values)
-			return nil
-		}
-	}
-	
-	public func toJSON() -> AnyObject {
-		return createJSON()
+	func createJSON() -> [String: Any] {
+		let jsonValues = updateStoredValues(RecordJSON()) as! RecordJSON
+		return jsonValues.dictionary
 	}
 }

@@ -1,53 +1,53 @@
 //
-//  CrawlerPreferences.swift
-//  Hoverlytics
+//	CrawlerPreferences.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 12/05/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 12/05/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
 import BurntFoundation
 
 
-private func bytesForMegabytes(MB: UInt) -> UInt {
+private func bytesForMegabytes(_ MB: UInt) -> UInt {
 	return MB * 1024 * 1024
 }
 
 
 enum CrawlerImageDownloadChoice: Int {
-	case NeverDownload = 0
-	case Total1MB = 1
-	case Total10MB = 10
-	case Total100MB = 100
-	case Unlimited = -1
+	case neverDownload = 0
+	case total1MB = 1
+	case total10MB = 10
+	case total100MB = 100
+	case unlimited = -1
 	
 	var maximumByteCount: UInt? {
 		switch self {
-		case .NeverDownload:
+		case .neverDownload:
 			return 0
-		case .Total1MB:
+		case .total1MB:
 			return bytesForMegabytes(1)
-		case .Total10MB:
+		case .total10MB:
 			return bytesForMegabytes(10)
-		case .Total100MB:
+		case .total100MB:
 			return bytesForMegabytes(100)
-		case .Unlimited:
+		case .unlimited:
 			return nil
 		}
 	}
 	
 	var title: String {
 		switch self {
-		case .NeverDownload:
+		case .neverDownload:
 			return "Never Download"
-		case .Total1MB:
+		case .total1MB:
 			return "Total 1MB"
-		case .Total10MB:
+		case .total10MB:
 			return "Total 10MB"
-		case .Total100MB:
+		case .total100MB:
 			return "Total 100MB"
-		case .Unlimited:
+		case .unlimited:
 			return "Unlimited"
 		}
 	}
@@ -55,11 +55,11 @@ enum CrawlerImageDownloadChoice: Int {
 
 extension CrawlerImageDownloadChoice: UserDefaultsChoiceRepresentable {
 	static var identifier = "crawlerPreferences.imageDownloadChoice"
-	static var defaultValue: CrawlerImageDownloadChoice = .Total10MB
+	static var defaultValue: CrawlerImageDownloadChoice = .total10MB
 }
 
 
-private var ud = NSUserDefaults.standardUserDefaults()
+private var ud = UserDefaults.standard
 
 
 class CrawlerPreferences {
@@ -67,11 +67,11 @@ class CrawlerPreferences {
 		case ImageDownloadChoiceDidChange = "CrawlerPreferences.ImageDownloadChoiceDidChange"
 	}
 	
-	func notify(identifier: Notification, userInfo: [String:AnyObject]? = nil) {
-		NSNotificationCenter.defaultCenter().postNotification(identifier, object: self, userInfo: userInfo)
+	func notify(_ identifier: Notification, userInfo: [String:AnyObject]? = nil) {
+		NotificationCenter.default.postNotification(identifier, object: self, userInfo: userInfo)
 	}
 	
-	var imageDownloadChoice: CrawlerImageDownloadChoice = .Total10MB {
+	var imageDownloadChoice: CrawlerImageDownloadChoice = .total10MB {
 		didSet {
 			ud.setChoice(imageDownloadChoice)
 			

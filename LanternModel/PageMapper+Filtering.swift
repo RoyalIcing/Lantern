@@ -1,35 +1,35 @@
 //
-//  PageMapper+Problems.swift
-//  Hoverlytics
+//	PageMapper+Problems.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 28/04/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 28/04/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
 
 
 public extension PageMapper {
-	public func numberOfRequestedURLsWithBaseContentType(type: BaseContentType) -> Int {
+	public func numberOfRequestedURLsWithBaseContentType(_ type: BaseContentType) -> Int {
 		switch type {
-		case .LocalHTMLPage:
+		case .localHTMLPage:
 			return requestedLocalPageURLsUnique.count
-		case .Image:
+		case .image:
 			return requestedImageURLsUnique.count
-		case .Feed:
+		case .feed:
 			return requestedFeedURLsUnique.count
 		default:
 			return 0
 		}
 	}
 	
-	public func numberOfLoadedURLsWithBaseContentType(baseContentType: BaseContentType, responseType: PageResponseType? = nil) -> UInt {
+	public func numberOfLoadedURLsWithBaseContentType(_ baseContentType: BaseContentType, responseType: PageResponseType? = nil) -> UInt {
 		if let responseType = responseType {
 			return baseContentTypeToResponseTypeToURLCount[baseContentType]?[responseType] ?? 0
 		}
 			// Else any response type: tally them up.
 		else if let responseTypeToURLCount = baseContentTypeToResponseTypeToURLCount[baseContentType] {
-			return responseTypeToURLCount.reduce(UInt(0), combine: { (totalSoFar, dictIndex) -> UInt in
+			return responseTypeToURLCount.reduce(UInt(0), { (totalSoFar, dictIndex) -> UInt in
 				let (responseType, URLCount) = dictIndex
 				return totalSoFar + URLCount
 			})
@@ -39,21 +39,21 @@ public extension PageMapper {
 		}
 	}
 	
-	public func copyURLsWithBaseContentType(type: BaseContentType) -> [NSURL] {
+	public func copyURLsWithBaseContentType(_ type: BaseContentType) -> [URL] {
 		switch type {
-		case .LocalHTMLPage:
-			return localPageURLsOrdered
-		case .Image:
-			return imageURLsOrdered
-		case .Feed:
-			return feedURLsOrdered
+		case .localHTMLPage:
+			return localPageURLsOrdered as [URL]
+		case .image:
+			return imageURLsOrdered as [URL]
+		case .feed:
+			return feedURLsOrdered as [URL]
 		default:
 			return []
 		}
 	}
 	
-	public func copyURLsWithBaseContentType(type: BaseContentType, withResponseType responseType: PageResponseType) -> [NSURL] {
-		let URLs: [NSURL] = copyURLsWithBaseContentType(type)
+	public func copyURLsWithBaseContentType(_ type: BaseContentType, withResponseType responseType: PageResponseType) -> [URL] {
+		let URLs: [URL] = copyURLsWithBaseContentType(type)
 		
 		return URLs.filter { (URL) in
 			if

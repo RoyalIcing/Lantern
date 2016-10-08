@@ -1,9 +1,9 @@
 //
-//  SiteSettingsViewController.swift
-//  Hoverlytics
+//	SiteSettingsViewController.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 30/03/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 30/03/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Cocoa
@@ -16,12 +16,12 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	var mainState: MainState!
 	@IBOutlet var nameField: NSTextField!
 	@IBOutlet var homePageURLField: NSTextField!
-	var willClose: ((viewController: SiteSettingsViewController) -> Void)?
+	var willClose: ((_ viewController: SiteSettingsViewController) -> Void)?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
-    }
+		override func viewDidLoad() {
+				super.viewDidLoad()
+				// Do view setup here.
+		}
 	
 	func prepareForReuse() {
 		nameField.stringValue = ""
@@ -34,26 +34,26 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 		}
 	}
 	
-	@IBAction func createSite(sender: NSButton) {
+	@IBAction func createSite(_ sender: NSButton) {
 		do {
 			let siteValues = try copySiteValuesFromUI()
 			modelManager.createSiteWithValues(siteValues)
-			mainState.siteChoice = .SavedSite(siteValues)
-			self.dismissController(nil)
+			mainState.siteChoice = .savedSite(siteValues)
+			self.dismiss(nil)
 			prepareForReuse()
 		}
 		catch {
-			NSApplication.sharedApplication().presentError(error as NSError, modalForWindow: self.view.window!, delegate: nil, didPresentSelector: nil, contextInfo: nil)
+			NSApplication.shared().presentError(error as NSError, modalFor: self.view.window!, delegate: nil, didPresent: nil, contextInfo: nil)
 		}
 	}
 	
-	@IBAction func removeSite(sender: NSButton) {
+	@IBAction func removeSite(_ sender: NSButton) {
 		modelManager.removeSiteWithUUID(site.UUID)
-		self.dismissController(nil)
+		self.dismiss(nil)
 		prepareForReuse()
 	}
 	
-	func updateUIWithSiteValues(siteValues: SiteValues) {
+	func updateUIWithSiteValues(_ siteValues: SiteValues) {
 		// Make sure view has loaded
 		_ = self.view
 		
@@ -61,19 +61,19 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 		homePageURLField.stringValue = siteValues.homePageURL.absoluteString
 	}
 	
-	func copySiteValuesFromUI(UUID UUID: NSUUID? = nil) throws -> SiteValues {
+	func copySiteValuesFromUI(UUID: Foundation.UUID? = nil) throws -> SiteValues {
 		// Make sure view has loaded
 		_ = self.view
 		
 		let name = try ValidationError.validateString(nameField.stringValue, identifier: "Name")
 		let homePageURL = try ValidationError.validateURLString(homePageURLField.stringValue, identifier: "Home Page URL")
 		
-		return SiteValues(name: name, homePageURL: homePageURL, UUID: UUID ?? NSUUID())
+		return SiteValues(name: name, homePageURL: homePageURL, UUID: UUID ?? Foundation.UUID())
 	}
 	
 	// MARK NSPopoverDelegate
 	
-	func popoverWillClose(notification: NSNotification) {
-		willClose?(viewController: self)
+	func popoverWillClose(_ notification: Notification) {
+		willClose?(self)
 	}
 }

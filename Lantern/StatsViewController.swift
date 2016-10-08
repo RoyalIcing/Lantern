@@ -1,9 +1,9 @@
 //
-//  StatsViewController.swift
-//  Hoverlytics
+//	StatsViewController.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 24/04/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 24/04/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Cocoa
@@ -14,18 +14,18 @@ import Quartz
 
 
 enum BaseContentTypeChoice: Int {
-	case LocalHTMLPages = 1
-	case Images
-	case Feeds
+	case localHTMLPages = 1
+	case images
+	case feeds
 	
 	var baseContentType: BaseContentType {
 		switch self {
-		case .LocalHTMLPages:
-			return .LocalHTMLPage
-		case .Images:
-			return .Image
-		case .Feeds:
-			return .Feed
+		case .localHTMLPages:
+			return .localHTMLPage
+		case .images:
+			return .image
+		case .feeds:
+			return .feed
 		}
 	}
 }
@@ -33,11 +33,11 @@ enum BaseContentTypeChoice: Int {
 extension BaseContentTypeChoice: UIChoiceRepresentative {
 	var title: String {
 		switch self {
-		case .LocalHTMLPages:
+		case .localHTMLPages:
 			return "Local Pages"
-		case .Images:
+		case .images:
 			return "Images"
-		case .Feeds:
+		case .feeds:
 			return "Feeds"
 		}
 	}
@@ -48,33 +48,33 @@ extension BaseContentTypeChoice: UIChoiceRepresentative {
 
 
 enum StatsFilterResponseChoice: Int {
-	case All = 0
+	case all = 0
 	
-	case Successful = 2
-	case Redirects = 3
-	case RequestErrors = 4
-	case ResponseErrors = 5
+	case successful = 2
+	case redirects = 3
+	case requestErrors = 4
+	case responseErrors = 5
 	
-	case ValidInformation = 100
-	case ProblematicMIMEType = 101
-	case ProblematicPageTitle = 102
-	case ProblematicHeading = 103
-	case ProblematicMetaDescription = 104
+	case validInformation = 100
+	case problematicMIMEType = 101
+	case problematicPageTitle = 102
+	case problematicHeading = 103
+	case problematicMetaDescription = 104
 	
-	case IsLinkedByBrowsedPage = 200
-	case ContainsLinkToBrowsedPage = 201
+	case isLinkedByBrowsedPage = 200
+	case containsLinkToBrowsedPage = 201
 	
 	
 	var responseType: PageResponseType? {
 		switch self {
-		case .Successful:
-			return .Successful
-		case .Redirects:
-			return .Redirects
-		case .RequestErrors:
-			return .RequestErrors
-		case .ResponseErrors:
-			return .ResponseErrors
+		case .successful:
+			return .successful
+		case .redirects:
+			return .redirects
+		case .requestErrors:
+			return .requestErrors
+		case .responseErrors:
+			return .responseErrors
 		default:
 			return nil
 		}
@@ -82,25 +82,25 @@ enum StatsFilterResponseChoice: Int {
 	
 	var validationArea: PageInfoValidationArea? {
 		switch self {
-		case .ProblematicMIMEType:
-			return .MIMEType
-		case .ProblematicHeading:
-			return .H1
-		case .ProblematicPageTitle:
+		case .problematicMIMEType:
+			return .mimeType
+		case .problematicHeading:
+			return .h1
+		case .problematicPageTitle:
 			return .Title
-		case .ProblematicMetaDescription:
-			return .MetaDescription
+		case .problematicMetaDescription:
+			return .metaDescription
 		default:
 			return nil
 		}
 	}
 	
-	func pageLinkFilterWithURL(URL: NSURL) -> PageLinkFilter? {
+	func pageLinkFilterWithURL(_ URL: Foundation.URL) -> PageLinkFilter? {
 		switch self {
-		case .IsLinkedByBrowsedPage:
-			return .IsLinkedByURL(URL)
-		case .ContainsLinkToBrowsedPage:
-			return .ContainsLinkToURL(URL)
+		case .isLinkedByBrowsedPage:
+			return .isLinkedByURL(URL)
+		case .containsLinkToBrowsedPage:
+			return .containsLinkToURL(URL)
 		default:
 			return nil
 		}
@@ -110,33 +110,33 @@ enum StatsFilterResponseChoice: Int {
 extension StatsFilterResponseChoice: UIChoiceRepresentative {
 	var title: String {
 		switch self {
-		case .All:
+		case .all:
 			return "All"
 			
-		case .Successful:
+		case .successful:
 			return "[2xx] Successful"
-		case .Redirects:
+		case .redirects:
 			return "[3xx] Redirects"
-		case .RequestErrors:
+		case .requestErrors:
 			return "[4xx] Request Errors"
-		case .ResponseErrors:
+		case .responseErrors:
 			return "[5xx] Response Errors"
 			
-		case .ValidInformation:
+		case .validInformation:
 			return "Valid Information"
 			
-		case .ProblematicMIMEType:
+		case .problematicMIMEType:
 			return "Invalid MIME Types"
-		case .ProblematicHeading:
+		case .problematicHeading:
 			return "Invalid Headings"
-		case .ProblematicPageTitle:
+		case .problematicPageTitle:
 			return "Invalid Page Titles"
-		case .ProblematicMetaDescription:
+		case .problematicMetaDescription:
 			return "Invalid Meta Description"
 			
-		case .IsLinkedByBrowsedPage:
+		case .isLinkedByBrowsedPage:
 			return "Linked by Browsed Page"
-		case .ContainsLinkToBrowsedPage:
+		case .containsLinkToBrowsedPage:
 			return "Contains Link to Browsed Page"
 		}
 	}
@@ -148,43 +148,43 @@ extension StatsFilterResponseChoice: UIChoiceRepresentative {
 }
 
 enum StatsColumnsMode: Int {
-	case Titles = 1
-	case Descriptions = 2
-	case Types = 3
-	case DownloadSizes = 4
-	case Links = 5
+	case titles = 1
+	case descriptions = 2
+	case types = 3
+	case downloadSizes = 4
+	case links = 5
 	
-	func columnIdentifiersForBaseContentType(baseContentType: BaseContentType) -> [PagePresentedInfoIdentifier] {
+	func columnIdentifiersForBaseContentType(_ baseContentType: BaseContentType) -> [PagePresentedInfoIdentifier] {
 		switch self {
-		case .Titles:
+		case .titles:
 			return [.pageTitle, .h1]
-		case .Descriptions:
+		case .descriptions:
 			return [.metaDescription, .pageTitle]
-		case .Types:
+		case .types:
 			return [.statusCode, .MIMEType]
-		case .DownloadSizes:
+		case .downloadSizes:
 			switch baseContentType {
-			case .LocalHTMLPage:
+			case .localHTMLPage:
 				return [.pageByteCount, .pageByteCountBeforeBodyTag, .pageByteCountAfterBodyTag]
 			default:
 				return [.pageByteCount]
 			}
-		case .Links:
+		case .links:
 			return [.internalLinkCount, .externalLinkCount]
 		}
 	}
 	
 	var title: String {
 		switch self {
-		case .Titles:
+		case .titles:
 			return "Titles"
-		case .Descriptions:
+		case .descriptions:
 			return "Descriptions"
-		case .Types:
+		case .types:
 			return "Types"
-		case .DownloadSizes:
+		case .downloadSizes:
 			return "Sizes"
-		case .Links:
+		case .links:
 			return "Links"
 		}
 	}
@@ -206,12 +206,12 @@ extension StatsColumnsMode: CustomStringConvertible {
 extension StatsFilterResponseChoice {
 	var preferredColumnsMode: StatsColumnsMode? {
 		switch self {
-		case .ProblematicMIMEType:
-			return .Types
-		case .ProblematicPageTitle, .ProblematicHeading:
-			return .Titles
-		case .ProblematicMetaDescription:
-			return .Descriptions
+		case .problematicMIMEType:
+			return .types
+		case .problematicPageTitle, .problematicHeading:
+			return .titles
+		case .problematicMetaDescription:
+			return .descriptions
 		default:
 			return nil
 		}
@@ -221,10 +221,10 @@ extension StatsFilterResponseChoice {
 extension BaseContentTypeChoice {
 	var allowedColumnsModes: [StatsColumnsMode] {
 		switch self {
-		case .LocalHTMLPages:
-			return [.Titles, .Descriptions, .Types, .DownloadSizes, .Links]
+		case .localHTMLPages:
+			return [.titles, .descriptions, .types, .downloadSizes, .links]
 		default:
-			return [.Types, .DownloadSizes]
+			return [.types, .downloadSizes]
 		}
 	}
 }
@@ -232,10 +232,10 @@ extension BaseContentTypeChoice {
 extension PageResponseType {
 	var cocoaColor: NSColor {
 		switch self {
-		case .RequestErrors, .ResponseErrors:
-			return NSColor(SRGBRed: 233.0/255.0, green: 36.0/255.0, blue: 0.0, alpha: 1.0)
+		case .requestErrors, .responseErrors:
+			return NSColor(srgbRed: 233.0/255.0, green: 36.0/255.0, blue: 0.0, alpha: 1.0)
 		default:
-			return NSColor.textColor()
+			return NSColor.textColor
 		}
 	}
 }
@@ -263,43 +263,43 @@ class StatsViewController: NSViewController {
 	
 	var pageMapper: PageMapper?
 	
-	var browsedURL: NSURL?
+	var browsedURL: URL?
 	
-	var chosenBaseContentChoice: BaseContentTypeChoice = .LocalHTMLPages
+	var chosenBaseContentChoice: BaseContentTypeChoice = .localHTMLPages
 	var filterToBaseContentType: BaseContentType {
 		return chosenBaseContentChoice.baseContentType
 	}
-	var filterResponseChoice: StatsFilterResponseChoice = .All
-	var selectedColumnsMode: StatsColumnsMode = .Titles
+	var filterResponseChoice: StatsFilterResponseChoice = .all
+	var selectedColumnsMode: StatsColumnsMode = .titles
 	var allowedColumnsModes: [StatsColumnsMode] {
 		return chosenBaseContentChoice.allowedColumnsModes
 	}
 	
-	var filteredURLs = [NSURL]()
+	var filteredURLs = [URL]()
 	
-	var didChooseURLCallback: ((URL: NSURL, pageInfo: PageInfo) -> Void)?
+	var didChooseURLCallback: ((_ URL: URL, _ pageInfo: PageInfo) -> ())?
 	
 	
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
+		override func viewDidLoad() {
+				super.viewDidLoad()
+				// Do view setup here.
 		
-		outlineView.removeTableColumn(outlineView.tableColumnWithIdentifier("text")!)
+		outlineView.removeTableColumn(outlineView.tableColumn(withIdentifier: "text")!)
 		
 		//updateColumnsToOnlyShow(selectedColumnsMode.columnIdentifiersForBaseContentType(filterToBaseContentType))
 		
-		outlineView.setDataSource(self)
-		outlineView.setDelegate(self)
+		outlineView.dataSource = self
+		outlineView.delegate = self
 		
 		outlineView.target = self
-		outlineView.doubleAction = "doubleClickSelectedRow:"
+		outlineView.doubleAction = #selector(StatsViewController.doubleClickSelectedRow(_:))
 		
 		createRowMenu()
 		
 		updateUI()
 		
 		startObservingCrawlerPreferences()
-    }
+		}
 	
 	deinit {
 		stopObservingCrawlerPreferences()
@@ -318,7 +318,7 @@ class StatsViewController: NSViewController {
 		crawlerPreferencesObserver = nil
 	}
 	
-	var primaryURL: NSURL! {
+	var primaryURL: URL! {
 		didSet {
 			browsedURL = primaryURL
 			crawl()
@@ -328,11 +328,11 @@ class StatsViewController: NSViewController {
 	func updateMaximumImageDownload() {
 		if let pageMapper = pageMapper {
 			let maximumImageByteCount = crawlerPreferences.imageDownloadChoice.maximumByteCount
-			pageMapper.setMaximumByteCount(maximumImageByteCount, forBaseContentType: .Image)
+			pageMapper.setMaximumByteCount(maximumImageByteCount, forBaseContentType: .image)
 		}
 	}
 	
-	func didNavigateToURL(URL: NSURL, crawl: Bool) {
+	func didNavigateToURL(_ URL: Foundation.URL, crawl: Bool) {
 		if let pageMapper = pageMapper {
 			browsedURL = URL
 			updateListOfURLs()
@@ -376,43 +376,38 @@ class StatsViewController: NSViewController {
 		}
 	}
 	
-	var selectedURLs: [NSURL] {
+	var selectedURLs: [URL] {
 		get {
-			let outlineView = self.outlineView!
-			let selectedRowIndexes = outlineView.selectedRowIndexes
-			var result = [NSURL]()
-			selectedRowIndexes.enumerateIndexesUsingBlock { (row, stopPointer) in
-				if let item = outlineView.itemAtRow(row) as? NSURL {
-					result.append(item)
-				}
+			let selectedRowIndexes = outlineView!.selectedRowIndexes
+			return selectedRowIndexes.flatMap { row in
+				return outlineView.item(atRow: row) as? URL
 			}
-			return result
 		}
 		set {
 			let outlineView = self.outlineView!
 			let newRowIndexes = NSMutableIndexSet()
 			for URL in newValue {
-				let row = outlineView.rowForItem(URL)
+				let row = outlineView.row(forItem: URL)
 				if row != -1 {
-					newRowIndexes.addIndex(row)
+					newRowIndexes.add(row)
 				}
 			}
-			outlineView.selectRowIndexes(newRowIndexes, byExtendingSelection: false)
+			outlineView.selectRowIndexes(newRowIndexes as IndexSet, byExtendingSelection: false)
 		}
 	}
 	
-	var previouslySelectedURLs = [NSURL]()
+	var previouslySelectedURLs = [URL]()
 	
 	func updateListOfURLs() {
 		if let pageMapper = pageMapper {
 			let baseContentType = filterToBaseContentType
-			if filterResponseChoice == .All {
+			if filterResponseChoice == .all {
 				filteredURLs = pageMapper.copyURLsWithBaseContentType(baseContentType)
 			}
 			else if let responseType = filterResponseChoice.responseType {
 				filteredURLs = pageMapper.copyURLsWithBaseContentType(baseContentType, withResponseType: responseType)
 			}
-			else if filterResponseChoice == .ValidInformation {
+			else if filterResponseChoice == .validInformation {
 				filteredURLs = pageMapper.copyHTMLPageURLsWhichCompletelyValidateForType(baseContentType)
 			}
 			else if let validationArea = filterResponseChoice.validationArea {
@@ -441,7 +436,7 @@ class StatsViewController: NSViewController {
 	}
 	
 	func updateUI(
-		baseContentType: Bool = true,
+		_ baseContentType: Bool = true,
 		filterResponseChoice: Bool = true,
 		columnsMode: Bool = true
 		)
@@ -489,22 +484,22 @@ class StatsViewController: NSViewController {
 		updateUI()
 	}
 	
-	var updateUIWithProgressOperation: NSBlockOperation!
+	var updateUIWithProgressOperation: BlockOperation!
 	
-	private func pageURLDidUpdate(pageURL: NSURL) {
+	fileprivate func pageURLDidUpdate(_ pageURL: URL) {
 		// Update the UI with a background quality of service using an operation.
 		if updateUIWithProgressOperation == nil {
-			let updateUIWithProgressOperation = NSBlockOperation(block: {
+			let updateUIWithProgressOperation = BlockOperation(block: {
 				self.updateUI()
 				self.updateUIWithProgressOperation = nil
 			})
-			NSOperationQueue.mainQueue().addOperation(updateUIWithProgressOperation)
+			OperationQueue.main.addOperation(updateUIWithProgressOperation)
 			self.updateUIWithProgressOperation = updateUIWithProgressOperation
 		}
 	}
 	
-	private func updateColumnsToOnlyShow(columnIdentifiers: [PagePresentedInfoIdentifier]) {
-		func updateHeaderOfColumn(column: NSTableColumn, withTitleFromIdentifier identifier: PagePresentedInfoIdentifier) {
+	fileprivate func updateColumnsToOnlyShow(_ columnIdentifiers: [PagePresentedInfoIdentifier]) {
+		func updateHeaderOfColumn(_ column: NSTableColumn, withTitleFromIdentifier identifier: PagePresentedInfoIdentifier) {
 			column.headerCell.stringValue = identifier.titleForBaseContentType(filterToBaseContentType)
 		}
 		
@@ -515,8 +510,8 @@ class StatsViewController: NSViewController {
 		let uniqueColumnIdentifiers = Set(columnIdentifiers)
 		let existingTableColumnIdentifierStrings = outlineView.tableColumns.map { return $0.identifier }
 		for identifierString in existingTableColumnIdentifierStrings {
-			if let identifier = PagePresentedInfoIdentifier(rawValue: identifierString) where !uniqueColumnIdentifiers.contains(identifier) && identifier != .requestedURL {
-				outlineView.removeTableColumn(outlineView.tableColumnWithIdentifier(identifierString)!)
+			if let identifier = PagePresentedInfoIdentifier(rawValue: identifierString) , !uniqueColumnIdentifiers.contains(identifier) && identifier != .requestedURL {
+				outlineView.removeTableColumn(outlineView.tableColumn(withIdentifier: identifierString)!)
 			}
 		}
 		
@@ -525,10 +520,10 @@ class StatsViewController: NSViewController {
 		
 		var columnIndex = 1 // After outline column
 		for identifier in columnIdentifiers {
-			let existingColumnIndex = outlineView.columnWithIdentifier(identifier.rawValue)
+			let existingColumnIndex = outlineView.column(withIdentifier: identifier.rawValue)
 			var tableColumn: NSTableColumn
 			if existingColumnIndex >= 0 {
-				tableColumn = outlineView.tableColumnWithIdentifier(identifier.rawValue)!
+				tableColumn = outlineView.tableColumn(withIdentifier: identifier.rawValue)!
 				outlineView.moveColumn(existingColumnIndex, toColumn: columnIndex)
 			}
 			else {
@@ -540,7 +535,7 @@ class StatsViewController: NSViewController {
 			tableColumn.width = columnWidth
 			updateHeaderOfColumn(tableColumn, withTitleFromIdentifier: identifier)
 			
-			columnIndex++
+			columnIndex += 1
 		}
 		
 		updateHeaderOfColumn(outlineView.outlineTableColumn!, withTitleFromIdentifier: .requestedURL)
@@ -552,7 +547,7 @@ class StatsViewController: NSViewController {
 		outlineView.reloadData()
 	}
 	
-	func changeColumnsMode(columnsMode: StatsColumnsMode, updateUI: Bool = true) {
+	func changeColumnsMode(_ columnsMode: StatsColumnsMode, updateUI: Bool = true) {
 		selectedColumnsMode = columnsMode
 		
 		if updateUI {
@@ -564,7 +559,7 @@ class StatsViewController: NSViewController {
 		}
 	}
 	
-	@IBAction func changeBaseContentTypeFilter(sender: NSPopUpButton) {
+	@IBAction func changeBaseContentTypeFilter(_ sender: NSPopUpButton) {
 		if let contentChoice = baseContentTypeChoicePopUpButtonAssistant.selectedItemRepresentative {
 			chosenBaseContentChoice = contentChoice
 			
@@ -572,7 +567,7 @@ class StatsViewController: NSViewController {
 		}
 	}
 	
-	@IBAction func changeResponseTypeFilter(sender: NSPopUpButton) {
+	@IBAction func changeResponseTypeFilter(_ sender: NSPopUpButton) {
 		let menuItem = sender.selectedItem!
 		let tag = menuItem.tag
 		
@@ -600,17 +595,17 @@ class StatsViewController: NSViewController {
 	
 	#endif
 	
-	@IBAction func changeColumnsMode(sender: NSSegmentedControl) {
+	@IBAction func changeColumnsMode(_ sender: NSSegmentedControl) {
 		if let columnsMode = columnsModeSegmentedControlAssistant?.selectedItemRepresentative {
 			changeColumnsMode(columnsMode)
 		}
 	}
 	
-	func showPreviewForRow(row: Int) {
+	func showPreviewForRow(_ row: Int) {
 		if let
-			URL = outlineView.itemAtRow(row) as? NSURL,
-			pageMapper = pageMapper,
-			info = pageMapper.pageInfoForRequestedURL(URL)
+			URL = outlineView.item(atRow: row) as? URL,
+			let pageMapper = pageMapper,
+			let info = pageMapper.pageInfoForRequestedURL(URL)
 		{
 			if info.contentInfo == nil {
 				pageMapper.priorityRequestContentIfNeededForURL(URL, expectedBaseContentType: info.baseContentType)
@@ -618,11 +613,11 @@ class StatsViewController: NSViewController {
 			}
 			
 			switch info.baseContentType {
-			case .LocalHTMLPage:
+			case .localHTMLPage:
 				showSourcePreviewForPageAtRow(row)
-			case .Image:
+			case .image:
 				showImagePreviewForResourceAtRow(row)
-			case .Feed:
+			case .feed:
 				showSourcePreviewForPageAtRow(row)
 			default:
 				break
@@ -630,17 +625,17 @@ class StatsViewController: NSViewController {
 		}
 	}
 	
-	@IBAction func doubleClickSelectedRow(sender: AnyObject?) {
-		if let row = clickedRow, column = clickedColumn {
+	@IBAction func doubleClickSelectedRow(_ sender: AnyObject?) {
+		if let row = clickedRow, let column = clickedColumn {
 			if
-				let URL = outlineView.itemAtRow(row) as? NSURL,
+				let URL = outlineView.item(atRow: row) as? URL,
 				let pageInfo = pageMapper?.pageInfoForRequestedURL(URL)
 			{
 				// Double clicking requested URL chooses that URL.
 				if column == 0 {
 					switch pageInfo.baseContentType {
-					case .LocalHTMLPage:
-						didChooseURLCallback?(URL: URL, pageInfo: pageInfo)
+					case .localHTMLPage:
+						didChooseURLCallback?(URL, pageInfo)
 					default:
 						showPreviewForRow(row)
 					}
@@ -652,29 +647,29 @@ class StatsViewController: NSViewController {
 		}
 	}
 	
-	@IBAction func pauseCrawling(sender: AnyObject?) {
+	@IBAction func pauseCrawling(_ sender: AnyObject?) {
 		//pageMapper?.pauseCrawling()
 		pageMapper?.cancel()
 	}
 	
-	@IBAction func recrawl(sender: AnyObject?) {
+	@IBAction func recrawl(_ sender: AnyObject?) {
 		//pageMapper?.pauseCrawling()
 		pageMapper?.cancel()
 	}
 	
-	override func respondsToSelector(selector: Selector) -> Bool {
+	override func responds(to selector: Selector) -> Bool {
 		switch selector {
-		case "pauseCrawling:":
+		case #selector(StatsViewController.pauseCrawling(_:)):
 			return pageMapper?.isCrawling ?? false
 		default:
-			return super.respondsToSelector(selector)
+			return super.responds(to: selector)
 		}
 	}
 }
 
 // TODO: finish quicklook support, needs a local file cache
 extension StatsViewController: QLPreviewPanelDataSource, QLPreviewPanelDelegate {
-	override func keyDown(theEvent: NSEvent) {
+	override func keyDown(with theEvent: NSEvent) {
 		if let charactersIgnoringModifiers = theEvent.charactersIgnoringModifiers {
 			let u = charactersIgnoringModifiers[charactersIgnoringModifiers.startIndex]
 			
@@ -688,13 +683,13 @@ extension StatsViewController: QLPreviewPanelDataSource, QLPreviewPanelDelegate 
 		}
 	}
 	
-	override func quickLookPreviewItems(sender: AnyObject?)
+	override func quickLookPreviewItems(_ sender: Any?)
 	{
 		if let pageMapper = pageMapper {
 			let selectedRowIndexes = outlineView.selectedRowIndexes
 			if selectedRowIndexes.count == 1 {
-				let row = selectedRowIndexes.firstIndex
-				if let pageURL = outlineView.itemAtRow(row) as? NSURL where pageMapper.hasFinishedRequestingURL(pageURL)
+				let row = selectedRowIndexes.first
+				if let pageURL = outlineView.item(atRow: row!) as? URL , pageMapper.hasFinishedRequestingURL(pageURL)
 				{
 					
 				}
@@ -702,58 +697,67 @@ extension StatsViewController: QLPreviewPanelDataSource, QLPreviewPanelDelegate 
 		}
 	}
 	
-	func numberOfPreviewItemsInPreviewPanel(panel: QLPreviewPanel!) -> Int {
+	func numberOfPreviewItems(in panel: QLPreviewPanel!) -> Int {
 		return selectedURLs.count
 	}
 	
-	func previewPanel(panel: QLPreviewPanel!, previewItemAtIndex index: Int) -> QLPreviewItem! {
-		return selectedURLs[index]
+	func previewPanel(_ panel: QLPreviewPanel!, previewItemAt index: Int) -> QLPreviewItem! {
+		return selectedURLs[index] as QLPreviewItem!
 	}
 	
-	override func acceptsPreviewPanelControl(panel: QLPreviewPanel!) -> Bool {
+	override func acceptsPreviewPanelControl(_ panel: QLPreviewPanel!) -> Bool {
 		return true
 	}
 	
-	override func beginPreviewPanelControl(panel: QLPreviewPanel!) {
+	override func beginPreviewPanelControl(_ panel: QLPreviewPanel!) {
 		panel.delegate = self
 	}
 	
-	override func endPreviewPanelControl(panel: QLPreviewPanel!) {
+	override func endPreviewPanelControl(_ panel: QLPreviewPanel!) {
 		panel.delegate = nil
 	}
 }
 
 
 extension StatsViewController {
-	enum MenuActions: Selector {
-		case BrowsePage = "browsePageAtSelectedRow:"
-		case ShowSourcePreview = "showSourcePreviewForPageAtSelectedRow:"
-		case ExpandValue = "showStringValuePreviewForResourceAtSelectedRow:"
-		case ShowImagePreview = "showImagePreviewForResourceAtSelectedRow:"
+	enum MenuActions: String {
+		case browsePage
+		case showSourcePreview
+		case expandValue
+		case showImagePreview
+		case copyURL
 		
-		case CopyURL = "copyURLForSelectedRow:"
+		var selector: Selector {
+			switch self {
+			case .browsePage: return #selector(StatsViewController.browsePageAtSelectedRow(_:))
+			case .showSourcePreview: return #selector(StatsViewController.showSourcePreviewForPageAtSelectedRow(_:))
+			case .expandValue: return #selector(StatsViewController.showStringValuePreviewForResourceAtSelectedRow(_:))
+			case .showImagePreview: return #selector(StatsViewController.showImagePreviewForResourceAtSelectedRow(_:))
+			case .copyURL: return #selector(StatsViewController.copyURLForSelectedRow(_:))
+			}
+		}
 	}
 }
 
-extension StatsViewController.MenuActions: UIChoiceRepresentative {
+extension StatsViewController.MenuActions : UIChoiceRepresentative {
 	var title: String {
 		switch self {
-		case .BrowsePage:
+		case .browsePage:
 			return "Browse Page"
-		case .ShowSourcePreview:
+		case .showSourcePreview:
 			return "Show Source"
-		case .ExpandValue:
+		case .expandValue:
 			return "Expand This Value"
-		case .ShowImagePreview:
+		case .showImagePreview:
 			return "Show Image Preview"
-		case .CopyURL:
+		case .copyURL:
 			return "Copy URL"
 		}
 	}
 	
 	var tag: Int? { return nil }
 	
-	typealias UniqueIdentifier = Selector
+	typealias UniqueIdentifier = String
 	var uniqueIdentifier: UniqueIdentifier {
 		return rawValue
 	}
@@ -766,33 +770,33 @@ extension StatsViewController {
 		rowMenuAssistant = MenuAssistant<MenuActions>(menu: menu)
 		
 		rowMenuAssistant.customization.actionAndTarget = { itemRepresentative in
-			return (action: itemRepresentative.rawValue, target: self)
+			return (action: itemRepresentative.selector, target: self)
 		}
 		
 		self.rowMenu = menu
 	}
 	
-	func rowMenuItemRepresentativesForResourceInfo(info: PageInfo) -> [MenuActions?] {
+	func rowMenuItemRepresentativesForResourceInfo(_ info: PageInfo) -> [MenuActions?] {
 		switch info.baseContentType {
-		case .LocalHTMLPage, .Feed:
+		case .localHTMLPage, .feed:
 			return [
-				.BrowsePage,
-				.ShowSourcePreview,
-				.ExpandValue,
+				.browsePage,
+				.showSourcePreview,
+				.expandValue,
 				nil,
-				.CopyURL
+				.copyURL
 			]
-		case .Image:
+		case .image:
 			if
 				let contentInfo = info.contentInfo
 				// Does not allow SVG preview for now, as needs a WKWebView or similar
-				where info.MIMEType?.stringValue != "image/svg+xml" && NSBitmapImageRep.canInitWithData(contentInfo.data)
+				, info.MIMEType?.stringValue != "image/svg+xml" && NSBitmapImageRep.canInit(with: contentInfo.data)
 			{
 				return [
-					.ShowImagePreview,
-					.ExpandValue,
+					.showImagePreview,
+					.expandValue,
 					nil,
-					.CopyURL
+					.copyURL
 				]
 			}
 			else {
@@ -800,77 +804,77 @@ extension StatsViewController {
 			}
 		default:
 			return [
-				.ExpandValue,
+				.expandValue,
 				nil,
-				.CopyURL
+				.copyURL
 			]
 		}
 	}
 	
-	func menuForResourceInfo(info: PageInfo) -> NSMenu {
+	func menuForResourceInfo(_ info: PageInfo) -> NSMenu {
 		rowMenuAssistant.menuItemRepresentatives = rowMenuItemRepresentativesForResourceInfo(info)
 		return rowMenuAssistant.update()
 	}
 	
-	@IBAction func browsePageAtSelectedRow(sender: AnyObject?) {
+	@IBAction func browsePageAtSelectedRow(_ sender: AnyObject?) {
 		if let
 			row = clickedRow,
-			URL = outlineView.itemAtRow(row) as? NSURL,
-			pageInfo = pageMapper?.pageInfoForRequestedURL(URL)
+			let URL = outlineView.item(atRow: row) as? URL,
+			let pageInfo = pageMapper?.pageInfoForRequestedURL(URL)
 		{
-			didChooseURLCallback?(URL: URL, pageInfo: pageInfo)
+			didChooseURLCallback?(URL, pageInfo)
 		}
 	}
 	
-	@IBAction func showSourcePreviewForPageAtSelectedRow(menuItem: NSMenuItem) {
+	@IBAction func showSourcePreviewForPageAtSelectedRow(_ menuItem: NSMenuItem) {
 		if let row = clickedRow {
 			showSourcePreviewForPageAtRow(row)
 		}
 	}
 	
-	@IBAction func showStringValuePreviewForResourceAtSelectedRow(menuItem: NSMenuItem) {
-		if let row = clickedRow, column = clickedColumn {
+	@IBAction func showStringValuePreviewForResourceAtSelectedRow(_ menuItem: NSMenuItem) {
+		if let row = clickedRow, let column = clickedColumn {
 			showStringValuePreviewForResourceAtRow(row, column: column)
 		}
 	}
 	
-	@IBAction func showImagePreviewForResourceAtSelectedRow(menuItem: NSMenuItem) {
+	@IBAction func showImagePreviewForResourceAtSelectedRow(_ menuItem: NSMenuItem) {
 		if let row = clickedRow {
 			showImagePreviewForResourceAtRow(row)
 		}
 	}
 	
-	@IBAction func copyURLForSelectedRow(menuItem: NSMenuItem) {
+	@IBAction func copyURLForSelectedRow(_ menuItem: NSMenuItem) {
 		if let row = clickedRow {
 			performCopyURLForURLAtRow(row)
 		}
 	}
 	
-	func showSourcePreviewForPageAtRow(row: Int) {
+	func showSourcePreviewForPageAtRow(_ row: Int) {
 		if
-			let pageURL = outlineView.itemAtRow(row) as? NSURL,
-			let pageMapper = pageMapper where pageMapper.hasFinishedRequestingURL(pageURL)
+			let pageURL = outlineView.item(atRow: row) as? URL,
+			let pageMapper = pageMapper , pageMapper.hasFinishedRequestingURL(pageURL)
 		{
 			if let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL) {
 				let sourcePreviewTabViewController = SourcePreviewTabViewController()
 				sourcePreviewTabViewController.pageInfo = pageInfo
 				
-				let rowRect = outlineView.rectOfRow(row)
-				presentViewController(sourcePreviewTabViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSRectEdge.MinY, behavior: .Semitransient)
+				let rowRect = outlineView.rect(ofRow: row)
+				presentViewController(sourcePreviewTabViewController, asPopoverRelativeTo: rowRect, of: outlineView, preferredEdge: NSRectEdge.minY, behavior: .semitransient)
 			}
 		}
 	}
 	
-	func presentedInfoIdentifierForTableColumn(tableColumn: NSTableColumn) -> PagePresentedInfoIdentifier? {
+	func presentedInfoIdentifierForTableColumn(_ tableColumn: NSTableColumn) -> PagePresentedInfoIdentifier? {
 		return PagePresentedInfoIdentifier(rawValue: tableColumn.identifier)
 	}
 	
-	func showStringValuePreviewForResourceAtRow(row: Int, column: Int) {
+	func showStringValuePreviewForResourceAtRow(_ row: Int, column: Int) {
 		let tableColumn = outlineView.tableColumns[column] 
 		
 		if
 			let presentedInfoIdentifier = presentedInfoIdentifierForTableColumn(tableColumn),
-			let pageURL = outlineView.itemAtRow(row) as? NSURL,
+			let pageURL = outlineView.item(atRow: row) as? URL,
 			let pageMapper = pageMapper
 		{
 			let presentedInfoIdentifier = presentedInfoIdentifier.longerFormInformation ?? presentedInfoIdentifier
@@ -880,22 +884,22 @@ extension StatsViewController {
 				
 				let previewViewController = MultipleStringPreviewViewController.instantiateFromStoryboard()
 				switch validatedStringValue {
-				case .Multiple(let values):
+				case .multiple(let values):
 					previewViewController.validatedStringValues = values
 				default:
 					previewViewController.validatedStringValues = [validatedStringValue]
 				}
 				
-				let rowRect = outlineView.frameOfCellAtColumn(column, row: row)
-				presentViewController(previewViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSRectEdge.MinY, behavior: .Semitransient)
+				let rowRect = outlineView.frameOfCell(atColumn: column, row: row)
+				presentViewController(previewViewController, asPopoverRelativeTo: rowRect, of: outlineView, preferredEdge: NSRectEdge.minY, behavior: .semitransient)
 			}
 		}
 	}
 	
-	func showImagePreviewForResourceAtRow(row: Int) {
+	func showImagePreviewForResourceAtRow(_ row: Int) {
 		if
-			let pageURL = outlineView.itemAtRow(row) as? NSURL,
-			let pageMapper = pageMapper where pageMapper.hasFinishedRequestingURL(pageURL)
+			let pageURL = outlineView.item(atRow: row) as? URL,
+			let pageMapper = pageMapper , pageMapper.hasFinishedRequestingURL(pageURL)
 		{
 			if
 				let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL),
@@ -906,24 +910,24 @@ extension StatsViewController {
 				previewViewController.MIMEType = pageInfo.MIMEType?.stringValue
 				previewViewController.sourceURL = pageInfo.requestedURL
 				
-				let rowRect = outlineView.rectOfRow(row)
-				presentViewController(previewViewController, asPopoverRelativeToRect: rowRect, ofView: outlineView, preferredEdge: NSRectEdge.MinY, behavior: .Semitransient)
+				let rowRect = outlineView.rect(ofRow: row)
+				presentViewController(previewViewController, asPopoverRelativeTo: rowRect, of: outlineView, preferredEdge: NSRectEdge.minY, behavior: .semitransient)
 			}
 		}
 
 	}
 	
-	func performCopyURLForURLAtRow(row: Int) {
-		if let URL = outlineView.itemAtRow(row) as? NSURL
+	func performCopyURLForURLAtRow(_ row: Int) {
+		if let url = outlineView.item(atRow: row) as? NSURL
 		{
-			let pasteboard = NSPasteboard.generalPasteboard()
+			let pasteboard = NSPasteboard.general()
 			pasteboard.clearContents()
 			// This does not copy the URL as a string though
 			//let success = pasteboard.writeObjects([URL])
 			//println("Copying \(success) \(pasteboard) \(URL)")
 			pasteboard.declareTypes([NSURLPboardType, NSStringPboardType], owner: nil)
-			URL.writeToPasteboard(pasteboard)
-			pasteboard.setString(URL.absoluteString, forType: NSStringPboardType)
+			url.write(to: pasteboard)
+			pasteboard.setString(url.absoluteString ?? "", forType: NSStringPboardType)
 		}
 	}
 }
@@ -931,32 +935,32 @@ extension StatsViewController {
 extension StatsViewController {
 	func menuItemRepresentativesForFilterResponseChoice() -> [StatsFilterResponseChoice?] {
 		switch filterToBaseContentType {
-		case .LocalHTMLPage:
+		case .localHTMLPage:
 			return [
-				.All,
+				.all,
 				nil,
-				.Successful,
+				.successful,
 				//.Redirects,
-				.RequestErrors,
-				.ResponseErrors,
+				.requestErrors,
+				.responseErrors,
 				nil,
-				.ValidInformation,
+				.validInformation,
 				//.ProblematicMIMEType,
-				.ProblematicPageTitle,
-				.ProblematicHeading,
-				.ProblematicMetaDescription,
+				.problematicPageTitle,
+				.problematicHeading,
+				.problematicMetaDescription,
 				nil,
-				.IsLinkedByBrowsedPage,
-				.ContainsLinkToBrowsedPage
+				.isLinkedByBrowsedPage,
+				.containsLinkToBrowsedPage
 			]
 		default:
 			return [
-				.All,
+				.all,
 				nil,
-				.Successful,
+				.successful,
 				//.Redirects,
-				.RequestErrors,
-				.ResponseErrors,
+				.requestErrors,
+				.responseErrors,
 				//nil,
 				//.ValidInformation,
 				//.ProblematicMIMEType,
@@ -965,14 +969,14 @@ extension StatsViewController {
 	}
 	
 	func updateFilterResponseChoiceUI() {
-		let popUpButton = filterResponseChoicePopUpButton
+		let popUpButton = filterResponseChoicePopUpButton!
 		
 		if pageMapper == nil {
-			popUpButton.animator().hidden = true
+			popUpButton.animator().isHidden = true
 			return
 		}
 		else {
-			popUpButton.animator().hidden = false
+			popUpButton.animator().isHidden = false
 		}
 		
 		let popUpButtonAssistant = filterResponseChoicePopUpButtonAssistant ?? {
@@ -981,19 +985,19 @@ extension StatsViewController {
 			let menuAssistant = popUpButtonAssistant.menuAssistant
 			menuAssistant.customization.title = { choice in
 				switch choice {
-				case .All:
+				case .all:
 					let baseContentType = self.filterToBaseContentType
 					switch baseContentType {
-					case .LocalHTMLPage:
+					case .localHTMLPage:
 						return "All Local Pages"
-					case .Image:
+					case .image:
 						return "All Images"
-					case .Feed:
+					case .feed:
 						return "All Feeds"
 					default:
 						fatalError("Unimplemented base content type")
 					}
-				case .Successful, .Redirects, .RequestErrors, .ResponseErrors:
+				case .successful, .redirects, .requestErrors, .responseErrors:
 					let baseContentType = self.filterToBaseContentType
 					let responseType = choice.responseType!
 					let URLCount = self.pageMapper?.numberOfLoadedURLsWithBaseContentType(baseContentType, responseType: responseType) ?? 0
@@ -1019,21 +1023,21 @@ extension StatsViewController {
 extension StatsViewController {
 	var baseContentTypeChoiceMenuItemRepresentatives: [BaseContentTypeChoice?] {
 		return [
-			.LocalHTMLPages,
-			.Images,
-			.Feeds
+			.localHTMLPages,
+			.images,
+			.feeds
 		]
 	}
 	
 	func updateBaseContentTypeChoiceUI() {
-		let popUpButton = baseContentTypeChoicePopUpButton
+		let popUpButton = baseContentTypeChoicePopUpButton!
 		
 		if pageMapper == nil {
-			popUpButton.animator().hidden = true
+			popUpButton.animator().isHidden = true
 			return
 		}
 		
-		popUpButton.animator().hidden = false
+		popUpButton.animator().isHidden = false
 		
 		let popUpButtonAssistant = baseContentTypeChoicePopUpButtonAssistant ?? {
 			let popUpButtonAssistant = PopUpButtonAssistant<BaseContentTypeChoice>(popUpButton: popUpButton)
@@ -1057,10 +1061,10 @@ extension StatsViewController {
 extension StatsViewController {
 	func updateColumnsModeUI() {
 		let allowedColumnsModes = self.allowedColumnsModes
-		let segmentedControl = columnsModeSegmentedControl
+		let segmentedControl = columnsModeSegmentedControl!
 		
 		if pageMapper != nil {
-			segmentedControl.animator().hidden = false
+			segmentedControl.animator().isHidden = false
 			
 			let segmentedControlAssistant = columnsModeSegmentedControlAssistant ?? {
 				let segmentedControlAssistant = SegmentedControlAssistant<StatsColumnsMode>(segmentedControl: segmentedControl)
@@ -1084,7 +1088,7 @@ extension StatsViewController {
 			segmentedControlAssistant.selectedUniqueIdentifier = selectedColumnsMode
 		}
 		else {
-			segmentedControl.animator().hidden = true
+			segmentedControl.animator().isHidden = true
 		}
 	
 		updateColumnsToOnlyShow(selectedColumnsMode.columnIdentifiersForBaseContentType(filterToBaseContentType))
@@ -1093,7 +1097,7 @@ extension StatsViewController {
 }
 
 extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
-	func outlineView(outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
+	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
 		if item == nil {
 			return filteredURLs.count
 		}
@@ -1101,7 +1105,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 		return 0
 	}
 	
-	func outlineView(outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
+	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
 		if item == nil {
 			return filteredURLs[index]
 		}
@@ -1109,18 +1113,18 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 		fatalError("Outline view is only currently one level deep")
 	}
 	
-	func outlineView(outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
+	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
 		return false
 	}
 	
-	func outlineView(outlineView: NSOutlineView, objectValueForTableColumn tableColumn: NSTableColumn?, byItem item: AnyObject?) -> AnyObject? {
+	func outlineView(_ outlineView: NSOutlineView, objectValueFor tableColumn: NSTableColumn?, byItem item: Any?) -> Any? {
 		return item
 	}
 	
-	func outlineView(outlineView: NSOutlineView, viewForTableColumn tableColumn: NSTableColumn?, item: AnyObject) -> NSView? {
+	func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 		
 		if
-			let pageURL = item as? NSURL,
+			let pageURL = item as? URL,
 			let identifierString = tableColumn?.identifier,
 			let identifier = PagePresentedInfoIdentifier(rawValue: identifierString)
 		{
@@ -1130,11 +1134,11 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 			var stringValue: String
 			var suffixString: String?
 			var opacity: CGFloat = 1.0
-			var textColor: NSColor = NSColor.textColor()
+			var textColor: NSColor = NSColor.textColor
 			
-			if let pageMapper = pageMapper where pageMapper.hasFinishedRequestingURL(pageURL)
+			if let pageMapper = pageMapper , pageMapper.hasFinishedRequestingURL(pageURL)
 			{
-				var validatedStringValue: ValidatedStringValue = .Missing
+				var validatedStringValue: ValidatedStringValue = .missing
 				
 				if let pageInfo = pageMapper.pageInfoForRequestedURL(pageURL) {
 					validatedStringValue = identifier.validatedStringValueInPageInfo(pageInfo, pageMapper: pageMapper)
@@ -1153,7 +1157,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 				}
 				
 				switch validatedStringValue {
-				case .NotRequested:
+				case .notRequested:
 					stringValue = "(double-click to download)"
 				default:
 					stringValue = validatedStringValue.stringValueForPresentation
@@ -1165,7 +1169,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 				let validatedStringValue = identifier.validatedStringValueForPendingURL(pageURL)
 				
 				switch validatedStringValue {
-				case .ValidString(let string):
+				case .validString(let string):
 					stringValue = string
 				default:
 					stringValue = "(loading)"
@@ -1173,7 +1177,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 				}
 			}
 			
-			if let view = outlineView.makeViewWithIdentifier(cellIdentifier, owner: self) as? NSTableCellView {
+			if let view = outlineView.make(withIdentifier: cellIdentifier, owner: self) as? NSTableCellView {
 				if let textField = view.textField {
 					if let suffixString = suffixString {
 						stringValue += " \(suffixString)"
@@ -1195,12 +1199,12 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 	
 	/* Seem to need both outlineViewSelectionIsChanging and outlineViewSelectionDidChange to correctly get the selection as the outline view updates quickly, either after selecting by mouse clicking or using the up/down arrow keys.
 	*/
-	func outlineViewSelectionIsChanging(notification: NSNotification)
+	func outlineViewSelectionIsChanging(_ notification: Notification)
 	{
 		previouslySelectedURLs = selectedURLs
 	}
 	
-	func outlineViewSelectionDidChange(notification: NSNotification)
+	func outlineViewSelectionDidChange(_ notification: Notification)
 	{
 		previouslySelectedURLs = selectedURLs
 	}

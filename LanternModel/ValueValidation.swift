@@ -1,44 +1,44 @@
 //
-//  ValueValidation.swift
-//  Hoverlytics
+//	ValueValidation.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 31/03/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 31/03/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
 
 
-private let whitespaceCharacterSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+private let whitespaceCharacterSet = CharacterSet.whitespacesAndNewlines
 
-public enum ValidationError: ErrorType {
-	case StringIsEmpty(string: String, identifier: String)
+public enum ValidationError: Error {
+	case stringIsEmpty(string: String, identifier: String)
 	
-	case URLStringIsInvalid(string: String, identifier: String)
+	case urlStringIsInvalid(string: String, identifier: String)
 	
 	static let errorDomain = "LanternModel.ValueValidation.errorDomain"
 	
-	private enum ErrorCode: Int {
-		case StringIsEmpty = 10
+	fileprivate enum ErrorCode: Int {
+		case stringIsEmpty = 10
 		
-		case URLStringIsInvalid = 20
+		case urlStringIsInvalid = 20
 	}
 
 	
 	var errorCode: Int {
 		switch self {
-		case StringIsEmpty:
-			return ErrorCode.StringIsEmpty.rawValue
-		case URLStringIsInvalid:
-			return ErrorCode.URLStringIsInvalid.rawValue
+		case .stringIsEmpty:
+			return ErrorCode.stringIsEmpty.rawValue
+		case .urlStringIsInvalid:
+			return ErrorCode.urlStringIsInvalid.rawValue
 		}
 	}
 	
 	var description: String {
 		switch self {
-		case StringIsEmpty(_, let identifier):
+		case .stringIsEmpty(_, let identifier):
 			return "Please enter something for \"\(identifier)\""
-		case URLStringIsInvalid(_, let identifier):
+		case .urlStringIsInvalid(_, let identifier):
 			return "Please enter a valid URL for \"\(identifier)\""
 		}
 	}
@@ -50,35 +50,35 @@ public enum ValidationError: ErrorType {
 		return NSError(domain: ValidationError.errorDomain, code: self.errorCode, userInfo: userInfo)
 	}
 	
-	public static func validateString(string: String, identifier: String) throws -> String {
-		let string = string.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
+	public static func validateString(_ string: String, identifier: String) throws -> String {
+		let string = string.trimmingCharacters(in: whitespaceCharacterSet)
 		if string.isEmpty {
-			throw self.StringIsEmpty(string: string, identifier: identifier).cocoaError
+			throw self.stringIsEmpty(string: string, identifier: identifier).cocoaError
 		}
 		
 		return string
 	}
 	
-	public static func validateURLString(URLString: String, identifier: String) throws -> NSURL {
+	public static func validateURLString(_ URLString: String, identifier: String) throws -> URL {
 		do {
 			guard let URL = detectWebURL(fromString: URLString) else {
-				throw self.URLStringIsInvalid(string: URLString, identifier: identifier).cocoaError
+				throw self.urlStringIsInvalid(string: URLString, identifier: identifier).cocoaError
 			}
 			
 			return URL
 		}
 		catch {
-			throw self.URLStringIsInvalid(string: URLString, identifier: identifier).cocoaError
+			throw self.urlStringIsInvalid(string: URLString, identifier: identifier).cocoaError
 		}
 	}
 }
 
 
-public func detectWebURL(fromString URLString: String) -> NSURL? {
-	let dataDetector = try? NSDataDetector(types: NSTextCheckingType.Link.rawValue)
+public func detectWebURL(fromString URLString: String) -> URL? {
+	let dataDetector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
 	
-	if let result = dataDetector?.firstMatchInString(URLString, options: NSMatchingOptions(), range: NSMakeRange(0, (URLString as NSString).length)) {
-		return result.URL
+	if let result = dataDetector?.firstMatch(in: URLString, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, (URLString as NSString).length)) {
+		return result.url
 	}
 	else {
 		return nil

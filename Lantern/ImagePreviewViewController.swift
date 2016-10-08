@@ -1,9 +1,9 @@
 //
-//  ImagePreviewViewController.swift
-//  Hoverlytics
+//	ImagePreviewViewController.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 4/05/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 4/05/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Cocoa
@@ -22,24 +22,24 @@ class ImagePreviewViewController: NSViewController {
 		view.appearance = NSAppearance(named: NSAppearanceNameAqua)
 	}
 	
-	override func prepareForSegue(segue: NSStoryboardSegue, sender: AnyObject?) {
+	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
 		if segue.identifier == "imageViewController" {
 			let innerImageViewController = segue.destinationController as! ImagePreviewInnerViewController
 			
 			innerImageViewController.imageData = imageData
 			
 			innerImageViewController.wantsToDismiss = {
-				self.dismissController(nil)
+				self.dismiss(nil)
 			}
 			
 			innerImageViewController.imagePropertiesDidLoad = { [weak self] imageProperties in
 				if let
 					receiver = self,
-					pixelWidthNumber = imageProperties[kCGImagePropertyPixelWidth] as? NSNumber,
-					pixelHeightNumber = imageProperties[kCGImagePropertyPixelHeight] as? NSNumber
+					let pixelWidthNumber = imageProperties[kCGImagePropertyPixelWidth] as? NSNumber,
+					let pixelHeightNumber = imageProperties[kCGImagePropertyPixelHeight] as? NSNumber
 				{
-					receiver.pixelWidthField.integerValue = pixelWidthNumber.integerValue
-					receiver.pixelHeightField.integerValue = pixelHeightNumber.integerValue
+					receiver.pixelWidthField.integerValue = pixelWidthNumber.intValue
+					receiver.pixelHeightField.integerValue = pixelHeightNumber.intValue
 				}
 
 			}
@@ -54,7 +54,7 @@ class ImagePreviewViewController: NSViewController {
 		pixelHeightField.stringValue = ""
 	}
 	
-	var sourceURL: NSURL? {
+	var sourceURL: URL? {
 		didSet {
 			if let sourceURL = sourceURL {
 				title = sourceURL.absoluteString
@@ -62,7 +62,7 @@ class ImagePreviewViewController: NSViewController {
 		}
 	}
 	
-	var imageData: NSData! {
+	var imageData: Data! {
 		didSet {
 			resetUI()
 			
@@ -89,7 +89,7 @@ class ImagePreviewViewController: NSViewController {
 		let view = self.view
 		let imageView = self.imageView
 		//if let windowContentView = view.window?.contentView as? NSView {
-		if let window = view.window, screen = window.screen {
+		if let window = view.window, let screen = window.screen {
 			if self.contentSizeConstraints.count > 0 {
 				view.removeConstraints(self.contentSizeConstraints)
 			}
@@ -144,25 +144,25 @@ class ImagePreviewViewController: NSViewController {
 
 extension ImagePreviewViewController {
 	class func instantiateFromStoryboard() -> ImagePreviewViewController {
-		let vc =  NSStoryboard.lantern_contentPreviewStoryboard.instantiateControllerWithIdentifier("Image View Controller") as! ImagePreviewViewController
+		let vc =	NSStoryboard.lantern_contentPreviewStoryboard.instantiateController(withIdentifier: "Image View Controller") as! ImagePreviewViewController
 		_ = vc.view // Stupid NSViewController
 		return vc
 	}
 }
 
 extension ImagePreviewViewController {
-	@IBAction func copyImage(sender: AnyObject?) {
+	@IBAction func copyImage(_ sender: AnyObject?) {
 		performCopyImage()
 	}
 	
 	func performCopyImage() {
 		if
 			let imageData = imageData,
-			let MIMEType = MIMEType where MIMEType != "",
-			let UTIs = UTTypeCreateAllIdentifiersForTag(kUTTagClassMIMEType, MIMEType, kUTTypeImage)?.takeRetainedValue() as? [String]//,
+			let MIMEType = MIMEType , MIMEType != "",
+			let UTIs = UTTypeCreateAllIdentifiersForTag(kUTTagClassMIMEType, MIMEType as CFString, kUTTypeImage)?.takeRetainedValue() as? [String]//,
 			//let pasteboardType = UTTypeCopyPreferredTagWithClass(preferredUTI, kUTTagClassNSPboardType).takeRetainedValue()
 		{
-			let pasteboard = NSPasteboard.generalPasteboard()
+			let pasteboard = NSPasteboard.general()
 			pasteboard.clearContents()
 			
 			pasteboard.declareTypes(UTIs, owner: nil)
@@ -176,20 +176,20 @@ extension ImagePreviewViewController {
 		return true
 	}
 	
-	override func cancelOperation(sender: AnyObject?) {
-		dismissController(sender)
+	override func cancelOperation(_ sender: Any?) {
+		dismiss(sender)
 	}
 	
-	override func keyDown(theEvent: NSEvent) {
+	override func keyDown(with theEvent: NSEvent) {
 		if theEvent.burnt_isSpaceKey {
 			// Just like QuickLook, use space to dismiss.
-			dismissController(nil)
+			dismiss(nil)
 		}
 	}
 }
 
 extension ImagePreviewViewController: NSPopoverDelegate {
-	func popoverDidShow(notification: NSNotification) {
+	func popoverDidShow(_ notification: Notification) {
 		if let window = view.window {
 			window.makeFirstResponder(self)
 		}
@@ -197,7 +197,7 @@ extension ImagePreviewViewController: NSPopoverDelegate {
 		view.layoutSubtreeIfNeeded()
 	}
 	
-	func popoverShouldDetach(popover: NSPopover) -> Bool {
+	func popoverShouldDetach(_ popover: NSPopover) -> Bool {
 		return true
 	}
 }
@@ -206,28 +206,28 @@ extension ImagePreviewViewController: NSPopoverDelegate {
 class ImagePreviewInnerViewController: NSViewController {
 	@IBOutlet var imageView: IKImageView!
 	
-	var imagePropertiesDidLoad: ((imageProperties: [NSString: AnyObject]) -> Void)?
+	var imagePropertiesDidLoad: ((_ imageProperties: [NSString: AnyObject]) -> Void)?
 	var wantsToDismiss: (() -> Void)?
 	
-	var backgroundQueue: dispatch_queue_t!
+	var backgroundQueue: DispatchQueue!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		backgroundQueue = dispatch_queue_create("com.burntcaramel.ImagePreviewViewController.background", DISPATCH_QUEUE_SERIAL)
+		backgroundQueue = DispatchQueue(label: "com.burntcaramel.ImagePreviewViewController.background", attributes: [])
 	}
 	
 	var coreGraphicsImageSource: CGImageSource!
 	var viewedCoreGraphicsImage: CGImage?
 	
-	private func updateUIWithImage(image: CGImage, imageProperties: [NSString: AnyObject]?) {
+	fileprivate func updateUIWithImage(_ image: CGImage, imageProperties: [NSString: AnyObject]?) {
 		let view = self.view
 		
 		let imageView = self.imageView
-		imageView.setImage(viewedCoreGraphicsImage, imageProperties: imageProperties)
+		imageView?.setImage(viewedCoreGraphicsImage, imageProperties: imageProperties)
 		//imageView.zoomImageToActualSize(nil)
 		
-		var imageSize = imageView.imageSize()
+		var imageSize = imageView?.imageSize()
 		#if DEBUG
 			print("imageSize \(imageSize)")
 		#endif
@@ -240,8 +240,8 @@ class ImagePreviewInnerViewController: NSViewController {
 			screenSize.height -= 13.0 * 2.0 + 32.0
 			//screenSize.height -= 32.0
 			
-			imageSize.width = min(imageSize.width, screenSize.width)
-			imageSize.height = min(imageSize.height, screenSize.height)
+			imageSize?.width = min((imageSize?.width)!, screenSize.width)
+			imageSize?.height = min((imageSize?.height)!, screenSize.height)
 		}
 		
 		//imageSize.width -= 13.0 * 2.0 + 8.0
@@ -251,11 +251,11 @@ class ImagePreviewInnerViewController: NSViewController {
 			print("preferredContentSize \(imageSize)")
 		#endif
 		
-		imageView.autoresizes = false
-		preferredContentSize = imageSize
+		imageView?.autoresizes = false
+		preferredContentSize = imageSize!
 		
 		if let imageProperties = imageProperties {
-			imagePropertiesDidLoad?(imageProperties: imageProperties)
+			imagePropertiesDidLoad?(imageProperties)
 		}
 		
 		view.needsUpdateConstraints = true
@@ -263,23 +263,23 @@ class ImagePreviewInnerViewController: NSViewController {
 		view.layoutSubtreeIfNeeded()
 		
 		//imageView.zoomImageToFit(nil)
-		imageView.zoomImageToActualSize(nil)
+		imageView?.zoomImageToActualSize(nil)
 		//view.superview
 	}
 	
-	var imageData: NSData? {
+	var imageData: Data? {
 		didSet {
 			_ = self.view // Stupid NSViewController
 			
 			if let imageData = self.imageData {
-				dispatch_async(backgroundQueue) {
-					guard let coreGraphicsImageSource = CGImageSourceCreateWithData(imageData, nil) else { return }
+				backgroundQueue.async {
+					guard let coreGraphicsImageSource = CGImageSourceCreateWithData(imageData as CFData, nil) else { return }
 					
 					let viewedCoreGraphicsImage = CGImageSourceCreateImageAtIndex(coreGraphicsImageSource, 0, nil)
 					let imageProperties = CGImageSourceCopyPropertiesAtIndex(coreGraphicsImageSource, 0, nil) as? [NSString: AnyObject]
 					
 					if let viewedCoreGraphicsImage = viewedCoreGraphicsImage {
-						dispatch_async(dispatch_get_main_queue()) { [weak self] in
+						DispatchQueue.main.async { [weak self] in
 							self?.updateUIWithImage(viewedCoreGraphicsImage, imageProperties: imageProperties)
 						}
 					}
@@ -291,7 +291,7 @@ class ImagePreviewInnerViewController: NSViewController {
 		}
 	}
 	
-	@IBAction func clickedImageView(sender: AnyObject?) {
+	@IBAction func clickedImageView(_ sender: AnyObject?) {
 		wantsToDismiss?()
 	}
 	

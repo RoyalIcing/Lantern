@@ -1,27 +1,23 @@
 //
-//  PageMapper+InfoPresenting.swift
-//  Hoverlytics
+//	PageMapper+InfoPresenting.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 28/04/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 28/04/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
 import Ono
 
 
-extension NSURL {
-	var burnt_pathWithQuery: String? {
-		if let path = path {
-			if let query = query {
-				return "\(path)?\(query)"
-			}
-			else {
-				return path
-			}
+extension URL {
+	var burnt_pathWithQuery: String {
+		if let query = query {
+			return "\(path)?\(query)"
 		}
-		
-		return nil
+		else {
+			return path
+		}
 	}
 }
 
@@ -52,16 +48,16 @@ public enum PagePresentedInfoIdentifier: String {
 		}
 	}
 	
-	public func titleForBaseContentType(baseContentType: BaseContentType?) -> String {
+	public func titleForBaseContentType(_ baseContentType: BaseContentType?) -> String {
 		switch self {
 		case .requestedURL:
 			if let baseContentType = baseContentType {
 				switch baseContentType {
-				case .LocalHTMLPage:
+				case .localHTMLPage:
 					return "Page URL"
-				case .Image:
+				case .image:
 					return "Image URL"
-				case .Feed:
+				case .feed:
 					return "Feed URL"
 				default:
 					break
@@ -92,16 +88,15 @@ public enum PagePresentedInfoIdentifier: String {
 		}
 	}
 	
-	private func stringValueForMultipleElementsContent(elements: [ONOXMLElement]) -> String? {
+	fileprivate func stringValueForMultipleElementsContent(_ elements: [ONOXMLElement]) -> String? {
 		switch elements.count {
 		case 1:
 			let element = elements[0]
-			var stringValue = element.stringValue()
+			var stringValue = element.stringValue() ?? ""
 			// Conforms spaces and new lines into single spaces
-			stringValue = stringValue.stringByReplacingOccurrencesOfString("[\\s]+", withString: " ", options: .RegularExpressionSearch, range: nil)
+			stringValue = stringValue.replacingOccurrences(of: "[\\s]+", with: " ", options: .regularExpression, range: nil)
 			// Trim whitespace from ends
-			let whitespaceCharacterSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()
-			stringValue = stringValue.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+			stringValue = stringValue.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 			return stringValue
 		case 0:
 			return nil
@@ -110,12 +105,12 @@ public enum PagePresentedInfoIdentifier: String {
 		}
 	}
 	
-	private func stringValueForMultipleElements(elements: [ONOXMLElement], attribute: String) -> String? {
+	fileprivate func stringValueForMultipleElements(_ elements: [ONOXMLElement], attribute: String) -> String? {
 		switch elements.count {
 		case 1:
 			let element = elements[0]
 			if let stringValue = element[attribute] as? String {
-				return stringValue.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+				return stringValue.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 			}
 			else {
 				return nil
@@ -127,58 +122,56 @@ public enum PagePresentedInfoIdentifier: String {
 		}
 	}
 	
-	private static var byteFormatter: NSByteCountFormatter = {
-		let byteFormatter = NSByteCountFormatter()
-		byteFormatter.countStyle = .Binary
-		byteFormatter.adaptive = false
+	fileprivate static var byteFormatter: ByteCountFormatter = {
+		let byteFormatter = ByteCountFormatter()
+		byteFormatter.countStyle = .binary
+		byteFormatter.isAdaptive = false
 		return byteFormatter
 		}()
 	
-	public func validatedStringValueForPendingURL(requestedURL: NSURL) -> ValidatedStringValue {
+	public func validatedStringValueForPendingURL(_ requestedURL: URL) -> ValidatedStringValue {
 		switch self {
 		case .requestedURL:
 			#if DEBUG && false
 				return ValidatedStringValue(string: "\(requestedURL)")
 			#endif
 			
-			if let requestedPath = requestedURL.burnt_pathWithQuery {
-				return ValidatedStringValue(string: requestedPath)
-			}
+			return ValidatedStringValue(string: requestedURL.burnt_pathWithQuery)
 		default:
 			break
 		}
 		
-		return .Missing
+		return .missing
 	}
 	
-	public func validatedStringValueInPageInfo(pageInfo: PageInfo, pageMapper: PageMapper) -> ValidatedStringValue {
+	public func validatedStringValueInPageInfo(_ pageInfo: PageInfo, pageMapper: PageMapper) -> ValidatedStringValue {
 		switch self {
 		case .requestedURL:
 			let requestedURL = pageInfo.requestedURL
-			if let requestedPath = pageInfo.requestedURL.burnt_pathWithQuery {
-				if
-					let finalURL = pageInfo.finalURL,
-					let finalURLPath = finalURL.burnt_pathWithQuery where requestedURL.absoluteString != finalURL.absoluteString
-				{
-					if let redirectionInfo = pageMapper.redirectedDestinationURLToInfo[finalURL] {
-						return ValidatedStringValue(string: "\(requestedPath) (\(finalURLPath))")
-					}
-					
-					let requestedScheme = requestedURL.scheme
-					let finalScheme = finalURL.scheme
-					if requestedScheme != finalScheme {
-						return ValidatedStringValue(string: "\(requestedPath) (\(finalURLPath) to \(finalScheme))")
-					}
-						
+			let requestedPath = requestedURL.burnt_pathWithQuery
+			if
+				let finalURL = pageInfo.finalURL,
+				requestedURL.absoluteString != finalURL.absoluteString
+			{
+				let finalURLPath = finalURL.burnt_pathWithQuery
+				if pageMapper.redirectedDestinationURLToInfo[finalURL] != nil {
 					return ValidatedStringValue(string: "\(requestedPath) (\(finalURLPath))")
 				}
 				
-				#if DEBUG && false
-					return ValidatedStringValue(string: "\(requestedURL) \(pageInfo.finalURL)")
-				#endif
-				
-				return ValidatedStringValue(string: requestedPath)
+				let requestedScheme = requestedURL.scheme
+				let finalScheme = finalURL.scheme
+				if requestedScheme != finalScheme {
+					return ValidatedStringValue(string: "\(requestedPath) (\(finalURLPath) to \(finalScheme))")
+				}
+					
+				return ValidatedStringValue(string: "\(requestedPath) (\(finalURLPath))")
 			}
+			
+			#if DEBUG && false
+				return ValidatedStringValue(string: "\(requestedURL) \(pageInfo.finalURL)")
+			#endif
+			
+			return ValidatedStringValue(string: requestedPath)
 		case .statusCode:
 			return ValidatedStringValue(string: String(pageInfo.statusCode))
 		case .MIMEType:
@@ -202,25 +195,25 @@ public enum PagePresentedInfoIdentifier: String {
 		case .pageByteCount:
 			if let byteCount = pageInfo.byteCount {
 				return ValidatedStringValue(
-					string: PagePresentedInfoIdentifier.byteFormatter.stringFromByteCount(Int64(byteCount))
+					string: PagePresentedInfoIdentifier.byteFormatter.string(fromByteCount: Int64(byteCount))
 				)
 			}
 			else {
-				return .NotRequested
+				return .notRequested
 			}
 		case .pageByteCountBeforeBodyTag:
 			if let byteCountBeforeBody = pageInfo.contentInfo?.preBodyByteCount {
 				return ValidatedStringValue(
-					string: PagePresentedInfoIdentifier.byteFormatter.stringFromByteCount(Int64(byteCountBeforeBody))
+					string: PagePresentedInfoIdentifier.byteFormatter.string(fromByteCount: Int64(byteCountBeforeBody))
 				)
 			}
 		case .pageByteCountAfterBodyTag:
 			if let
 				byteCount = pageInfo.byteCount,
-				byteCountBeforeBody = pageInfo.contentInfo?.preBodyByteCount
+				let byteCountBeforeBody = pageInfo.contentInfo?.preBodyByteCount
 			{
 				return ValidatedStringValue(
-					string: PagePresentedInfoIdentifier.byteFormatter.stringFromByteCount(Int64(byteCount - byteCountBeforeBody))
+					string: PagePresentedInfoIdentifier.byteFormatter.string(fromByteCount: Int64(byteCount - byteCountBeforeBody))
 				)
 			}
 		case .internalLinkCount:
@@ -231,7 +224,7 @@ public enum PagePresentedInfoIdentifier: String {
 			}
 		case .internalLinks:
 			if let localPageURLs = pageInfo.contentInfo?.localPageURLs {
-				return ValidatedStringValue.Multiple(
+				return ValidatedStringValue.multiple(
 					localPageURLs.map { URL in
 						ValidatedStringValue(
 							string: URL.absoluteString
@@ -247,7 +240,7 @@ public enum PagePresentedInfoIdentifier: String {
 			}
 		case .externalLinks:
 			if let externalPageURLs = pageInfo.contentInfo?.externalPageURLs {
-				return ValidatedStringValue.Multiple(
+				return ValidatedStringValue.multiple(
 					externalPageURLs.map { URL in
 						ValidatedStringValue(
 							string: URL.absoluteString
@@ -257,6 +250,6 @@ public enum PagePresentedInfoIdentifier: String {
 			}
 		}
 		
-		return .Missing
+		return .missing
 	}
 }

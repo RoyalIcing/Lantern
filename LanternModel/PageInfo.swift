@@ -1,9 +1,9 @@
 //
-//  PageInfo.swift
-//  Hoverlytics
+//	PageInfo.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 28/04/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 28/04/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
@@ -12,47 +12,47 @@ import Ono
 
 
 public enum BaseContentType {
-	case Unknown
-	case LocalHTMLPage
-	case Text
-	case Image
-	case Feed
-	case Redirect
-	case Essential
+	case unknown
+	case localHTMLPage
+	case text
+	case image
+	case feed
+	case redirect
+	case essential
 }
 
 extension BaseContentType: CustomDebugStringConvertible {
 	 public var debugDescription: String {
 		switch self {
-		case .Unknown:
+		case .unknown:
 			return "Unknown"
-		case .LocalHTMLPage:
+		case .localHTMLPage:
 			return "LocalHTMLPage"
-		case .Text:
+		case .text:
 			return "Text"
-		case .Image:
+		case .image:
 			return "Image"
-		case .Feed:
+		case .feed:
 			return "Feed"
-		case .Redirect:
+		case .redirect:
 			return "Redirect"
-		case .Essential:
+		case .essential:
 			return "Essential"
 		}
 	}
 }
 
 
-private typealias ONOXMLElementFilter = (element: ONOXMLElement) -> Bool
+private typealias ONOXMLElementFilter = (_ element: ONOXMLElement) -> Bool
 
 extension ONOXMLDocument {
-	private func allElementsWithCSS(selector: String, filter: ONOXMLElementFilter? = nil) -> [ONOXMLElement] {
+	fileprivate func allElementsWithCSS(_ selector: String, filter: ONOXMLElementFilter? = nil) -> [ONOXMLElement] {
 		var elements = [ONOXMLElement]()
-		self.enumerateElementsWithCSS(selector) { (element, index, stop) in
-			if filter?(element: element) == false {
+		self.enumerateElements(withCSS: selector) { (element, index, stop) in
+			if filter?(element!) == false {
 				return
 			}
-			elements.append(element)
+			elements.append(element!)
 		}
 		return elements
 	}
@@ -61,35 +61,35 @@ extension ONOXMLDocument {
 
 
 public enum PageResponseType: Int {
-	case Successful = 2
-	case Redirects = 3
-	case RequestErrors = 4
-	case ResponseErrors = 5
-	case Unknown = 0
+	case successful = 2
+	case redirects = 3
+	case requestErrors = 4
+	case responseErrors = 5
+	case unknown = 0
 }
 
 extension PageResponseType {
 	public init(statusCode: Int) {
 		switch statusCode {
 		case 200..<300:
-			self = .Successful
+			self = .successful
 		case 300..<400:
-			self = .Redirects
+			self = .redirects
 		case 400..<500:
-			self = .RequestErrors
+			self = .requestErrors
 		case 500..<600:
-			self = .ResponseErrors
+			self = .responseErrors
 		default:
-			self = .Unknown
+			self = .unknown
 		}
 	}
 }
 
 
 
-internal func URLIsExternal(URLToTest: NSURL, localHost: String) -> Bool {
+internal func URLIsExternal(_ URLToTest: URL, localHost: String) -> Bool {
 	if let host = URLToTest.host {
-		if host.caseInsensitiveCompare(localHost) != .OrderedSame {
+		if host.caseInsensitiveCompare(localHost) != .orderedSame {
 			return true
 		}
 	}
@@ -99,11 +99,10 @@ internal func URLIsExternal(URLToTest: NSURL, localHost: String) -> Bool {
 
 private let fileDownloadFileExtensions = Set<String>(["zip", "dmg", "exe", "pdf", "gz", "tar", "doc", "docx", "xls", "wav", "aiff", "mp3", "mp4", "mov", "avi", "wmv"])
 
-func linkedURLLooksLikeFileDownload(URL: NSURL) -> Bool {
-	if let pathExtension = URL.pathExtension {
-		if fileDownloadFileExtensions.contains(pathExtension) {
-			return true
-		}
+func linkedURLLooksLikeFileDownload(_ url: URL) -> Bool {
+	let pathExtension = url.pathExtension
+	if fileDownloadFileExtensions.contains(pathExtension) {
+		return true
 	}
 	
 	return false
@@ -137,7 +136,7 @@ extension MIMETypeString {
 		return stringValue.hasPrefix("image/")
 	}
 	
-	private static let feedTypes = Set<String>(["application/rss+xml", "application/rdf+xml", "application/atom+xml", "application/xml", "text/xml"])
+	fileprivate static let feedTypes = Set<String>(["application/rss+xml", "application/rdf+xml", "application/atom+xml", "application/xml", "text/xml"])
 	
 	var isFeed: Bool {
 		let feedTypes = MIMETypeString.feedTypes
@@ -146,19 +145,19 @@ extension MIMETypeString {
 	
 	var baseContentType: BaseContentType {
 		if isHTML {
-			return .LocalHTMLPage
+			return .localHTMLPage
 		}
 		else if isText {
-			return .Text
+			return .text
 		}
 		else if isImage {
-			return .Image
+			return .image
 		}
 		else if isFeed {
-			return .Feed
+			return .feed
 		}
 		else {
-			return .Unknown
+			return .unknown
 		}
 	}
 }
@@ -177,9 +176,9 @@ struct PageContentInfoOptions {
 }
 
 public struct PageContentInfo {
-	public let data: NSData
-	private let document: ONOXMLDocument!
-	let stringEncoding: NSStringEncoding!
+	public let data: Data
+	fileprivate let document: ONOXMLDocument!
+	let stringEncoding: String.Encoding!
 	
 	public let preBodyByteCount: Int?
 	
@@ -188,29 +187,29 @@ public struct PageContentInfo {
 	public let metaDescriptionElements: [ONOXMLElement]
 	public let openGraphElements: [ONOXMLElement]
 	
-	private let uniqueFeedURLs: UniqueURLArray
-	public var feedURLs: [NSURL] {
-		return uniqueFeedURLs.orderedURLs
+	fileprivate let uniqueFeedURLs: UniqueURLArray
+	public var feedURLs: [URL] {
+		return uniqueFeedURLs.orderedURLs as [URL]
 	}
 	public let feedLinkElements: [ONOXMLElement]
 	
-	private let uniqueExternalPageURLs: UniqueURLArray
-	public var externalPageURLs: [NSURL] {
-		return uniqueExternalPageURLs.orderedURLs
+	fileprivate let uniqueExternalPageURLs: UniqueURLArray
+	public var externalPageURLs: [URL] {
+		return uniqueExternalPageURLs.orderedURLs as [URL]
 	}
 	public let aExternalLinkElements: [ONOXMLElement]
 	
-	private let uniqueLocalPageURLs: UniqueURLArray
-	public var localPageURLs: [NSURL] {
-		return uniqueLocalPageURLs.orderedURLs
+	fileprivate let uniqueLocalPageURLs: UniqueURLArray
+	public var localPageURLs: [URL] {
+		return uniqueLocalPageURLs.orderedURLs as [URL]
 	}
-	public func containsLocalPageURL(URL: NSURL) -> Bool {
+	public func containsLocalPageURL(_ URL: Foundation.URL) -> Bool {
 		return uniqueLocalPageURLs.contains(URL)
 	}
 	public let aLocalLinkElements: [ONOXMLElement]
 	
-	public let imageURLs: Set<NSURL>
-	public func containsImageURL(URL: NSURL) -> Bool {
+	public let imageURLs: Set<URL>
+	public func containsImageURL(_ URL: Foundation.URL) -> Bool {
 		return imageURLs.contains(URL)
 	}
 	public let imageElements: [ONOXMLElement]
@@ -221,25 +220,19 @@ public struct PageContentInfo {
 	public let h1Elements: [ONOXMLElement]
 	public let richSnippetElements: [ONOXMLElement]
 	
-	init(data: NSData, localURL: NSURL, options: PageContentInfoOptions = PageContentInfoOptions()) {
+	init(data: Data, localURL: URL, options: PageContentInfoOptions = PageContentInfoOptions()) {
 		self.data = data
 		
-		var error: NSError?
 		do {
-			let document = try ONOXMLDocument.HTMLDocumentWithData(data)
+			let document = try ONOXMLDocument.htmlDocument(with: data)
 			self.stringEncoding = document.stringEncodingWithFallback()
 			// Must store document to also save references to all found elements.
 			self.document = document
 			
 			let stringEncoding = document.stringEncodingWithFallback()
-			if let bodyTagData = "<body".dataUsingEncoding(stringEncoding, allowLossyConversion: false) {
-				let bodyTagRange = data.rangeOfData(bodyTagData, options: [], range: NSMakeRange(0, data.length))
-				if bodyTagRange.location != NSNotFound {
-					preBodyByteCount = bodyTagRange.location
-				}
-				else {
-					preBodyByteCount = nil
-				}
+			if let bodyTagData = "<body".data(using: stringEncoding, allowLossyConversion: false) {
+				let bodyTagRange = data.range(of: bodyTagData)
+				preBodyByteCount = bodyTagRange?.lowerBound
 			}
 			else {
 				preBodyByteCount = nil
@@ -249,14 +242,14 @@ public struct PageContentInfo {
 			
 			metaDescriptionElements = document.allElementsWithCSS("head meta[name][content]") { element in
 				if let name = element["name"] as? String {
-					return name.caseInsensitiveCompare("description") == .OrderedSame
+					return name.caseInsensitiveCompare("description") == .orderedSame
 				}
 				
 				return false
 			}
 			openGraphElements = document.allElementsWithCSS("head meta[property]") { element in
 				if let name = element["property"] as? String {
-					return name.rangeOfString("og:", options: [.AnchoredSearch, .CaseInsensitiveSearch]) != nil
+					return name.range(of: "og:", options: [.anchored, .caseInsensitive]) != nil
 				}
 				
 				return false
@@ -266,9 +259,9 @@ public struct PageContentInfo {
 			feedLinkElements = document.allElementsWithCSS("head link[type][href]") { element in
 				if
 					let typeRaw = element["type"] as? String,
-					let MIMEType = MIMETypeString(typeRaw.lowercaseString),
+					let MIMEType = MIMETypeString(typeRaw.lowercased()),
 					let linkURLString = element["href"] as? String,
-					let linkURL = NSURL(string: linkURLString, relativeToURL: localURL)
+					let linkURL = URL(string: linkURLString, relativeTo: localURL)
 				{
 					if MIMEType.isFeed {
 						uniqueFeedURLs.insertReturningConformedURLIfNew(linkURL)
@@ -290,20 +283,20 @@ public struct PageContentInfo {
 			let uniqueExternalPageURLs = UniqueURLArray()
 			
 			var imageElements = [ONOXMLElement]()
-			var imageURLs = Set<NSURL>()
+			var imageURLs = Set<URL>()
 			
-			document.enumerateElementsWithCSS("a[href]") { (aLinkElement, index, stop) in
+			document.enumerateElements(withCSS: "a[href]") { (aLinkElement, index, stop) in
 				if
-					let linkURLString = aLinkElement["href"] as? String,
-					let linkURL = NSURL(string: linkURLString, relativeToURL: localURL)
+					let linkURLString = aLinkElement?["href"] as? String,
+					let linkURL = URL(string: linkURLString, relativeTo: localURL)
 				{
 					if separateLinksToImageTypes {
-						let hasImageType = [".jpg", ".jpeg", ".png", ".gif"].reduce(false, combine: { (hasSoFar, suffix) -> Bool in
+						let hasImageType = [".jpg", ".jpeg", ".png", ".gif"].reduce(false, { (hasSoFar, suffix) -> Bool in
 							return hasSoFar || linkURLString.hasSuffix(suffix)
 						})
 						
 						if hasImageType {
-							imageElements.append(aLinkElement)
+							imageElements.append(aLinkElement!)
 							imageURLs.insert(linkURL)
 							return
 						}
@@ -312,11 +305,11 @@ public struct PageContentInfo {
 					let isExternal = URLIsExternal(linkURL, localHost: localHost)
 					
 					if isExternal {
-						aExternalLinkElements.append(aLinkElement)
+						aExternalLinkElements.append(aLinkElement!)
 						uniqueExternalPageURLs.insertReturningConformedURLIfNew(linkURL)
 					}
 					else {
-						aLocalLinkElements.append(aLinkElement)
+						aLocalLinkElements.append(aLinkElement!)
 						uniqueLocalPageURLs.insertReturningConformedURLIfNew(linkURL)
 					}
 				}
@@ -326,14 +319,14 @@ public struct PageContentInfo {
 			self.uniqueLocalPageURLs = uniqueLocalPageURLs
 			self.uniqueExternalPageURLs = uniqueExternalPageURLs
 			
-			document.enumerateElementsWithCSS("img[src]") { (imgElement, index, stop) in
+			document.enumerateElements(withCSS: "img[src]") { (imgElement, index, stop) in
 				if
-					let imageURLString = imgElement["src"] as? String,
-					let imageURL = NSURL(string: imageURLString, relativeToURL: localURL)
+					let imageURLString = imgElement?["src"] as? String,
+					let imageURL = URL(string: imageURLString, relativeTo: localURL)
 				{
 					//let isExternal = URLIsExternal(linkURL, localHost: localHost)
 					
-					imageElements.append(imgElement)
+					imageElements.append(imgElement!)
 					imageURLs.insert(imageURL)
 				}
 			}
@@ -343,8 +336,7 @@ public struct PageContentInfo {
 			h1Elements = document.allElementsWithCSS("h1")
 			
 			richSnippetElements = [] //TODO:
-		} catch let error1 as NSError {
-			error = error1
+		} catch let error as NSError {
 			document = nil
 			stringEncoding = nil
 			
@@ -363,7 +355,7 @@ public struct PageContentInfo {
 			
 			aLocalLinkElements = []
 			
-			imageURLs = Set<NSURL>()
+			imageURLs = Set<URL>()
 			imageElements = []
 			
 			h1Elements = []
@@ -373,30 +365,30 @@ public struct PageContentInfo {
 		}
 	}
 	
-	public var HTMLHeadData: NSData? {
+	public var HTMLHeadData: Data? {
 		if let preBodyByteCount = preBodyByteCount {
-			return data.subdataWithRange(NSMakeRange(0, preBodyByteCount))
+			return data.subdata(in: 0..<preBodyByteCount)
 		}
 		
 		return nil
 	}
 	
-	public var HTMLBodyData: NSData? {
+	public var HTMLBodyData: Data? {
 		if let preBodyByteCount = preBodyByteCount {
-			return data.subdataWithRange(NSMakeRange(preBodyByteCount, data.length - preBodyByteCount))
+			return data.subdata(in: preBodyByteCount..<(data.count - preBodyByteCount))
 		}
 		
 		return nil
 	}
 	
 	public var stringContent: String? {
-		return NSString(data: data, encoding: stringEncoding) as? String
+		return String(data: data, encoding: stringEncoding)
 		//return data.stringRepresentationUsingONOXMLDocumentHints(document)
 	}
 	
 	public var HTMLHeadStringContent: String? {
 		if let data = HTMLHeadData {
-			return NSString(data: data, encoding: stringEncoding) as? String
+			return String(data: data, encoding: stringEncoding)
 		}
 		else {
 			return nil
@@ -406,7 +398,7 @@ public struct PageContentInfo {
 	
 	public var HTMLBodyStringContent: String? {
 		if let data = HTMLBodyData {
-			return NSString(data: data, encoding: stringEncoding) as? String
+			return String(data: data, encoding: stringEncoding)
 		}
 		else {
 			return nil
@@ -418,8 +410,8 @@ public struct PageContentInfo {
 
 
 public struct ResourceInfo {
-	public let requestedURL: NSURL
-	public let finalURL: NSURL?
+	public let requestedURL: URL
+	public let finalURL: URL?
 	public let statusCode: Int
 	public let baseContentType: BaseContentType
 	public let MIMEType: MIMETypeString?
@@ -432,8 +424,8 @@ public typealias PageInfo = ResourceInfo
 
 
 public struct RequestRedirectionInfo {
-	let sourceRequest: NSURLRequest
-	let nextRequest: NSURLRequest
+	let sourceRequest: URLRequest
+	let nextRequest: URLRequest
 	public let statusCode: Int
 	public let MIMEType: MIMETypeString?
 }

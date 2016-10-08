@@ -1,9 +1,9 @@
 //
-//  PageInfoValidationResult.swift
-//  Hoverlytics
+//	PageInfoValidationResult.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 28/04/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 28/04/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
@@ -11,70 +11,70 @@ import Ono
 
 
 public enum PageInfoValidationResult {
-	case Valid
-	case NotRequested
-	case Missing
-	case Empty
-	case Multiple
-	case Invalid
+	case valid
+	case notRequested
+	case missing
+	case empty
+	case multiple
+	case invalid
 }
 
-private let whitespaceCharacterSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()
-private let nonWhitespaceCharacterSet = whitespaceCharacterSet.invertedSet
+private let whitespaceCharacterSet = CharacterSet.whitespacesAndNewlines
+private let nonWhitespaceCharacterSet = whitespaceCharacterSet.inverted
 
-private func stringIsJustWhitespace(string: String) -> Bool {
+private func stringIsJustWhitespace(_ string: String) -> Bool {
 	// Return range if non-whitespace characters are present, nil if no non-whitespace characters are present.
-	return string.rangeOfCharacterFromSet(nonWhitespaceCharacterSet, options: [], range: nil) == nil
+	return string.rangeOfCharacter(from: nonWhitespaceCharacterSet, options: [], range: nil) == nil
 }
 
 extension PageInfoValidationResult {
 	init(validatedStringValue: ValidatedStringValue) {
 		switch validatedStringValue{
-		case .ValidString:
-			self = .Valid
-		case .NotRequested:
-			self = .NotRequested
-		case .Missing:
-			self = .Missing
-		case .Empty:
-			self = .Empty
-		case .Multiple:
-			self = .Multiple
-		case .Invalid:
-			self = .Invalid
+		case .validString:
+			self = .valid
+		case .notRequested:
+			self = .notRequested
+		case .missing:
+			self = .missing
+		case .empty:
+			self = .empty
+		case .multiple:
+			self = .multiple
+		case .invalid:
+			self = .invalid
 		}
 	}
 	
-	static func validateContentsOfElements(elements: [ONOXMLElement]) -> PageInfoValidationResult {
+	static func validateContentsOfElements(_ elements: [ONOXMLElement]) -> PageInfoValidationResult {
 		let validatedStringValue = ValidatedStringValue.validateContentOfElements(elements)
 		return self.init(validatedStringValue: validatedStringValue)
 	}
 	
-	static func validateMIMEType(MIMEType: String) -> PageInfoValidationResult {
+	static func validateMIMEType(_ MIMEType: String) -> PageInfoValidationResult {
 		if stringIsJustWhitespace(MIMEType) {
-			return .Missing
+			return .missing
 		}
 		
-		return .Valid
+		return .valid
 	}
 }
 
 
 public enum PageInfoValidationArea: Int {
-	case MIMEType = 1
+	case mimeType = 1
 	case Title = 2
-	case H1 = 3
-	case MetaDescription = 4
+	case h1 = 3
+	case metaDescription = 4
 	
 	var title: String {
 		switch self {
-		case .MIMEType:
+		case .mimeType:
 			return "MIME Type"
 		case .Title:
 			return "Title"
-		case .H1:
+		case .h1:
 			return "H1"
-		case .MetaDescription:
+		case .metaDescription:
 			return "Meta Description"
 		}
 	}
@@ -83,13 +83,13 @@ public enum PageInfoValidationArea: Int {
 		return true
 	}
 	
-	static var allAreas = Set<PageInfoValidationArea>([.MIMEType, .Title, .H1, .MetaDescription])
+	static var allAreas = Set<PageInfoValidationArea>([.mimeType, .Title, .h1, .metaDescription])
 }
 
 extension PageInfo {
-	public func validateArea(validationArea: PageInfoValidationArea) -> PageInfoValidationResult {
+	public func validateArea(_ validationArea: PageInfoValidationArea) -> PageInfoValidationResult {
 		switch validationArea {
-		case .MIMEType:
+		case .mimeType:
 			if let MIMEType = MIMEType {
 				return PageInfoValidationResult.validateMIMEType(MIMEType.stringValue)
 			}
@@ -97,11 +97,11 @@ extension PageInfo {
 			if let pageTitleElements = contentInfo?.pageTitleElements {
 				return PageInfoValidationResult.validateContentsOfElements(pageTitleElements)
 			}
-		case .H1:
+		case .h1:
 			if let h1Elements = contentInfo?.h1Elements {
 				return PageInfoValidationResult.validateContentsOfElements(h1Elements)
 			}
-		case .MetaDescription:
+		case .metaDescription:
 			if let metaDescriptionElements = self.contentInfo?.metaDescriptionElements {
 				switch metaDescriptionElements.count {
 				case 1:
@@ -109,44 +109,44 @@ extension PageInfo {
 					let validatedStringValue = ValidatedStringValue.validateAttribute("content", ofElement: element)
 					return PageInfoValidationResult(validatedStringValue: validatedStringValue)
 				case 0:
-					return .Missing
+					return .missing
 				default:
-					return .Multiple
+					return .multiple
 				}
 			}
 		}
 		
-		return .Missing
+		return .missing
 	}
 }
 
 
 public extension PageMapper {
-	public func copyHTMLPageURLsWhichCompletelyValidateForType(type: BaseContentType) -> [NSURL] {
+	public func copyHTMLPageURLsWhichCompletelyValidateForType(_ type: BaseContentType) -> [URL] {
 		let validationAreas = PageInfoValidationArea.allAreas
-		let URLs = copyURLsWithBaseContentType(type, withResponseType: .Successful)
+		let URLs = copyURLsWithBaseContentType(type, withResponseType: .successful)
 		
 		return URLs.filter { URL in
 			guard let pageInfo = self.loadedURLToPageInfo[URL] else { return false }
 			
 			let containsInvalidResult = validationAreas.contains { validationArea in
-				return pageInfo.validateArea(validationArea) != .Valid
+				return pageInfo.validateArea(validationArea) != .valid
 			}
 			
 			return !containsInvalidResult
 		}
 	}
 	
-	public func copyHTMLPageURLsForType(type: BaseContentType, failingToValidateInArea validationArea: PageInfoValidationArea) -> [NSURL] {
-		let URLs = copyURLsWithBaseContentType(type, withResponseType: .Successful)
+	public func copyHTMLPageURLsForType(_ type: BaseContentType, failingToValidateInArea validationArea: PageInfoValidationArea) -> [URL] {
+		let URLs = copyURLsWithBaseContentType(type, withResponseType: .successful)
 		
 		return URLs.filter { URL in
 			guard let pageInfo = self.loadedURLToPageInfo[URL] else { return false }
 			
 			switch pageInfo.validateArea(validationArea) {
-			case .Valid:
+			case .valid:
 				return false
-			case .Missing:
+			case .missing:
 				return validationArea.isRequired // Only invalid if it is required
 			default:
 				return true

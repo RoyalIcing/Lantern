@@ -1,9 +1,9 @@
 //
-//  CrawlerMenuController.swift
-//  Hoverlytics
+//	CrawlerMenuController.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 12/05/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 12/05/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Cocoa
@@ -29,11 +29,11 @@ class CrawlerMenuController: NSObject, NSUserInterfaceValidations {
 		
 		imageDownloadMenuItemsAssistant = PlaceholderMenuItemAssistant<CrawlerImageDownloadChoice>(placeholderMenuItem: imageDownloadPlaceholderMenuItem)
 		imageDownloadMenuItemsAssistant.menuItemRepresentatives = [
-			.NeverDownload,
-			.Total1MB,
-			.Total10MB,
-			.Total100MB,
-			.Unlimited
+			.neverDownload,
+			.total1MB,
+			.total10MB,
+			.total100MB,
+			.unlimited
 		]
 		imageDownloadMenuItemsAssistant.customization.actionAndTarget = { [weak self] widthChoice in
 			return (action: "changeImageDownloadChoice:", target: self)
@@ -69,16 +69,16 @@ class CrawlerMenuController: NSObject, NSUserInterfaceValidations {
 		crawlerPreferencesObserver = nil
 	}
 	
-	@IBAction func changeImageDownloadChoice(sender: AnyObject?) {
+	@IBAction func changeImageDownloadChoice(_ sender: AnyObject?) {
 		if let
 			menuItem = sender as? NSMenuItem,
-			imageDownloadChoice = imageDownloadMenuItemsAssistant.itemRepresentativeForMenuItem(menuItem)
+			let imageDownloadChoice = imageDownloadMenuItemsAssistant.itemRepresentative(for: menuItem)
 		{
 			CrawlerPreferences.sharedCrawlerPreferences.imageDownloadChoice = imageDownloadChoice
 		}
 	}
 	
-	@objc func validateUserInterfaceItem(anItem: NSValidatedUserInterfaceItem) -> Bool {
+	@objc func validateUserInterfaceItem(_ anItem: NSValidatedUserInterfaceItem) -> Bool {
 		return true
 	}
 }

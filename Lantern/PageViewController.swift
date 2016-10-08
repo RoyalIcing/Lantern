@@ -1,9 +1,9 @@
 //
-//  PageViewController.swift
-//  Hoverlytics for Mac
+//	PageViewController.swift
+//	Hoverlytics for Mac
 //
-//  Created by Patrick Smith on 29/03/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 29/03/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Cocoa
@@ -12,10 +12,10 @@ import LanternModel
 import BurntFoundation
 
 
-typealias PageViewControllerGoogleOAuth2TokenCallback = (tokenJSONString: String) -> Void
+typealias PageViewControllerGoogleOAuth2TokenCallback = (_ tokenJSONString: String) -> Void
 
 
-public class PageViewController: NSViewController {
+open class PageViewController: NSViewController {
 	@IBOutlet var URLField: NSTextField!
 	@IBOutlet var crawlWhileBrowsingCheckButton: NSButton!
 	var webViewController: PageWebViewController!
@@ -26,7 +26,7 @@ public class PageViewController: NSViewController {
 	var GoogleOAuth2TokenJSONString: String?
 	var hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback: PageViewControllerGoogleOAuth2TokenCallback?
 	
-	var navigatedURLDidChangeCallback: ((URL: NSURL) -> Void)?
+	var navigatedURLDidChangeCallback: ((_ URL: URL) -> Void)?
 	
 	let minimumWidth: CGFloat = 600.0
 	let minimumHeight: CGFloat = 200.0
@@ -39,11 +39,11 @@ public class PageViewController: NSViewController {
 		}
 	}
 	
-	override public func viewDidLoad() {
+	override open func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.addConstraint(NSLayoutConstraint(item: view, attribute: .Width, relatedBy: .GreaterThanOrEqual, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: minimumWidth))
-		view.addConstraint(NSLayoutConstraint(item: view, attribute: .Height, relatedBy: .GreaterThanOrEqual, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: minimumHeight))
+		view.addConstraint(NSLayoutConstraint(item: view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: minimumWidth))
+		view.addConstraint(NSLayoutConstraint(item: view, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: minimumHeight))
 	}
 	
 	var webViewControllerNotificationObserver: NotificationObserver<PageWebViewControllerNotification>!
@@ -56,7 +56,7 @@ public class PageViewController: NSViewController {
 		}
 	}
 	
-	func prepareWebViewController(webViewController: PageWebViewController) {
+	func prepareWebViewController(_ webViewController: PageWebViewController) {
 		#if false
 			webViewController.wantsHoverlyticsScript = true
 			webViewController.GoogleOAuth2TokenJSONString = GoogleOAuth2TokenJSONString
@@ -69,7 +69,7 @@ public class PageViewController: NSViewController {
 		startObservingWebViewController()
 	}
 	
-	override public func prepareForSegue(segue: NSStoryboardSegue, sender: AnyObject?) {
+	override open func prepare(for segue: NSStoryboardSegue, sender: Any?) {
 		if segue.identifier == "webViewController" {
 			webViewController = segue.destinationController as! PageWebViewController
 			prepareWebViewController(webViewController)
@@ -79,33 +79,33 @@ public class PageViewController: NSViewController {
 	func navigatedURLDidChange() {
 		guard let URL = webViewController.URL else { return }
 		
-		navigatedURLDidChangeCallback?(URL: URL)
+		navigatedURLDidChangeCallback?(URL)
 		
 		updateUIForURL(URL)
 	}
 	
-	func loadURL(URL: NSURL) {
+	func loadURL(_ URL: Foundation.URL) {
 		webViewController.loadURL(URL)
 		
 		updateUIForURL(URL)
 	}
 	
-	func updateUIForURL(URL: NSURL) {
+	func updateUIForURL(_ URL: Foundation.URL) {
 		URLField.stringValue = URL.absoluteString
 	}
 	
-	@IBAction func URLFieldChanged(textField: NSTextField) {
+	@IBAction func URLFieldChanged(_ textField: NSTextField) {
 		if let URL = LanternModel.detectWebURL(fromString: textField.stringValue) {
 			loadURL(URL)
 		}
 	}
 	
-	@IBAction func toggleCrawlWhileBrowsing(checkButton: NSButton) {
+	@IBAction func toggleCrawlWhileBrowsing(_ checkButton: NSButton) {
 		let on = checkButton.state == NSOnState
 		crawlWhileBrowsing = on
 	}
 	
-	@IBAction func reloadBrowsing(sender: AnyObject?) {
+	@IBAction func reloadBrowsing(_ sender: AnyObject?) {
 		webViewController.reloadFromOrigin()
 	}
 }
@@ -131,14 +131,14 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 	var webViewConfiguration = WKWebViewConfiguration()
 	var wantsHoverlyticsScript = false
 	var allowsClosing = false
-	private(set) var webView: WKWebView!
-	var URL: NSURL!
+	fileprivate(set) var webView: WKWebView!
+	var URL: Foundation.URL!
 	var hoverlyticsPanelDocumentReadyCallback: (() -> Void)?
 	var GoogleOAuth2TokenJSONString: String?
 	var hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback: PageViewControllerGoogleOAuth2TokenCallback?
 	
-	private var preferredBrowserWidthContraint: NSLayoutConstraint?
-	private var minimumWidthContraint: NSLayoutConstraint?
+	fileprivate var preferredBrowserWidthContraint: NSLayoutConstraint?
+	fileprivate var minimumWidthContraint: NSLayoutConstraint?
 	var preferredBrowserWidth: CGFloat? {
 		didSet {
 			if let preferredBrowserWidthContraint = preferredBrowserWidthContraint {
@@ -147,7 +147,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 			}
 			
 			if let preferredBrowserWidth = preferredBrowserWidth {
-				let constraint = NSLayoutConstraint(item: webView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: preferredBrowserWidth)
+				let constraint = NSLayoutConstraint(item: webView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: preferredBrowserWidth)
 				view.addConstraint(constraint)
 				preferredBrowserWidthContraint = constraint
 			}
@@ -165,13 +165,13 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		
 		let userContentController = webViewConfiguration.userContentController ?? WKUserContentController()
 		
-		func addBundledUserScript(scriptNameInBundle: String, injectAtStart: Bool = false, injectAtEnd: Bool = false, forMainFrameOnly: Bool = true, sourceReplacements: [String:String]? = nil) {
-			let scriptURL = NSBundle.mainBundle().URLForResource(scriptNameInBundle, withExtension: "js")!
-			let scriptSource = try! NSMutableString(contentsOfURL: scriptURL, usedEncoding: nil)
+		func addBundledUserScript(_ scriptNameInBundle: String, injectAtStart: Bool = false, injectAtEnd: Bool = false, forMainFrameOnly: Bool = true, sourceReplacements: [String:String]? = nil) {
+			let scriptURL = Bundle.main.url(forResource: scriptNameInBundle, withExtension: "js")!
+			let scriptSource = try! NSMutableString(contentsOf: scriptURL, usedEncoding: nil)
 			
 			if let sourceReplacements = sourceReplacements {
 				func replaceInTemplate(find target: String, replace replacement: String) {
-					scriptSource.replaceOccurrencesOfString(target, withString: replacement, options: NSStringCompareOptions(rawValue: 0), range: NSMakeRange(0, scriptSource.length))
+					scriptSource.replaceOccurrences(of: target, with: replacement, options: NSString.CompareOptions(rawValue: 0), range: NSMakeRange(0, scriptSource.length))
 				}
 				
 				for (placeholderID, value) in sourceReplacements {
@@ -180,18 +180,18 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 			}
 			
 			if injectAtStart {
-				let script = WKUserScript(source: scriptSource as String, injectionTime: .AtDocumentStart, forMainFrameOnly: forMainFrameOnly)
+				let script = WKUserScript(source: scriptSource as String, injectionTime: .atDocumentStart, forMainFrameOnly: forMainFrameOnly)
 				userContentController.addUserScript(script)
 			}
 			
 			if injectAtEnd {
-				let script = WKUserScript(source: scriptSource as String, injectionTime: .AtDocumentEnd, forMainFrameOnly: forMainFrameOnly)
+				let script = WKUserScript(source: scriptSource as String, injectionTime: .atDocumentEnd, forMainFrameOnly: forMainFrameOnly)
 				userContentController.addUserScript(script)
 			}
 		}
 		
 		addBundledUserScript("console", injectAtStart: true)
-		userContentController.addScriptMessageHandler(self, name: "console")
+		userContentController.add(self, name: "console")
 		
 		if true {
 			addBundledUserScript("userAgent", injectAtStart: true)
@@ -200,7 +200,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		if allowsClosing {
 			addBundledUserScript("windowClose", injectAtStart: true)
 			
-			userContentController.addScriptMessageHandler(self, name: MessageIdentifier.receiveWindowClose.rawValue)
+			userContentController.add(self, name: MessageIdentifier.receiveWindowClose.rawValue)
 		}
 		
 		if wantsHoverlyticsScript {
@@ -218,14 +218,14 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 			
 			addBundledUserScript("panelAuthorizationChanged", injectAtEnd: true, forMainFrameOnly: false)
 			
-			userContentController.addScriptMessageHandler(self, name: MessageIdentifier.googleAPIAuthorizationChanged.rawValue)
+			userContentController.add(self, name: MessageIdentifier.googleAPIAuthorizationChanged.rawValue)
 		}
 			
 		webViewConfiguration.userContentController = userContentController
 		
 		webView = WKWebView(frame: NSRect.zero, configuration: webViewConfiguration)
 		webView.navigationDelegate = self
-		webView.UIDelegate = self
+		webView.uiDelegate = self
 		webView.allowsBackForwardNavigationGestures = true
 		
 		if true {
@@ -238,63 +238,63 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		
 		webView.translatesAutoresizingMaskIntoConstraints = false
 		
-		let minimumWidthContraint = NSLayoutConstraint(item: webView, attribute: .Width, relatedBy: .LessThanOrEqual, toItem: view, attribute: .Width, multiplier: 1.0, constant: 0.0)
+		let minimumWidthContraint = NSLayoutConstraint(item: webView, attribute: .width, relatedBy: .lessThanOrEqual, toItem: view, attribute: .width, multiplier: 1.0, constant: 0.0)
 		minimumWidthContraint.priority = 750
 		view.addConstraint(
 			minimumWidthContraint
 		)
 		self.minimumWidthContraint = minimumWidthContraint
 		
-		addLayoutConstraintToMatchAttribute(.Width, withChildView:webView, identifier:"width", priority: 250)
-		addLayoutConstraintToMatchAttribute(.Height, withChildView:webView, identifier:"height")
-		addLayoutConstraintToMatchAttribute(.CenterX, withChildView:webView, identifier:"centerX")
-		addLayoutConstraintToMatchAttribute(.Top, withChildView:webView, identifier:"top")
+		addLayoutConstraint(toMatch: .width, withChildView:webView, identifier:"width", priority: 250)
+		addLayoutConstraint(toMatch: .height, withChildView:webView, identifier:"height")
+		addLayoutConstraint(toMatch: .centerX, withChildView:webView, identifier:"centerX")
+		addLayoutConstraint(toMatch: .top, withChildView:webView, identifier:"top")
 		
-		webView.addObserver(self, forKeyPath: "URL", options: .New, context: &webViewURLObservingContext)
+		webView.addObserver(self, forKeyPath: "URL", options: .new, context: &webViewURLObservingContext)
 		
 		view.wantsLayer = true
-		view.layer?.backgroundColor = NSColor.blackColor().CGColor
+		view.layer?.backgroundColor = NSColor.black.cgColor
 	}
 	
 	deinit {
 		webView.removeObserver(self, forKeyPath: "URL", context: &webViewURLObservingContext)
 	}
 	
-	func loadURL(URL: NSURL) {
+	func loadURL(_ URL: Foundation.URL) {
 		self.URL = URL
 		
-		let URLRequest = NSURLRequest(URL: URL)
-		webView.loadRequest(URLRequest)
+		let URLRequest = Foundation.URLRequest(url: URL)
+		webView.load(URLRequest)
 	}
 	
 	func reloadFromOrigin() {
 		webView.reloadFromOrigin()
 	}
 	
-	private func mainQueue_notify(identifier: PageWebViewControllerNotification, userInfo: [String:AnyObject]? = nil) {
-		let nc = NSNotificationCenter.defaultCenter()
-		nc.postNotificationName(identifier.notificationName, object: self, userInfo: userInfo)
+	fileprivate func mainQueue_notify(_ identifier: PageWebViewControllerNotification, userInfo: [String:AnyObject]? = nil) {
+		let nc = NotificationCenter.default
+		nc.post(name: Notification.Name(rawValue: identifier.notificationName), object: self, userInfo: userInfo)
 	}
 	
-	func didNavigateToURL(URL: NSURL) {
+	func didNavigateToURL(_ URL: Foundation.URL) {
 		self.URL = URL
 		mainQueue_notify(.URLDidChange)
 	}
 	
-	override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
 		guard let keyPath = keyPath else { return }
 		
 		if context == &webViewURLObservingContext {
 			switch keyPath {
 			case "URL":
-				self.URL = webView.URL
+				self.URL = webView.url
 				mainQueue_notify(.URLDidChange)
 			default:
 				break
 			}
 		}
 		else {
-			super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+			super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
 		}
 	}
 	
@@ -323,7 +323,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 	}
 	*/
 	
-	func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+	func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 		#if DEBUG
 			print("didFinishNavigation \(navigation)")
 		#endif
@@ -331,7 +331,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 	
 	// MARK: WKUIDelegate
 	
-	func webView(webView: WKWebView, createWebViewWithConfiguration configuration: WKWebViewConfiguration, forNavigationAction navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+	func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
 		let innerPageViewController = PageWebViewController(nibName: nil, bundle: nil)!
 		innerPageViewController.view = NSView(frame: NSRect(x: 0, y: 0, width: 500.0, height: 500.0))
 		
@@ -350,12 +350,12 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 	
 	// MARK: WKScriptMessageHandler
 	
-	func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
+	func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 		if let messageIdentifier = MessageIdentifier(rawValue: message.name) {
 			switch messageIdentifier {
 			case .receiveWindowClose:
 				if allowsClosing {
-					dismissController(nil)
+					dismiss(nil)
 				}
 			case .googleAPIAuthorizationChanged:
 				if let body = message.body as? [String:AnyObject] {
@@ -363,7 +363,7 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 						//println("googleClientAPILoaded \(body)")
 					}
 					else if let tokenJSONString = body["tokenJSONString"] as? String {
-						hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback?(tokenJSONString: tokenJSONString)
+						hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback?(tokenJSONString)
 						#if DEBUG
 							print("tokenJSONString \(tokenJSONString)")
 						#endif

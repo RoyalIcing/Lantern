@@ -24,7 +24,6 @@
 		B22766351AEF67920083FE8C /* UniqueURLArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22766341AEF67920083FE8C /* UniqueURLArray.swift */; };
 		B227663A1AEFB6DB0083FE8C /* Dictionary+UpdateClosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22766391AEFB6DB0083FE8C /* Dictionary+UpdateClosure.swift */; };
 		B23EA59E1ACA5F6A009B4032 /* ValueValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */; };
-		B249AB941CA903D4006AAA42 /* Grain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B249AB931CA903D4006AAA42 /* Grain.framework */; };
 		B250205D1B01AE8700ABAE96 /* CrawlerPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25020581B01AD3600ABAE96 /* CrawlerPreferences.swift */; };
 		B25020611B01B66400ABAE96 /* CrawlerMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B250205E1B01B3AE00ABAE96 /* CrawlerMenuController.swift */; };
 		B25020631B01C15900ABAE96 /* LanternModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* LanternModel.framework */; };
@@ -58,6 +57,9 @@
 		B27F48CE1B64E452003F1215 /* BurntCocoaUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */; };
 		B27F48CF1B64E452003F1215 /* BurntCocoaUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B27F48D11B64E452003F1215 /* BurntFoundation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B27F48CB1B64DF8A003F1215 /* BurntFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B29E20831DA8B0BB002FC2A7 /* Grain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B249AB931CA903D4006AAA42 /* Grain.framework */; };
+		B29E20841DA8B0DA002FC2A7 /* Grain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B249AB931CA903D4006AAA42 /* Grain.framework */; };
+		B29E20851DA8B0DA002FC2A7 /* Grain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B249AB931CA903D4006AAA42 /* Grain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B2B542C11AF0980E00073464 /* NSData+ONOXMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B542C01AF0980E00073464 /* NSData+ONOXMLDocument.swift */; };
 		B2B542C31AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B542C21AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift */; };
 		B2C4A93F1ACA31F0000F1566 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */; };
@@ -75,8 +77,6 @@
 		B2E0FFFE1B0078590073CB8A /* BrowserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E0FFFD1B0078580073CB8A /* BrowserPreferences.swift */; };
 		B2EAB9131AF74DDD00A1F185 /* NSEvent+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */; };
 		B2EAB9151AF7A12F00A1F185 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = B2EAB9141AF7A12F00A1F185 /* Credits.rtf */; };
-		B2ECF3231B1B523800A96024 /* BurntList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2ECF3221B1B523800A96024 /* BurntList.framework */; };
-		B2ECF3241B1B523800A96024 /* BurntList.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B2ECF3221B1B523800A96024 /* BurntList.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,7 +117,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B2ECF3241B1B523800A96024 /* BurntList.framework in Embed Frameworks */,
+				B29E20851DA8B0DA002FC2A7 /* Grain.framework in Embed Frameworks */,
 				B27F48CF1B64E452003F1215 /* BurntCocoaUI.framework in Embed Frameworks */,
 				B25020681B01F4E000ABAE96 /* LanternModel.framework in Embed Frameworks */,
 				B27F48D11B64E452003F1215 /* BurntFoundation.framework in Embed Frameworks */,
@@ -216,7 +216,6 @@
 		B2E2693C1AE9E9200044BE04 /* MainView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainView.storyboard; sourceTree = "<group>"; };
 		B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSEvent+extension.swift"; sourceTree = "<group>"; };
 		B2EAB9141AF7A12F00A1F185 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
-		B2ECF3221B1B523800A96024 /* BurntList.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BurntList.framework; path = Carthage/Build/Mac/BurntList.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,10 +230,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B249AB941CA903D4006AAA42 /* Grain.framework in Frameworks */,
 				B25033181AF5C9A5006A2AE7 /* libxml2.dylib in Frameworks */,
 				B2D563241AF5BF8A006DE202 /* Alamofire.framework in Frameworks */,
 				B25033121AF5C2C7006A2AE7 /* Ono.framework in Frameworks */,
+				B29E20831DA8B0BB002FC2A7 /* Grain.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,7 +249,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2ECF3231B1B523800A96024 /* BurntList.framework in Frameworks */,
+				B29E20841DA8B0DA002FC2A7 /* Grain.framework in Frameworks */,
 				B27F48CE1B64E452003F1215 /* BurntCocoaUI.framework in Frameworks */,
 				B25020631B01C15900ABAE96 /* LanternModel.framework in Frameworks */,
 				B20DB38B1B0F020500E57532 /* Crashlytics.framework in Frameworks */,
@@ -442,7 +441,6 @@
 				B2D563221AF5BF8A006DE202 /* Alamofire.framework */,
 				B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */,
 				B27F48CB1B64DF8A003F1215 /* BurntFoundation.framework */,
-				B2ECF3221B1B523800A96024 /* BurntList.framework */,
 				B20DB3861B0F020500E57532 /* Fabric.framework */,
 				B20DB3871B0F020500E57532 /* Crashlytics.framework */,
 				B25033131AF5C2D0006A2AE7 /* libxml2.dylib */,
@@ -559,6 +557,7 @@
 					B22425F21AC8F8B200809EF0 = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = 5278SPSAPR;
+						LastSwiftMigration = 0800;
 					};
 					B22425FC1AC8F8B200809EF0 = {
 						CreatedOnToolsVersion = 6.2;
@@ -566,6 +565,7 @@
 					};
 					B25033301AF5E5B0006A2AE7 = {
 						DevelopmentTeam = 5278SPSAPR;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -851,11 +851,13 @@
 				INFOPLIST_FILE = LanternModel/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.Hoverlytics.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = LanternModel;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = "";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -890,10 +892,12 @@
 				INFOPLIST_FILE = LanternModel/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.Hoverlytics.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = LanternModel;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = "";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1034,11 +1038,13 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Lantern/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.$(PRODUCT_NAME:rfc1034identifier).Mac";
 				PRODUCT_NAME = Lantern;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Lantern/Lantern-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1059,10 +1065,13 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Lantern/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.$(PRODUCT_NAME:rfc1034identifier).Mac";
 				PRODUCT_NAME = Lantern;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Lantern/Lantern-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

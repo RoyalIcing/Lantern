@@ -1,9 +1,9 @@
 //
-//  LanternModel.h
-//  LanternModel
+//	LanternModel.h
+//	LanternModel
 //
-//  Created by Patrick Smith on 30/03/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 30/03/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

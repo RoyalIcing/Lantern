@@ -1,9 +1,9 @@
 //
-//  NSViewController+PGWSConstraintConvenience.h
-//  BurntIcing
+//	NSViewController+PGWSConstraintConvenience.h
+//	BurntIcing
 //
-//  Created by Patrick Smith on 28/02/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 28/02/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 @import Cocoa;

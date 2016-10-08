@@ -1,9 +1,9 @@
 //
-//  BrowserState.swift
-//  Hoverlytics
+//	BrowserState.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 11/05/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 11/05/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
@@ -11,38 +11,38 @@ import BurntFoundation
 
 
 enum BrowserWidthChoice: Int {
-	case SlimMobile = 1
-	case MediumMobile
-	case MediumTabletPortrait
-	case MediumTabletLandscape
-	case FullWidth
+	case slimMobile = 1
+	case mediumMobile
+	case mediumTabletPortrait
+	case mediumTabletLandscape
+	case fullWidth
 	
 	var value: CGFloat? {
 		switch self {
-		case .SlimMobile:
+		case .slimMobile:
 			return 320.0
-		case .MediumMobile:
+		case .mediumMobile:
 			return 480.0
-		case .MediumTabletPortrait:
+		case .mediumTabletPortrait:
 			return 768.0
-		case .MediumTabletLandscape:
+		case .mediumTabletLandscape:
 			return 1024.0
-		case .FullWidth:
+		case .fullWidth:
 			return nil
 		}
 	}
 	
 	var title: String {
 		switch self {
-		case .SlimMobile:
+		case .slimMobile:
 			return "Slim Mobile (iPhone 4)"
-		case .MediumMobile:
+		case .mediumMobile:
 			return "Medium Mobile (iPhone 6)"
-		case .MediumTabletPortrait:
+		case .mediumTabletPortrait:
 			return "Medium Tablet Portrait (iPad)"
-		case .MediumTabletLandscape:
+		case .mediumTabletLandscape:
 			return "Medium Tablet Landscape (iPad)"
-		case .FullWidth:
+		case .fullWidth:
 			return "Full Width"
 		}
 	}
@@ -50,11 +50,11 @@ enum BrowserWidthChoice: Int {
 
 extension BrowserWidthChoice: UserDefaultsChoiceRepresentable {
 	static var identifier = "browserPreferences.widthChoice"
-	static var defaultValue: BrowserWidthChoice = .FullWidth
+	static var defaultValue: BrowserWidthChoice = .fullWidth
 }
 
 
-private var ud = NSUserDefaults.standardUserDefaults()
+private var ud = UserDefaults.standard
 
 
 class BrowserPreferences {
@@ -62,12 +62,12 @@ class BrowserPreferences {
 		case WidthChoiceDidChange = "BrowserPreferences.WidthChoiceDidChange"
 	}
 	
-	func notify(identifier: Notification, userInfo: [String:AnyObject]? = nil) {
-		let nc = NSNotificationCenter.defaultCenter()
-		nc.postNotificationName(identifier.rawValue, object: self, userInfo: userInfo)
+	func notify(_ identifier: Notification, userInfo: [String:AnyObject]? = nil) {
+		let nc = NotificationCenter.default
+		nc.post(name: Foundation.Notification.Name(rawValue: identifier.rawValue), object: self, userInfo: userInfo)
 	}
 	
-	var widthChoice: BrowserWidthChoice = .FullWidth {
+	var widthChoice: BrowserWidthChoice = .fullWidth {
 		didSet {
 			ud.setChoice(widthChoice)
 			

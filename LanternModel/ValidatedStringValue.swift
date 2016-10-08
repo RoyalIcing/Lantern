@@ -1,9 +1,9 @@
 //
-//  ElementConvenience.swift
-//  Hoverlytics
+//	ElementConvenience.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 28/04/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 28/04/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
@@ -12,82 +12,83 @@ import Ono
 
 
 public enum ValidatedStringValue {
-	case ValidString(string: String)
-	case Missing
-	case Empty
-	case NotRequested
-	case Multiple([ValidatedStringValue])
-	case Invalid
+	case validString(string: String)
+	case missing
+	case empty
+	case notRequested
+	case multiple([ValidatedStringValue])
+	case invalid
 	
 	init(string: String?) {
 		if let string = string {
 			if string == "" {
-				self = .Empty
+				self = .empty
 			}
 			else {
-				self = .ValidString(string: string)
+				self = .validString(string: string)
 			}
 		}
 		else {
-			self = .Missing
+			self = .missing
 		}
 	}
 }
 
-private let whitespaceCharacterSet = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+private let whitespaceCharacterSet = CharacterSet.whitespacesAndNewlines
 
 extension ValidatedStringValue {
-	init(var string: String, trimmingSpace: Bool, combineSpaces: Bool = false) {
+	init(string: String, trimmingSpace: Bool, combineSpaces: Bool = false) {
+		var string = string
 		if combineSpaces {
-			string = string.stringByReplacingOccurrencesOfString("[\\s]+", withString: " ", options: .RegularExpressionSearch, range: nil)
+			string = string.replacingOccurrences(of: "[\\s]+", with: " ", options: .regularExpression, range: nil)
 		}
 		// Trim whitespace from ends
-		string = string.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
+		string = string.trimmingCharacters(in: whitespaceCharacterSet)
 		
 		self.init(string: string)
 	}
 	
-	static func validateContentOfElement(element: ONOXMLElement) -> ValidatedStringValue {
+	static func validateContentOfElement(_ element: ONOXMLElement) -> ValidatedStringValue {
 		let stringValue = element.stringValue()
 		
-		return self.init(string: stringValue, trimmingSpace: true, combineSpaces: true)
+		return self.init(string: stringValue!, trimmingSpace: true, combineSpaces: true)
 	}
 	
-	static func validateContentOfElements(elements: [ONOXMLElement]) -> ValidatedStringValue {
+	static func validateContentOfElements(_ elements: [ONOXMLElement]) -> ValidatedStringValue {
 		switch elements.count {
 		case 1:
 			let element = elements[0]
 			return validateContentOfElement(element)
 		case 0:
-			return .Missing
+			return .missing
 		default:
-			return .Multiple(elements.map { element in
+			return .multiple(elements.map { element in
 				return self.validateContentOfElement(element)
 			})
 		}
 	}
 	
-	static func validateAttribute(attribute: String, ofElement element: ONOXMLElement) -> ValidatedStringValue {
+	static func validateAttribute(_ attribute: String, ofElement element: ONOXMLElement) -> ValidatedStringValue {
 		if let stringValue = element[attribute] as? String {
 			return self.init(string: stringValue, trimmingSpace: true)
 		}
 		else {
-			return .Missing
+			return .missing
 		}
 	}
 	
-	static func validateAttribute(attribute: String, ofElements elements: [ONOXMLElement]) -> ValidatedStringValue {
+	static func validateAttribute(_ attribute: String, ofElements elements: [ONOXMLElement]) -> ValidatedStringValue {
 		switch elements.count {
 		case 1:
 			let element = elements[0]
 			return validateAttribute(attribute, ofElement: element)
 		case 0:
-			return .Missing
+			return .missing
 		default:
 			let values: [ValidatedStringValue] = elements.map { element in
 				return self.validateAttribute(attribute, ofElement: element)
 			}
-			return .Multiple(values)
+			return .multiple(values)
 		}
 	}
 }

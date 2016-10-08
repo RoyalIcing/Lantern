@@ -1,27 +1,27 @@
 //
-//  UniqueURLArray.swift
-//  Hoverlytics
+//	UniqueURLArray.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 28/04/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 28/04/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
 
 
-func conformURL(URL: NSURL, requireHost: Bool = true) -> NSURL? {
-	if let URLComponents = NSURLComponents(URL: URL, resolvingAgainstBaseURL: true) {
-		if requireHost && URLComponents.host == nil {
+func conformURL(_ URL: Foundation.URL, requireHost: Bool = true) -> Foundation.URL? {
+	if var urlComponents = URLComponents(url: URL, resolvingAgainstBaseURL: true) {
+		if requireHost && urlComponents.host == nil {
 			return nil
 		}
 		// Remove #fragments
-		URLComponents.fragment = nil
+		urlComponents.fragment = nil
 		// Home page should always have trailing slash
-		if URLComponents.path == "" {
-			URLComponents.path = "/"
+		if urlComponents.path == "" {
+			urlComponents.path = "/"
 		}
 		// Return adjusted URL
-		return URLComponents.URL
+		return urlComponents.url
 	}
 	else {
 		return nil
@@ -29,17 +29,17 @@ func conformURL(URL: NSURL, requireHost: Bool = true) -> NSURL? {
 }
 
 
-class UniqueURLArray: SequenceType {
-	private var uniqueURLs = Set<NSURL>()
-	var orderedURLs = [NSURL]()
+class UniqueURLArray: Sequence {
+	fileprivate var uniqueURLs = Set<URL>()
+	var orderedURLs = [URL]()
 	
-	typealias Generator = Array<NSURL>.Generator
-	func generate() -> Generator {
-		return orderedURLs.generate()
+	typealias Iterator = Array<URL>.Iterator
+	func makeIterator() -> Iterator {
+		return orderedURLs.makeIterator()
 	}
 	
-	typealias Index = Array<NSURL>.Index
-	subscript(position: Index) -> Generator.Element {
+	typealias Index = Array<URL>.Index
+	subscript(position: Index) -> Iterator.Element {
 		return orderedURLs[position]
 	}
 	
@@ -47,7 +47,7 @@ class UniqueURLArray: SequenceType {
 		return uniqueURLs.count
 	}
 	
-	func contains(URL: NSURL) -> Bool {
+	func contains(_ URL: Foundation.URL) -> Bool {
 		if let URL = conformURL(URL) {
 			return uniqueURLs.contains(URL)
 		}
@@ -55,7 +55,7 @@ class UniqueURLArray: SequenceType {
 		return false
 	}
 	
-	func insertReturningConformedURLIfNew(URL: NSURL) -> NSURL? {
+	func insertReturningConformedURLIfNew(_ URL: Foundation.URL) -> Foundation.URL? {
 		if let URL = conformURL(URL) {
 			if !uniqueURLs.contains(URL) {
 				uniqueURLs.insert(URL)
@@ -67,13 +67,13 @@ class UniqueURLArray: SequenceType {
 		return nil
 	}
 	
-	func remove(URL: NSURL) {
+	func remove(_ URL: Foundation.URL) {
 		if let URL = conformURL(URL) {
-			if let setIndex = uniqueURLs.indexOf(URL) {
-				uniqueURLs.removeAtIndex(setIndex)
+			if let setIndex = uniqueURLs.index(of: URL) {
+				uniqueURLs.remove(at: setIndex)
 				
-				if let arrayIndex = orderedURLs.indexOf(URL) {
-					orderedURLs.removeAtIndex(arrayIndex)
+				if let arrayIndex = orderedURLs.index(of: URL) {
+					orderedURLs.remove(at: arrayIndex)
 				}
 			}
 		}

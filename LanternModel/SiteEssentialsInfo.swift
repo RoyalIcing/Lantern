@@ -1,40 +1,40 @@
 //
-//  SiteEssentialsInfo.swift
-//  Hoverlytics
+//	SiteEssentialsInfo.swift
+//	Hoverlytics
 //
-//  Created by Patrick Smith on 7/05/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 7/05/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Foundation
 
 
 public enum SiteEssentialType {
-	case SiteMapXML
-	case RobotsTxt
-	case Valid404Page
+	case siteMapXML
+	case robotsTxt
+	case valid404Page
 	//case WWWRedirecting(hasWWW: Bool)
 	//case HTTPS
 	//case HTTPToHTTPSRedirection
-	case FavIconAtRoot
+	case favIconAtRoot
 	//case TouchIcon
 	
 	
 	public enum Need {
-		case Required
-		case Recommended
-		case Optional
+		case required
+		case recommended
+		case optional
 	}
 	
 	
 	public var need: Need {
 		switch self {
-		case .FavIconAtRoot: //, .TouchIcon:
-			return .Recommended
+		case .favIconAtRoot: //, .TouchIcon:
+			return .recommended
 		//case .HTTPS:
 		//	return .Optional
 		default:
-			return .Required
+			return .required
 		}
 	}
 }
@@ -50,26 +50,26 @@ public struct SiteEssentialInfo {
 }
 
 
-public class SiteEssentialInfoRequest {
-	public typealias CompletionHandler = (info: SiteEssentialInfo) -> Void
+open class SiteEssentialInfoRequest {
+	public typealias CompletionHandler = (_ info: SiteEssentialInfo) -> Void
 	
-	public let type: SiteEssentialType
-	public let completionHandler: CompletionHandler
+	open let type: SiteEssentialType
+	open let completionHandler: CompletionHandler
 	
 	var resourceRequests: [String: PageInfoRequest]
 	var resourceInfos: [String: PageInfo]
 	
-	init(type: SiteEssentialType, baseURL: NSURL, completionHandler: CompletionHandler) {
+	init(type: SiteEssentialType, baseURL: URL, completionHandler: @escaping CompletionHandler) {
 		self.type = type
 		self.completionHandler = completionHandler
 		
 		resourceRequests = [String: PageInfoRequest]()
 		resourceInfos = [String: PageInfo]()
 		
-		func addResourceRequest(pathComponent pathComponent: String, identifier: String? = nil) {
+		func addResourceRequest(pathComponent: String, identifier: String? = nil) {
 			let identifier = identifier ?? pathComponent
 			
-			func requestCompletionHandler(info: PageInfo) {
+			func requestCompletionHandler(_ info: PageInfo) {
 				
 			}
 			
@@ -82,23 +82,23 @@ public class SiteEssentialInfoRequest {
 		}
 		
 		switch type {
-		case .SiteMapXML:
+		case .siteMapXML:
 			addResourceRequest(pathComponent: "sitemap.xml")
-		case .RobotsTxt:
+		case .robotsTxt:
 			addResourceRequest(pathComponent: "robots.txt")
-		case .Valid404Page:
+		case .valid404Page:
 			// Use UUID to create a unique request every time.
-			addResourceRequest(pathComponent: NSUUID().UUIDString, identifier: "UUID")
-		case .FavIconAtRoot:
+			addResourceRequest(pathComponent: UUID().uuidString, identifier: "UUID")
+		case .favIconAtRoot:
 			addResourceRequest(pathComponent: "favicon.ico")
 		}
 	}
 	
-	func didCompleteResourceInfoRequest(resourceInfo: PageInfo, identifier: String) {
+	func didCompleteResourceInfoRequest(_ resourceInfo: PageInfo, identifier: String) {
 		resourceInfos[identifier] = resourceInfo
 	}
 	
-	public var currentInfo: SiteEssentialInfo {
+	open var currentInfo: SiteEssentialInfo {
 		var finished = resourceRequests.count == resourceInfos.count
 		return SiteEssentialInfo(type: type, wasFound: nil, isValid: nil, resourceInfos: [])
 	}

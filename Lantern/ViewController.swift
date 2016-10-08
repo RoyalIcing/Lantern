@@ -1,9 +1,9 @@
 //
-//  ViewController.swift
-//  Hoverlytics for Mac
+//	ViewController.swift
+//	Hoverlytics for Mac
 //
-//  Created by Patrick Smith on 28/03/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 28/03/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Cocoa
@@ -33,11 +33,11 @@ class ViewController: NSViewController
 	var browserPreferencesObserver: NotificationObserver<BrowserPreferences.Notification>!
 	
 	func startObservingModelManager() {
-		let nc = NSNotificationCenter.defaultCenter()
-		let mainQueue = NSOperationQueue.mainQueue()
+		let nc = NotificationCenter.default
+		let mainQueue = OperationQueue.main
 		
-		func addObserver(notificationIdentifier: MainState.Notification, block: (NSNotification!) -> Void) {
-			let observer = nc.addObserverForName(notificationIdentifier.notificationName, object: mainState, queue: mainQueue, usingBlock: block)
+		func addObserver(_ notificationIdentifier: MainState.Notification, block: @escaping (Notification!) -> Void) {
+			let observer = nc.addObserver(forName: NSNotification.Name(rawValue: notificationIdentifier.notificationName), object: mainState, queue: mainQueue, using: block)
 			mainStateNotificationObservers[notificationIdentifier] = observer
 		}
 		
@@ -47,12 +47,12 @@ class ViewController: NSViewController
 	}
 	
 	func stopObservingModelManager() {
-		let nc = NSNotificationCenter.defaultCenter()
+		let nc = NotificationCenter.default
 		
 		for (_, observer) in mainStateNotificationObservers {
 			nc.removeObserver(observer)
 		}
-		mainStateNotificationObservers.removeAll(keepCapacity: false)
+		mainStateNotificationObservers.removeAll(keepingCapacity: false)
 	}
 	
 	func updatePreferredBrowserWidth() {
@@ -89,7 +89,7 @@ class ViewController: NSViewController
 	
 	func updateMainViewForState() {
 		let site = mainState?.chosenSite
-		if site?.UUID === lastChosenSite?.UUID {
+		if site?.UUID == lastChosenSite?.UUID {
 			return
 		}
 		lastChosenSite = site
@@ -121,15 +121,15 @@ class ViewController: NSViewController
 		super.viewDidLoad()
 		
 		mainSplitViewController = NSSplitViewController()
-		mainSplitViewController.splitView.vertical = false
+		mainSplitViewController.splitView.isVertical = false
 		//mainSplitViewController.splitView.dividerStyle = .PaneSplitter
-		mainSplitViewController.splitView.dividerStyle = .Thick
-		fillWithChildViewController(mainSplitViewController)
+		mainSplitViewController.splitView.dividerStyle = .thick
+		fill(withChildViewController: mainSplitViewController)
 		
 		let storyboard = self.pageStoryboard
 		
 		// The top web browser
-		let pageViewController = storyboard.instantiateControllerWithIdentifier("Page View Controller") as! PageViewController
+		let pageViewController = storyboard.instantiateController(withIdentifier: "Page View Controller") as! PageViewController
 		pageViewController.navigatedURLDidChangeCallback = { [unowned self] URL in
 			if self.mainState.chosenSite == nil {
 				self.mainState.initialHost = URL.host
@@ -153,9 +153,9 @@ class ViewController: NSViewController
 		}
 		
 		// The bottom page crawler table
-		let statsViewController = storyboard.instantiateControllerWithIdentifier("Stats View Controller") as! StatsViewController
+		let statsViewController = storyboard.instantiateController(withIdentifier: "Stats View Controller") as! StatsViewController
 		statsViewController.didChooseURLCallback = { URL, pageInfo in
-			if pageInfo.baseContentType == .LocalHTMLPage {
+			if pageInfo.baseContentType == .localHTMLPage {
 				self.pageViewController.loadURL(URL)
 			}
 		}
@@ -180,31 +180,31 @@ class ViewController: NSViewController
 	//lazy var siteSettingsStoryboard = NSStoryboard(name: "SiteSettings", bundle: nil)
 	var siteSettingsStoryboard = NSStoryboard(name: "SiteSettings", bundle: nil)
 	lazy var addSiteViewController: SiteSettingsViewController = {
-		let vc = self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Add Site View Controller") as! SiteSettingsViewController
+		let vc = self.siteSettingsStoryboard.instantiateController(withIdentifier: "Add Site View Controller") as! SiteSettingsViewController
 		vc.modelManager = self.modelManager
 		vc.mainState = self.mainState
 		return vc
 	}()
 	lazy var siteSettingsViewController: SiteSettingsViewController = {
-		let vc = self.siteSettingsStoryboard.instantiateControllerWithIdentifier("Site Settings View Controller") as! SiteSettingsViewController
+		let vc = self.siteSettingsStoryboard.instantiateController(withIdentifier: "Site Settings View Controller") as! SiteSettingsViewController
 		vc.modelManager = self.modelManager
 		vc.mainState = self.mainState
 		return vc
 	}()
 	
 	
-	@IBAction func showAddSiteRelativeToView(relativeView: NSView) {
-		if addSiteViewController.presentingViewController != nil {
+	@IBAction func showAddSiteRelativeToView(_ relativeView: NSView) {
+		if addSiteViewController.presenting != nil {
 			dismissViewController(addSiteViewController)
 		}
 		else {
-			presentViewController(addSiteViewController, asPopoverRelativeToRect: relativeView.bounds, ofView: relativeView, preferredEdge: NSRectEdge.MaxY, behavior: .Semitransient)
+			presentViewController(addSiteViewController, asPopoverRelativeTo: relativeView.bounds, of: relativeView, preferredEdge: NSRectEdge.maxY, behavior: .semitransient)
 		}
 	}
 	
 	
-	@IBAction func showSiteSettings(button: NSButton) {
-		if siteSettingsViewController.presentingViewController != nil {
+	@IBAction func showSiteSettings(_ button: NSButton) {
+		if siteSettingsViewController.presenting != nil {
 			dismissViewController(siteSettingsViewController)
 		}
 		else {
@@ -212,7 +212,7 @@ class ViewController: NSViewController
 				siteSettingsViewController.site = chosenSite
 				siteSettingsViewController.updateUIWithSiteValues(chosenSite)
 				
-				let modelManager = self.modelManager
+				let modelManager = self.modelManager!
 				siteSettingsViewController.willClose = { siteSettingsViewController in
 					let UUID = chosenSite.UUID
 					do {
@@ -220,29 +220,29 @@ class ViewController: NSViewController
 						modelManager.updateSiteWithUUID(UUID, withValues: siteValues)
 					}
 					catch {
-						NSApplication.sharedApplication().presentError(error as NSError, modalForWindow: self.view.window!, delegate: nil, didPresentSelector: nil, contextInfo: nil)
+						NSApplication.shared().presentError(error as NSError, modalFor: self.view.window!, delegate: nil, didPresent: nil, contextInfo: nil)
 					}
 				}
 				
-				presentViewController(siteSettingsViewController, asPopoverRelativeToRect: button.bounds, ofView: button, preferredEdge: NSRectEdge.MaxY, behavior: .Semitransient)
+				presentViewController(siteSettingsViewController, asPopoverRelativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.maxY, behavior: .semitransient)
 			}
 		}
 	}
 	
-	override func supplementalTargetForAction(action: Selector, sender: AnyObject?) -> AnyObject? {
-		if statsViewController.respondsToSelector(action) {
+	override func supplementalTarget(forAction action: Selector, sender: Any?) -> Any? {
+		if statsViewController.responds(to: action) {
 			return statsViewController
 		}
 		
-		if pageViewController.respondsToSelector(action) {
+		if pageViewController.responds(to: action) {
 			return pageViewController
 		}
 		
-		return super.supplementalTargetForAction(action, sender: sender)
+		return super.supplementalTarget(forAction: action, sender: sender)
 	}
 	
 	
-	override var representedObject: AnyObject? {
+	override var representedObject: Any? {
 		didSet {
 			
 		}

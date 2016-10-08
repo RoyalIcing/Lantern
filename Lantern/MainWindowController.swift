@@ -1,15 +1,35 @@
 //
-//  MainWindowController.swift
-//  Hoverlytics for Mac
+//	MainWindowController.swift
+//	Hoverlytics for Mac
 //
-//  Created by Patrick Smith on 29/03/2015.
-//  Copyright (c) 2015 Burnt Caramel. All rights reserved.
+//	Created by Patrick Smith on 29/03/2015.
+//	Copyright (c) 2015 Burnt Caramel. All rights reserved.
 //
 
 import Cocoa
 import BurntFoundation
 import BurntCocoaUI
 import LanternModel
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+	switch (lhs, rhs) {
+	case let (l?, r?):
+		return l < r
+	case (nil, _?):
+		return true
+	default:
+		return false
+	}
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+	switch (lhs, rhs) {
+	case let (l?, r?):
+		return l > r
+	default:
+		return rhs < lhs
+	}
+}
+
 
 
 private let sectionUserDefaultKey = "mainSection"
@@ -32,7 +52,7 @@ class MainWindowController: NSWindowController {
 			
 			toolbarAssistant.prepareNewSiteButton = { button in
 				button.target = nil
-				button.action = "showAddSite:"
+				button.action = #selector(MainWindowController.showAddSite(_:))
 			}
 			
 			toolbarAssistant.prepareSiteSettingsButton = { [unowned self] button in
@@ -44,13 +64,13 @@ class MainWindowController: NSWindowController {
 	
 	var chosenSiteDidChangeObserver: AnyObject?
 
-    override func windowDidLoad() {
-        super.windowDidLoad()
+		override func windowDidLoad() {
+				super.windowDidLoad()
 		
 		if let window = window {
 			window.delegate = self
 			
-			window.titleVisibility = .Hidden
+			window.titleVisibility = .hidden
 			//window.appearance = NSAppearance(named: NSAppearanceNameVibrantDark)
 			//window.appearance = NSAppearance(named: NSAppearanceNameVibrantLight)
 		}
@@ -58,28 +78,28 @@ class MainWindowController: NSWindowController {
 		mainViewController.modelManager = modelManager
 		mainViewController.mainState = mainState
 		
-		let nc = NSNotificationCenter.defaultCenter()
-		chosenSiteDidChangeObserver = nc.addObserverForName(MainState.Notification.ChosenSiteDidChange.rawValue, object: mainState, queue: nil) { [unowned self] note in
-			self.window?.title = self.windowTitleForDocumentDisplayName("Main")
+		let nc = NotificationCenter.default
+		chosenSiteDidChangeObserver = nc.addObserver(forName: NSNotification.Name(rawValue: MainState.Notification.ChosenSiteDidChange.rawValue), object: mainState, queue: nil) { [unowned self] note in
+			self.window?.title = self.windowTitle(forDocumentDisplayName: "Main")
 		}
-    }
+		}
 	
 	deinit {
-		let nc = NSNotificationCenter.defaultCenter()
+		let nc = NotificationCenter.default
 		if let chosenSiteDidChangeObserver: AnyObject = chosenSiteDidChangeObserver {
 			nc.removeObserver(chosenSiteDidChangeObserver)
 		}
 	}
 	
-	@IBAction func showAddSite(sender: AnyObject?) {
+	@IBAction func showAddSite(_ sender: AnyObject?) {
 		mainViewController.showAddSiteRelativeToView(toolbarAssistant.addSiteButton)
 	}
 	
-	@IBAction func focusOnSearchPagesField(sender: AnyObject?) {
+	@IBAction func focusOnSearchPagesField(_ sender: AnyObject?) {
 		toolbarAssistant.focusOnSearchPagesField(sender)
 	}
 	
-	override func windowTitleForDocumentDisplayName(displayName: String) -> String {
+	override func windowTitle(forDocumentDisplayName displayName: String) -> String {
 		return mainState.chosenSite?.name ?? displayName
 	}
 }
@@ -92,7 +112,7 @@ extension MainWindowController: NSWindowDelegate {
 struct ToolbarItem<ControlClass: NSControl> {
 	var control: ControlClass!
 	
-	typealias PrepareBlock = (control: ControlClass) -> Void
+	typealias PrepareBlock = (_ control: ControlClass) -> Void
 	var prepare: PrepareBlock!
 }
 
@@ -114,7 +134,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		
 		mainStateObserver.observe(.ChosenSiteDidChange) { [unowned self] _ in
 			if let chosenSite = self.mainState.chosenSite {
-				let choice = SiteMenuItem.Choice(.SavedSite(chosenSite))
+				let choice = SiteMenuItem.choice(.savedSite(chosenSite))
 				self.sitesPopUpButtonAssistant?.selectedUniqueIdentifier = choice.uniqueIdentifier
 			}
 		}
@@ -131,59 +151,59 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	var modelManagerNotificationObservers = [ModelManagerNotification: AnyObject]()
 	
 	func startObservingModelManager() {
-		let nc = NSNotificationCenter.defaultCenter()
-		let mainQueue = NSOperationQueue.mainQueue()
+		let nc = NotificationCenter.default
+		let mainQueue = OperationQueue.main
 		
-		func addObserver(notificationIdentifier: LanternModel.ModelManagerNotification, block: (NSNotification!) -> Void) {
-			let observer = nc.addObserverForName(notificationIdentifier.notificationName, object: modelManager, queue: mainQueue, usingBlock: block)
+		func addObserver(_ notificationIdentifier: LanternModel.ModelManagerNotification, block: @escaping (Notification!) -> ()) {
+			let observer = nc.addObserver(forName: Notification.Name(notificationIdentifier.notificationName), object: modelManager, queue: mainQueue, using: block)
 			modelManagerNotificationObservers[notificationIdentifier] = observer
 		}
 		
-		addObserver(.AllSitesDidChange) { (notification) in
+		addObserver(.allSitesDidChange) { (notification) in
 			self.updateUIForSites()
 		}
 	}
 	
 	func stopObservingModelManager() {
-		let nc = NSNotificationCenter.defaultCenter()
+		let nc = NotificationCenter.default
 		
 		for (_, observer) in modelManagerNotificationObservers {
 			nc.removeObserver(observer)
 		}
-		modelManagerNotificationObservers.removeAll(keepCapacity: false)
+		modelManagerNotificationObservers.removeAll()
 	}
 	
 	
 	var sitesPopUpButton: NSPopUpButton!
-	var chosenSiteChoice: SiteMenuItem = .LoadingSavedSites
+	var chosenSiteChoice: SiteMenuItem = .loadingSavedSites
 	var sitesPopUpButtonAssistant: PopUpButtonAssistant<SiteMenuItem>?
 	let siteTag: Int = 1
 	
 	var siteChoices: [SiteMenuItem?] {
 		var result: [SiteMenuItem?] = [
-			SiteMenuItem.Choice(.Custom),
+			SiteMenuItem.choice(.custom),
 			nil
 		]
 		
 		if let allSites = modelManager.allSites {
-			let allSites = allSites.sort({ $0.name < $1.name })
+			let allSites = allSites.sorted(by: { $0.name < $1.name })
 			
 			if allSites.count == 0 {
 				result.append(
-					SiteMenuItem.NoSavedSitesYet
+					SiteMenuItem.noSavedSitesYet
 				)
 			}
 			else {
 				for site in allSites {
 					result.append(
-						SiteMenuItem.Choice(.SavedSite(site))
+						SiteMenuItem.choice(.savedSite(site))
 					)
 				}
 			}
 		}
 		else {
 			result.append(
-				SiteMenuItem.LoadingSavedSites
+				SiteMenuItem.loadingSavedSites
 			)
 		}
 		
@@ -194,15 +214,12 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		#if DEBUG
 			//println("updateSitesPopUpButton")
 		#endif
-		if sitesPopUpButton == nil {
-			return
-		}
 		
-		
-		let popUpButton = sitesPopUpButton;
+		guard let popUpButton = sitesPopUpButton
+			else { return }
 		
 		popUpButton.target = self
-		popUpButton.action = "chosenSiteDidChange:"
+		popUpButton.action = #selector(MainWindowToolbarAssistant.chosenSiteDidChange(_:))
 		
 		
 		let popUpButtonAssistant = sitesPopUpButtonAssistant ?? {
@@ -211,7 +228,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			let menuAssistant = popUpButtonAssistant.menuAssistant
 			menuAssistant.customization.enabled = { siteChoice in
 				switch siteChoice {
-				case .LoadingSavedSites, .NoSavedSitesYet:
+				case .loadingSavedSites, .noSavedSitesYet:
 					return false
 				default:
 					return true
@@ -231,13 +248,13 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		let hasSites = modelManager.allSites?.count > 0
 		
 		//sitesPopUpButton?.enabled = hasSites
-		siteSettingsButton?.enabled = hasSites
-		siteSettingsButton?.hidden = !hasSites
+		siteSettingsButton?.isEnabled = hasSites
+		siteSettingsButton?.isHidden = !hasSites
 		
 		updateSitesPopUpButton()
 	}
 	
-	@objc @IBAction func chosenSiteDidChange(sender: NSPopUpButton) {
+	@objc @IBAction func chosenSiteDidChange(_ sender: NSPopUpButton) {
 		updateChosenSiteState()
 	}
 
@@ -245,14 +262,14 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		if let siteMenuItem = sitesPopUpButtonAssistant?.selectedItemRepresentative {
 			//mainState.chosenSite = site
 			switch siteMenuItem {
-			case .Choice(let siteChoice):
+			case .choice(let siteChoice):
 				mainState.siteChoice = siteChoice
 			default:
-				mainState.siteChoice = .Custom
+				mainState.siteChoice = .custom
 			}
 		}
 		else {
-			mainState.siteChoice = .Custom
+			mainState.siteChoice = .custom
 		}
 		
 		/*if let selectedItem = sitesPopUpButton.selectedItem {
@@ -277,7 +294,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	
 	
 	var searchPagesField: NSSearchField!
-	@IBAction func focusOnSearchPagesField(sender: AnyObject?) {
+	@IBAction func focusOnSearchPagesField(_ sender: AnyObject?) {
 		if let searchPagesField = searchPagesField {
 			searchPagesField.window!.makeFirstResponder(searchPagesField)
 		}
@@ -287,8 +304,8 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	//var sectionItem = ToolbarItem<NSSegmentedControl>()
 	
 	
-	func toolbarWillAddItem(notification: NSNotification) {
-		let userInfo = notification.userInfo!
+	func toolbarWillAddItem(_ notification: Notification) {
+		let userInfo = (notification as NSNotification).userInfo!
 		let toolbarItem = userInfo["item"] as! NSToolbarItem
 		let itemIdentifier = toolbarItem.itemIdentifier
 		var sizeToFit = false
