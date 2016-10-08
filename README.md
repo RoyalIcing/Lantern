@@ -1,5 +1,5 @@
 # Lantern
-Crawl and audit websites. Written in Swift 2.
+Crawl and audit websites. Written in Swift 3.
 
 ## Links
 
@@ -10,6 +10,9 @@ Crawl and audit websites. Written in Swift 2.
 ## Libraries
 
 Uses:
+- [Grain data flow for Swift](https://github.com/BurntCaramel/Grain)
+- [BurntCocoaUI](https://github.com/BurntCaramel/BurntCocoaUI)
+- [BurntFoundation](https://github.com/BurntCaramel/BurntFoundation)
 - [WebKit](https://www.webkit.org)
 - [Alamofire](https://github.com/Alamofire/Alamofire)
 - [Ono](https://github.com/mattt/Ono)
