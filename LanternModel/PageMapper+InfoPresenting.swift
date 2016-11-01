@@ -54,7 +54,7 @@ public enum PagePresentedInfoIdentifier: String {
 			if let baseContentType = baseContentType {
 				switch baseContentType {
 				case .localHTMLPage:
-					return "Page URL"
+					return "Path"
 				case .image:
 					return "Image URL"
 				case .feed:

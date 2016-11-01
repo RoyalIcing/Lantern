@@ -1,14 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A320" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
-        <plugIn identifier="com.apple.imagekit.ibplugin" version="7702"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <plugIn identifier="com.apple.imagekit.ibplugin" version="11542"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Source Preview View Controller-->
         <scene sceneID="lOW-qd-A3m">
             <objects>
-                <viewController title="Source Preview View Controller" storyboardIdentifier="Source Preview View Controller" id="mAW-df-vd3" customClass="SourcePreviewViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Source Preview View Controller" storyboardIdentifier="Source Preview View Controller" id="mAW-df-vd3" customClass="SourcePreviewViewController" customModule="Lantern" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="dXT-7S-bBF">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -16,18 +18,16 @@
                             <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ofv-dm-hRL">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                 <clipView key="contentView" id="RZE-Z5-coj">
-                                    <rect key="frame" x="1" y="1" width="223" height="133"/>
+                                    <rect key="frame" x="1" y="1" width="448" height="298"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView editable="NO" importsGraphics="NO" findStyle="bar" incrementalSearchingEnabled="YES" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="na3-ew-H5q" customClass="SourcePreviewTextView" customModule="Hoverlytics" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="223" height="298"/>
+                                        <textView editable="NO" importsGraphics="NO" findStyle="bar" incrementalSearchingEnabled="YES" allowsUndo="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="na3-ew-H5q" customClass="SourcePreviewTextView" customModule="Lantern" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="448" height="298"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" name="shadowColor" catalog="System" colorSpace="catalog"/>
                                             <size key="minSize" width="448" height="298"/>
                                             <size key="maxSize" width="477" height="10000000"/>
                                             <color key="insertionPointColor" name="controlLightHighlightColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="448" height="298"/>
-                                            <size key="maxSize" width="477" height="10000000"/>
                                         </textView>
                                     </subviews>
                                     <color key="backgroundColor" name="shadowColor" catalog="System" colorSpace="catalog"/>
@@ -37,7 +37,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="ROH-lh-fC2">
-                                    <rect key="frame" x="224" y="1" width="15" height="133"/>
+                                    <rect key="frame" x="433" y="1" width="16" height="298"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -68,11 +68,11 @@
                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="29" horizontalPageScroll="10" verticalLineScroll="29" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFC-BG-qhg">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                 <clipView key="contentView" id="gUR-Ml-6Uc">
-                                    <rect key="frame" x="1" y="17" width="238" height="117"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="27" rowSizeStyle="automatic" viewBased="YES" id="IfF-NL-hDZ" customClass="TableView" customModule="Hoverlytics" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="450" height="0.0"/>
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="27" rowSizeStyle="automatic" viewBased="YES" id="IfF-NL-hDZ" customClass="TableView" customModule="Lantern" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -134,7 +134,6 @@
                                             </tableColumns>
                                         </tableView>
                                     </subviews>
-                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="aNr-sQ-4RP">
                                     <rect key="frame" x="1" y="119" width="223" height="15"/>
@@ -164,13 +163,13 @@
         <!--Image View Controller-->
         <scene sceneID="3Zl-gR-66l">
             <objects>
-                <viewController title="Image View Controller" storyboardIdentifier="Image View Controller" id="Ram-Zx-kvq" customClass="ImagePreviewViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Image View Controller" storyboardIdentifier="Image View Controller" id="Ram-Zx-kvq" customClass="ImagePreviewViewController" customModule="Lantern" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="jIT-Mj-xT4">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="327"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="88B-9y-FKw">
-                                <rect key="frame" x="20" y="300" width="76" height="19"/>
+                                <rect key="frame" x="20" y="300" width="75" height="19"/>
                                 <buttonCell key="cell" type="roundTextured" title="Copy Image" bezelStyle="texturedRounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZVw-kN-Eam">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="smallSystem"/>
@@ -180,7 +179,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="5TJ-9k-3dO">
-                                <rect key="frame" x="253" y="303" width="44" height="14"/>
+                                <rect key="frame" x="249" y="303" width="48" height="14"/>
                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="«width»" id="B1H-0A-llF">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -196,7 +195,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="IRF-NH-vZ8">
-                                <rect key="frame" x="303" y="303" width="48" height="14"/>
+                                <rect key="frame" x="303" y="303" width="53" height="14"/>
                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="«height»" id="R6a-nA-14k">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -204,7 +203,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7Nv-Cg-VjE">
-                                <rect key="frame" x="508" y="303" width="74" height="14"/>
+                                <rect key="frame" x="505" y="303" width="77" height="14"/>
                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="right" title="«MIME Type»" id="0QB-VA-U6e">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -249,16 +248,17 @@
         <!--Image Preview Inner View Controller-->
         <scene sceneID="uvl-ND-jox">
             <objects>
-                <viewController id="hTD-EV-dxX" customClass="ImagePreviewInnerViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="hTD-EV-dxX" customClass="ImagePreviewInnerViewController" customModule="Lantern" customModuleProvider="target" sceneMemberID="viewController">
                     <scrollView key="view" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="qQX-Ki-nRd">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" id="XU4-SQ-zlg">
-                            <rect key="frame" x="1" y="1" width="166" height="79"/>
+                            <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <ikImageView wantsLayer="YES" fixedFrame="YES" zoomFactor="0.0" doubleClickOpensImageEditPanel="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SQa-fu-iDq">
-                                    <rect key="frame" x="65" y="41" width="400" height="350"/>
+                                    <rect key="frame" x="65" y="262" width="400" height="350"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <gestureRecognizers>
                                         <clickGestureRecognizer delaysPrimaryMouseButtonEvents="YES" numberOfClicksRequired="1" id="cba-gt-68r">
                                             <connections>
@@ -271,11 +271,11 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="vYY-7t-uhV">
-                            <rect key="frame" x="1" y="80" width="166" height="15"/>
+                            <rect key="frame" x="0.0" y="284" width="450" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="e7Z-7e-Myg">
-                            <rect key="frame" x="167" y="1" width="15" height="79"/>
+                            <rect key="frame" x="434" y="0.0" width="16" height="300"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>

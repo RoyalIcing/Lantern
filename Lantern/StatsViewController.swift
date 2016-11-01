@@ -1136,7 +1136,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 			var opacity: CGFloat = 1.0
 			var textColor: NSColor = NSColor.textColor
 			
-			if let pageMapper = pageMapper , pageMapper.hasFinishedRequestingURL(pageURL)
+			if let pageMapper = pageMapper, pageMapper.hasFinishedRequestingURL(pageURL)
 			{
 				var validatedStringValue: ValidatedStringValue = .missing
 				
@@ -1171,6 +1171,9 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 				switch validatedStringValue {
 				case .validString(let string):
 					stringValue = string
+				case .missing:
+					stringValue = "(missing)"
+					opacity = 0.2
 				default:
 					stringValue = "(loading)"
 					opacity = 0.2

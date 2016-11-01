@@ -1,13 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A320" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Page View Controller-->
         <scene sceneID="2IK-UQ-1Iz">
             <objects>
-                <viewController storyboardIdentifier="Page View Controller" id="lOR-rk-ZOz" customClass="PageViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Page View Controller" id="lOR-rk-ZOz" customClass="PageViewController" customModule="Lantern" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="IMy-jD-QFc">
                         <rect key="frame" x="0.0" y="0.0" width="500" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -22,7 +24,7 @@
                                 </connections>
                             </containerView>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-EU-sP3">
-                                <rect key="frame" x="20" y="8" width="251" height="19"/>
+                                <rect key="frame" x="20" y="8" width="322" height="19"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="4BL-LC-tAV"/>
                                 </constraints>
@@ -36,8 +38,8 @@
                                 </connections>
                             </textField>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="eKl-uH-6sn">
-                                <rect key="frame" x="276" y="8" width="206" height="18"/>
-                                <buttonCell key="cell" type="check" title="Crawl Local Pages While Browsing" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="dwE-SW-rGN">
+                                <rect key="frame" x="347" y="9" width="135" height="18"/>
+                                <buttonCell key="cell" type="check" title="Crawl Browsed Pages" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="dwE-SW-rGN">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="smallSystem"/>
                                 </buttonCell>
@@ -67,7 +69,7 @@
         <!--Stats View Controller-->
         <scene sceneID="P6X-3D-DQq">
             <objects>
-                <viewController storyboardIdentifier="Stats View Controller" id="r6L-Dj-16X" customClass="StatsViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Stats View Controller" id="r6L-Dj-16X" customClass="StatsViewController" customModule="Lantern" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="7iw-gg-adD">
                         <rect key="frame" x="0.0" y="0.0" width="688" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -75,11 +77,11 @@
                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1DH-BN-Ck5">
                                 <rect key="frame" x="0.0" y="0.0" width="688" height="266"/>
                                 <clipView key="contentView" id="phH-CB-Yie">
-                                    <rect key="frame" x="1" y="17" width="238" height="117"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="688" height="266"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="b01-9k-OdU" viewBased="YES" indentationPerLevel="16" outlineTableColumn="nV0-mQ-8uj" id="8zm-hh-BVu" customClass="OutlineView" customModule="Hoverlytics" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="688" height="0.0"/>
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="b01-9k-OdU" viewBased="YES" indentationPerLevel="16" outlineTableColumn="nV0-mQ-8uj" id="8zm-hh-BVu" customClass="OutlineView" customModule="Lantern" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="688" height="243"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -162,7 +164,6 @@
                                             </tableColumns>
                                         </outlineView>
                                     </subviews>
-                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="c1D-b4-RSn"/>
@@ -177,7 +178,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" id="b01-9k-OdU">
-                                    <rect key="frame" x="0.0" y="0.0" width="238" height="17"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="688" height="23"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
@@ -213,7 +214,7 @@
                                 </connections>
                             </popUpButton>
                             <popUpButton identifier="problemType" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mo4-F3-qdK" userLabel="Filter Response Choice Popup Button">
-                                <rect key="frame" x="544" y="273" width="124" height="19"/>
+                                <rect key="frame" x="546" y="273" width="122" height="19"/>
                                 <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Gtx-O5-RJg">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="smallSystem"/>
@@ -260,7 +261,7 @@
         <!--Page Web View Controller-->
         <scene sceneID="zNs-iy-TL9">
             <objects>
-                <viewController storyboardIdentifier="webViewController" id="nWe-1L-Tzu" customClass="PageWebViewController" customModule="Hoverlytics" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="webViewController" id="nWe-1L-Tzu" customClass="PageWebViewController" customModule="Lantern" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="5KY-5a-zk6">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>

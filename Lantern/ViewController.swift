@@ -134,6 +134,8 @@ class ViewController: NSViewController
 				self.mainState.initialHost = URL.host
 			}
 			
+			self.view.window?.title = URL.host ?? URL.absoluteString
+			
 			if pageViewController.crawlWhileBrowsing {
 				// Can only crawl the initial 'local' website.
 				let isLocal: Bool = {
