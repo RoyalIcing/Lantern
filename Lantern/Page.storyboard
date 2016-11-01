@@ -265,7 +265,7 @@
                 <splitViewController id="vaU-Wg-50g" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem id="e4s-3E-7go"/>
-                        <splitViewItem id="y8o-CF-bhs"/>
+                        <splitViewItem canCollapse="YES" id="y8o-CF-bhs"/>
                     </splitViewItems>
                     <splitView key="splitView" dividerStyle="thin" vertical="YES" id="AHN-D7-wZ7">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
@@ -288,15 +288,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K6P-gP-fJE">
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kuO-vE-5Qk">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                            </stackView>
+                                <clipView key="contentView" id="3he-YQ-KNO">
+                                    <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <stackView distribution="equalCentering" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="250" verticalClippingResistancePriority="250" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K6P-gP-fJE">
+                                            <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                                            <edgeInsets key="edgeInsets" left="10" right="10" top="10" bottom="10"/>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="K6P-gP-fJE" secondAttribute="bottom" id="Jy7-5y-vRx"/>
+                                        <constraint firstItem="K6P-gP-fJE" firstAttribute="top" secondItem="3he-YQ-KNO" secondAttribute="top" id="KKc-g0-Xb4"/>
+                                        <constraint firstAttribute="trailing" secondItem="K6P-gP-fJE" secondAttribute="trailing" id="kFX-mf-7GS"/>
+                                        <constraint firstItem="K6P-gP-fJE" firstAttribute="leading" secondItem="3he-YQ-KNO" secondAttribute="leading" id="mws-Pq-3rY"/>
+                                    </constraints>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="fy5-nJ-3mf">
+                                    <rect key="frame" x="0.0" y="284" width="450" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="6GX-0C-Up6">
+                                    <rect key="frame" x="434" y="0.0" width="16" height="300"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="K6P-gP-fJE" secondAttribute="bottom" id="71O-kS-4pb"/>
-                            <constraint firstItem="K6P-gP-fJE" firstAttribute="top" secondItem="gcM-Oe-4F9" secondAttribute="top" id="EOu-Q2-lkq"/>
-                            <constraint firstItem="K6P-gP-fJE" firstAttribute="leading" secondItem="gcM-Oe-4F9" secondAttribute="leading" id="atR-S8-Rfy"/>
-                            <constraint firstAttribute="trailing" secondItem="K6P-gP-fJE" secondAttribute="trailing" id="wYw-4i-icf"/>
+                            <constraint firstAttribute="bottom" secondItem="kuO-vE-5Qk" secondAttribute="bottom" id="9F0-EG-ucz"/>
+                            <constraint firstItem="kuO-vE-5Qk" firstAttribute="top" secondItem="gcM-Oe-4F9" secondAttribute="top" id="A3G-WH-elE"/>
+                            <constraint firstItem="kuO-vE-5Qk" firstAttribute="leading" secondItem="gcM-Oe-4F9" secondAttribute="leading" id="Aws-es-V6J"/>
+                            <constraint firstAttribute="trailing" secondItem="kuO-vE-5Qk" secondAttribute="trailing" id="nA6-R4-Trn"/>
                         </constraints>
                     </view>
                     <connections>

@@ -194,6 +194,7 @@ public struct PageContentInfo {
 	
 	public let pageTitleElements: [ONOXMLElement]
 	
+	public let metaElements: [ONOXMLElement]
 	public let metaDescriptionElements: [ONOXMLElement]
 	public let openGraphElements: [ONOXMLElement]
 	
@@ -249,6 +250,8 @@ public struct PageContentInfo {
 			}
 			
 			pageTitleElements = document.allElementsWithCSS("head title")
+			
+			metaElements = document.allElementsWithCSS("head meta")
 			
 			metaDescriptionElements = document.allElementsWithCSS("head meta[name][content]") { element in
 				if let name = element["name"] as? String {
@@ -352,6 +355,7 @@ public struct PageContentInfo {
 			
 			pageTitleElements = []
 			
+			metaElements = []
 			metaDescriptionElements = []
 			openGraphElements = []
 			
@@ -414,6 +418,14 @@ public struct PageContentInfo {
 			return nil
 		}
 		//return HTMLBodyData?.stringRepresentationUsingONOXMLDocumentHints(document)
+	}
+	
+	public var metaElementStrings: [String] {
+		return metaElements.map { "\($0.attributes)" }
+	}
+	
+	public var metaElementAttributes: [[String: String]] {
+		return metaElements.map { $0.attributes as! [String: String] }
 	}
 }
 

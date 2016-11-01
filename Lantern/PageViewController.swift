@@ -30,6 +30,7 @@ open class PageViewController: NSViewController {
 	var GoogleOAuth2TokenJSONString: String?
 	var hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback: PageViewControllerGoogleOAuth2TokenCallback?
 	
+	// TODO: remove
 	var navigatedURLDidChangeCallback: ((_ URL: URL) -> Void)?
 	
 	let minimumWidth: CGFloat = 600.0
@@ -86,11 +87,12 @@ open class PageViewController: NSViewController {
 	}
 	
 	func navigatedURLDidChange() {
-		guard let URL = webViewController.URL else { return }
+		// FIXME: ask web view controller
+		guard let url = pageMapperProvider?.activeURL else { return }
 		
-		navigatedURLDidChangeCallback?(URL)
+		navigatedURLDidChangeCallback?(url)
 		
-		updateUIForURL(URL)
+		updateUIForURL(url)
 	}
 	
 	func loadURL(_ URL: Foundation.URL) {
@@ -269,11 +271,10 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		webView.removeObserver(self, forKeyPath: "URL", context: &webViewURLObservingContext)
 	}
 	
-	func loadURL(_ URL: Foundation.URL) {
-		self.URL = URL
+	func loadURL(_ url: Foundation.URL) {
+		self.URL = url
 		
-		let URLRequest = Foundation.URLRequest(url: URL)
-		webView.load(URLRequest)
+		webView.load(URLRequest(url: url))
 	}
 	
 	func reloadFromOrigin() {
@@ -285,19 +286,14 @@ class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
 		nc.post(name: Notification.Name(rawValue: identifier.notificationName), object: self, userInfo: userInfo)
 	}
 	
-	func didNavigateToURL(_ URL: Foundation.URL) {
-		self.URL = URL
-		mainQueue_notify(.URLDidChange)
-	}
-	
 	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
 		guard let keyPath = keyPath else { return }
 		
 		if context == &webViewURLObservingContext {
 			switch keyPath {
+			//case #keyPath(WKWebView.url):
 			case "URL":
-				self.URL = webView.url
-				mainQueue_notify(.URLDidChange)
+				pageMapperProvider?.activeURL = webView.url
 			default:
 				break
 			}

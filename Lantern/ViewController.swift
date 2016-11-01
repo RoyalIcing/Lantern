@@ -14,6 +14,9 @@ import LanternModel
 class ViewController: NSViewController
 {
 	var modelManager: LanternModel.ModelManager!
+	
+	// MARK: Page Mapper
+	
 	var pageMapper: PageMapper?
 	
 	func clearPageMapper() {
@@ -21,11 +24,76 @@ class ViewController: NSViewController
 		pageMapper = nil
 	}
 	
+	var pageMapperCreatedCallbacks: [UUID: (PageMapper) -> ()] = [:]
 	func createPageMapper(primaryURL: URL) -> PageMapper? {
 		clearPageMapper()
 		pageMapper = PageMapper(primaryURL: primaryURL)
+		
+		if let pageMapper = pageMapper {
+			for (_, callback) in pageMapperCreatedCallbacks {
+				callback(pageMapper)
+			}
+		}
+		
 		return pageMapper
 	}
+	
+	subscript(pageMapperCreatedCallback uuid: UUID) -> ((PageMapper) -> ())? {
+		get {
+			return pageMapperCreatedCallbacks[uuid]
+		}
+		set(callback) {
+			pageMapperCreatedCallbacks[uuid] = callback
+		}
+	}
+	
+	var activeURL: URL? {
+		didSet {
+			activeURLChanged()
+		}
+	}
+	
+	var activeURLChangedCallbacks: [UUID: (URL?) -> ()] = [:]
+	func activeURLChanged() {
+		for (_, callback) in activeURLChangedCallbacks {
+			callback(activeURL)
+		}
+		
+		guard let url = activeURL else { return }
+		
+		if self.mainState.chosenSite == nil {
+			self.mainState.initialHost = url.host
+		}
+		
+		self.view.window?.title = url.host ?? url.absoluteString
+		
+		if pageViewController.crawlWhileBrowsing {
+			// Can only crawl the initial 'local' website.
+			let isLocal: Bool = {
+				if let initialHost = self.mainState.initialHost {
+					return url.host == initialHost
+				}
+				
+				return false
+			}()
+			
+			#if DEBUG
+				print("navigatedURLDidChangeCallback \(url)")
+			#endif
+			self.statsViewController.didNavigateToURL(url, crawl: isLocal)
+		}
+	}
+	
+	subscript(activeURLChangedCallback uuid: UUID) -> ((URL?) -> ())? {
+		get {
+			return activeURLChangedCallbacks[uuid]
+		}
+		set(callback) {
+			activeURLChangedCallbacks[uuid] = callback
+		}
+	}
+	
+	// MARK: -
 	
 	var section: MainSection!
 	
@@ -139,34 +207,12 @@ class ViewController: NSViewController
 		
 		// The top web browser
 		let pageViewController = storyboard.instantiateController(withIdentifier: "Page View Controller") as! PageViewController
-		pageViewController.navigatedURLDidChangeCallback = { [unowned self] URL in
-			if self.mainState.chosenSite == nil {
-				self.mainState.initialHost = URL.host
-			}
-			
-			self.view.window?.title = URL.host ?? URL.absoluteString
-			
-			if pageViewController.crawlWhileBrowsing {
-				// Can only crawl the initial 'local' website.
-				let isLocal: Bool = {
-					if let initialHost = self.mainState.initialHost {
-						return URL.host == initialHost
-					}
-					
-					return false
-				}()
-				
-				#if DEBUG
-					print("navigatedURLDidChangeCallback \(URL)")
-				#endif
-				self.statsViewController.didNavigateToURL(URL, crawl: isLocal)
-			}
-		}
 		
 		// The bottom page crawler table
 		let statsViewController = storyboard.instantiateController(withIdentifier: "Stats View Controller") as! StatsViewController
 		statsViewController.didChooseURLCallback = { URL, pageInfo in
 			if pageInfo.baseContentType == .localHTMLPage {
+				// FIXME: use active URL instead?
 				self.pageViewController.loadURL(URL)
 			}
 		}

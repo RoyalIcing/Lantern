@@ -275,9 +275,9 @@
 				B2E2693C1AE9E9200044BE04 /* MainView.storyboard */,
 				B2C4A9401ACA3203000F1566 /* MainState.swift */,
 				B25020601B01B3B200ABAE96 /* Preferences */,
+				B219509F1DC87CB400ACCB38 /* Responder Chain */,
 				B2E2693A1AE9E5130044BE04 /* MainSection.swift */,
 				B22876261AF3A4D800A8A4A2 /* SiteMenuItem.swift */,
-				B219509D1DC873CF00ACCB38 /* PageMapper+UI.swift */,
 				B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */,
 				B22B7D961AC6B9090026AEDB /* ViewController.swift */,
 				B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */,
@@ -329,6 +329,14 @@
 				B2054D811AF477C700DC2C00 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B219509F1DC87CB400ACCB38 /* Responder Chain */ = {
+			isa = PBXGroup;
+			children = (
+				B219509D1DC873CF00ACCB38 /* PageMapper+UI.swift */,
+			);
+			name = "Responder Chain";
 			sourceTree = "<group>";
 		};
 		B22425F41AC8F8B200809EF0 /* LanternModel */ = {

@@ -10,11 +10,15 @@ import Cocoa
 import LanternModel
 
 
-protocol PageMapperProvider {
+protocol PageMapperProvider : class {
 	var pageMapper: PageMapper? { get }
 	
 	func clearPageMapper()
 	func createPageMapper(primaryURL: URL) -> PageMapper?
+	subscript(pageMapperCreatedCallback uuid: UUID) -> ((PageMapper) -> ())? { get set }
+	
+	var activeURL: URL? { get set }
+	subscript(activeURLChangedCallback uuid: UUID) -> ((URL?) -> ())? { get set }
 }
 
 extension NSResponder {
