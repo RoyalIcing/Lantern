@@ -175,6 +175,16 @@ struct PageContentInfoOptions {
 	var separateLinksToImageTypes = true
 }
 
+enum ResourceSourceArea {
+	case headMeta
+	case headOpenGraph
+	case bodyContent
+}
+struct ResourceSource {
+	var element: ONOXMLElement
+	var url: URL
+}
+
 public struct PageContentInfo {
 	public let data: Data
 	fileprivate let document: ONOXMLDocument!

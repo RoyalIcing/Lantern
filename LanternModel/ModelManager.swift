@@ -204,6 +204,7 @@ public class ModelManager {
 			}
 		}
 	}
+	
 	fileprivate var sitesSavingProgression: SitesSavingProgression? {
 		didSet(newValue) {
 			sitesSavingProgression?.execute { useResult in

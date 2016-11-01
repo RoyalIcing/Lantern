@@ -124,7 +124,6 @@ class ViewController: NSViewController
 		mainSplitViewController.splitView.isVertical = false
 		//mainSplitViewController.splitView.dividerStyle = .PaneSplitter
 		mainSplitViewController.splitView.dividerStyle = .thick
-		fill(withChildViewController: mainSplitViewController)
 		
 		let storyboard = self.pageStoryboard
 		
@@ -174,6 +173,8 @@ class ViewController: NSViewController
 			return item
 		}())
 		self.statsViewController = statsViewController
+		
+		fill(withChildViewController: mainSplitViewController)
 	}
 	
 	

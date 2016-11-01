@@ -150,6 +150,7 @@
 		B20DB3871B0F020500E57532 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		B2134AAD1AE9F97F00ACDDE3 /* PageMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageMapper.swift; sourceTree = "<group>"; };
+		B219509A1DC8177D00ACCB38 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		B22425F31AC8F8B200809EF0 /* LanternModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LanternModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22425F61AC8F8B200809EF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HoverlyticsModel.h; sourceTree = "<group>"; };
@@ -200,7 +201,6 @@
 		B2B542C61AF0A09600073464 /* ContentPreview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContentPreview.storyboard; sourceTree = "<group>"; };
 		B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		B2C4A9401ACA3203000F1566 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainState.swift; sourceTree = "<group>"; };
-		B2D24FB41B738FA30001B557 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		B2D39B081AF601C7003D6738 /* code-sign-frameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "code-sign-frameworks.sh"; sourceTree = "<group>"; };
 		B2D39B0A1AF64533003D6738 /* PageMapper+LinkFiltering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PageMapper+LinkFiltering.swift"; sourceTree = "<group>"; };
 		B2D39B0C1AF64EB5003D6738 /* ContentPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPreview.swift; sourceTree = "<group>"; };
@@ -435,7 +435,7 @@
 		B2D9D8881B253D3100217300 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B2D24FB41B738FA30001B557 /* Cartfile */,
+				B219509A1DC8177D00ACCB38 /* Cartfile */,
 				B249AB931CA903D4006AAA42 /* Grain.framework */,
 				B25033111AF5C2C7006A2AE7 /* Ono.framework */,
 				B2D563221AF5BF8A006DE202 /* Alamofire.framework */,

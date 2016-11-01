@@ -1,5 +1,5 @@
 github "Alamofire/Alamofire" >= 4.0
-github "mattt/Ono" >= 1.2.2
+github "burntcaramel/Ono" "master"
 github "burntcaramel/BurntFoundation" >= 0.3
 github "burntcaramel/BurntCocoaUI" >= 0.4
 github "burntcaramel/Grain" >= 0.6
