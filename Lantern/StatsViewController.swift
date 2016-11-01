@@ -261,7 +261,7 @@ class StatsViewController: NSViewController {
 	var crawlerPreferencesObserver: NotificationObserver<CrawlerPreferences.Notification>!
 	
 	
-	var pageMapper: PageMapper?
+	lazy var pageMapperListenerUUID = UUID()
 	
 	var browsedURL: URL?
 	
@@ -280,26 +280,26 @@ class StatsViewController: NSViewController {
 	var didChooseURLCallback: ((_ URL: URL, _ pageInfo: PageInfo) -> ())?
 	
 	
-		override func viewDidLoad() {
-				super.viewDidLoad()
-				// Do view setup here.
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		// Do view setup here.
 		
 		outlineView.removeTableColumn(outlineView.tableColumn(withIdentifier: "text")!)
-		
+
 		//updateColumnsToOnlyShow(selectedColumnsMode.columnIdentifiersForBaseContentType(filterToBaseContentType))
-		
+
 		outlineView.dataSource = self
 		outlineView.delegate = self
-		
+
 		outlineView.target = self
 		outlineView.doubleAction = #selector(StatsViewController.doubleClickSelectedRow(_:))
-		
+
 		createRowMenu()
-		
+
 		updateUI()
-		
+
 		startObservingCrawlerPreferences()
-		}
+	}
 	
 	deinit {
 		stopObservingCrawlerPreferences()
@@ -323,6 +323,10 @@ class StatsViewController: NSViewController {
 			browsedURL = primaryURL
 			crawl()
 		}
+	}
+	
+	var pageMapper: PageMapper? {
+		return pageMapperProvider?.pageMapper
 	}
 	
 	func updateMaximumImageDownload() {
@@ -454,26 +458,17 @@ class StatsViewController: NSViewController {
 		updateListOfURLs()
 	}
 	
-	func clearPageMapper() {
-		if let oldPageMapper = pageMapper {
-			oldPageMapper.cancel()
-			pageMapper = nil
-		}
-	}
-	
 	func crawl() {
-		clearPageMapper()
-		
 		if
 			let primaryURL = self.primaryURL,
-			let mappableURL = MappableURL(primaryURL: primaryURL)
+			let pageMapperProvider = self.pageMapperProvider
 		{
-			let pageMapper = PageMapper(mappableURL: mappableURL)
-			pageMapper.didUpdateCallback = { loadedPageURL in
+			guard let pageMapper = pageMapperProvider.createPageMapper(primaryURL: primaryURL)
+				else { return }
+			
+			pageMapper[didUpdateCallback: pageMapperListenerUUID] = { loadedPageURL in
 				self.pageURLDidUpdate(loadedPageURL)
 			}
-			
-			self.pageMapper = pageMapper
 			
 			updateMaximumImageDownload()
 			

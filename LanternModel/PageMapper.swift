@@ -32,41 +32,41 @@ extension MappableURL {
 }
 
 
-open class PageMapper {
-	open let primaryURL: URL
-	open let crawlsFoundURLs: Bool
-	open let maximumDepth: UInt
+public final class PageMapper {
+	public let primaryURL: URL
+	public let crawlsFoundURLs: Bool
+	public let maximumDepth: UInt
 	let localHost: String
 	
-	open internal(set) var additionalURLs = [URL]()
+	public internal(set) var additionalURLs = [URL]()
 	
 	//var ignoresNoFollows = false
 	
 	
 	internal(set) var requestedURLsUnique = UniqueURLArray()
 	
-	open internal(set) var loadedURLToPageInfo = [URL: PageInfo]()
-	open internal(set) var requestedURLToDestinationURL = [URL: URL]()
-	open internal(set) var requestedURLToResponseType = [URL: PageResponseType]()
+	public internal(set) var loadedURLToPageInfo = [URL: PageInfo]()
+	public internal(set) var requestedURLToDestinationURL = [URL: URL]()
+	public internal(set) var requestedURLToResponseType = [URL: PageResponseType]()
 	
-	open func hasFinishedRequestingURL(_ requestedURL: URL) -> Bool {
+	public func hasFinishedRequestingURL(_ requestedURL: URL) -> Bool {
 		return requestedURLToResponseType[requestedURL] != nil
 	}
 	
-	open internal(set) var externalURLs = Set<URL>()
+	public internal(set) var externalURLs = Set<URL>()
 	
 	internal(set) var requestedLocalPageURLsUnique = UniqueURLArray()
-	open var localPageURLsOrdered: [URL] {
+	public var localPageURLsOrdered: [URL] {
 		return requestedLocalPageURLsUnique.orderedURLs as [URL]
 	}
 	
 	internal(set) var requestedImageURLsUnique = UniqueURLArray()
-	open var imageURLsOrdered: [URL] {
+	public var imageURLsOrdered: [URL] {
 		return requestedImageURLsUnique.orderedURLs as [URL]
 	}
 	
 	var requestedFeedURLsUnique = UniqueURLArray()
-	open var feedURLsOrdered: [URL] {
+	public var feedURLsOrdered: [URL] {
 		return requestedFeedURLsUnique.orderedURLs as [URL]
 	}
 	
@@ -74,8 +74,8 @@ open class PageMapper {
 	var baseContentTypeToSummedByteCount = [BaseContentType: UInt]()
 	var baseContentTypeToMaximumByteCount = [BaseContentType: UInt]()
 	
-	open var redirectedSourceURLToInfo = [URL: RequestRedirectionInfo]()
-	open var redirectedDestinationURLToInfo = [URL: RequestRedirectionInfo]()
+	public var redirectedSourceURLToInfo = [URL: RequestRedirectionInfo]()
+	public var redirectedDestinationURLToInfo = [URL: RequestRedirectionInfo]()
 	
 	
 	fileprivate let infoRequestQueue: PageInfoRequestQueue
@@ -87,16 +87,27 @@ open class PageMapper {
 	}
 	
 	fileprivate var state: State = .idle
-	open var isCrawling: Bool {
+	public var isCrawling: Bool {
 		return state == .crawling
 	}
-	open var paused: Bool {
+	public var paused: Bool {
 		return state == .paused
 	}
 	
 	var queuedURLsToRequestWhilePaused = [(URL, BaseContentType, UInt?)]()
 	
-	open var didUpdateCallback: ((_ pageURL: URL) -> Void)?
+	//public var didUpdateCallback: ((_ pageURL: URL) -> ())?
+	
+	private var didUpdateCallbacks: [UUID: ((_ pageURL: URL) -> ())] = [:]
+	
+	public subscript(didUpdateCallback uuid: UUID) -> ((_ pageURL: URL) -> ())? {
+		get {
+			return didUpdateCallbacks[uuid]
+		}
+		set(callback) {
+			didUpdateCallbacks[uuid] = callback
+		}
+	}
 	
 	fileprivate static let defaultMaximumDefault: UInt = 10
 	
@@ -124,7 +135,14 @@ open class PageMapper {
 		}
 	}
 	
-	open func addAdditionalURL(_ URL: Foundation.URL) {
+	public convenience init?(primaryURL: URL) {
+		guard let mappableURL = MappableURL(primaryURL: primaryURL)
+			else { return nil }
+		
+		self.init(mappableURL: mappableURL)
+	}
+	
+	public func addAdditionalURL(_ URL: Foundation.URL) {
 		additionalURLs.append(URL)
 		
 		if isCrawling {
@@ -152,7 +170,7 @@ open class PageMapper {
 		baseContentTypeToSummedByteCount.removeAll()
 	}
 	
-	open func reload() {
+	public func reload() {
 		state = .crawling
 		
 		clearLoadedInfo()
@@ -164,7 +182,7 @@ open class PageMapper {
 		}
 	}
 	
-	open func pageInfoForRequestedURL(_ URL: Foundation.URL) -> PageInfo? {
+	public func pageInfoForRequestedURL(_ URL: Foundation.URL) -> PageInfo? {
 		if JUST_USE_FINAL_URLS {
 			if let URL = conformURL(URL) {
 				return loadedURLToPageInfo[URL]
@@ -196,7 +214,7 @@ open class PageMapper {
 		}
 	}
 	
-	open func priorityRequestContentIfNeededForURL(_ URL: Foundation.URL, expectedBaseContentType: BaseContentType) {
+	public func priorityRequestContentIfNeededForURL(_ URL: Foundation.URL, expectedBaseContentType: BaseContentType) {
 		if let
 			info = pageInfoForRequestedURL(URL),
 			let contentInfo = info.contentInfo
@@ -311,7 +329,10 @@ open class PageMapper {
 			}
 		}
 		
-		self.didUpdateCallback?(requestedPageURL)
+		//self.didUpdateCallback?(requestedPageURL)
+		for (_, callback) in self.didUpdateCallbacks {
+			callback(requestedPageURL)
+		}
 	}
 	
 	func cancelPendingRequestsForBaseContentType(_ type: BaseContentType) {
@@ -320,7 +341,7 @@ open class PageMapper {
 		}
 	}
 	
-	open func pauseCrawling() {
+	public func pauseCrawling() {
 		assert(crawlsFoundURLs, "Must have been initialized with crawlsFoundURLs = true")
 		
 		if !paused {
@@ -328,7 +349,7 @@ open class PageMapper {
 		}
 	}
 	
-	open func resumeCrawling() {
+	public func resumeCrawling() {
 		assert(crawlsFoundURLs, "Must have been initialized with crawlsFoundURLs = true")
 		
 		state = .crawling
@@ -339,23 +360,23 @@ open class PageMapper {
 		queuedURLsToRequestWhilePaused.removeAll()
 	}
 	
-	open func cancel() {
+	public func cancel() {
 		state = .idle
 		
-		didUpdateCallback = nil
+		didUpdateCallbacks.removeAll()
 		
 		infoRequestQueue.cancelAll(true)
 	}
 	
-	open func summedByteCountForBaseContentType(_ type: BaseContentType) -> UInt {
+	public func summedByteCountForBaseContentType(_ type: BaseContentType) -> UInt {
 		return baseContentTypeToSummedByteCount[type] ?? 0
 	}
 	
-	open func maximumByteCountForBaseContentType(_ type: BaseContentType) -> UInt? {
+	public func maximumByteCountForBaseContentType(_ type: BaseContentType) -> UInt? {
 		return baseContentTypeToMaximumByteCount[type]
 	}
 	
-	open func setMaximumByteCount(_ maximumByteCount: UInt?, forBaseContentType type: BaseContentType) {
+	public func setMaximumByteCount(_ maximumByteCount: UInt?, forBaseContentType type: BaseContentType) {
 		if let maximumByteCount = maximumByteCount {
 			baseContentTypeToMaximumByteCount[type] = maximumByteCount
 		}
@@ -364,7 +385,7 @@ open class PageMapper {
 		}
 	}
 	
-	open func hasReachedMaximumByteLimitForBaseContentType(_ type: BaseContentType) -> Bool {
+	public func hasReachedMaximumByteLimitForBaseContentType(_ type: BaseContentType) -> Bool {
 		if let maximumByteCount = maximumByteCountForBaseContentType(type) {
 			return summedByteCountForBaseContentType(type) >= maximumByteCount
 		}

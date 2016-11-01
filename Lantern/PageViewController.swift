@@ -18,7 +18,11 @@ typealias PageViewControllerGoogleOAuth2TokenCallback = (_ tokenJSONString: Stri
 open class PageViewController: NSViewController {
 	@IBOutlet var URLField: NSTextField!
 	@IBOutlet var crawlWhileBrowsingCheckButton: NSButton!
-	var webViewController: PageWebViewController!
+	var webViewController: PageWebViewController! {
+		didSet {
+			prepareWebViewController(webViewController!)
+		}
+	}
 	
 	
 	var crawlWhileBrowsing: Bool = true
@@ -70,9 +74,14 @@ open class PageViewController: NSViewController {
 	}
 	
 	override open func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-		if segue.identifier == "webViewController" {
+		/*if segue.identifier == "webViewController" {
 			webViewController = segue.destinationController as! PageWebViewController
 			prepareWebViewController(webViewController)
+		}*/
+		if segue.identifier == "activeResourceSplit" {
+			let splitVC = segue.destinationController as! NSSplitViewController
+			let webSplit = splitVC.splitViewItems[0]
+			webViewController = webSplit.viewController as! PageWebViewController
 		}
 	}
 	

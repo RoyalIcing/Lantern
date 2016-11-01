@@ -14,6 +14,18 @@ import LanternModel
 class ViewController: NSViewController
 {
 	var modelManager: LanternModel.ModelManager!
+	var pageMapper: PageMapper?
+	
+	func clearPageMapper() {
+		pageMapper?.cancel()
+		pageMapper = nil
+	}
+	
+	func createPageMapper(primaryURL: URL) -> PageMapper? {
+		clearPageMapper()
+		pageMapper = PageMapper(primaryURL: primaryURL)
+		return pageMapper
+	}
 	
 	var section: MainSection!
 	
@@ -28,7 +40,6 @@ class ViewController: NSViewController
 	}
 	
 	typealias MainStateNotification = MainState.Notification
-	
 	var mainStateNotificationObservers = [MainStateNotification: AnyObject]()
 	var browserPreferencesObserver: NotificationObserver<BrowserPreferences.Notification>!
 	
@@ -122,8 +133,7 @@ class ViewController: NSViewController
 		
 		mainSplitViewController = NSSplitViewController()
 		mainSplitViewController.splitView.isVertical = false
-		//mainSplitViewController.splitView.dividerStyle = .PaneSplitter
-		mainSplitViewController.splitView.dividerStyle = .thick
+		mainSplitViewController.splitView.dividerStyle = .thin
 		
 		let storyboard = self.pageStoryboard
 		
@@ -252,3 +262,4 @@ class ViewController: NSViewController
 	}
 }
 
+extension ViewController : PageMapperProvider {}

@@ -57,7 +57,7 @@ class MainWindowController: NSWindowController {
 			
 			toolbarAssistant.prepareSiteSettingsButton = { [unowned self] button in
 				button.target = self.mainViewController
-				button.action = "showSiteSettings:"
+				button.action = #selector(ViewController.showSiteSettings(_:))
 			}
 		}
 	}
@@ -70,9 +70,13 @@ class MainWindowController: NSWindowController {
 		if let window = window {
 			window.delegate = self
 			
+			// Prefer tabbing
 			window.tabbingIdentifier = "main"
 			window.tabbingMode = .preferred
+			
+			// Combine title and toolbar
 			window.titleVisibility = .hidden
+			
 			//window.appearance = NSAppearance(named: NSAppearanceNameVibrantDark)
 			//window.appearance = NSAppearance(named: NSAppearanceNameVibrantLight)
 			

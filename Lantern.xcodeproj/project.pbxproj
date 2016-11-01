@@ -11,6 +11,8 @@
 		B2054DB11AF494A300DC2C00 /* PageInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2054DB01AF494A300DC2C00 /* PageInfoRequest.swift */; };
 		B20DB3891B0F020500E57532 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DB3861B0F020500E57532 /* Fabric.framework */; };
 		B20DB38B1B0F020500E57532 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DB3871B0F020500E57532 /* Crashlytics.framework */; };
+		B219509C1DC86D1C00ACCB38 /* MetaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219509B1DC86D1C00ACCB38 /* MetaViewController.swift */; };
+		B219509E1DC873CF00ACCB38 /* PageMapper+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219509D1DC873CF00ACCB38 /* PageMapper+UI.swift */; };
 		B22425F81AC8F8B200809EF0 /* HoverlyticsModel.h in Headers */ = {isa = PBXBuildFile; fileRef = B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B22425FE1AC8F8B200809EF0 /* LanternModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* LanternModel.framework */; };
 		B22426071AC8F8B200809EF0 /* HoverlyticsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426061AC8F8B200809EF0 /* HoverlyticsModelTests.swift */; };
@@ -151,6 +153,8 @@
 		B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		B2134AAD1AE9F97F00ACDDE3 /* PageMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageMapper.swift; sourceTree = "<group>"; };
 		B219509A1DC8177D00ACCB38 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		B219509B1DC86D1C00ACCB38 /* MetaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaViewController.swift; sourceTree = "<group>"; };
+		B219509D1DC873CF00ACCB38 /* PageMapper+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PageMapper+UI.swift"; sourceTree = "<group>"; };
 		B22425F31AC8F8B200809EF0 /* LanternModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LanternModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22425F61AC8F8B200809EF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HoverlyticsModel.h; sourceTree = "<group>"; };
@@ -273,6 +277,7 @@
 				B25020601B01B3B200ABAE96 /* Preferences */,
 				B2E2693A1AE9E5130044BE04 /* MainSection.swift */,
 				B22876261AF3A4D800A8A4A2 /* SiteMenuItem.swift */,
+				B219509D1DC873CF00ACCB38 /* PageMapper+UI.swift */,
 				B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */,
 				B22B7D961AC6B9090026AEDB /* ViewController.swift */,
 				B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */,
@@ -282,6 +287,7 @@
 				B22B7DBA1AC77EF20026AEDB /* Page.storyboard */,
 				B2D39B151AF665D5003D6738 /* TableView-OutlineView-Subclass.swift */,
 				B22B7DB81AC77D420026AEDB /* PageViewController.swift */,
+				B219509B1DC86D1C00ACCB38 /* MetaViewController.swift */,
 				B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */,
 				B2D39B441AF6F482003D6738 /* Preview */,
 				B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */,
@@ -716,6 +722,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B219509C1DC86D1C00ACCB38 /* MetaViewController.swift in Sources */,
 				B2E000001B007F500073CB8A /* BrowserMenuController.swift in Sources */,
 				B2D39B041AF5F074003D6738 /* NSViewController+PGWSConstraintConvenience.m in Sources */,
 				B2D39B001AF5ECEB003D6738 /* StatsViewController.swift in Sources */,
@@ -732,6 +739,7 @@
 				B250335A1AF5E7A7006A2AE7 /* MainWindowController.swift in Sources */,
 				B25033591AF5E79F006A2AE7 /* AppDelegate.swift in Sources */,
 				B2D39B471AF6F494003D6738 /* ImagePreviewViewController.swift in Sources */,
+				B219509E1DC873CF00ACCB38 /* PageMapper+UI.swift in Sources */,
 				B2D39B111AF650A1003D6738 /* MultipleStringPreviewViewController.swift in Sources */,
 				B2D39B171AF665D5003D6738 /* TableView-OutlineView-Subclass.swift in Sources */,
 				B2D39B0E1AF64F3C003D6738 /* ContentPreview.swift in Sources */,
@@ -851,7 +859,7 @@
 				INFOPLIST_FILE = LanternModel/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.Hoverlytics.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = LanternModel;
@@ -892,7 +900,7 @@
 				INFOPLIST_FILE = LanternModel/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.Hoverlytics.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = LanternModel;
 				SKIP_INSTALL = YES;
@@ -973,7 +981,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -1010,7 +1018,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -1038,7 +1046,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Lantern/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.$(PRODUCT_NAME:rfc1034identifier).Mac";
 				PRODUCT_NAME = Lantern;
@@ -1065,7 +1073,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Lantern/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.$(PRODUCT_NAME:rfc1034identifier).Mac";
 				PRODUCT_NAME = Lantern;
 				PROVISIONING_PROFILE = "";

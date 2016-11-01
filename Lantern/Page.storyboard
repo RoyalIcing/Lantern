@@ -4,6 +4,7 @@
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <scenes>
         <!--Page View Controller-->
@@ -20,7 +21,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="500" id="dVX-GN-paG"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="nWe-1L-Tzu" kind="embed" identifier="webViewController" id="2xK-rR-SMZ"/>
+                                    <segue destination="vaU-Wg-50g" kind="embed" identifier="activeResourceSplit" id="kGb-oQ-12o"/>
                                 </connections>
                             </containerView>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-EU-sP3">
@@ -258,6 +259,54 @@
             </objects>
             <point key="canvasLocation" x="955" y="166"/>
         </scene>
+        <!--Split View Controller-->
+        <scene sceneID="fFf-Os-yyp">
+            <objects>
+                <splitViewController id="vaU-Wg-50g" sceneMemberID="viewController">
+                    <splitViewItems>
+                        <splitViewItem id="e4s-3E-7go"/>
+                        <splitViewItem id="y8o-CF-bhs"/>
+                    </splitViewItems>
+                    <splitView key="splitView" dividerStyle="thin" vertical="YES" id="AHN-D7-wZ7">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </splitView>
+                    <connections>
+                        <segue destination="nWe-1L-Tzu" kind="relationship" relationship="splitItems" id="QWe-ja-MT4"/>
+                        <segue destination="Dgf-Vx-BCX" kind="relationship" relationship="splitItems" id="qZ7-Wc-gCl"/>
+                    </connections>
+                </splitViewController>
+                <customObject id="ZWZ-or-XjE" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="787" y="656"/>
+        </scene>
+        <!--Meta View Controller-->
+        <scene sceneID="7IS-EA-Id8">
+            <objects>
+                <viewController id="Dgf-Vx-BCX" customClass="MetaViewController" customModule="Lantern" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="gcM-Oe-4F9">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K6P-gP-fJE">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="K6P-gP-fJE" secondAttribute="bottom" id="71O-kS-4pb"/>
+                            <constraint firstItem="K6P-gP-fJE" firstAttribute="top" secondItem="gcM-Oe-4F9" secondAttribute="top" id="EOu-Q2-lkq"/>
+                            <constraint firstItem="K6P-gP-fJE" firstAttribute="leading" secondItem="gcM-Oe-4F9" secondAttribute="leading" id="atR-S8-Rfy"/>
+                            <constraint firstAttribute="trailing" secondItem="K6P-gP-fJE" secondAttribute="trailing" id="wYw-4i-icf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="stackView" destination="K6P-gP-fJE" id="BpW-u6-3YR"/>
+                    </connections>
+                </viewController>
+                <customObject id="vBC-FQ-1Db" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1381" y="656"/>
+        </scene>
         <!--Page Web View Controller-->
         <scene sceneID="zNs-iy-TL9">
             <objects>
@@ -269,7 +318,7 @@
                 </viewController>
                 <customObject id="SOe-BC-AxO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="304" y="642"/>
+            <point key="canvasLocation" x="253" y="656"/>
         </scene>
     </scenes>
 </document>
