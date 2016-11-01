@@ -64,15 +64,19 @@ class MainWindowController: NSWindowController {
 	
 	var chosenSiteDidChangeObserver: AnyObject?
 
-		override func windowDidLoad() {
-				super.windowDidLoad()
+	override func windowDidLoad() {
+		super.windowDidLoad()
 		
 		if let window = window {
 			window.delegate = self
 			
+			window.tabbingIdentifier = "main"
+			window.tabbingMode = .preferred
 			window.titleVisibility = .hidden
 			//window.appearance = NSAppearance(named: NSAppearanceNameVibrantDark)
 			//window.appearance = NSAppearance(named: NSAppearanceNameVibrantLight)
+			
+			window.title = "New"
 		}
 		
 		mainViewController.modelManager = modelManager
@@ -80,9 +84,9 @@ class MainWindowController: NSWindowController {
 		
 		let nc = NotificationCenter.default
 		chosenSiteDidChangeObserver = nc.addObserver(forName: NSNotification.Name(rawValue: MainState.Notification.ChosenSiteDidChange.rawValue), object: mainState, queue: nil) { [unowned self] note in
-			self.window?.title = self.windowTitle(forDocumentDisplayName: "Main")
+			self.window?.title = self.windowTitle(forDocumentDisplayName: "New")
 		}
-		}
+	}
 	
 	deinit {
 		let nc = NotificationCenter.default
