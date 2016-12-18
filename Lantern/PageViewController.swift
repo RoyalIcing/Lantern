@@ -199,7 +199,7 @@ class PageWebViewController : NSViewController, WKNavigationDelegate, WKUIDelega
 		#endif
 		webViewConfiguration.preferences = preferences
 		
-		let userContentController = webViewConfiguration.userContentController ?? WKUserContentController()
+		let userContentController = webViewConfiguration.userContentController
 		
 		func addBundledUserScript(_ scriptNameInBundle: String, injectAtStart: Bool = false, injectAtEnd: Bool = false, forMainFrameOnly: Bool = true, sourceReplacements: [String:String]? = nil) {
 			let scriptURL = Bundle.main.url(forResource: scriptNameInBundle, withExtension: "js")!

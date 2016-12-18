@@ -82,7 +82,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	}
 	
 	@IBAction func newDocument(_ sender: AnyObject?) {
-		self.applicationOpenUntitledFile(NSApp)
+		_ = self.applicationOpenUntitledFile(NSApp)
 	}
 	
 	@IBAction func forkOnGitHub(_ sender: AnyObject?) {

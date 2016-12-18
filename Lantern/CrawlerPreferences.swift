@@ -80,7 +80,7 @@ class CrawlerPreferences {
 	}
 	
 	func updateFromDefaults() {
-		imageDownloadChoice = ud.choice(CrawlerImageDownloadChoice)
+		imageDownloadChoice = ud.choice(CrawlerImageDownloadChoice.self)
 	}
 	
 	init() {

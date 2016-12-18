@@ -76,7 +76,7 @@ class BrowserPreferences {
 	}
 	
 	func updateFromDefaults() {
-		widthChoice = ud.choice(BrowserWidthChoice)
+		widthChoice = ud.choice(BrowserWidthChoice.self)
 	}
 	
 	init() {
