@@ -50,7 +50,7 @@ class MetaViewController : NSViewController {
 		provider[activeURLChangedCallback: crawlerProviderListenerUUID] = nil
 	}
 	
-	func createStackViews(url: URL?) -> [NSView] {
+	func createStackViews(_ url: URL?) -> [NSView] {
 		guard let url = url else {
 			return []
 		}
@@ -82,6 +82,6 @@ class MetaViewController : NSViewController {
 	}
 	
 	func updateUI(url: URL?) {
-		stackView.setViews(createStackViews(url: url), in: NSStackViewGravity.center)
+		stackView.setViews(createStackViews(url), in: NSStackViewGravity.center)
 	}
 }

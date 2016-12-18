@@ -11,7 +11,7 @@ import BurntFoundation
 import LanternModel
 
 
-class ViewController: NSViewController
+class ViewController : NSViewController
 {
 	var modelManager: LanternModel.ModelManager!
 	
@@ -273,10 +273,10 @@ class ViewController: NSViewController
 				
 				let modelManager = self.modelManager!
 				siteSettingsViewController.willClose = { siteSettingsViewController in
-					let UUID = chosenSite.UUID
+					let uuid = chosenSite.UUID
 					do {
-						let siteValues = try siteSettingsViewController.copySiteValuesFromUI(UUID: UUID)
-						modelManager.updateSiteWithUUID(UUID, withValues: siteValues)
+						let siteValues = try siteSettingsViewController.copySiteValuesFromUI(uuid: uuid)
+						modelManager.updateSite(uuid: uuid, values: siteValues)
 					}
 					catch {
 						NSApplication.shared().presentError(error as NSError, modalFor: self.view.window!, delegate: nil, didPresent: nil, contextInfo: nil)
@@ -286,6 +286,10 @@ class ViewController: NSViewController
 				presentViewController(siteSettingsViewController, asPopoverRelativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.maxY, behavior: .semitransient)
 			}
 		}
+	}
+	
+	@IBAction func toggleShownViews(_ sender: Any?) {
+			pageViewController.toggleShownViews(sender)
 	}
 	
 	override func supplementalTarget(forAction action: Selector, sender: Any?) -> Any? {

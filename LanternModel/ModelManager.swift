@@ -29,7 +29,7 @@ public enum ModelManagerNotification: String {
 }
 
 
-public class ErrorReceiver {
+public final class ErrorReceiver {
 	open var errorCallback: ((_ error: NSError) -> Void)?
 	
 	func receiveError(_ error: NSError) {
@@ -107,7 +107,7 @@ enum SitesLoadingProgression : StageProtocol {
 		}
 	}
 	
-	mutating func remove(uuid: Foundation.UUID) {
+	mutating func remove(_ uuid: Foundation.UUID) {
 		switch self {
 		case var .sitesList(sitesList, _):
 			guard let index = sitesList.index(where: { $0.UUID == uuid })
@@ -171,10 +171,10 @@ enum SitesSavingProgression : StageProtocol {
 	}
 }
 
-public class ModelManager {
+open class ModelManager {
 	var isAvailable = false
 	
-	public let errorReceiver = ErrorReceiver()
+	open let errorReceiver = ErrorReceiver()
 	
 	fileprivate var storeDirectory: SystemDirectory
 	fileprivate var sitesURL: URL?
@@ -218,7 +218,7 @@ public class ModelManager {
 		}
 	}
 	
-	public var allSites: [SiteValues]? {
+	open var allSites: [SiteValues]? {
 		return sitesLoadingProgression.result
 	}
 	
@@ -234,7 +234,7 @@ public class ModelManager {
 
 	}
 	
-	public class var sharedManager: ModelManager {
+	open class var sharedManager: ModelManager {
 		struct Helper {
 			static let sharedManager = ModelManager()
 		}
@@ -262,11 +262,11 @@ public class ModelManager {
 		sitesLoadingProgression.add(siteValues)
 	}
 	
-	public func updateSiteWithUUID(_ uuid: Foundation.UUID, withValues siteValues: SiteValues) {
+	public func updateSite(uuid: Foundation.UUID, values siteValues: SiteValues) {
 		sitesLoadingProgression.update(siteValues, uuid: uuid)
 	}
 	
 	public func removeSiteWithUUID(_ uuid: Foundation.UUID) {
-		sitesLoadingProgression.remove(uuid: uuid)
+		sitesLoadingProgression.remove(uuid)
 	}
 }

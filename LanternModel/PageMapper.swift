@@ -98,7 +98,7 @@ public final class PageMapper {
 	
 	//public var didUpdateCallback: ((_ pageURL: URL) -> ())?
 	
-	private var didUpdateCallbacks: [UUID: ((_ pageURL: URL) -> ())] = [:]
+	fileprivate var didUpdateCallbacks: [UUID: ((_ pageURL: URL) -> ())] = [:]
 	
 	public subscript(didUpdateCallback uuid: UUID) -> ((_ pageURL: URL) -> ())? {
 		get {
@@ -304,7 +304,7 @@ public final class PageMapper {
 				for imageURL in contentInfo.imageURLs {
 					if JUST_USE_FINAL_URLS {
 						if crawl {
-							retrieveInfoForPageWithURL(imageURL as URL, expectedBaseContentType: .image, currentDepth: childDepth)
+							retrieveInfoForPageWithURL(imageURL, expectedBaseContentType: .image, currentDepth: childDepth)
 						}
 					}
 					else if let imageURL = requestedImageURLsUnique.insertReturningConformedURLIfNew(imageURL) {
@@ -317,7 +317,7 @@ public final class PageMapper {
 				for feedURL in contentInfo.feedURLs {
 					if JUST_USE_FINAL_URLS {
 						if crawl {
-							retrieveInfoForPageWithURL(feedURL as URL, expectedBaseContentType: .feed, currentDepth: childDepth)
+							retrieveInfoForPageWithURL(feedURL, expectedBaseContentType: .feed, currentDepth: childDepth)
 						}
 					}
 					else if let feedURL = requestedFeedURLsUnique.insertReturningConformedURLIfNew(feedURL) {

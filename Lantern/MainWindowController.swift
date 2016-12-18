@@ -59,6 +59,11 @@ class MainWindowController: NSWindowController {
 				button.target = self.mainViewController
 				button.action = #selector(ViewController.showSiteSettings(_:))
 			}
+			
+			toolbarAssistant.prepareShowTogglesSegmentedControl = { [unowned self] segmentedControl in
+				segmentedControl.target = self.mainViewController
+				segmentedControl.action = #selector(ViewController.toggleShownViews(_:))
+			}
 		}
 	}
 	
@@ -99,11 +104,11 @@ class MainWindowController: NSWindowController {
 		}
 	}
 	
-	@IBAction func showAddSite(_ sender: AnyObject?) {
+	@IBAction func showAddSite(_ sender: Any?) {
 		mainViewController.showAddSiteRelativeToView(toolbarAssistant.addSiteButton)
 	}
 	
-	@IBAction func focusOnSearchPagesField(_ sender: AnyObject?) {
+	@IBAction func focusOnSearchPagesField(_ sender: Any?) {
 		toolbarAssistant.focusOnSearchPagesField(sender)
 	}
 	
@@ -292,17 +297,17 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		}*/
 	}
 	
-	typealias PrepareButtonCallback = (NSButton) -> Void
-	
 	var addSiteButton: NSButton!
-	var prepareNewSiteButton: PrepareButtonCallback?
+	var prepareNewSiteButton: ((NSButton) -> ())?
 	
 	var siteSettingsButton: NSButton!
-	var prepareSiteSettingsButton: PrepareButtonCallback?
+	var prepareSiteSettingsButton: ((NSButton) -> ())?
 	
+	var showTogglesSegmentedControl: NSSegmentedControl!
+	var prepareShowTogglesSegmentedControl: ((NSSegmentedControl) -> ())?
 	
 	var searchPagesField: NSSearchField!
-	@IBAction func focusOnSearchPagesField(_ sender: AnyObject?) {
+	@IBAction func focusOnSearchPagesField(_ sender: Any?) {
 		if let searchPagesField = searchPagesField {
 			searchPagesField.window!.makeFirstResponder(searchPagesField)
 		}
@@ -313,7 +318,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	
 	
 	func toolbarWillAddItem(_ notification: Notification) {
-		let userInfo = (notification as NSNotification).userInfo!
+		let userInfo = notification.userInfo!
 		let toolbarItem = userInfo["item"] as! NSToolbarItem
 		let itemIdentifier = toolbarItem.itemIdentifier
 		var sizeToFit = false
@@ -331,6 +336,10 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			sizeToFit = true
 			prepareSiteSettingsButton?(siteSettingsButton)
 			updateUIForSites()
+		}
+		else if itemIdentifier == "showToggles" {
+			showTogglesSegmentedControl = toolbarItem.view as! NSSegmentedControl
+			prepareShowTogglesSegmentedControl?(showTogglesSegmentedControl)
 		}
 		else if itemIdentifier == "searchPages" {
 			searchPagesField = toolbarItem.view as! NSSearchField

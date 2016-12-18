@@ -66,7 +66,7 @@ open class SiteEssentialInfoRequest {
 		resourceRequests = [String: PageInfoRequest]()
 		resourceInfos = [String: PageInfo]()
 		
-		func addResourceRequest(pathComponent: String, identifier: String? = nil) {
+		func addResourceRequest(_ pathComponent: String, identifier: String? = nil) {
 			let identifier = identifier ?? pathComponent
 			
 			func requestCompletionHandler(_ info: PageInfo) {
@@ -83,14 +83,14 @@ open class SiteEssentialInfoRequest {
 		
 		switch type {
 		case .siteMapXML:
-			addResourceRequest(pathComponent: "sitemap.xml")
+			addResourceRequest("sitemap.xml")
 		case .robotsTxt:
-			addResourceRequest(pathComponent: "robots.txt")
+			addResourceRequest("robots.txt")
 		case .valid404Page:
 			// Use UUID to create a unique request every time.
-			addResourceRequest(pathComponent: UUID().uuidString, identifier: "UUID")
+			addResourceRequest(UUID().uuidString, identifier: "UUID")
 		case .favIconAtRoot:
-			addResourceRequest(pathComponent: "favicon.ico")
+			addResourceRequest("favicon.ico")
 		}
 	}
 	

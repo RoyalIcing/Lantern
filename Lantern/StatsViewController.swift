@@ -913,7 +913,7 @@ extension StatsViewController {
 	}
 	
 	func performCopyURLForURLAtRow(_ row: Int) {
-		if let url = outlineView.item(atRow: row) as? NSURL
+		if let url = outlineView.item(atRow: row) as? URL
 		{
 			let pasteboard = NSPasteboard.general()
 			pasteboard.clearContents()
@@ -921,8 +921,8 @@ extension StatsViewController {
 			//let success = pasteboard.writeObjects([URL])
 			//println("Copying \(success) \(pasteboard) \(URL)")
 			pasteboard.declareTypes([NSURLPboardType, NSStringPboardType], owner: nil)
-			url.write(to: pasteboard)
-			pasteboard.setString(url.absoluteString ?? "", forType: NSStringPboardType)
+			(url as NSURL).write(to: pasteboard)
+			pasteboard.setString(url.absoluteString, forType: NSStringPboardType)
 		}
 	}
 }

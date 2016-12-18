@@ -55,7 +55,7 @@ class SourcePreviewTabViewController: NSTabViewController {
 	
 	func updateWithSections(_ sections: [SourcePreviewTabItemSection]) {
 		let tabViewItems = sections.map { section in
-			self.newSourcePreviewTabViewItem(section: section)
+			self.newSourcePreviewTabViewItem(section)
 		}
 		
 		// This crashes for some reason
@@ -80,7 +80,7 @@ class SourcePreviewTabViewController: NSTabViewController {
 		updateWithSections([.HTMLHead, .HTMLBody])
 	}
 	
-	func newSourcePreviewTabViewItem(section: SourcePreviewTabItemSection) -> NSTabViewItem {
+	func newSourcePreviewTabViewItem(_ section: SourcePreviewTabItemSection) -> NSTabViewItem {
 		let item = NSTabViewItem(identifier: section.stringValue)
 		
 		let vc = newSourcePreviewController()

@@ -16,6 +16,8 @@ typealias PageViewControllerGoogleOAuth2TokenCallback = (_ tokenJSONString: Stri
 
 
 open class PageViewController: NSViewController {
+	var splitViewController: NSSplitViewController!
+	
 	@IBOutlet var URLField: NSTextField!
 	@IBOutlet var crawlWhileBrowsingCheckButton: NSButton!
 	var webViewController: PageWebViewController! {
@@ -74,6 +76,8 @@ open class PageViewController: NSViewController {
 		startObservingWebViewController()
 	}
 	
+	// MARK: Segue
+	
 	override open func prepare(for segue: NSStoryboardSegue, sender: Any?) {
 		/*if segue.identifier == "webViewController" {
 			webViewController = segue.destinationController as! PageWebViewController
@@ -81,6 +85,7 @@ open class PageViewController: NSViewController {
 		}*/
 		if segue.identifier == "activeResourceSplit" {
 			let splitVC = segue.destinationController as! NSSplitViewController
+			self.splitViewController = splitVC
 			let webSplit = splitVC.splitViewItems[0]
 			webViewController = webSplit.viewController as! PageWebViewController
 		}
@@ -105,6 +110,8 @@ open class PageViewController: NSViewController {
 		URLField.stringValue = URL.absoluteString
 	}
 	
+	// MARK: Actions
+	
 	@IBAction func URLFieldChanged(_ textField: NSTextField) {
 		if let URL = LanternModel.detectWebURL(fromString: textField.stringValue) {
 			loadURL(URL)
@@ -118,6 +125,24 @@ open class PageViewController: NSViewController {
 	
 	@IBAction func reloadBrowsing(_ sender: AnyObject?) {
 		webViewController.reloadFromOrigin()
+	}
+	
+	enum ShowToggleSegment : Int {
+		case browser = 1
+		case info = 2
+	}
+	
+	@IBAction func toggleShownViews(_ sender: Any?) {
+		guard
+			let control = sender as? NSSegmentedControl,
+			let cell = control.cell as? NSSegmentedCell
+			else { return }
+		
+		let splitViewItems = splitViewController.splitViewItems
+		(0 ..< cell.segmentCount).forEach() { segmentIndex in
+			let show = cell.isSelected(forSegment: segmentIndex)
+			splitViewItems[segmentIndex].isCollapsed = !show
+		}
 	}
 }
 
@@ -138,7 +163,7 @@ enum MessageIdentifier: String {
 
 private var webViewURLObservingContext = 0
 
-class PageWebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
+class PageWebViewController : NSViewController, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
 	var webViewConfiguration = WKWebViewConfiguration()
 	var wantsHoverlyticsScript = false
 	var allowsClosing = false

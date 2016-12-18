@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A320" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2659" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
@@ -423,7 +423,7 @@
                                     <size key="minSize" width="40" height="25"/>
                                     <size key="maxSize" width="40" height="25"/>
                                     <button key="view" verticalHuggingPriority="750" id="V8C-mE-AIW">
-                                        <rect key="frame" x="0.0" y="14" width="40" height="25"/>
+                                        <rect key="frame" x="7" y="14" width="40" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSAddTemplate" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SxB-aC-a7k">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -469,7 +469,7 @@
                                     <size key="minSize" width="100" height="22"/>
                                     <size key="maxSize" width="110" height="22"/>
                                     <searchField key="view" wantsLayer="YES" verticalHuggingPriority="750" id="4I4-f0-XTy">
-                                        <rect key="frame" x="0.0" y="14" width="110" height="22"/>
+                                        <rect key="frame" x="7" y="14" width="110" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="Favorite Pages" usesSingleLineMode="YES" bezelStyle="round" id="K0n-kz-i0b">
                                             <font key="font" metaFont="system"/>
@@ -478,12 +478,29 @@
                                         </searchFieldCell>
                                     </searchField>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="9BBF2DA5-EE16-45CE-93FC-3529358DD0AA" explicitItemIdentifier="showToggles" label="Show" paletteLabel="Show" id="Irc-O6-gOu">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="100" height="28"/>
+                                    <size key="maxSize" width="149" height="28"/>
+                                    <segmentedControl key="view" verticalHuggingPriority="750" id="CJH-lg-TyV">
+                                        <rect key="frame" x="0.0" y="14" width="142" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectAny" id="6gp-46-v9K">
+                                            <font key="font" metaFont="system"/>
+                                            <segments>
+                                                <segment label="Browser" selected="YES" tag="1"/>
+                                                <segment label="Content" selected="YES" tag="2"/>
+                                            </segments>
+                                        </segmentedCell>
+                                    </segmentedControl>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="cbE-mo-coS"/>
                                 <toolbarItem reference="UDa-Tt-8U7"/>
                                 <toolbarItem reference="dTY-M3-1X3"/>
                                 <toolbarItem reference="Wpo-Aj-pBW"/>
+                                <toolbarItem reference="Irc-O6-gOu"/>
                             </defaultToolbarItems>
                         </toolbar>
                     </window>
