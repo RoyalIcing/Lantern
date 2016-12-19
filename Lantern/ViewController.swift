@@ -141,7 +141,7 @@ class ViewController : NSViewController
 	func startObservingBrowserPreferences() {
 		browserPreferencesObserver = NotificationObserver<BrowserPreferences.Notification>(object: mainState.browserPreferences)
 		
-		browserPreferencesObserver.observe(.WidthChoiceDidChange) { notification in
+		browserPreferencesObserver.observe(.widthChoiceDidChange) { notification in
 			self.updatePreferredBrowserWidth()
 		}
 	}

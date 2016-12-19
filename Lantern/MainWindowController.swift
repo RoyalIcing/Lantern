@@ -155,10 +155,12 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		toolbar.delegate = self
 		
 		startObservingModelManager()
+		startObservingBrowserPreferences()
 	}
 	
 	deinit {
 		stopObservingModelManager()
+		stopObservingBrowserPreferences()
 	}
 	
 	var modelManagerNotificationObservers = [ModelManagerNotification: AnyObject]()
@@ -224,10 +226,6 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	}
 	
 	func updateSitesPopUpButton() {
-		#if DEBUG
-			//println("updateSitesPopUpButton")
-		#endif
-		
 		guard let popUpButton = sitesPopUpButton
 			else { return }
 		
@@ -306,6 +304,30 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	var showTogglesSegmentedControl: NSSegmentedControl!
 	var prepareShowTogglesSegmentedControl: ((NSSegmentedControl) -> ())?
 	
+	//var viewportWidthAssistant: SegmentedControlAssistant<BrowserWidthChoice>?
+	var viewportWidthAssistant: PopUpButtonAssistant<BrowserWidthChoice>?
+	@IBAction func changeViewportWidth(_ sender: Any?) {
+		guard let widthChoice = viewportWidthAssistant?.selectedItemRepresentative else { return }
+		BrowserPreferences.sharedBrowserPreferences.widthChoice = widthChoice
+	}
+	
+	var browserPreferencesObserver: NotificationObserver<BrowserPreferences.Notification>!
+	func startObservingBrowserPreferences() {
+		let preferences = BrowserPreferences.sharedBrowserPreferences
+		browserPreferencesObserver = NotificationObserver<BrowserPreferences.Notification>(object: preferences)
+		//browserPreferencesObserver = BrowserPreferences.Notification.createObserver(of: preferences)
+		//browserPreferencesObserver = preferences.createObserver()
+		
+		browserPreferencesObserver.observe(.widthChoiceDidChange) { notification in
+			self.viewportWidthAssistant?.selectedUniqueIdentifier = preferences.widthChoice.uniqueIdentifier
+		}
+	}
+	
+	func stopObservingBrowserPreferences() {
+		browserPreferencesObserver.stopObserving()
+		browserPreferencesObserver = nil
+	}
+	
 	var searchPagesField: NSSearchField!
 	@IBAction func focusOnSearchPagesField(_ sender: Any?) {
 		if let searchPagesField = searchPagesField {
@@ -336,6 +358,18 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			sizeToFit = true
 			prepareSiteSettingsButton?(siteSettingsButton)
 			updateUIForSites()
+		}
+		else if itemIdentifier == "viewportWidth" {
+			let popUpButton = toolbarItem.view as! NSPopUpButton
+			popUpButton.target = self
+			popUpButton.action = #selector(changeViewportWidth(_:))
+			
+			print(BrowserWidthChoice.allChoices)
+			let assistant = PopUpButtonAssistant<BrowserWidthChoice>(popUpButton: popUpButton)
+			assistant.menuItemRepresentatives = BrowserWidthChoice.allChoices
+			//print(assistant.defaultSegmentedItemRepresentatives)
+			assistant.update()
+			self.viewportWidthAssistant = assistant
 		}
 		else if itemIdentifier == "showToggles" {
 			showTogglesSegmentedControl = toolbarItem.view as! NSSegmentedControl

@@ -11,12 +11,25 @@ import BurntFoundation
 import BurntCocoaUI
 
 
-extension BrowserWidthChoice: UIChoiceRepresentative {
+extension BrowserWidthChoice : UIChoiceRepresentative {
 	var tag: Int? { return self.rawValue }
 	
 	typealias UniqueIdentifier = BrowserWidthChoice
 	var uniqueIdentifier: UniqueIdentifier { return self }
 }
+
+extension BrowserWidthChoice : UIChoiceEnumerable {
+	static var allChoices: [BrowserWidthChoice] {
+		return [
+			.slimMobile,
+			.mediumMobile,
+			.mediumTabletPortrait,
+			.mediumTabletLandscape,
+			.fullWidth
+		]
+	}
+}
+
 
 
 class BrowserMenuController: NSObject, NSUserInterfaceValidations {
@@ -63,7 +76,7 @@ class BrowserMenuController: NSObject, NSUserInterfaceValidations {
 	func startObservingBrowserPreferences() {
 		browserPreferencesObserver = NotificationObserver<BrowserPreferences.Notification>(object: BrowserPreferences.sharedBrowserPreferences)
 		
-		browserPreferencesObserver.observe(.WidthChoiceDidChange) { notification in
+		browserPreferencesObserver.observe(.widthChoiceDidChange) { notification in
 			self.updateWidthMenu()
 		}
 	}

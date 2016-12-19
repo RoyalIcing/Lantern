@@ -10,7 +10,7 @@ import Foundation
 import BurntFoundation
 
 
-enum BrowserWidthChoice: Int {
+enum BrowserWidthChoice : Int {
 	case slimMobile = 1
 	case mediumMobile
 	case mediumTabletPortrait
@@ -35,6 +35,18 @@ enum BrowserWidthChoice: Int {
 	var title: String {
 		switch self {
 		case .slimMobile:
+			return "320"
+		case .mediumMobile:
+			return "375"
+		case .mediumTabletPortrait:
+			return "768"
+		case .mediumTabletLandscape:
+			return "1024"
+		case .fullWidth:
+			return "Fluid"
+		}
+		/*switch self {
+		case .slimMobile:
 			return "Slim Mobile (iPhone 4)"
 		case .mediumMobile:
 			return "Medium Mobile (iPhone 6)"
@@ -44,11 +56,11 @@ enum BrowserWidthChoice: Int {
 			return "Medium Tablet Landscape (iPad)"
 		case .fullWidth:
 			return "Full Width"
-		}
+		}(*/
 	}
 }
 
-extension BrowserWidthChoice: UserDefaultsChoiceRepresentable {
+extension BrowserWidthChoice : UserDefaultsChoiceRepresentable {
 	static var identifier = "browserPreferences.widthChoice"
 	static var defaultValue: BrowserWidthChoice = .fullWidth
 }
@@ -59,19 +71,23 @@ private var ud = UserDefaults.standard
 
 class BrowserPreferences {
 	enum Notification: String {
-		case WidthChoiceDidChange = "BrowserPreferences.WidthChoiceDidChange"
+		case widthChoiceDidChange = "BrowserPreferences.WidthChoiceDidChange"
+		
+		var name : Foundation.Notification.Name {
+			return Foundation.Notification.Name(rawValue: rawValue)
+		}
 	}
 	
-	func notify(_ identifier: Notification, userInfo: [String:AnyObject]? = nil) {
+	private func notify(_ identifier: Notification, userInfo: [String:AnyObject]? = nil) {
 		let nc = NotificationCenter.default
-		nc.post(name: Foundation.Notification.Name(rawValue: identifier.rawValue), object: self, userInfo: userInfo)
+		nc.post(name: Notification.widthChoiceDidChange.name, object: self, userInfo: userInfo)
 	}
 	
 	var widthChoice: BrowserWidthChoice = .fullWidth {
 		didSet {
 			ud.setChoice(widthChoice)
 			
-			notify(.WidthChoiceDidChange)
+			notify(.widthChoiceDidChange)
 		}
 	}
 	
