@@ -12,7 +12,8 @@ import Cocoa
 
 
 class MetaViewController : NSViewController {
-	@IBOutlet var stackView: NSStackView!
+	//@IBOutlet var stackView: NSStackView!
+	@IBOutlet var tableView: NSTableView!
 	
 	var crawlerProviderListenerUUID = UUID()
 
@@ -22,6 +23,9 @@ class MetaViewController : NSViewController {
 	
 	override func viewDidAppear() {
 		super.viewDidAppear()
+		
+		tableView.dataSource = self
+		tableView.delegate = self
 		
 		if let provider = pageMapperProvider {
 			let crawlerProviderListenerUUID = self.crawlerProviderListenerUUID
@@ -50,7 +54,7 @@ class MetaViewController : NSViewController {
 		provider[activeURLChangedCallback: crawlerProviderListenerUUID] = nil
 	}
 	
-	func createStackViews(_ url: URL?) -> [NSView] {
+	/*func createStackViews(_ url: URL?) -> [NSView] {
 		guard let url = url else {
 			return []
 		}
@@ -79,9 +83,55 @@ class MetaViewController : NSViewController {
 		return [
 			NSTextField(labelWithString: "Loading…"),
 		]
+	}*/
+	
+	func findMetaElementAttributes(url: URL) -> [[String : String]]? {
+		guard
+			let crawler = pageMapperProvider?.pageMapper,
+			let resourceInfo = crawler.pageInfoForRequestedURL(url),
+			let contentInfo = resourceInfo.contentInfo
+			else { return nil }
+		
+		return contentInfo.metaElementAttributes
 	}
 	
+	var metaElementAttributes: [[String : String]] = []
+	
 	func updateUI(url: URL?) {
-		stackView.setViews(createStackViews(url), in: NSStackViewGravity.center)
+		metaElementAttributes = url.flatMap{ findMetaElementAttributes(url: $0) } ?? []
+		print("metaElementAttributes \(metaElementAttributes.count)")
+		tableView.reloadData()
+		//stackView.setViews(createStackViews(url), in: NSStackViewGravity.center)
+	}
+}
+
+extension MetaViewController : NSTableViewDataSource, NSTableViewDelegate {
+	func numberOfRows(in tableView: NSTableView) -> Int {
+		return metaElementAttributes.count
+	}
+	
+	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+		let attributes = metaElementAttributes[row]
+		let identifier = tableColumn!.identifier
+		let view = tableView.make(withIdentifier: identifier, owner: self) as! NSTableCellView
+		print("attributes", attributes)
+		
+		var property = attributes["name"] ?? attributes["property"] ?? attributes["http-equiv"]
+		var contentAttributeKey = "content"
+		if property == nil && attributes["charset"] != nil {
+			property = "charset"
+			contentAttributeKey = "charset"
+		}
+		
+		switch identifier {
+		case "property":
+			view.textField?.stringValue = property ?? attributes.keys.filter{ $0 != "content" }.joined(separator: " ")
+		case "value":
+			view.textField?.stringValue = attributes[contentAttributeKey] ?? "?"
+		default:
+			break
+		}
+		
+		return view
 	}
 }
