@@ -114,13 +114,13 @@ extension StatsFilterResponseChoice: UIChoiceRepresentative {
 			return "All"
 			
 		case .successful:
-			return "[2xx] Successful"
+			return "Successful 2xx"
 		case .redirects:
-			return "[3xx] Redirects"
+			return "Redirects 3xx"
 		case .requestErrors:
-			return "[4xx] Request Errors"
+			return "Client Errors 4xx"
 		case .responseErrors:
-			return "[5xx] Response Errors"
+			return "Server Errors 5xx"
 			
 		case .validInformation:
 			return "Valid Information"
