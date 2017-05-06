@@ -223,11 +223,11 @@ class ImagePreviewInnerViewController: NSViewController {
 	fileprivate func updateUIWithImage(_ image: CGImage, imageProperties: [NSString: AnyObject]?) {
 		let view = self.view
 		
-		let imageView = self.imageView
-		imageView?.setImage(viewedCoreGraphicsImage, imageProperties: imageProperties)
+		let imageView = self.imageView!
+		imageView.setImage(viewedCoreGraphicsImage, imageProperties: imageProperties)
 		//imageView.zoomImageToActualSize(nil)
 		
-		var imageSize = imageView?.imageSize()
+		var imageSize = imageView.imageSize()
 		#if DEBUG
 			print("imageSize \(imageSize)")
 		#endif
@@ -240,8 +240,8 @@ class ImagePreviewInnerViewController: NSViewController {
 			screenSize.height -= 13.0 * 2.0 + 32.0
 			//screenSize.height -= 32.0
 			
-			imageSize?.width = min((imageSize?.width)!, screenSize.width)
-			imageSize?.height = min((imageSize?.height)!, screenSize.height)
+			imageSize.width = min(imageSize.width, screenSize.width)
+			imageSize.height = min(imageSize.height, screenSize.height)
 		}
 		
 		//imageSize.width -= 13.0 * 2.0 + 8.0
@@ -251,8 +251,8 @@ class ImagePreviewInnerViewController: NSViewController {
 			print("preferredContentSize \(imageSize)")
 		#endif
 		
-		imageView?.autoresizes = false
-		preferredContentSize = imageSize!
+		imageView.autoresizes = false
+		preferredContentSize = imageSize
 		
 		if let imageProperties = imageProperties {
 			imagePropertiesDidLoad?(imageProperties)
@@ -263,7 +263,7 @@ class ImagePreviewInnerViewController: NSViewController {
 		view.layoutSubtreeIfNeeded()
 		
 		//imageView.zoomImageToFit(nil)
-		imageView?.zoomImageToActualSize(nil)
+		imageView.zoomImageToActualSize(nil)
 		//view.superview
 	}
 	
