@@ -98,7 +98,6 @@ class MainWindowController: NSWindowController {
 			self.window?.title = self.windowTitle(forDocumentDisplayName: "New")
 		}
 		
-		print("WC pageMapperProvider \(String(describing: mainViewController.pageMapperProvider))")
 		if let provider = mainViewController.pageMapperProvider {
 			provider[activeURLChangedCallback: crawlerProviderListenerUUID] = { [weak self] url in
 				guard let receiver = self else { return }
