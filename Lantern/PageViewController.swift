@@ -12,7 +12,7 @@ import LanternModel
 import BurntFoundation
 
 
-typealias PageViewControllerGoogleOAuth2TokenCallback = (_ tokenJSONString: String) -> Void
+typealias PageViewControllerGoogleOAuth2TokenCallback = (_ tokenJSONString: String) -> ()
 
 
 open class PageViewController: NSViewController {
@@ -33,7 +33,7 @@ open class PageViewController: NSViewController {
 	var hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback: PageViewControllerGoogleOAuth2TokenCallback?
 	
 	// TODO: remove
-	var navigatedURLDidChangeCallback: ((_ URL: URL) -> Void)?
+	var navigatedURLDidChangeCallback: ((_ URL: URL) -> ())?
 	
 	let minimumWidth: CGFloat = 600.0
 	let minimumHeight: CGFloat = 200.0
@@ -169,7 +169,7 @@ class PageWebViewController : NSViewController, WKNavigationDelegate, WKUIDelega
 	var allowsClosing = false
 	fileprivate(set) var webView: WKWebView!
 	var URL: Foundation.URL!
-	var hoverlyticsPanelDocumentReadyCallback: (() -> Void)?
+	var hoverlyticsPanelDocumentReadyCallback: (() -> ())?
 	var GoogleOAuth2TokenJSONString: String?
 	var hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback: PageViewControllerGoogleOAuth2TokenCallback?
 	
@@ -331,7 +331,7 @@ class PageWebViewController : NSViewController, WKNavigationDelegate, WKUIDelega
 	// MARK: WKNavigationDelegate
 	
 	/*
-	func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+	func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> ()) {
 		switch navigationAction.navigationType {
 		case .LinkActivated, .BackForward, .Other:
 			if navigationAction.targetFrame?.mainFrame ?? false {
@@ -348,7 +348,7 @@ class PageWebViewController : NSViewController, WKNavigationDelegate, WKUIDelega
 	}
 	*/
 	/*
-	func webView(webView: WKWebView, decidePolicyForNavigationResponse navigationResponse: WKNavigationResponse, decisionHandler: (WKNavigationResponsePolicy) -> Void) {
+	func webView(webView: WKWebView, decidePolicyForNavigationResponse navigationResponse: WKNavigationResponse, decisionHandler: (WKNavigationResponsePolicy) -> ()) {
 		
 	}
 	*/

@@ -51,7 +51,7 @@ public struct SiteEssentialInfo {
 
 
 open class SiteEssentialInfoRequest {
-	public typealias CompletionHandler = (_ info: SiteEssentialInfo) -> Void
+	public typealias CompletionHandler = (_ info: SiteEssentialInfo) -> ()
 	
 	open let type: SiteEssentialType
 	open let completionHandler: CompletionHandler

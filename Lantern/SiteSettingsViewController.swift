@@ -16,7 +16,7 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	var mainState: MainState!
 	@IBOutlet var nameField: NSTextField!
 	@IBOutlet var homePageURLField: NSTextField!
-	var willClose: ((_ viewController: SiteSettingsViewController) -> Void)?
+	var willClose: ((_ viewController: SiteSettingsViewController) -> ())?
 
 		override func viewDidLoad() {
 				super.viewDidLoad()

@@ -161,7 +161,7 @@ class SourcePreviewViewController: NSViewController {
 	
 	@IBOutlet var textView: SourcePreviewTextView!
 	
-	var wantsToDismiss: (() -> Void)?
+	var wantsToDismiss: (() -> ())?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -191,7 +191,7 @@ class SourcePreviewViewController: NSViewController {
 
 class SourcePreviewTextView: NSTextView {
 	
-	var wantsToDismiss: (() -> Void)?
+	var wantsToDismiss: (() -> ())?
 	
 	override func keyDown(with theEvent: NSEvent) {
 		if theEvent.burnt_isSpaceKey {

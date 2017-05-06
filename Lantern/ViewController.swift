@@ -115,7 +115,7 @@ class ViewController : NSViewController
 		let nc = NotificationCenter.default
 		let mainQueue = OperationQueue.main
 		
-		func addObserver(_ notificationIdentifier: MainState.Notification, block: @escaping (Notification!) -> Void) {
+		func addObserver(_ notificationIdentifier: MainState.Notification, block: @escaping (Notification!) -> ()) {
 			let observer = nc.addObserver(forName: NSNotification.Name(rawValue: notificationIdentifier.notificationName), object: mainState, queue: mainQueue, using: block)
 			mainStateNotificationObservers[notificationIdentifier] = observer
 		}

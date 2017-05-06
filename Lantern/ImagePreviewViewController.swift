@@ -206,8 +206,8 @@ extension ImagePreviewViewController: NSPopoverDelegate {
 class ImagePreviewInnerViewController: NSViewController {
 	@IBOutlet var imageView: IKImageView!
 	
-	var imagePropertiesDidLoad: ((_ imageProperties: [NSString: AnyObject]) -> Void)?
-	var wantsToDismiss: (() -> Void)?
+	var imagePropertiesDidLoad: ((_ imageProperties: [NSString: AnyObject]) -> ())?
+	var wantsToDismiss: (() -> ())?
 	
 	var backgroundQueue: DispatchQueue!
 	

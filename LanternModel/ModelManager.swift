@@ -30,7 +30,7 @@ public enum ModelManagerNotification: String {
 
 
 public final class ErrorReceiver {
-	open var errorCallback: ((_ error: NSError) -> Void)?
+	open var errorCallback: ((_ error: NSError) -> ())?
 	
 	func receiveError(_ error: NSError) {
 		errorCallback?(error)

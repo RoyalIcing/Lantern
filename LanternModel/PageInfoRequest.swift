@@ -13,7 +13,7 @@ import Grain
 
 
 open class PageInfoRequest {
-	typealias CompletionHandler = (_ info: PageInfo, _ infoRequest: PageInfoRequest) -> Void
+	typealias CompletionHandler = (_ info: PageInfo, _ infoRequest: PageInfoRequest) -> ()
 	
 	open let URL: Foundation.URL
 	open let includingContent: Bool
@@ -126,8 +126,8 @@ class PageInfoRequestQueue {
 	let maximumActiveRequests = 5
 	var activeRequests = [PageInfoRequest]()
 	var pendingRequests = [PageInfoRequest]()
-	var willPerformHTTPRedirection: ((_ redirectionInfo: RequestRedirectionInfo) -> Void)?
-	var didFinishWithRequest: ((_ infoRequest: PageInfoRequest) -> Void)?
+	var willPerformHTTPRedirection: ((_ redirectionInfo: RequestRedirectionInfo) -> ())?
+	var didFinishWithRequest: ((_ infoRequest: PageInfoRequest) -> ())?
 	
 	init() {
 		let manager = Alamofire.SessionManager()

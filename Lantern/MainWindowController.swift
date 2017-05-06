@@ -125,7 +125,7 @@ extension MainWindowController: NSWindowDelegate {
 struct ToolbarItem<ControlClass: NSControl> {
 	var control: ControlClass!
 	
-	typealias PrepareBlock = (_ control: ControlClass) -> Void
+	typealias PrepareBlock = (_ control: ControlClass) -> ()
 	var prepare: PrepareBlock!
 }
 
