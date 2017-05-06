@@ -107,7 +107,7 @@ open class PageViewController: NSViewController {
 	}
 	
 	func updateUIForURL(_ URL: Foundation.URL) {
-		URLField.stringValue = URL.absoluteString
+		//URLField.stringValue = URL.absoluteString
 	}
 	
 	// MARK: Actions

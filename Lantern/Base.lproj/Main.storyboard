@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -431,7 +431,7 @@
                                         </buttonCell>
                                     </button>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="33AB0BAC-0F75-433B-8547-5F52502A2215" explicitItemIdentifier="chosenSite" label="Chosen Site" paletteLabel="Chosen Site" id="UDa-Tt-8U7">
+                                <toolbarItem implicitItemIdentifier="33AB0BAC-0F75-433B-8547-5F52502A2215" explicitItemIdentifier="chosenSite" label="Favorites" paletteLabel="Favorites" id="UDa-Tt-8U7">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="90" height="28"/>
                                     <size key="maxSize" width="200" height="28"/>
@@ -451,14 +451,14 @@
                                         </popUpButtonCell>
                                     </popUpButton>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="69CF055A-8451-4A20-8C7E-140CA0CF5072" explicitItemIdentifier="siteSettingsButton" label="Site Settings" paletteLabel="Site Settings" visibilityPriority="1000" id="dTY-M3-1X3">
+                                <toolbarItem implicitItemIdentifier="69CF055A-8451-4A20-8C7E-140CA0CF5072" explicitItemIdentifier="siteSettingsButton" label="Site Settings" paletteLabel="Viewed Page" visibilityPriority="1000" id="dTY-M3-1X3">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="80" height="25"/>
-                                    <size key="maxSize" width="80" height="25"/>
+                                    <size key="maxSize" width="4000" height="25"/>
                                     <button key="view" verticalHuggingPriority="750" id="i3Y-1h-JQU">
                                         <rect key="frame" x="0.0" y="14" width="80" height="25"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" title="Edit" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VpM-Yb-73D">
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" title="Enter a URL" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VpM-Yb-73D">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -468,7 +468,7 @@
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="100" height="22"/>
                                     <size key="maxSize" width="110" height="22"/>
-                                    <searchField key="view" wantsLayer="YES" verticalHuggingPriority="750" id="4I4-f0-XTy">
+                                    <searchField key="view" wantsLayer="YES" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" id="4I4-f0-XTy">
                                         <rect key="frame" x="7" y="14" width="110" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="Favorite Pages" usesSingleLineMode="YES" bezelStyle="round" id="K0n-kz-i0b">
@@ -485,12 +485,12 @@
                                     <popUpButton key="view" verticalHuggingPriority="750" id="SlM-J2-nG7">
                                         <rect key="frame" x="5" y="14" width="80" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="roundTextured" title="«Item 1»" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="1" imageScaling="proportionallyDown" inset="2" id="fsU-gA-Era">
+                                        <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fsU-gA-Era">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="vBK-ZF-8ID">
                                                 <items>
-                                                    <menuItem title="«Item 1»" state="on" tag="1" id="HKU-tK-OO3"/>
+                                                    <menuItem title="«Item 1»" tag="1" id="HKU-tK-OO3"/>
                                                     <menuItem title="«Item 2»" tag="1" id="xHi-tk-yb3"/>
                                                     <menuItem title="«Item 3»" tag="1" id="cB6-ZY-E4U"/>
                                                 </items>
@@ -516,10 +516,8 @@
                                 </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
-                                <toolbarItem reference="cbE-mo-coS"/>
-                                <toolbarItem reference="UDa-Tt-8U7"/>
                                 <toolbarItem reference="dTY-M3-1X3"/>
-                                <toolbarItem reference="Wpo-Aj-pBW"/>
+                                <toolbarItem reference="UDa-Tt-8U7"/>
                                 <toolbarItem reference="KJk-MN-cfh"/>
                             </defaultToolbarItems>
                         </toolbar>

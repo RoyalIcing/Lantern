@@ -210,10 +210,10 @@ class ViewController : NSViewController
 		
 		// The bottom page crawler table
 		let statsViewController = storyboard.instantiateController(withIdentifier: "Stats View Controller") as! StatsViewController
-		statsViewController.didChooseURLCallback = { URL, pageInfo in
+		statsViewController.didChooseURLCallback = { url, pageInfo in
 			if pageInfo.baseContentType == .localHTMLPage {
 				// FIXME: use active URL instead?
-				self.pageViewController.loadURL(URL)
+				self.pageViewController.loadURL(url)
 			}
 		}
 		
@@ -267,24 +267,50 @@ class ViewController : NSViewController
 			dismissViewController(siteSettingsViewController)
 		}
 		else {
-			if let chosenSite = mainState?.chosenSite {
-				siteSettingsViewController.site = chosenSite
-				siteSettingsViewController.updateUIWithSiteValues(chosenSite)
-				
-				let modelManager = self.modelManager!
-				siteSettingsViewController.willClose = { siteSettingsViewController in
-					let uuid = chosenSite.UUID
-					do {
-						let siteValues = try siteSettingsViewController.copySiteValuesFromUI(uuid: uuid)
-						modelManager.updateSite(uuid: uuid, values: siteValues)
-					}
-					catch {
-						NSApplication.shared().presentError(error as NSError, modalFor: self.view.window!, delegate: nil, didPresent: nil, contextInfo: nil)
+			//var chosenSite = mainState?.chosenSite
+			//var chosenSite = chosenSite
+			
+			//let activeURL = self.activeURL
+			
+//			if let activeURL = activeURL {
+//				chosenSite = chosenSite.map{ inner in
+//					var inner = inner
+//					inner.homePageURL = activeURL
+//					return inner
+//				} ?? SiteValues(name: "", homePageURL: activeURL)
+//			}
+			
+			let modelManager = self.modelManager!
+			
+			if let activeURL = activeURL {
+				let chosenSite = modelManager.siteWithURL(url: activeURL)
+				print("EDIT CHOSEN SITE", "\(chosenSite)")
+				siteSettingsViewController.state = (url: activeURL, favoriteName: chosenSite?.name)
+			}
+			else {
+				siteSettingsViewController.state = nil
+			}
+			// TODO
+			
+			siteSettingsViewController.saveSite = { siteSettingsViewController in
+				do {
+					if let (siteValues, saveInFavorites) = try siteSettingsViewController.copySiteValuesFromUI() {
+						if saveInFavorites {
+							modelManager.addOrUpdateSite(values: siteValues)
+						}
+						else {
+							modelManager.removeSite(url: siteValues.homePageURL)
+						}
+						
+						self.pageViewController.loadURL(siteValues.homePageURL)
 					}
 				}
-				
-				presentViewController(siteSettingsViewController, asPopoverRelativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.maxY, behavior: .semitransient)
+				catch {
+					NSApplication.shared().presentError(error as NSError, modalFor: self.view.window!, delegate: nil, didPresent: nil, contextInfo: nil)
+				}
 			}
+			
+			presentViewController(siteSettingsViewController, asPopoverRelativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.maxY, behavior: .semitransient)
 		}
 	}
 	

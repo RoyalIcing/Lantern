@@ -11,21 +11,20 @@ import Foundation
 
 private let whitespaceCharacterSet = CharacterSet.whitespacesAndNewlines
 
-public enum ValidationError: Error {
+public enum ValidationError : Error, LocalizedError, CustomNSError {
 	case stringIsEmpty(string: String, identifier: String)
 	
 	case urlStringIsInvalid(string: String, identifier: String)
 	
-	static let errorDomain = "LanternModel.ValueValidation.errorDomain"
+	public static let errorDomain = "LanternModel.ValueValidation.errorDomain"
 	
-	fileprivate enum ErrorCode: Int {
+	fileprivate enum ErrorCode : Int {
 		case stringIsEmpty = 10
 		
 		case urlStringIsInvalid = 20
 	}
-
 	
-	var errorCode: Int {
+	public var errorCode: Int {
 		switch self {
 		case .stringIsEmpty:
 			return ErrorCode.stringIsEmpty.rawValue
@@ -34,7 +33,7 @@ public enum ValidationError: Error {
 		}
 	}
 	
-	var description: String {
+	public var errorDescription: String? {
 		switch self {
 		case .stringIsEmpty(_, let identifier):
 			return "Please enter something for \"\(identifier)\""
@@ -43,32 +42,24 @@ public enum ValidationError: Error {
 		}
 	}
 	
-	var cocoaError: NSError {
-		let userInfo = [
-			NSLocalizedDescriptionKey: self.description
-		]
-		return NSError(domain: ValidationError.errorDomain, code: self.errorCode, userInfo: userInfo)
-	}
-	
 	public static func validateString(_ string: String, identifier: String) throws -> String {
 		let string = string.trimmingCharacters(in: whitespaceCharacterSet)
 		if string.isEmpty {
-			throw self.stringIsEmpty(string: string, identifier: identifier).cocoaError
+			throw self.stringIsEmpty(string: string, identifier: identifier)
 		}
 		
 		return string
 	}
 	
-	public static func validateURLString(_ URLString: String, identifier: String) throws -> URL {
+	public static func validate(urlString: String, identifier: String) throws -> URL {
 		do {
-			guard let URL = detectWebURL(fromString: URLString) else {
-				throw self.urlStringIsInvalid(string: URLString, identifier: identifier).cocoaError
+			let urlString = try validateString(urlString, identifier: identifier)
+			
+			guard let url = detectWebURL(fromString: urlString) else {
+				throw self.urlStringIsInvalid(string: urlString, identifier: identifier)
 			}
 			
-			return URL
-		}
-		catch {
-			throw self.urlStringIsInvalid(string: URLString, identifier: identifier).cocoaError
+			return url
 		}
 	}
 }

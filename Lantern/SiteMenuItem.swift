@@ -25,7 +25,7 @@ extension SiteMenuItem: UIChoiceRepresentative {
 			case .savedSite(let site):
 				return site.name
 			case .custom:
-				return "Enter URL Below"
+				return "Custom"
 			}
 		case .loadingSavedSites:
 			return "(Loading Saved Sites)"
@@ -45,7 +45,12 @@ extension SiteMenuItem: UIChoiceRepresentative {
 		case .choice(let siteChoice):
 			switch siteChoice {
 			case .savedSite(let site):
-				return site.UUID.uuidString
+				let url = site.homePageURL
+				guard var urlComponents = URLComponents(url: site.homePageURL, resolvingAgainstBaseURL: true) else {
+					return url.absoluteString
+				}
+				urlComponents.fragment = nil
+				return urlComponents.string ?? url.absoluteString
 			case .custom:
 				return "Custom"
 			}

@@ -45,6 +45,8 @@ class MainWindowController: NSWindowController {
 		return contentViewController as! ViewController
 	}
 	
+	let crawlerProviderListenerUUID = UUID()
+	
 	var toolbarAssistant: MainWindowToolbarAssistant!
 	@IBOutlet var toolbar: NSToolbar! {
 		didSet {
@@ -94,6 +96,17 @@ class MainWindowController: NSWindowController {
 		let nc = NotificationCenter.default
 		chosenSiteDidChangeObserver = nc.addObserver(forName: NSNotification.Name(rawValue: MainState.Notification.ChosenSiteDidChange.rawValue), object: mainState, queue: nil) { [unowned self] note in
 			self.window?.title = self.windowTitle(forDocumentDisplayName: "New")
+		}
+		
+		print("WC pageMapperProvider \(String(describing: mainViewController.pageMapperProvider))")
+		if let provider = mainViewController.pageMapperProvider {
+			provider[activeURLChangedCallback: crawlerProviderListenerUUID] = { [weak self] url in
+				guard let receiver = self else { return }
+				if let url = url, let button = receiver.toolbarAssistant.siteSettingsButton {
+					button.title = url.absoluteString
+					receiver.toolbarAssistant.updateChosenSiteState()
+				}
+			}
 		}
 	}
 	
@@ -355,7 +368,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		}
 		else if itemIdentifier == "siteSettingsButton" {
 			siteSettingsButton = toolbarItem.view as! NSButton
-			sizeToFit = true
+			//sizeToFit = true
 			prepareSiteSettingsButton?(siteSettingsButton)
 			updateUIForSites()
 		}

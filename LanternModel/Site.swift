@@ -44,8 +44,8 @@ private enum Error: Int {
 public struct SiteValues: Equatable {
 	public let UUID: Foundation.UUID
 	
-	public let name: String
-	public let homePageURL: URL
+	public var name: String
+	public var homePageURL: URL
 	
 	public init(name: String, homePageURL: URL, UUID: Foundation.UUID = Foundation.UUID()) {
 		self.name = name

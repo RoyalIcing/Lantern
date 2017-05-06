@@ -80,16 +80,6 @@ enum SitesLoadingProgression : Progression {
 		return result
 	}
 	
-	mutating func add(_ siteValues: SiteValues) {
-		switch self {
-		case var .sitesList(sitesList, _):
-			sitesList.append(siteValues)
-			self = .sitesList(sitesList: sitesList, needsSaving: true)
-		default:
-			break
-		}
-	}
-	
 	mutating func update(_ siteValues: SiteValues, uuid: Foundation.UUID) {
 		switch self {
 		case var .sitesList(sitesList, _):
@@ -102,12 +92,26 @@ enum SitesLoadingProgression : Progression {
 		}
 	}
 	
-	mutating func remove(_ uuid: Foundation.UUID) {
+	mutating func addOrUpdate(_ siteValues: SiteValues) {
+		let url = siteValues.homePageURL.absoluteURL
 		switch self {
 		case var .sitesList(sitesList, _):
-			guard let index = sitesList.index(where: { $0.UUID == uuid })
-				else { return }
-			sitesList.remove(at: index)
+			if let index = sitesList.index(where: { $0.homePageURL.absoluteURL == url }) {
+				sitesList[index] = siteValues
+			}
+			else {
+				sitesList.append(siteValues)
+			}
+			self = .sitesList(sitesList: sitesList, needsSaving: true)
+		default:
+			break
+		}
+	}
+	
+	mutating func remove(url: URL) {
+		switch self {
+		case var .sitesList(sitesList, _):
+			sitesList = sitesList.filter{ $0.homePageURL != url }
 			self = .sitesList(sitesList: sitesList, needsSaving: true)
 		default:
 			break
@@ -169,6 +173,7 @@ open class ModelManager {
 	fileprivate var storeDirectory: SystemDirectory
 	fileprivate var sitesURL: URL?
 	
+	// Change this value, by mutating it, and it will be saved to disk
 	fileprivate var sitesLoadingProgression: SitesLoadingProgression = .none {
 		didSet {
 			let progression = sitesLoadingProgression
@@ -186,6 +191,7 @@ open class ModelManager {
 						print("Error loading local sites \(error)")
 					}
 				}
+			// If changed, and needs saving, then save
 			case let .sitesList(sites, needsSaving):
 				if needsSaving, let sitesURL = sitesURL {
 					sitesSavingProgression = .saveToFile(fileURL: sitesURL, sites: sites)
@@ -209,8 +215,13 @@ open class ModelManager {
 		}
 	}
 	
-	open var allSites: [SiteValues]? {
+	public var allSites: [SiteValues]? {
 		return sitesLoadingProgression.result
+	}
+	
+	public func siteWithURL(url: URL) -> SiteValues? {
+		guard let sites = allSites else { return nil }
+		return sites.first{ $0.homePageURL.absoluteURL == url.absoluteURL }
 	}
 	
 	
@@ -249,15 +260,12 @@ open class ModelManager {
 		self.mainQueue_notify(.allSitesDidChange)
 	}
 	
-	public func createSiteWithValues(_ siteValues: SiteValues) {
-		sitesLoadingProgression.add(siteValues)
+	public func addOrUpdateSite(values: SiteValues) {
+		//sitesLoadingProgression.update(siteValues, uuid: uuid)
+		sitesLoadingProgression.addOrUpdate(values)
 	}
 	
-	public func updateSite(uuid: Foundation.UUID, values siteValues: SiteValues) {
-		sitesLoadingProgression.update(siteValues, uuid: uuid)
-	}
-	
-	public func removeSiteWithUUID(_ uuid: Foundation.UUID) {
-		sitesLoadingProgression.remove(uuid)
+	public func removeSite(url: URL) {
+		sitesLoadingProgression.remove(url: url)
 	}
 }

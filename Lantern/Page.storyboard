@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,7 +15,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="EOJ-Eq-5bL">
-                                <rect key="frame" x="0.0" y="35" width="500" height="265"/>
+                                <rect key="frame" x="0.0" y="0.0" width="500" height="300"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="500" id="dVX-GN-paG"/>
                                 </constraints>
@@ -23,44 +23,14 @@
                                     <segue destination="vaU-Wg-50g" kind="embed" identifier="activeResourceSplit" id="kGb-oQ-12o"/>
                                 </connections>
                             </containerView>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-EU-sP3">
-                                <rect key="frame" x="20" y="8" width="322" height="19"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="4BL-LC-tAV"/>
-                                </constraints>
-                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Your Website’s URL" bezelStyle="round" id="otO-hx-4tR">
-                                    <font key="font" metaFont="smallSystem"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <action selector="URLFieldChanged:" target="lOR-rk-ZOz" id="La7-k6-kgO"/>
-                                </connections>
-                            </textField>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="eKl-uH-6sn">
-                                <rect key="frame" x="347" y="9" width="135" height="18"/>
-                                <buttonCell key="cell" type="check" title="Crawl Browsed Pages" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="dwE-SW-rGN">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="smallSystem"/>
-                                </buttonCell>
-                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="8cl-EU-sP3" secondAttribute="bottom" constant="8" id="ANg-2P-1QJ"/>
+                            <constraint firstAttribute="bottom" secondItem="EOJ-Eq-5bL" secondAttribute="bottom" id="812-l3-lJO"/>
                             <constraint firstItem="EOJ-Eq-5bL" firstAttribute="leading" secondItem="IMy-jD-QFc" secondAttribute="leading" id="Oa9-kK-7AF"/>
                             <constraint firstAttribute="trailing" secondItem="EOJ-Eq-5bL" secondAttribute="trailing" id="Ugs-fy-zEL"/>
-                            <constraint firstItem="8cl-EU-sP3" firstAttribute="top" secondItem="EOJ-Eq-5bL" secondAttribute="bottom" constant="8" id="b39-Ba-O8C"/>
-                            <constraint firstAttribute="trailing" secondItem="eKl-uH-6sn" secondAttribute="trailing" constant="20" id="erM-TS-FMT"/>
-                            <constraint firstItem="8cl-EU-sP3" firstAttribute="baseline" secondItem="eKl-uH-6sn" secondAttribute="baseline" id="lMI-4G-56V"/>
-                            <constraint firstItem="8cl-EU-sP3" firstAttribute="leading" secondItem="IMy-jD-QFc" secondAttribute="leading" constant="20" symbolic="YES" id="rRF-HU-wR3"/>
                             <constraint firstAttribute="top" secondItem="EOJ-Eq-5bL" secondAttribute="top" id="vsd-RB-Sf3"/>
-                            <constraint firstItem="eKl-uH-6sn" firstAttribute="leading" secondItem="8cl-EU-sP3" secondAttribute="trailing" constant="8" id="wII-8A-NKm"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="URLField" destination="8cl-EU-sP3" id="iIp-Mj-MuE"/>
-                        <outlet property="crawlWhileBrowsingCheckButton" destination="eKl-uH-6sn" id="asS-Ho-GA0"/>
-                    </connections>
                 </viewController>
                 <customObject id="NaO-og-c6g" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -104,7 +74,7 @@
                                                             <rect key="frame" x="1" y="1" width="277" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wb5-FZ-tJZ">
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wb5-FZ-tJZ">
                                                                     <rect key="frame" x="0.0" y="0.0" width="192" height="17"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="ME9-2V-pYM">
                                                                         <font key="font" metaFont="smallSystem"/>
@@ -141,7 +111,7 @@
                                                             <rect key="frame" x="281" y="1" width="405" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q82-Sj-LeX">
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q82-Sj-LeX">
                                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="pfT-0b-qsL">
                                                                         <font key="font" metaFont="smallSystem"/>
@@ -320,7 +290,7 @@
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hlc-3V-2Tf">
                                                                     <rect key="frame" x="0.0" y="2" width="140" height="14"/>
                                                                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="GK6-Hc-kIt">
-                                                                        <font key="font" metaFont="systemBold" size="11"/>
+                                                                        <font key="font" metaFont="smallSystemBold"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
