@@ -99,7 +99,6 @@ class MetaViewController : NSViewController {
 	
 	func updateUI(url: URL?) {
 		metaElementAttributes = url.flatMap{ findMetaElementAttributes(url: $0) } ?? []
-		print("metaElementAttributes \(metaElementAttributes.count)")
 		tableView.reloadData()
 		//stackView.setViews(createStackViews(url), in: NSStackViewGravity.center)
 	}
@@ -114,7 +113,6 @@ extension MetaViewController : NSTableViewDataSource, NSTableViewDelegate {
 		let attributes = metaElementAttributes[row]
 		let identifier = tableColumn!.identifier
 		let view = tableView.make(withIdentifier: identifier, owner: self) as! NSTableCellView
-		print("attributes", attributes)
 		
 		var property = attributes["name"] ?? attributes["property"] ?? attributes["http-equiv"]
 		var contentAttributeKey = "content"

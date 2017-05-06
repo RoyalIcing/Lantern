@@ -38,7 +38,7 @@ public final class ErrorReceiver {
 }
 
 
-enum SitesLoadingProgression : StageProtocol {
+enum SitesLoadingProgression : Progression {
 	case none
 	case loadFromFile(fileURL: URL)
 	case jsonData(Data)
@@ -51,33 +51,28 @@ enum SitesLoadingProgression : StageProtocol {
 		case invalidJSON(json: Any)
 	}
 	
-	func next() -> Deferred<SitesLoadingProgression> {
+	mutating func updateOrDeferNext() throws -> Deferred<SitesLoadingProgression>? {
 		switch self {
 		case let .loadFromFile(fileURL):
-			return .unit{
-				try .jsonData(Data(contentsOf: fileURL, options: .mappedIfSafe))
-			}
+			self = try .jsonData(Data(contentsOf: fileURL, options: .mappedIfSafe))
 		case let .jsonData(data):
-			return .unit{
-				try .json(JSONSerialization.jsonObject(with: data, options: []))
-			}
+			self = try .json(JSONSerialization.jsonObject(with: data, options: []))
 		case let .json(json):
-			return .unit{
-				guard
-					let jsonDictionary = json as? [String: Any],
-					let itemsJSON = jsonDictionary["items"] as? [Any]
+			guard
+				let jsonDictionary = json as? [String: Any],
+				let itemsJSON = jsonDictionary["items"] as? [Any]
+				else { throw ErrorKind.invalidJSON(json: json) }
+			let sitesList = try itemsJSON.map { (json: Any) -> SiteValues in
+				guard let jsonObject = json as? [String: Any]
 					else { throw ErrorKind.invalidJSON(json: json) }
-				let sitesList = try itemsJSON.map { (json: Any) -> SiteValues in
-					guard let jsonObject = json as? [String: Any]
-						else { throw ErrorKind.invalidJSON(json: json) }
-					
-					return SiteValues(fromJSON: jsonObject)
-				}
-				return .sitesList(sitesList: sitesList, needsSaving: false)
+				
+				return SiteValues(fromJSON: jsonObject)
 			}
+			self = .sitesList(sitesList: sitesList, needsSaving: false)
 		case .sitesList, .none:
-			completedStage(self)
+			break
 		}
+		return nil
 	}
 	
 	var result: Result? {
@@ -120,7 +115,7 @@ enum SitesLoadingProgression : StageProtocol {
 	}
 }
 
-enum SitesSavingProgression : StageProtocol {
+enum SitesSavingProgression : Progression {
 	case saveToFile(fileURL: URL, sites: [SiteValues])
 	case serializeJSON([String: Any], fileURL: URL)
 	case writeData(Data, fileURL: URL)
@@ -134,35 +129,30 @@ enum SitesSavingProgression : StageProtocol {
 		case fileWriting(error: Error)
 	}
 	
-	func next() -> Deferred<SitesSavingProgression> {
+	mutating func updateOrDeferNext() throws -> Deferred<SitesSavingProgression>? {
 		switch self {
 		case let .saveToFile(fileURL, sites):
-			return .unit{
-				let json = [
-					"items": sites.map{ $0.toJSON() }
-				] as [String: [[String: Any]]]
-				return .serializeJSON(json, fileURL: fileURL)
-			}
+			let json = [
+				"items": sites.map{ $0.toJSON() }
+			] as [String: [[String: Any]]]
+			self = .serializeJSON(json, fileURL: fileURL)
 		case let .serializeJSON(json, fileURL):
-			return .unit{
-				do {
-					if !JSONSerialization.isValidJSONObject(json) {
-						throw ErrorKind.invalidJSON
-					}
-					return try .writeData(JSONSerialization.data(withJSONObject: json), fileURL: fileURL)
+			do {
+				if !JSONSerialization.isValidJSONObject(json) {
+					throw ErrorKind.invalidJSON
 				}
-				catch {
-					throw ErrorKind.jsonSerialization(error: error)
-				}
+				self = try .writeData(JSONSerialization.data(withJSONObject: json), fileURL: fileURL)
+			}
+			catch {
+				throw ErrorKind.jsonSerialization(error: error)
 			}
 		case let .writeData(data, fileURL):
-			return .unit{
-				try data.write(to: fileURL, options: .atomic)
-				return .savedFile(fileURL: fileURL)
-			}
+			try data.write(to: fileURL, options: .atomic)
+			self = .savedFile(fileURL: fileURL)
 		case .savedFile:
-			completedStage(self)
+			break
 		}
+		return nil
 	}
 	
 	var result: Result? {
@@ -186,7 +176,7 @@ open class ModelManager {
 			
 			switch progression {
 			case .loadFromFile:
-				progression.execute { [weak self] useResult in
+				progression / .utility >>= { [weak self] useResult in
 					guard let receiver = self else { return }
 					do {
 						let sites = try useResult()
@@ -207,7 +197,8 @@ open class ModelManager {
 	
 	fileprivate var sitesSavingProgression: SitesSavingProgression? {
 		didSet(newValue) {
-			sitesSavingProgression?.execute { useResult in
+			guard let progression = sitesSavingProgression else { return }
+			progression / .utility >>= { useResult in
 				do {
 					let _ = try useResult()
 				}

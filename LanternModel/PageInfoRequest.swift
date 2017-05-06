@@ -73,7 +73,7 @@ extension ResourceInfo {
 }
 
 
-public enum ResourceInfoRetrievalStage : StageProtocol {
+public enum ResourceInfoRetrievalStage : Progression {
 	case getInfo(url: URL, requestManager: Alamofire.SessionManager)
 	case getContent(url: URL, requestManager: Alamofire.SessionManager)
 	
@@ -87,19 +87,15 @@ public enum ResourceInfoRetrievalStage : StageProtocol {
 		case requestFailed(underlyingError: Error)
 	}
 	
-	public func next() -> Deferred<ResourceInfoRetrievalStage> {
+	public mutating func updateOrDeferNext() throws -> Deferred<ResourceInfoRetrievalStage>? {
 		switch self {
 		case let .getInfo(url, requestManager):
-			return Deferred.unit{
-				let request = requestManager.request(url, method: .head)
-				return .startedRequest(request: request, url: url, includeContent: false)
-			}
+			let request = requestManager.request(url, method: .head)
+			self = .startedRequest(request: request, url: url, includeContent: false)
 			
 		case let .getContent(url, requestManager):
-			return Deferred.unit{
-				let request = requestManager.request(url)
-				return .startedRequest(request: request, url: url, includeContent: true)
-			}
+			let request = requestManager.request(url)
+			self = .startedRequest(request: request, url: url, includeContent: true)
 			
 		case let .startedRequest(request, url, includeContent):
 			return Deferred.future{ resolve in
@@ -113,9 +109,9 @@ public enum ResourceInfoRetrievalStage : StageProtocol {
 					}
 				}
 			}
-		case .success:
-			completedStage(self)
+		case .success: break
 		}
+		return nil
 	}
 	
 	public var result: Result? {
@@ -227,7 +223,7 @@ class PageInfoRequestQueue {
 	//let executionCustomizer = GCDExecutionCustomizer<ResourceInfoRetrievalStage>()
 	
 	fileprivate func performRetrieval(_ stage: ResourceInfoRetrievalStage) {
-		stage.execute { useResult in
+		stage / .utility >>= { useResult in
 			do {
 				let result = try useResult()
 			}
