@@ -234,7 +234,7 @@ public final class PageMapper {
 		
 		if responseType == .redirects {
 			#if DEBUG
-				print("REDIRECT \(requestedPageURL) \(pageInfo.finalURL)")
+				print("REDIRECT \(requestedPageURL) \(pageInfo.finalURL?.absoluteString ?? "No final URL")")
 			#endif
 		}
 		
