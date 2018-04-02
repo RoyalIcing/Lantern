@@ -1,0 +1,9 @@
+{
+  "commitish" : "0.10.0",
+  "Mac" : [
+    {
+      "name" : "Syrup",
+      "hash" : "7a445173fba0cb7fa9d16c50cc1f72a1f477eec2a057bea904fd4180faf76c1d"
+    }
+  ]
+}

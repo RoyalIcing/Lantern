@@ -1,0 +1,11 @@
+framework module Syrup {
+  umbrella header "Syrup.h"
+
+  export *
+  module * { export * }
+}
+
+module Syrup.Swift {
+    header "Syrup-Swift.h"
+    requires objc
+}

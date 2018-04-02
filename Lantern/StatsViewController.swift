@@ -697,7 +697,7 @@ extension StatsViewController: QLPreviewPanelDataSource, QLPreviewPanelDelegate 
 	}
 	
 	func previewPanel(_ panel: QLPreviewPanel!, previewItemAt index: Int) -> QLPreviewItem! {
-		return selectedURLs[index] as QLPreviewItem!
+		return selectedURLs[index] as QLPreviewItem?
 	}
 	
 	override func acceptsPreviewPanelControl(_ panel: QLPreviewPanel!) -> Bool {

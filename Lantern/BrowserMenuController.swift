@@ -55,9 +55,13 @@ class BrowserMenuController: NSObject, NSUserInterfaceValidations {
 		widthMenuItemsAssistant.customization.actionAndTarget = { [weak self] widthChoice in
 			return (action: #selector(BrowserMenuController.changeWidthChoice(_:)), target: self)
 		}
-		widthMenuItemsAssistant.customization.state = { widthChoice in
+//		widthMenuItemsAssistant.customization.state = { widthChoice in
+//			let chosenWidthChoice = BrowserPreferences.sharedBrowserPreferences.widthChoice
+//			return (chosenWidthChoice == widthChoice) ? NSOnState : NSOffState
+//		}
+		widthMenuItemsAssistant.customization.additionalSetUp = { widthChoice, menuItem in
 			let chosenWidthChoice = BrowserPreferences.sharedBrowserPreferences.widthChoice
-			return (chosenWidthChoice == widthChoice) ? NSOnState : NSOffState
+			menuItem.state = (chosenWidthChoice == widthChoice) ? NSOnState : NSOffState
 		}
 		
 		updateWidthMenu()

@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 import Ono
-import Grain
+import Syrup
 
 
 open class PageInfoRequest {

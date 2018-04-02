@@ -8,7 +8,7 @@
 
 import Foundation
 import BurntFoundation
-import Grain
+import Syrup
 
 
 enum RecordType: String {

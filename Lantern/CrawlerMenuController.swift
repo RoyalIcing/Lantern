@@ -38,9 +38,13 @@ class CrawlerMenuController: NSObject, NSUserInterfaceValidations {
 		imageDownloadMenuItemsAssistant.customization.actionAndTarget = { [weak self] widthChoice in
 			return (action: #selector(CrawlerMenuController.changeImageDownloadChoice(_:)), target: self)
 		}
-		imageDownloadMenuItemsAssistant.customization.state = { imageDownloadChoice in
+//		imageDownloadMenuItemsAssistant.customization.state = { imageDownloadChoice in
+//			let chosenImageDownloadChoice = CrawlerPreferences.sharedCrawlerPreferences.imageDownloadChoice
+//			return (chosenImageDownloadChoice == imageDownloadChoice) ? NSOnState : NSOffState
+//		}
+		imageDownloadMenuItemsAssistant.customization.additionalSetUp = { imageDownloadChoice, menuItem in
 			let chosenImageDownloadChoice = CrawlerPreferences.sharedCrawlerPreferences.imageDownloadChoice
-			return (chosenImageDownloadChoice == imageDownloadChoice) ? NSOnState : NSOffState
+			menuItem.state = (chosenImageDownloadChoice == imageDownloadChoice) ? NSOnState : NSOffState
 		}
 		
 		updateImageDownloadMenu()

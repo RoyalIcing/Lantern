@@ -115,7 +115,7 @@ class ViewController : NSViewController
 		let nc = NotificationCenter.default
 		let mainQueue = OperationQueue.main
 		
-		func addObserver(_ notificationIdentifier: MainState.Notification, block: @escaping (Notification!) -> ()) {
+		func addObserver(_ notificationIdentifier: MainState.Notification, block: @escaping (Notification?) -> ()) {
 			let observer = nc.addObserver(forName: NSNotification.Name(rawValue: notificationIdentifier.notificationName), object: mainState, queue: mainQueue, using: block)
 			mainStateNotificationObservers[notificationIdentifier] = observer
 		}
@@ -284,7 +284,7 @@ class ViewController : NSViewController
 			
 			if let activeURL = activeURL {
 				let chosenSite = modelManager.siteWithURL(url: activeURL)
-				print("EDIT CHOSEN SITE", "\(chosenSite)")
+				print("EDIT CHOSEN SITE", "\(String(describing: chosenSite))")
 				siteSettingsViewController.state = (url: activeURL, favoriteName: chosenSite?.name)
 			}
 			else {

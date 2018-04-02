@@ -7,4 +7,5 @@ framework module BurntCocoaUI {
 
 module BurntCocoaUI.Swift {
     header "BurntCocoaUI-Swift.h"
+    requires objc
 }

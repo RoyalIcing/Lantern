@@ -59,9 +59,8 @@
 		B27F48CE1B64E452003F1215 /* BurntCocoaUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */; };
 		B27F48CF1B64E452003F1215 /* BurntCocoaUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B27F48D11B64E452003F1215 /* BurntFoundation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B27F48CB1B64DF8A003F1215 /* BurntFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B29E20831DA8B0BB002FC2A7 /* Grain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B249AB931CA903D4006AAA42 /* Grain.framework */; };
-		B29E20841DA8B0DA002FC2A7 /* Grain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B249AB931CA903D4006AAA42 /* Grain.framework */; };
-		B29E20851DA8B0DA002FC2A7 /* Grain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B249AB931CA903D4006AAA42 /* Grain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B2921F012071F0CF00EAB561 /* Syrup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2921F002071F0CF00EAB561 /* Syrup.framework */; };
+		B2921F022071F0CF00EAB561 /* Syrup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2921F002071F0CF00EAB561 /* Syrup.framework */; };
 		B2B542C11AF0980E00073464 /* NSData+ONOXMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B542C01AF0980E00073464 /* NSData+ONOXMLDocument.swift */; };
 		B2B542C31AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B542C21AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift */; };
 		B2C4A93F1ACA31F0000F1566 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */; };
@@ -119,7 +118,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B29E20851DA8B0DA002FC2A7 /* Grain.framework in Embed Frameworks */,
 				B27F48CF1B64E452003F1215 /* BurntCocoaUI.framework in Embed Frameworks */,
 				B25020681B01F4E000ABAE96 /* LanternModel.framework in Embed Frameworks */,
 				B27F48D11B64E452003F1215 /* BurntFoundation.framework in Embed Frameworks */,
@@ -188,7 +186,6 @@
 		B23E29E91AE73DF6009A94E5 /* console.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = console.js; sourceTree = "<group>"; };
 		B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WKUserContentController+bundledScripts.swift"; sourceTree = "<group>"; };
 		B23EA59D1ACA5F6A009B4032 /* ValueValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueValidation.swift; sourceTree = "<group>"; };
-		B249AB931CA903D4006AAA42 /* Grain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Grain.framework; path = Carthage/Build/Mac/Grain.framework; sourceTree = "<group>"; };
 		B25020581B01AD3600ABAE96 /* CrawlerPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrawlerPreferences.swift; sourceTree = "<group>"; };
 		B250205E1B01B3AE00ABAE96 /* CrawlerMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrawlerMenuController.swift; sourceTree = "<group>"; };
 		B25033111AF5C2C7006A2AE7 /* Ono.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ono.framework; path = Carthage/Build/Mac/Ono.framework; sourceTree = "<group>"; };
@@ -198,6 +195,8 @@
 		B27F48C81B64D25B003F1215 /* ValueStorable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueStorable.swift; sourceTree = "<group>"; };
 		B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BurntCocoaUI.framework; path = Carthage/Build/Mac/BurntCocoaUI.framework; sourceTree = "<group>"; };
 		B27F48CB1B64DF8A003F1215 /* BurntFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BurntFoundation.framework; path = Carthage/Build/Mac/BurntFoundation.framework; sourceTree = "<group>"; };
+		B2921EFC2071EFD200EAB561 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		B2921F002071F0CF00EAB561 /* Syrup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Syrup.framework; path = Carthage/Build/Mac/Syrup.framework; sourceTree = "<group>"; };
 		B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SiteSettings.storyboard; sourceTree = "<group>"; };
 		B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteSettingsViewController.swift; sourceTree = "<group>"; };
 		B2B542C01AF0980E00073464 /* NSData+ONOXMLDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+ONOXMLDocument.swift"; sourceTree = "<group>"; };
@@ -237,7 +236,7 @@
 				B25033181AF5C9A5006A2AE7 /* libxml2.dylib in Frameworks */,
 				B2D563241AF5BF8A006DE202 /* Alamofire.framework in Frameworks */,
 				B25033121AF5C2C7006A2AE7 /* Ono.framework in Frameworks */,
-				B29E20831DA8B0BB002FC2A7 /* Grain.framework in Frameworks */,
+				B2921F022071F0CF00EAB561 /* Syrup.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,12 +252,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B29E20841DA8B0DA002FC2A7 /* Grain.framework in Frameworks */,
 				B27F48CE1B64E452003F1215 /* BurntCocoaUI.framework in Frameworks */,
 				B25020631B01C15900ABAE96 /* LanternModel.framework in Frameworks */,
 				B20DB38B1B0F020500E57532 /* Crashlytics.framework in Frameworks */,
 				B27F48CD1B64DF8A003F1215 /* BurntFoundation.framework in Frameworks */,
 				B20DB3891B0F020500E57532 /* Fabric.framework in Frameworks */,
+				B2921F012071F0CF00EAB561 /* Syrup.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +393,7 @@
 		B22B7D861AC6B9090026AEDB = {
 			isa = PBXGroup;
 			children = (
+				B2921EFC2071EFD200EAB561 /* Cartfile */,
 				B2D9D8881B253D3100217300 /* Frameworks */,
 				B22425F41AC8F8B200809EF0 /* LanternModel */,
 				B22426031AC8F8B200809EF0 /* LanternModelTests */,
@@ -450,7 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				B219509A1DC8177D00ACCB38 /* Cartfile */,
-				B249AB931CA903D4006AAA42 /* Grain.framework */,
+				B2921F002071F0CF00EAB561 /* Syrup.framework */,
 				B25033111AF5C2C7006A2AE7 /* Ono.framework */,
 				B2D563221AF5BF8A006DE202 /* Alamofire.framework */,
 				B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */,

@@ -7,4 +7,5 @@ framework module BurntFoundation {
 
 module BurntFoundation.Swift {
     header "BurntFoundation-Swift.h"
+    requires objc
 }

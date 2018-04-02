@@ -13,6 +13,6 @@ import Ono
 extension Data {
 	func stringRepresentationUsingONOXMLDocumentHints(_ document: ONOXMLDocument) -> String? {
 		let stringEncoding = document.stringEncodingWithFallback()
-		return NSString(data: self, encoding: stringEncoding.rawValue) as? String
+		return NSString(data: self, encoding: stringEncoding.rawValue) as String?
 	}
 }

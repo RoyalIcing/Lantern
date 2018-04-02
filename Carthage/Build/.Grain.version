@@ -1,9 +1,9 @@
 {
-  "commitish" : "0.7.0",
+  "commitish" : "0.8.3",
   "Mac" : [
     {
-      "hash" : "2b4672f408595e2639454975fd4f520e76a2db8061797fbc80ac4bb1cde6fdb4",
-      "name" : "Grain"
+      "name" : "Syrup",
+      "hash" : "6b64f7d2f01aa5c3eafd2cf982d2ac80b2a01585bf1b376f8393398f09e4c516"
     }
   ]
 }

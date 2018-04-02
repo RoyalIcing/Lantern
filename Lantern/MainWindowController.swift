@@ -181,7 +181,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		let nc = NotificationCenter.default
 		let mainQueue = OperationQueue.main
 		
-		func addObserver(_ notificationIdentifier: LanternModel.ModelManagerNotification, block: @escaping (Notification!) -> ()) {
+		func addObserver(_ notificationIdentifier: LanternModel.ModelManagerNotification, block: @escaping (Notification?) -> ()) {
 			let observer = nc.addObserver(forName: Notification.Name(notificationIdentifier.notificationName), object: modelManager, queue: mainQueue, using: block)
 			modelManagerNotificationObservers[notificationIdentifier] = observer
 		}
