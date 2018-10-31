@@ -1,9 +1,9 @@
 {
-  "commitish" : "0.5.1",
+  "commitish" : "0.6.0",
   "Mac" : [
     {
       "name" : "BurntCocoaUI",
-      "hash" : "3e1b0043954eb0af7c146575b0a085b8a6c35cfe30610d4c600a9314ff24a224"
+      "hash" : "72a64c28d85392e273fe663aeef31f2051a2bda277f793b04928efeab298d146"
     }
   ]
 }

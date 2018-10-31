@@ -61,7 +61,7 @@ class BrowserMenuController: NSObject, NSUserInterfaceValidations {
 //		}
 		widthMenuItemsAssistant.customization.additionalSetUp = { widthChoice, menuItem in
 			let chosenWidthChoice = BrowserPreferences.sharedBrowserPreferences.widthChoice
-			menuItem.state = (chosenWidthChoice == widthChoice) ? NSOnState : NSOffState
+			menuItem.state = (chosenWidthChoice == widthChoice) ? NSControlStateValueOn : NSControlStateValueOff
 		}
 		
 		updateWidthMenu()

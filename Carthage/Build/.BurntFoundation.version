@@ -1,9 +1,9 @@
 {
-  "commitish" : "0.7.0",
+  "commitish" : "0.8.0",
   "Mac" : [
     {
       "name" : "BurntFoundation",
-      "hash" : "789d3427f1e758e05087229f10e2f488bf7910dc548956faaecc41a6ee0c29af"
+      "hash" : "95f0a455055aa15784e3a23cb227d8a0af2f39a9a2dfaa9ed718d0838d50ce12"
     }
   ]
 }

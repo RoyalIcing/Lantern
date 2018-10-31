@@ -61,6 +61,7 @@
 		B27F48D11B64E452003F1215 /* BurntFoundation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B27F48CB1B64DF8A003F1215 /* BurntFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B2921F012071F0CF00EAB561 /* Syrup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2921F002071F0CF00EAB561 /* Syrup.framework */; };
 		B2921F022071F0CF00EAB561 /* Syrup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2921F002071F0CF00EAB561 /* Syrup.framework */; };
+		B2921F032071F8DB00EAB561 /* Syrup.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B2921F002071F0CF00EAB561 /* Syrup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B2B542C11AF0980E00073464 /* NSData+ONOXMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B542C01AF0980E00073464 /* NSData+ONOXMLDocument.swift */; };
 		B2B542C31AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B542C21AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift */; };
 		B2C4A93F1ACA31F0000F1566 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */; };
@@ -102,13 +103,6 @@
 			remoteGlobalIDString = B25033301AF5E5B0006A2AE7;
 			remoteInfo = Lantern;
 		};
-		B2D39AFE1AF5EBA3003D6738 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B22B7D871AC6B9090026AEDB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B25033301AF5E5B0006A2AE7;
-			remoteInfo = Lantern;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -118,6 +112,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B2921F032071F8DB00EAB561 /* Syrup.framework in Embed Frameworks */,
 				B27F48CF1B64E452003F1215 /* BurntCocoaUI.framework in Embed Frameworks */,
 				B25020681B01F4E000ABAE96 /* LanternModel.framework in Embed Frameworks */,
 				B27F48D11B64E452003F1215 /* BurntFoundation.framework in Embed Frameworks */,
@@ -507,7 +502,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				B2D39AFF1AF5EBA3003D6738 /* PBXTargetDependency */,
 			);
 			name = LanternModel;
 			productName = HoverlyticsModel;
@@ -775,11 +769,6 @@
 			target = B25033301AF5E5B0006A2AE7 /* Lantern */;
 			targetProxy = B25033571AF5E73E006A2AE7 /* PBXContainerItemProxy */;
 		};
-		B2D39AFF1AF5EBA3003D6738 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B25033301AF5E5B0006A2AE7 /* Lantern */;
-			targetProxy = B2D39AFE1AF5EBA3003D6738 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -849,11 +838,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/Mac";
 				FRAMEWORK_VERSION = A;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -894,11 +879,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/Mac";
 				FRAMEWORK_VERSION = A;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
