@@ -111,8 +111,8 @@ extension MetaViewController : NSTableViewDataSource, NSTableViewDelegate {
 	
 	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
 		let attributes = metaElementAttributes[row]
-		let identifier = tableColumn!.identifier
-		let view = tableView.make(withIdentifier: identifier, owner: self) as! NSTableCellView
+		let identifier = convertFromNSUserInterfaceItemIdentifier(tableColumn!.identifier)
+		let view = tableView.makeView(withIdentifier: convertToNSUserInterfaceItemIdentifier(identifier), owner: self) as! NSTableCellView
 		
 		var property = attributes["name"] ?? attributes["property"] ?? attributes["http-equiv"]
 		var contentAttributeKey = "content"
@@ -132,4 +132,14 @@ extension MetaViewController : NSTableViewDataSource, NSTableViewDelegate {
 		
 		return view
 	}
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSUserInterfaceItemIdentifier(_ input: NSUserInterfaceItemIdentifier) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSUserInterfaceItemIdentifier(_ input: String) -> NSUserInterfaceItemIdentifier {
+	return NSUserInterfaceItemIdentifier(rawValue: input)
 }

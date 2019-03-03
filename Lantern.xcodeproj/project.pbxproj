@@ -565,7 +565,7 @@
 					B22425F21AC8F8B200809EF0 = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = 5278SPSAPR;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 1010;
 					};
 					B22425FC1AC8F8B200809EF0 = {
 						CreatedOnToolsVersion = 6.2;
@@ -573,7 +573,7 @@
 					};
 					B25033301AF5E5B0006A2AE7 = {
 						DevelopmentTeam = 5278SPSAPR;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 1010;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -858,7 +858,8 @@
 				PRODUCT_NAME = LanternModel;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = "";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -894,7 +895,8 @@
 				PRODUCT_NAME = LanternModel;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = "";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1064,7 +1066,8 @@
 				PRODUCT_NAME = Lantern;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Lantern/Lantern-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1091,7 +1094,8 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Lantern/Lantern-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

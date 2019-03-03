@@ -354,7 +354,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	func toolbarWillAddItem(_ notification: Notification) {
 		let userInfo = notification.userInfo!
 		let toolbarItem = userInfo["item"] as! NSToolbarItem
-		let itemIdentifier = toolbarItem.itemIdentifier
+		let itemIdentifier = convertFromNSToolbarItemIdentifier(toolbarItem.itemIdentifier)
 		var sizeToFit = false
 		
 		if itemIdentifier == "newSiteButton" {
@@ -397,4 +397,9 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			toolbarItem.maxSize = fittingSize
 		}
 	}
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSToolbarItemIdentifier(_ input: NSToolbarItem.Identifier) -> String {
+	return input.rawValue
 }

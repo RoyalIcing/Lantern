@@ -284,7 +284,7 @@ class StatsViewController: NSViewController {
 		super.viewDidLoad()
 		// Do view setup here.
 		
-		outlineView.removeTableColumn(outlineView.tableColumn(withIdentifier: "text")!)
+		outlineView.removeTableColumn(outlineView.tableColumn(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "text"))!)
 
 		//updateColumnsToOnlyShow(selectedColumnsMode.columnIdentifiersForBaseContentType(filterToBaseContentType))
 
@@ -383,7 +383,7 @@ class StatsViewController: NSViewController {
 	var selectedURLs: [URL] {
 		get {
 			let selectedRowIndexes = outlineView!.selectedRowIndexes
-			return selectedRowIndexes.flatMap { row in
+			return selectedRowIndexes.compactMap { row in
 				return outlineView.item(atRow: row) as? URL
 			}
 		}
@@ -503,10 +503,10 @@ class StatsViewController: NSViewController {
 		outlineView.beginUpdates()
 		
 		let uniqueColumnIdentifiers = Set(columnIdentifiers)
-		let existingTableColumnIdentifierStrings = outlineView.tableColumns.map { return $0.identifier }
+		let existingTableColumnIdentifierStrings = outlineView.tableColumns.map { return $0.identifier.rawValue }
 		for identifierString in existingTableColumnIdentifierStrings {
 			if let identifier = PagePresentedInfoIdentifier(rawValue: identifierString) , !uniqueColumnIdentifiers.contains(identifier) && identifier != .requestedURL {
-				outlineView.removeTableColumn(outlineView.tableColumn(withIdentifier: identifierString)!)
+				outlineView.removeTableColumn(outlineView.tableColumn(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifierString))!)
 			}
 		}
 		
@@ -515,14 +515,14 @@ class StatsViewController: NSViewController {
 		
 		var columnIndex = 1 // After outline column
 		for identifier in columnIdentifiers {
-			let existingColumnIndex = outlineView.column(withIdentifier: identifier.rawValue)
+			let existingColumnIndex = outlineView.column(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier.rawValue))
 			var tableColumn: NSTableColumn
 			if existingColumnIndex >= 0 {
-				tableColumn = outlineView.tableColumn(withIdentifier: identifier.rawValue)!
+				tableColumn = outlineView.tableColumn(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier.rawValue))!
 				outlineView.moveColumn(existingColumnIndex, toColumn: columnIndex)
 			}
 			else {
-				tableColumn = NSTableColumn(identifier: identifier.rawValue)
+				tableColumn = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(rawValue: identifier.rawValue))
 				outlineView.addTableColumn(tableColumn)
 			}
 			
@@ -855,13 +855,13 @@ extension StatsViewController {
 				sourcePreviewTabViewController.pageInfo = pageInfo
 				
 				let rowRect = outlineView.rect(ofRow: row)
-				presentViewController(sourcePreviewTabViewController, asPopoverRelativeTo: rowRect, of: outlineView, preferredEdge: NSRectEdge.minY, behavior: .semitransient)
+				present(sourcePreviewTabViewController, asPopoverRelativeTo: rowRect, of: outlineView, preferredEdge: NSRectEdge.minY, behavior: .semitransient)
 			}
 		}
 	}
 	
 	func presentedInfoIdentifierForTableColumn(_ tableColumn: NSTableColumn) -> PagePresentedInfoIdentifier? {
-		return PagePresentedInfoIdentifier(rawValue: tableColumn.identifier)
+		return PagePresentedInfoIdentifier(rawValue: tableColumn.identifier.rawValue)
 	}
 	
 	func showStringValuePreviewForResourceAtRow(_ row: Int, column: Int) {
@@ -886,7 +886,7 @@ extension StatsViewController {
 				}
 				
 				let rowRect = outlineView.frameOfCell(atColumn: column, row: row)
-				presentViewController(previewViewController, asPopoverRelativeTo: rowRect, of: outlineView, preferredEdge: NSRectEdge.minY, behavior: .semitransient)
+				present(previewViewController, asPopoverRelativeTo: rowRect, of: outlineView, preferredEdge: NSRectEdge.minY, behavior: .semitransient)
 			}
 		}
 	}
@@ -906,7 +906,7 @@ extension StatsViewController {
 				previewViewController.sourceURL = pageInfo.requestedURL
 				
 				let rowRect = outlineView.rect(ofRow: row)
-				presentViewController(previewViewController, asPopoverRelativeTo: rowRect, of: outlineView, preferredEdge: NSRectEdge.minY, behavior: .semitransient)
+				present(previewViewController, asPopoverRelativeTo: rowRect, of: outlineView, preferredEdge: NSRectEdge.minY, behavior: .semitransient)
 			}
 		}
 
@@ -915,14 +915,14 @@ extension StatsViewController {
 	func performCopyURLForURLAtRow(_ row: Int) {
 		if let url = outlineView.item(atRow: row) as? URL
 		{
-			let pasteboard = NSPasteboard.general()
+			let pasteboard = NSPasteboard.general
 			pasteboard.clearContents()
 			// This does not copy the URL as a string though
 			//let success = pasteboard.writeObjects([URL])
 			//println("Copying \(success) \(pasteboard) \(URL)")
-			pasteboard.declareTypes([NSURLPboardType, NSStringPboardType], owner: nil)
+			pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
 			(url as NSURL).write(to: pasteboard)
-			pasteboard.setString(url.absoluteString, forType: NSStringPboardType)
+			pasteboard.setString(url.absoluteString, forType: NSPasteboard.PasteboardType.string)
 		}
 	}
 }
@@ -1120,7 +1120,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 		
 		if
 			let pageURL = item as? URL,
-			let identifierString = tableColumn?.identifier,
+			let identifierString = tableColumn?.identifier.rawValue,
 			let identifier = PagePresentedInfoIdentifier(rawValue: identifierString)
 		{
 			let cellIdentifier = (identifier == .requestedURL ? "requestedURL" : "text")
@@ -1175,7 +1175,7 @@ extension StatsViewController: NSOutlineViewDataSource, NSOutlineViewDelegate {
 				}
 			}
 			
-			if let view = outlineView.make(withIdentifier: cellIdentifier, owner: self) as? NSTableCellView {
+			if let view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: cellIdentifier), owner: self) as? NSTableCellView {
 				if let textField = view.textField {
 					if let suffixString = suffixString {
 						stringValue += " \(suffixString)"

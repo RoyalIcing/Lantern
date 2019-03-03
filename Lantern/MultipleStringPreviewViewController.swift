@@ -22,9 +22,9 @@ class MultipleStringPreviewViewController: NSViewController {
 		tableView.dataSource = self
 		tableView.delegate = self
 		
-		measuringTableCellView = tableView.make(withIdentifier: "stringValue", owner: self) as! MultipleStringPreviewTableCellView
+		measuringTableCellView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "stringValue"), owner: self) as! MultipleStringPreviewTableCellView
 		
-		view.appearance = NSAppearance(named: NSAppearanceNameAqua)
+		view.appearance = NSAppearance(named: NSAppearance.Name.aqua)
 	}
 	
 	func createRowMenu() {
@@ -73,11 +73,11 @@ extension MultipleStringPreviewViewController {
 	func performCopyValueForItemAtRow(_ row: Int) {
 		switch validatedStringValues[row] {
 		case .validString(let stringValue):
-			let pasteboard = NSPasteboard.general()
+			let pasteboard = NSPasteboard.general
 			pasteboard.clearContents()
 
-			pasteboard.declareTypes([NSStringPboardType], owner: nil)
-			pasteboard.setString(stringValue, forType: NSStringPboardType)
+			pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
+			pasteboard.setString(stringValue, forType: NSPasteboard.PasteboardType.string)
 		default:
 			break
 		}
@@ -141,7 +141,7 @@ extension MultipleStringPreviewViewController: NSTableViewDataSource, NSTableVie
 	}
 	
 	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-		if let view = tableView.make(withIdentifier: "stringValue", owner: self) as? MultipleStringPreviewTableCellView {
+		if let view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "stringValue"), owner: self) as? MultipleStringPreviewTableCellView {
 			setUpTableCellView(view, tableColumn: tableColumn, row: row)
 			
 			return view

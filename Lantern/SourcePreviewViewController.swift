@@ -140,7 +140,7 @@ class SourcePreviewTabViewController: NSTabViewController {
 extension SourcePreviewTabViewController: NSPopoverDelegate {
 	func popoverWillShow(_ notification: Notification) {
 		let popover = notification.object as! NSPopover
-		popover.appearance = NSAppearance(named: NSAppearanceNameVibrantDark)
+		popover.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
 		//popover.appearance = NSAppearance(named: NSAppearanceNameLightContent)
 		//popover.appearance = .HUD
 	}
@@ -171,8 +171,8 @@ class SourcePreviewViewController: NSViewController {
 	}
 	
 	let defaultTextAttributes: [String: AnyObject] = [
-		NSFontAttributeName: NSFont(name: "Menlo", size: 11.0)!,
-		NSForegroundColorAttributeName: NSColor.highlightColor
+		convertFromNSAttributedStringKey(NSAttributedString.Key.font): NSFont(name: "Menlo", size: 11.0)!,
+		convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): NSColor.highlightColor
 	]
 	
 	var sourceText: String! {
@@ -181,7 +181,7 @@ class SourcePreviewViewController: NSViewController {
 			
 			if let textStorage = textView.textStorage {
 				let attributes = defaultTextAttributes
-				let newAttributedString = NSAttributedString(string: sourceText, attributes:attributes)
+				let newAttributedString = NSAttributedString(string: sourceText, attributes:convertToOptionalNSAttributedStringKeyDictionary(attributes))
 				textStorage.replaceCharacters(in: NSMakeRange(0, textStorage.length), with: newAttributedString)
 			}
 		}
@@ -201,4 +201,15 @@ class SourcePreviewTextView: NSTextView {
 			super.keyDown(with: theEvent)
 		}
 	}
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

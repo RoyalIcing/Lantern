@@ -12,7 +12,7 @@ import Fabric
 import Crashlytics
 
 
-let NSApp = NSApplication.shared()
+let NSApp = NSApplication.shared
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -72,7 +72,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		mainWindowControllers.append(windowController)
 		
 		let nc = NotificationCenter.default
-		windowWillCloseObservers.append(nc.addObserver(forName: NSNotification.Name.NSWindowWillClose, object: windowController.window!, queue: nil, using: { [unowned self] note in
+		windowWillCloseObservers.append(nc.addObserver(forName: NSWindow.willCloseNotification, object: windowController.window!, queue: nil, using: { [unowned self] note in
 			if let index = self.mainWindowControllers.index(of: windowController) {
 				self.mainWindowControllers.remove(at: index)
 			}
@@ -87,6 +87,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	@IBAction func forkOnGitHub(_ sender: AnyObject?) {
 		let URL = Foundation.URL(string: "https://github.com/BurntCaramel/Lantern")!
-		NSWorkspace.shared().open(URL)
+		NSWorkspace.shared.open(URL)
 	}
 }

@@ -253,18 +253,18 @@ class ViewController : NSViewController
 	
 	
 	@IBAction func showAddSiteRelativeToView(_ relativeView: NSView) {
-		if addSiteViewController.presenting != nil {
-			dismissViewController(addSiteViewController)
+		if addSiteViewController.presentingViewController != nil {
+			dismiss(addSiteViewController)
 		}
 		else {
-			presentViewController(addSiteViewController, asPopoverRelativeTo: relativeView.bounds, of: relativeView, preferredEdge: NSRectEdge.maxY, behavior: .semitransient)
+			present(addSiteViewController, asPopoverRelativeTo: relativeView.bounds, of: relativeView, preferredEdge: NSRectEdge.maxY, behavior: .semitransient)
 		}
 	}
 	
 	
 	@IBAction func showSiteSettings(_ button: NSButton) {
-		if siteSettingsViewController.presenting != nil {
-			dismissViewController(siteSettingsViewController)
+		if siteSettingsViewController.presentingViewController != nil {
+			dismiss(siteSettingsViewController)
 		}
 		else {
 			//var chosenSite = mainState?.chosenSite
@@ -306,11 +306,11 @@ class ViewController : NSViewController
 					}
 				}
 				catch {
-					NSApplication.shared().presentError(error as NSError, modalFor: self.view.window!, delegate: nil, didPresent: nil, contextInfo: nil)
+					NSApplication.shared.presentError(error as NSError, modalFor: self.view.window!, delegate: nil, didPresent: nil, contextInfo: nil)
 				}
 			}
 			
-			presentViewController(siteSettingsViewController, asPopoverRelativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.maxY, behavior: .semitransient)
+			present(siteSettingsViewController, asPopoverRelativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.maxY, behavior: .semitransient)
 		}
 	}
 	

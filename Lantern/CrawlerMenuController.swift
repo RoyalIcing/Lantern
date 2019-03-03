@@ -44,7 +44,7 @@ class CrawlerMenuController: NSObject, NSUserInterfaceValidations {
 //		}
 		imageDownloadMenuItemsAssistant.customization.additionalSetUp = { imageDownloadChoice, menuItem in
 			let chosenImageDownloadChoice = CrawlerPreferences.sharedCrawlerPreferences.imageDownloadChoice
-			menuItem.state = (chosenImageDownloadChoice == imageDownloadChoice) ? NSOnState : NSOffState
+			menuItem.state = (chosenImageDownloadChoice == imageDownloadChoice) ? NSControl.StateValue.on : NSControl.StateValue.off
 		}
 		
 		updateImageDownloadMenu()

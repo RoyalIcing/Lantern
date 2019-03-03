@@ -19,7 +19,7 @@ class ImagePreviewViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.appearance = NSAppearance(named: NSAppearanceNameAqua)
+		view.appearance = NSAppearance(named: NSAppearance.Name.aqua)
 	}
 	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
@@ -162,12 +162,12 @@ extension ImagePreviewViewController {
 			let UTIs = UTTypeCreateAllIdentifiersForTag(kUTTagClassMIMEType, MIMEType as CFString, kUTTypeImage)?.takeRetainedValue() as? [String]//,
 			//let pasteboardType = UTTypeCopyPreferredTagWithClass(preferredUTI, kUTTagClassNSPboardType).takeRetainedValue()
 		{
-			let pasteboard = NSPasteboard.general()
+			let pasteboard = NSPasteboard.general
 			pasteboard.clearContents()
 			
-			pasteboard.declareTypes(UTIs, owner: nil)
+			pasteboard.declareTypes(convertToNSPasteboardPasteboardTypeArray(UTIs), owner: nil)
 			for UTI in UTIs {
-				pasteboard.setData(imageData, forType: UTI)
+				pasteboard.setData(imageData, forType: convertToNSPasteboardPasteboardType(UTI))
 			}
 		}
 	}
@@ -308,3 +308,13 @@ class ImagePreviewInnerViewController: NSViewController {
 	#endif
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSPasteboardPasteboardTypeArray(_ input: [String]) -> [NSPasteboard.PasteboardType] {
+	return input.map { key in NSPasteboard.PasteboardType(key) }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSPasteboardPasteboardType(_ input: String) -> NSPasteboard.PasteboardType {
+	return NSPasteboard.PasteboardType(rawValue: input)
+}

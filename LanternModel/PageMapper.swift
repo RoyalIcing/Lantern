@@ -109,10 +109,7 @@ public final class PageMapper {
 		}
 	}
 	
-	fileprivate static let defaultMaximumDefault: UInt = 10
-	
-	
-	public init(mappableURL: MappableURL, crawlsFoundURLs: Bool = true, maximumDepth: UInt = defaultMaximumDefault) {
+	public init(mappableURL: MappableURL, crawlsFoundURLs: Bool = true, maximumDepth: UInt = 10) {
 		self.primaryURL = mappableURL.primaryURL
 		self.localHost = mappableURL.localHost
 		self.crawlsFoundURLs = crawlsFoundURLs

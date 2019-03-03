@@ -52,7 +52,7 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 			}
 			
 			homePageURLField.stringValue = urlString
-			saveInFavoritesButton.state = hasFavorite ? NSOnState : NSOffState
+			saveInFavoritesButton.state = hasFavorite ? NSControl.StateValue.on : NSControl.StateValue.off
 			nameField.isEnabled = hasFavorite
 			nameField.stringValue = name
 		}
@@ -63,7 +63,7 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	}
 	
 	@IBAction func toggleSaveInFavorites(_ sender: NSButton) {
-		let hasFavorite = sender.state == NSOnState
+		let hasFavorite = sender.state == NSControl.StateValue.on
 		nameField.isEnabled = hasFavorite
 	}
 	
@@ -82,7 +82,7 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 		}
 		
 		homePageURLField.stringValue = urlString
-		saveInFavoritesButton.state = hasFavorite ? NSOnState : NSOffState
+		saveInFavoritesButton.state = hasFavorite ? NSControl.StateValue.on : NSControl.StateValue.off
 		nameField.isEnabled = hasFavorite
 		nameField.stringValue = name
 	}
@@ -91,7 +91,7 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 		// Make sure view has loaded
 		_ = self.view
 		
-		let siteInFavorites = saveInFavoritesButton.state == NSOnState
+		let siteInFavorites = saveInFavoritesButton.state == NSControl.StateValue.on
 		
 		let name: String
 		if siteInFavorites {

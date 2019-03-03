@@ -15,10 +15,10 @@ import Syrup
 open class PageInfoRequest {
 	typealias CompletionHandler = (_ info: PageInfo, _ infoRequest: PageInfoRequest) -> ()
 	
-	open let URL: Foundation.URL
-	open let includingContent: Bool
-	open let method: Alamofire.HTTPMethod
-	open let expectedBaseContentType: BaseContentType
+	public let URL: Foundation.URL
+	public let includingContent: Bool
+	public let method: Alamofire.HTTPMethod
+	public let expectedBaseContentType: BaseContentType
 	let completionHandler: CompletionHandler
 	var request: Alamofire.Request?
 	

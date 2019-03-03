@@ -119,7 +119,7 @@ open class PageViewController: NSViewController {
 	}
 	
 	@IBAction func toggleCrawlWhileBrowsing(_ checkButton: NSButton) {
-		let on = checkButton.state == NSOnState
+		let on = checkButton.state == NSControl.StateValue.on
 		crawlWhileBrowsing = on
 	}
 	
@@ -275,13 +275,13 @@ class PageWebViewController : NSViewController, WKNavigationDelegate, WKUIDelega
 		webView.translatesAutoresizingMaskIntoConstraints = false
 		
 		let minimumWidthContraint = NSLayoutConstraint(item: webView, attribute: .width, relatedBy: .lessThanOrEqual, toItem: view, attribute: .width, multiplier: 1.0, constant: 0.0)
-		minimumWidthContraint.priority = 750
+		minimumWidthContraint.priority = NSLayoutConstraint.Priority(rawValue: 750)
 		view.addConstraint(
 			minimumWidthContraint
 		)
 		self.minimumWidthContraint = minimumWidthContraint
 		
-		addLayoutConstraint(toMatch: .width, withChildView:webView, identifier:"width", priority: 250)
+		addLayoutConstraint(toMatch: .width, withChildView:webView, identifier:"width", priority: NSLayoutConstraint.Priority(rawValue: 250))
 		addLayoutConstraint(toMatch: .height, withChildView:webView, identifier:"height")
 		addLayoutConstraint(toMatch: .centerX, withChildView:webView, identifier:"centerX")
 		addLayoutConstraint(toMatch: .top, withChildView:webView, identifier:"top")
@@ -362,7 +362,7 @@ class PageWebViewController : NSViewController, WKNavigationDelegate, WKUIDelega
 	// MARK: WKUIDelegate
 	
 	func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-		let innerPageViewController = PageWebViewController(nibName: nil, bundle: nil)!
+		let innerPageViewController = PageWebViewController(nibName: nil, bundle: nil)
 		innerPageViewController.view = NSView(frame: NSRect(x: 0, y: 0, width: 500.0, height: 500.0))
 		
 		configuration.userContentController = WKUserContentController()
@@ -373,7 +373,7 @@ class PageWebViewController : NSViewController, WKNavigationDelegate, WKUIDelega
 		innerPageViewController.prepare()
 		
 		// http://www.google.com/analytics/
-		presentViewControllerAsSheet(innerPageViewController)
+		presentAsSheet(innerPageViewController)
 		
 		return innerPageViewController.webView
 	}
