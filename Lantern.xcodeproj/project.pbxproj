@@ -541,7 +541,6 @@
 				B25033451AF5E5B0006A2AE7 /* Resources */,
 				B25020671B01C15A00ABAE96 /* Embed Frameworks */,
 				B2D39B091AF60213003D6738 /* Code Sign Embedded Frameworks */,
-				B20DB3851B0F019800E57532 /* Run Fabric Script */,
 			);
 			buildRules = (
 			);
@@ -657,20 +656,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B20DB3851B0F019800E57532 /* Run Fabric Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Fabric Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run d78b0628a95d5798006bf463bd79aea5988e1d50 964de81fc31bf8ad4f53f2d6a8f6e6ef8d5499d21ed3089a3cb8781473da8205";
-		};
 		B2D39B091AF60213003D6738 /* Code Sign Embedded Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -683,7 +668,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ] ; then\n    exit 0\nfi\n\nLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Patrick Smith (9J837BGA64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/LanternModel.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/LanternModel.framework/Versions/A/Frameworks/Alamofire.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/LanternModel.framework/Versions/A/Frameworks/Ono.framework/Versions/A\"";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ] ; then\n    exit 0\nfi\n\nLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Patrick Smith (9J837BGA64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/LanternModel.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/LanternModel.framework/Versions/A/Frameworks/Alamofire.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/LanternModel.framework/Versions/A/Frameworks/Ono.framework/Versions/A\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
