@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,8 @@
 		B2054DB11AF494A300DC2C00 /* PageInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2054DB01AF494A300DC2C00 /* PageInfoRequest.swift */; };
 		B20DB3891B0F020500E57532 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DB3861B0F020500E57532 /* Fabric.framework */; };
 		B20DB38B1B0F020500E57532 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DB3871B0F020500E57532 /* Crashlytics.framework */; };
+		B21738F323742503003C5C59 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = B21738F223742503003C5C59 /* Makefile */; };
+		B21738F62374263D003C5C59 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = B21738F52374263D003C5C59 /* CSV */; };
 		B219509C1DC86D1C00ACCB38 /* MetaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219509B1DC86D1C00ACCB38 /* MetaViewController.swift */; };
 		B219509E1DC873CF00ACCB38 /* PageMapper+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219509D1DC873CF00ACCB38 /* PageMapper+UI.swift */; };
 		B22425F81AC8F8B200809EF0 /* HoverlyticsModel.h in Headers */ = {isa = PBXBuildFile; fileRef = B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -145,6 +147,7 @@
 		B20DB3871B0F020500E57532 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		B2134AAD1AE9F97F00ACDDE3 /* PageMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageMapper.swift; sourceTree = "<group>"; };
+		B21738F223742503003C5C59 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		B219509A1DC8177D00ACCB38 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		B219509B1DC86D1C00ACCB38 /* MetaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaViewController.swift; sourceTree = "<group>"; };
 		B219509D1DC873CF00ACCB38 /* PageMapper+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PageMapper+UI.swift"; sourceTree = "<group>"; };
@@ -229,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B25033181AF5C9A5006A2AE7 /* libxml2.dylib in Frameworks */,
+				B21738F62374263D003C5C59 /* CSV in Frameworks */,
 				B2D563241AF5BF8A006DE202 /* Alamofire.framework in Frameworks */,
 				B25033121AF5C2C7006A2AE7 /* Ono.framework in Frameworks */,
 				B2921F022071F0CF00EAB561 /* Syrup.framework in Frameworks */,
@@ -388,6 +392,7 @@
 		B22B7D861AC6B9090026AEDB = {
 			isa = PBXGroup;
 			children = (
+				B21738F223742503003C5C59 /* Makefile */,
 				B2921EFC2071EFD200EAB561 /* Cartfile */,
 				B2D9D8881B253D3100217300 /* Frameworks */,
 				B22425F41AC8F8B200809EF0 /* LanternModel */,
@@ -504,6 +509,9 @@
 			dependencies = (
 			);
 			name = LanternModel;
+			packageProductDependencies = (
+				B21738F52374263D003C5C59 /* CSV */,
+			);
 			productName = HoverlyticsModel;
 			productReference = B22425F31AC8F8B200809EF0 /* LanternModel.framework */;
 			productType = "com.apple.product-type.framework";
@@ -590,10 +598,14 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
 			mainGroup = B22B7D861AC6B9090026AEDB;
+			packageReferences = (
+				B21738F42374263D003C5C59 /* XCRemoteSwiftPackageReference "CSV.swift" */,
+			);
 			productRefGroup = B22B7D901AC6B9090026AEDB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -739,6 +751,7 @@
 				B250335B1AF5E7AF006A2AE7 /* MainState.swift in Sources */,
 				B250335C1AF5E7AF006A2AE7 /* MainSection.swift in Sources */,
 				B250335A1AF5E7A7006A2AE7 /* MainWindowController.swift in Sources */,
+				B21738F323742503003C5C59 /* Makefile in Sources */,
 				B25033591AF5E79F006A2AE7 /* AppDelegate.swift in Sources */,
 				B2D39B471AF6F494003D6738 /* ImagePreviewViewController.swift in Sources */,
 				B219509E1DC873CF00ACCB38 /* PageMapper+UI.swift in Sources */,
@@ -799,7 +812,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = LanternTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lantern copy.app/Contents/MacOS/Lantern copy";
@@ -817,7 +834,11 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = LanternTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lantern copy.app/Contents/MacOS/Lantern copy";
@@ -851,7 +872,11 @@
 				);
 				INFOPLIST_FILE = LanternModel/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.Hoverlytics.$(PRODUCT_NAME:rfc1034identifier)";
@@ -889,12 +914,17 @@
 				);
 				INFOPLIST_FILE = LanternModel/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.Hoverlytics.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = LanternModel;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.2;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -916,7 +946,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = HoverlyticsModelTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_NAME = LanternModelTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hoverlytics.app/Contents/MacOS/Hoverlytics";
 			};
@@ -931,7 +965,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = HoverlyticsModelTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_NAME = LanternModelTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hoverlytics.app/Contents/MacOS/Hoverlytics";
 			};
@@ -941,6 +979,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -983,11 +1022,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -995,6 +1035,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1031,10 +1072,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
@@ -1059,7 +1102,10 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Lantern/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.$(PRODUCT_NAME:rfc1034identifier).Mac";
@@ -1087,13 +1133,17 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Lantern/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.$(PRODUCT_NAME:rfc1034identifier).Mac";
 				PRODUCT_NAME = Lantern;
 				PROVISIONING_PROFILE = "";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_BRIDGING_HEADER = "Lantern/Lantern-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.2;
 			};
@@ -1148,6 +1198,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B21738F42374263D003C5C59 /* XCRemoteSwiftPackageReference "CSV.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yaslab/CSV.swift.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.4.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B21738F52374263D003C5C59 /* CSV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B21738F42374263D003C5C59 /* XCRemoteSwiftPackageReference "CSV.swift" */;
+			productName = CSV;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B22B7D871AC6B9090026AEDB /* Project object */;
 }
