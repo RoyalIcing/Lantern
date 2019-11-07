@@ -47,7 +47,9 @@ extension ValidatedStringValue {
 		
 		self.init(string: string)
 	}
+}
 	
+extension ValidatedStringValue {
 	static func validateContentOfElement(_ element: ONOXMLElement) -> ValidatedStringValue {
 		let stringValue = element.stringValue()
 		

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -10,50 +10,65 @@
         <scene sceneID="2nV-nl-Dg5">
             <objects>
                 <viewController title="Site Settings" storyboardIdentifier="Site Settings View Controller" showSeguePresentationStyle="single" id="CU5-0T-cmJ" customClass="SiteSettingsViewController" customModule="Lantern" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="i5p-pL-hHv">
-                        <rect key="frame" x="0.0" y="0.0" width="400" height="114"/>
+                    <view key="view" misplaced="YES" id="i5p-pL-hHv">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="175"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WnE-nz-lPG">
-                                <rect key="frame" x="18" y="48" width="364" height="18"/>
-                                <buttonCell key="cell" type="check" title="Save in Favorites" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="mxB-xa-1oc">
+                                <rect key="frame" x="17" y="95" width="365" height="18"/>
+                                <buttonCell key="cell" type="check" title="Save in Favorites" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="mxB-xa-1oc">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="menu" size="11"/>
                                 </buttonCell>
                             </button>
-                            <textField identifier="Home Page URL Field" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VeV-fu-voS">
-                                <rect key="frame" x="20" y="72" width="360" height="22"/>
+                            <textField identifier="Home Page URL Field" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="VeV-fu-voS">
+                                <rect key="frame" x="20" y="130" width="360" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="360" id="9V6-Nl-Mp4"/>
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Web page URL" drawsBackground="YES" id="hts-RC-QJC">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <font key="font" metaFont="system" size="17"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField identifier="Name Field" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uIC-0I-q7g">
-                                <rect key="frame" x="20" y="20" width="360" height="22"/>
+                            <textField identifier="Name Field" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="uIC-0I-q7g">
+                                <rect key="frame" x="20" y="71" width="360" height="19"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="360" id="22c-pr-9EO"/>
                                 </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Name" drawsBackground="YES" id="d2s-Vy-ynt">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Name" drawsBackground="YES" id="d2s-Vy-ynt">
+                                    <font key="font" metaFont="menu" size="11"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aCw-H1-5IM">
+                                <rect key="frame" x="171" y="13" width="58" height="32"/>
+                                <buttonCell key="cell" type="push" title="Go" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tu2-dC-oFU">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="performClose:" target="4yK-ro-LSu" id="LeL-QM-L7H"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="WnE-nz-lPG" firstAttribute="top" secondItem="VeV-fu-voS" secondAttribute="bottom" constant="8" id="4Xg-Dn-29Q"/>
+                            <constraint firstItem="WnE-nz-lPG" firstAttribute="top" secondItem="VeV-fu-voS" secondAttribute="bottom" constant="20" id="4Xg-Dn-29Q"/>
+                            <constraint firstAttribute="bottom" secondItem="aCw-H1-5IM" secondAttribute="bottom" constant="20" symbolic="YES" id="8Y6-at-fsV"/>
                             <constraint firstItem="WnE-nz-lPG" firstAttribute="trailing" secondItem="uIC-0I-q7g" secondAttribute="trailing" id="95K-9j-zXk"/>
                             <constraint firstItem="VeV-fu-voS" firstAttribute="top" secondItem="i5p-pL-hHv" secondAttribute="top" constant="20" symbolic="YES" id="9OI-aC-2Sp"/>
                             <constraint firstItem="VeV-fu-voS" firstAttribute="leading" secondItem="i5p-pL-hHv" secondAttribute="leading" constant="20" symbolic="YES" id="Bao-2p-Zoy"/>
                             <constraint firstItem="uIC-0I-q7g" firstAttribute="trailing" secondItem="VeV-fu-voS" secondAttribute="trailing" id="Qm3-ck-iBk"/>
                             <constraint firstItem="WnE-nz-lPG" firstAttribute="leading" secondItem="uIC-0I-q7g" secondAttribute="leading" id="cVg-nH-byg"/>
-                            <constraint firstAttribute="bottom" secondItem="uIC-0I-q7g" secondAttribute="bottom" constant="20" symbolic="YES" id="crN-WJ-d7l"/>
+                            <constraint firstItem="aCw-H1-5IM" firstAttribute="top" secondItem="uIC-0I-q7g" secondAttribute="bottom" constant="30" id="fNC-Zt-yZs"/>
                             <constraint firstItem="uIC-0I-q7g" firstAttribute="leading" secondItem="VeV-fu-voS" secondAttribute="leading" id="ffb-48-di2"/>
                             <constraint firstAttribute="trailing" secondItem="VeV-fu-voS" secondAttribute="trailing" constant="20" symbolic="YES" id="gkx-j3-SjD"/>
+                            <constraint firstItem="aCw-H1-5IM" firstAttribute="centerX" secondItem="i5p-pL-hHv" secondAttribute="centerX" id="jrJ-jn-pNc"/>
                             <constraint firstItem="uIC-0I-q7g" firstAttribute="top" secondItem="WnE-nz-lPG" secondAttribute="bottom" constant="8" id="o00-sa-wux"/>
                         </constraints>
                     </view>
@@ -66,29 +81,29 @@
                 </viewController>
                 <customObject id="4yK-ro-LSu" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="319" y="19"/>
+            <point key="canvasLocation" x="319" y="33.5"/>
         </scene>
         <!--Add Site-->
         <scene sceneID="3lj-hP-Yw6">
             <objects>
                 <viewController title="Add Site" storyboardIdentifier="Add Site View Controller" showSeguePresentationStyle="single" id="ont-Pv-J5Y" customClass="SiteSettingsViewController" customModule="Lantern" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Qx0-hQ-3T0">
-                        <rect key="frame" x="0.0" y="0.0" width="400" height="194"/>
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="190"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField identifier="Home Page URL Field" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tx3-lb-zH8">
-                                <rect key="frame" x="20" y="71" width="360" height="22"/>
+                            <textField identifier="Home Page URL Field" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Tx3-lb-zH8">
+                                <rect key="frame" x="20" y="71" width="360" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="360" id="bls-es-CoL"/>
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="The URL to this website’s home page" drawsBackground="YES" id="AXb-ec-1Zi">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField identifier="Home Page URL Label" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Pl-MS-8D3">
-                                <rect key="frame" x="18" y="101" width="103" height="17"/>
+                            <textField identifier="Home Page URL Label" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Pl-MS-8D3">
+                                <rect key="frame" x="18" y="100" width="103" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Home Page URL" id="qzx-qO-2c6">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -108,22 +123,22 @@ DQ
                                     <action selector="createSite:" target="ont-Pv-J5Y" id="ZTL-82-kN0"/>
                                 </connections>
                             </button>
-                            <textField identifier="Name Label" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2WE-up-9VU">
-                                <rect key="frame" x="18" y="157" width="76" height="17"/>
+                            <textField identifier="Name Label" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2WE-up-9VU">
+                                <rect key="frame" x="18" y="154" width="76" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Site’s Name" id="n6P-bf-Hmx">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField identifier="Name Field" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWR-fU-VaP">
-                                <rect key="frame" x="20" y="127" width="360" height="22"/>
+                            <textField identifier="Name Field" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="yWR-fU-VaP">
+                                <rect key="frame" x="20" y="125" width="360" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="360" id="dLn-XN-IYr"/>
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="Name" drawsBackground="YES" id="t4O-aZ-x4a">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>

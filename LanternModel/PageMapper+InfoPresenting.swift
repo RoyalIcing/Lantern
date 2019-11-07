@@ -127,7 +127,7 @@ public enum PagePresentedInfoIdentifier: String {
 		byteFormatter.countStyle = .binary
 		byteFormatter.isAdaptive = false
 		return byteFormatter
-		}()
+	}()
 	
 	public func validatedStringValueForPendingURL(_ requestedURL: URL) -> ValidatedStringValue {
 		switch self {

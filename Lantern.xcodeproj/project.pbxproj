@@ -13,6 +13,7 @@
 		B20DB38B1B0F020500E57532 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DB3871B0F020500E57532 /* Crashlytics.framework */; };
 		B21738F323742503003C5C59 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = B21738F223742503003C5C59 /* Makefile */; };
 		B21738F62374263D003C5C59 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = B21738F52374263D003C5C59 /* CSV */; };
+		B21738F823742C50003C5C59 /* PageMapper+CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21738F723742C50003C5C59 /* PageMapper+CSV.swift */; };
 		B219509C1DC86D1C00ACCB38 /* MetaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219509B1DC86D1C00ACCB38 /* MetaViewController.swift */; };
 		B219509E1DC873CF00ACCB38 /* PageMapper+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219509D1DC873CF00ACCB38 /* PageMapper+UI.swift */; };
 		B22425F81AC8F8B200809EF0 /* HoverlyticsModel.h in Headers */ = {isa = PBXBuildFile; fileRef = B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -148,6 +149,7 @@
 		B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		B2134AAD1AE9F97F00ACDDE3 /* PageMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageMapper.swift; sourceTree = "<group>"; };
 		B21738F223742503003C5C59 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		B21738F723742C50003C5C59 /* PageMapper+CSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PageMapper+CSV.swift"; sourceTree = "<group>"; };
 		B219509A1DC8177D00ACCB38 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		B219509B1DC86D1C00ACCB38 /* MetaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaViewController.swift; sourceTree = "<group>"; };
 		B219509D1DC873CF00ACCB38 /* PageMapper+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PageMapper+UI.swift"; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				B2D39B0A1AF64533003D6738 /* PageMapper+LinkFiltering.swift */,
 				B22766301AEF4DFC0083FE8C /* PageMapper+Validating.swift */,
 				B227662C1AEF382E0083FE8C /* PageMapper+InfoPresenting.swift */,
+				B21738F723742C50003C5C59 /* PageMapper+CSV.swift */,
 				B2E0FFFB1AFB37580073CB8A /* SiteEssentialsInfo.swift */,
 				B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */,
 				B22425F51AC8F8B200809EF0 /* Supporting Files */,
@@ -717,6 +720,7 @@
 				B2C4A93F1ACA31F0000F1566 /* ModelManager.swift in Sources */,
 				B22766281AEF36DA0083FE8C /* PageMapper+Filtering.swift in Sources */,
 				B22766291AEF37360083FE8C /* PageMapper.swift in Sources */,
+				B21738F823742C50003C5C59 /* PageMapper+CSV.swift in Sources */,
 				B27F48C91B64D25B003F1215 /* ValueStorable.swift in Sources */,
 				B268DC971B1B569C0095BBB9 /* EnabledFeatures.swift in Sources */,
 				B2B542C31AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift in Sources */,

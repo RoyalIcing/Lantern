@@ -318,6 +318,31 @@ class ViewController : NSViewController
 			pageViewController.toggleShownViews(sender)
 	}
 	
+	@IBAction func exportCSV(_ sender: Any?) {
+		guard let pageMapper = pageMapper else { return }
+		
+		let savePanel = NSSavePanel()
+		savePanel.allowedFileTypes = [(kUTTypeCommaSeparatedText as String)]
+		savePanel.nameFieldStringValue = "pages.csv"
+		
+		let window = self.view.window!
+		savePanel.beginSheetModal(for: window) { [weak self] response in
+			guard let self = self else { return }
+			guard .OK == response, let url = savePanel.url else { return }
+			
+			var csvCreator = CrawledResultsCSVCreator()
+			csvCreator.baseContentType = .localHTMLPage
+			
+			do {
+				let data = try csvCreator.csvData(pageMapper: pageMapper)
+				try data.write(to: url)
+			}
+			catch (let error) {
+				self.presentError(error)
+			}
+		}
+	}
+	
 	override func supplementalTarget(forAction action: Selector, sender: Any?) -> Any? {
 		if statsViewController.responds(to: action) {
 			return statsViewController
