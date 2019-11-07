@@ -62,7 +62,7 @@ class MainWindowController: NSWindowController {
 				button.action = #selector(ViewController.showSiteSettings(_:))
 			}
 			
-			toolbarAssistant.prepareShowTogglesSegmentedControl = { [unowned self] segmentedControl in
+			toolbarAssistant.prepareToggleViewControl = { [unowned self] segmentedControl in
 				segmentedControl.target = self.mainViewController
 				segmentedControl.action = #selector(ViewController.toggleShownViews(_:))
 			}
@@ -93,17 +93,26 @@ class MainWindowController: NSWindowController {
 		mainViewController.modelManager = modelManager
 		mainViewController.mainState = mainState
 		
+		mainViewController.changeCallback = { [weak self] change in
+			guard let self = self else { return }
+			switch change {
+			case let .toggleableViews(shown):
+				self.toolbarAssistant.updateToggleViewControl(shownViews: shown)
+			}
+		}
+		
 		let nc = NotificationCenter.default
-		chosenSiteDidChangeObserver = nc.addObserver(forName: NSNotification.Name(rawValue: MainState.Notification.ChosenSiteDidChange.rawValue), object: mainState, queue: nil) { [unowned self] note in
+		chosenSiteDidChangeObserver = nc.addObserver(forName: MainState.chosenSiteDidChangeNotification, object: mainState, queue: nil) { [weak self] note in
+			guard let self = self else { return }
 			self.window?.title = self.windowTitle(forDocumentDisplayName: "New")
 		}
 		
 		if let provider = mainViewController.pageMapperProvider {
 			provider[activeURLChangedCallback: crawlerProviderListenerUUID] = { [weak self] url in
-				guard let receiver = self else { return }
-				if let url = url, let button = receiver.toolbarAssistant.siteSettingsButton {
+				guard let self = self else { return }
+				if let url = url, let button = self.toolbarAssistant.siteSettingsButton {
 					button.title = url.absoluteString
-					receiver.toolbarAssistant.updateChosenSiteState()
+					self.toolbarAssistant.updateChosenSiteState()
 				}
 			}
 		}
@@ -145,7 +154,6 @@ struct ToolbarItem<ControlClass: NSControl> {
 class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	let toolbar: NSToolbar
 	let mainState: MainState
-	let mainStateObserver: NotificationObserver<MainState.Notification>
 	let modelManager: LanternModel.ModelManager
 	
 	init(toolbar: NSToolbar, mainState: MainState, modelManager: LanternModel.ModelManager) {
@@ -153,16 +161,10 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		self.mainState = mainState
 		self.modelManager = modelManager
 		
-		mainStateObserver = NotificationObserver<MainState.Notification>(object: mainState)
-		
 		super.init()
 		
-		mainStateObserver.observe(.ChosenSiteDidChange) { [unowned self] _ in
-			if let chosenSite = self.mainState.chosenSite {
-				let choice = SiteMenuItem.choice(.savedSite(chosenSite))
-				self.sitesPopUpButtonAssistant?.selectedUniqueIdentifier = choice.uniqueIdentifier
-			}
-		}
+		let nc = NotificationCenter.default
+		nc.addObserver(self, selector: #selector(mainState_chosenSiteDidChange(_:)), name: MainState.chosenSiteDidChangeNotification, object: mainState)
 		
 		toolbar.delegate = self
 		
@@ -173,6 +175,13 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	deinit {
 		stopObservingModelManager()
 		stopObservingBrowserPreferences()
+	}
+	
+	@objc func mainState_chosenSiteDidChange(_ notification: NSNotification) {
+		if let chosenSite = mainState.chosenSite {
+			let choice = SiteMenuItem.choice(.savedSite(chosenSite))
+			sitesPopUpButtonAssistant?.selectedUniqueIdentifier = choice.uniqueIdentifier
+		}
 	}
 	
 	var modelManagerNotificationObservers = [ModelManagerNotification: AnyObject]()
@@ -313,8 +322,13 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	var siteSettingsButton: NSButton!
 	var prepareSiteSettingsButton: ((NSButton) -> ())?
 	
-	var showTogglesSegmentedControl: NSSegmentedControl!
-	var prepareShowTogglesSegmentedControl: ((NSSegmentedControl) -> ())?
+	var toggleViewControl: NSSegmentedControl!
+	var prepareToggleViewControl: ((NSSegmentedControl) -> ())?
+	func updateToggleViewControl(shownViews: Set<ToggleableViewIdentifier>) {
+		print("updateToggleViewControl \(shownViews)")
+		toggleViewControl.setSelected(shownViews.contains(.browser), forSegment: 0)
+		toggleViewControl.setSelected(shownViews.contains(.meta), forSegment: 1)
+	}
 	
 	//var viewportWidthAssistant: SegmentedControlAssistant<BrowserWidthChoice>?
 	var viewportWidthAssistant: PopUpButtonAssistant<BrowserWidthChoice>?
@@ -327,8 +341,6 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	func startObservingBrowserPreferences() {
 		let preferences = BrowserPreferences.sharedBrowserPreferences
 		browserPreferencesObserver = NotificationObserver<BrowserPreferences.Notification>(object: preferences)
-		//browserPreferencesObserver = BrowserPreferences.Notification.createObserver(of: preferences)
-		//browserPreferencesObserver = preferences.createObserver()
 		
 		browserPreferencesObserver.observe(.widthChoiceDidChange) { notification in
 			self.viewportWidthAssistant?.selectedUniqueIdentifier = preferences.widthChoice.uniqueIdentifier
@@ -354,7 +366,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	func toolbarWillAddItem(_ notification: Notification) {
 		let userInfo = notification.userInfo!
 		let toolbarItem = userInfo["item"] as! NSToolbarItem
-		let itemIdentifier = convertFromNSToolbarItemIdentifier(toolbarItem.itemIdentifier)
+		let itemIdentifier = toolbarItem.itemIdentifier.rawValue
 		var sizeToFit = false
 		
 		if itemIdentifier == "newSiteButton" {
@@ -376,7 +388,6 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			popUpButton.target = self
 			popUpButton.action = #selector(changeViewportWidth(_:))
 			
-			print(BrowserWidthChoice.allChoices)
 			let assistant = PopUpButtonAssistant<BrowserWidthChoice>(popUpButton: popUpButton)
 			assistant.menuItemRepresentatives = BrowserWidthChoice.allChoices
 			//print(assistant.defaultSegmentedItemRepresentatives)
@@ -384,8 +395,8 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			self.viewportWidthAssistant = assistant
 		}
 		else if itemIdentifier == "showToggles" {
-			showTogglesSegmentedControl = toolbarItem.view as! NSSegmentedControl
-			prepareShowTogglesSegmentedControl?(showTogglesSegmentedControl)
+			toggleViewControl = toolbarItem.view as! NSSegmentedControl
+			prepareToggleViewControl?(toggleViewControl)
 		}
 		else if itemIdentifier == "searchPages" {
 			searchPagesField = toolbarItem.view as! NSSearchField
@@ -397,9 +408,4 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			toolbarItem.maxSize = fittingSize
 		}
 	}
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromNSToolbarItemIdentifier(_ input: NSToolbarItem.Identifier) -> String {
-	return input.rawValue
 }

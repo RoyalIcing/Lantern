@@ -24,6 +24,11 @@ class ViewController : NSViewController
 		pageMapper = nil
 	}
 	
+	enum Change {
+		case toggleableViews(shown: Set<ToggleableViewIdentifier>)
+	}
+	var changeCallback: ((_ change: Change) -> ())?
+	
 	var pageMapperCreatedCallbacks: [UUID: (PageMapper) -> ()] = [:]
 	func createPageMapper(primaryURL: URL) -> PageMapper? {
 		clearPageMapper()
@@ -107,31 +112,26 @@ class ViewController : NSViewController
 		}
 	}
 	
-	typealias MainStateNotification = MainState.Notification
-	var mainStateNotificationObservers = [MainStateNotification: AnyObject]()
+	var mainStateNotificationObservers = [NSObjectProtocol]()
 	var browserPreferencesObserver: NotificationObserver<BrowserPreferences.Notification>!
 	
 	func startObservingModelManager() {
 		let nc = NotificationCenter.default
 		let mainQueue = OperationQueue.main
 		
-		func addObserver(_ notificationIdentifier: MainState.Notification, block: @escaping (Notification?) -> ()) {
-			let observer = nc.addObserver(forName: NSNotification.Name(rawValue: notificationIdentifier.notificationName), object: mainState, queue: mainQueue, using: block)
-			mainStateNotificationObservers[notificationIdentifier] = observer
+		let observer = nc.addObserver(forName: MainState.chosenSiteDidChangeNotification, object: mainState, queue: mainQueue) { [weak self] _ in
+			self?.updateMainViewForState()
 		}
-		
-		addObserver(.ChosenSiteDidChange) { notification in
-			self.updateMainViewForState()
-		}
+		mainStateNotificationObservers.append(observer)
 	}
 	
 	func stopObservingModelManager() {
 		let nc = NotificationCenter.default
 		
-		for (_, observer) in mainStateNotificationObservers {
+		for observer in mainStateNotificationObservers {
 			nc.removeObserver(observer)
 		}
-		mainStateNotificationObservers.removeAll(keepingCapacity: false)
+		mainStateNotificationObservers.removeAll()
 	}
 	
 	func updatePreferredBrowserWidth() {
@@ -207,6 +207,9 @@ class ViewController : NSViewController
 		
 		// The top web browser
 		let pageViewController = storyboard.instantiateController(withIdentifier: "Page View Controller") as! PageViewController
+		pageViewController.toggledViewsDidChangeCallback = { [weak self] shownViews in
+			self?.changeCallback?(.toggleableViews(shown: shownViews))
+		}
 		
 		// The bottom page crawler table
 		let statsViewController = storyboard.instantiateController(withIdentifier: "Stats View Controller") as! StatsViewController
@@ -216,7 +219,6 @@ class ViewController : NSViewController
 				self.pageViewController.loadURL(url)
 			}
 		}
-		
 		
 		mainSplitViewController.addSplitViewItem({
 			let item = NSSplitViewItem(viewController: pageViewController)

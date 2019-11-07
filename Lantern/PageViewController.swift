@@ -16,7 +16,12 @@ typealias PageViewControllerGoogleOAuth2TokenCallback = (_ tokenJSONString: Stri
 
 
 open class PageViewController: NSViewController {
-	var splitViewController: NSSplitViewController!
+	var splitViewController: NSSplitViewController! {
+		didSet {
+			startObservingSplitView()
+		}
+	}
+	var toggledViewsDidChangeCallback: ((_ shownViews: Set<ToggleableViewIdentifier>) -> ())?
 	
 	@IBOutlet var URLField: NSTextField!
 	@IBOutlet var crawlWhileBrowsingCheckButton: NSButton!
@@ -53,6 +58,24 @@ open class PageViewController: NSViewController {
 		view.addConstraint(NSLayoutConstraint(item: view, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: minimumHeight))
 	}
 	
+	func startObservingSplitView() {
+		let nc = NotificationCenter.default
+		nc.addObserver(self, selector: #selector(splitView_didResizeSubviews(_:)), name: NSSplitView.didResizeSubviewsNotification, object: self.splitViewController.splitView)
+	}
+	
+	@objc func splitView_didResizeSubviews(_ notification: Notification) {
+		guard let callback = self.toggledViewsDidChangeCallback else { return }
+		let splitVC = self.splitViewController!
+		
+		var shownViews = Set<ToggleableViewIdentifier>()
+		for (identifier, item) in zip([ToggleableViewIdentifier.browser, .meta], splitVC.splitViewItems) {
+			if item.isCollapsed == false {
+					shownViews.insert(identifier)
+			}
+		}
+		callback(shownViews)
+	}
+	
 	var webViewControllerNotificationObserver: NotificationObserver<PageWebViewControllerNotification>!
 	//var webViewControllerNotificationObservers = [PageWebViewControllerNotification: AnyObject]()
 	
@@ -83,6 +106,7 @@ open class PageViewController: NSViewController {
 			webViewController = segue.destinationController as! PageWebViewController
 			prepareWebViewController(webViewController)
 		}*/
+		print("prepare SEGUE")
 		if segue.identifier == "activeResourceSplit" {
 			let splitVC = segue.destinationController as! NSSplitViewController
 			self.splitViewController = splitVC
@@ -100,21 +124,21 @@ open class PageViewController: NSViewController {
 		updateUIForURL(url)
 	}
 	
-	func loadURL(_ URL: Foundation.URL) {
-		webViewController.loadURL(URL)
+	func loadURL(_ url: URL) {
+		webViewController.loadURL(url)
 		
-		updateUIForURL(URL)
+		updateUIForURL(url)
 	}
 	
-	func updateUIForURL(_ URL: Foundation.URL) {
+	func updateUIForURL(_ url: URL) {
 		//URLField.stringValue = URL.absoluteString
 	}
 	
 	// MARK: Actions
 	
 	@IBAction func URLFieldChanged(_ textField: NSTextField) {
-		if let URL = LanternModel.detectWebURL(fromString: textField.stringValue) {
-			loadURL(URL)
+		if let url = LanternModel.detectWebURL(fromString: textField.stringValue) {
+			loadURL(url)
 		}
 	}
 	
@@ -143,6 +167,10 @@ open class PageViewController: NSViewController {
 			let show = cell.isSelected(forSegment: segmentIndex)
 			splitViewItems[segmentIndex].isCollapsed = !show
 		}
+	}
+	
+	@IBAction func updateToggleShownViews(_ sender: Any?) {
+		
 	}
 }
 
@@ -183,7 +211,7 @@ class PageWebViewController : NSViewController, WKNavigationDelegate, WKUIDelega
 			}
 			
 			if let preferredBrowserWidth = preferredBrowserWidth {
-				let constraint = NSLayoutConstraint(item: webView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: preferredBrowserWidth)
+				let constraint = webView.widthAnchor.constraint(equalToConstant: preferredBrowserWidth)
 				view.addConstraint(constraint)
 				preferredBrowserWidthContraint = constraint
 			}

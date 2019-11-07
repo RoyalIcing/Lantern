@@ -14,6 +14,7 @@
 		B21738F323742503003C5C59 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = B21738F223742503003C5C59 /* Makefile */; };
 		B21738F62374263D003C5C59 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = B21738F52374263D003C5C59 /* CSV */; };
 		B21738F823742C50003C5C59 /* PageMapper+CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21738F723742C50003C5C59 /* PageMapper+CSV.swift */; };
+		B21738FA237455B8003C5C59 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21738F9237455B8003C5C59 /* ViewState.swift */; };
 		B219509C1DC86D1C00ACCB38 /* MetaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219509B1DC86D1C00ACCB38 /* MetaViewController.swift */; };
 		B219509E1DC873CF00ACCB38 /* PageMapper+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219509D1DC873CF00ACCB38 /* PageMapper+UI.swift */; };
 		B22425F81AC8F8B200809EF0 /* HoverlyticsModel.h in Headers */ = {isa = PBXBuildFile; fileRef = B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -150,6 +151,7 @@
 		B2134AAD1AE9F97F00ACDDE3 /* PageMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageMapper.swift; sourceTree = "<group>"; };
 		B21738F223742503003C5C59 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		B21738F723742C50003C5C59 /* PageMapper+CSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PageMapper+CSV.swift"; sourceTree = "<group>"; };
+		B21738F9237455B8003C5C59 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		B219509A1DC8177D00ACCB38 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		B219509B1DC86D1C00ACCB38 /* MetaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaViewController.swift; sourceTree = "<group>"; };
 		B219509D1DC873CF00ACCB38 /* PageMapper+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PageMapper+UI.swift"; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				B2C4A9401ACA3203000F1566 /* MainState.swift */,
 				B25020601B01B3B200ABAE96 /* Preferences */,
 				B219509F1DC87CB400ACCB38 /* Responder Chain */,
+				B21738F9237455B8003C5C59 /* ViewState.swift */,
 				B2E2693A1AE9E5130044BE04 /* MainSection.swift */,
 				B22876261AF3A4D800A8A4A2 /* SiteMenuItem.swift */,
 				B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */,
@@ -749,6 +752,7 @@
 				B25033611AF5E7CD006A2AE7 /* WKUserContentController+bundledScripts.swift in Sources */,
 				B25033601AF5E7C4006A2AE7 /* SourcePreviewViewController.swift in Sources */,
 				B250335E1AF5E7BC006A2AE7 /* PageViewController.swift in Sources */,
+				B21738FA237455B8003C5C59 /* ViewState.swift in Sources */,
 				B25020611B01B66400ABAE96 /* CrawlerMenuController.swift in Sources */,
 				B250335D1AF5E7B5006A2AE7 /* ViewController.swift in Sources */,
 				B250335B1AF5E7AF006A2AE7 /* MainState.swift in Sources */,

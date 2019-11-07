@@ -428,7 +428,7 @@
                                 <toolbarItem implicitItemIdentifier="E101A52F-9533-4F68-B061-3B53DDCE426E" explicitItemIdentifier="newSiteButton" label="New Site" paletteLabel="New Site" image="NSAddTemplate" visibilityPriority="1000" id="cbE-mo-coS">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="40" height="25"/>
-                                    <size key="maxSize" width="40" height="25"/>
+                                    <size key="maxSize" width="41" height="25"/>
                                     <button key="view" verticalHuggingPriority="750" id="V8C-mE-AIW">
                                         <rect key="frame" x="7" y="14" width="40" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -461,11 +461,11 @@
                                 <toolbarItem implicitItemIdentifier="69CF055A-8451-4A20-8C7E-140CA0CF5072" explicitItemIdentifier="siteSettingsButton" label="Site Settings" paletteLabel="Viewed Page" visibilityPriority="1000" id="dTY-M3-1X3">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="80" height="25"/>
-                                    <size key="maxSize" width="4000" height="25"/>
+                                    <size key="maxSize" width="4000" height="26"/>
                                     <button key="view" verticalHuggingPriority="750" id="i3Y-1h-JQU">
-                                        <rect key="frame" x="0.0" y="14" width="80" height="25"/>
+                                        <rect key="frame" x="0.0" y="14" width="109" height="26"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" title="Enter a URL" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VpM-Yb-73D">
+                                        <buttonCell key="cell" type="roundTextured" title="Enter Page URL" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VpM-Yb-73D">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -505,18 +505,18 @@
                                         </popUpButtonCell>
                                     </popUpButton>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="9BBF2DA5-EE16-45CE-93FC-3529358DD0AA" explicitItemIdentifier="contentHighlights" label="Content Highlights" paletteLabel="Content Highlights" id="Irc-O6-gOu" userLabel="Content Highlights">
+                                <toolbarItem implicitItemIdentifier="9BBF2DA5-EE16-45CE-93FC-3529358DD0AA" explicitItemIdentifier="showToggles" label="Toggle Views" paletteLabel="Toggle Views" id="Irc-O6-gOu">
                                     <nil key="toolTip"/>
-                                    <size key="minSize" width="100" height="28"/>
-                                    <size key="maxSize" width="149" height="28"/>
+                                    <size key="minSize" width="100" height="24"/>
+                                    <size key="maxSize" width="153" height="28"/>
                                     <segmentedControl key="view" verticalHuggingPriority="750" id="CJH-lg-TyV">
-                                        <rect key="frame" x="0.0" y="14" width="123" height="28"/>
+                                        <rect key="frame" x="0.0" y="14" width="136" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectAny" id="6gp-46-v9K">
                                             <font key="font" metaFont="system"/>
                                             <segments>
-                                                <segment label="Meta" selected="YES" tag="1"/>
-                                                <segment label="Content" selected="YES" tag="2"/>
+                                                <segment label="Browser" selected="YES" tag="1"/>
+                                                <segment label="Meta" selected="YES" tag="2"/>
                                             </segments>
                                         </segmentedCell>
                                     </segmentedControl>
@@ -526,6 +526,7 @@
                                 <toolbarItem reference="dTY-M3-1X3"/>
                                 <toolbarItem reference="UDa-Tt-8U7"/>
                                 <toolbarItem reference="KJk-MN-cfh"/>
+                                <toolbarItem reference="Irc-O6-gOu"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>

@@ -33,36 +33,26 @@ class MainState {
 	let crawlerPreferences = CrawlerPreferences.sharedCrawlerPreferences
 	let browserPreferences = BrowserPreferences.sharedBrowserPreferences
 	
-	var siteChoice: SiteChoice = .custom {
+	var siteChoice = SiteChoice.custom {
 		didSet {
-			if siteChoice == oldValue {
-				return
-			}
-			mainQueue_notify(.ChosenSiteDidChange)
+			if siteChoice == oldValue { return }
+			mainQueue_notify(Self.chosenSiteDidChangeNotification)
 		}
 	}
 	
 	var chosenSite: SiteValues? {
 		switch siteChoice {
-		case .savedSite(let site):
-			return site
-		default:
-			return nil
+		case .savedSite(let site): return site
+		default: return nil
 		}
 	}
 	
 	var initialHost: String?
 	
-	enum Notification: String {
-		case ChosenSiteDidChange = "LanternModel.MainState.ChosenSiteDidChangeNotification"
-		
-		var notificationName: String {
-			return self.rawValue
-		}
-	}
+	static let chosenSiteDidChangeNotification = Notification.Name.init("LanternModel.MainState.ChosenSiteDidChangeNotification")
 	
-	func mainQueue_notify(_ identifier: Notification, userInfo: [String:AnyObject]? = nil) {
+	private func mainQueue_notify(_ name: Notification.Name, userInfo: [String: AnyObject]? = nil) {
 		let nc = NotificationCenter.default
-		nc.post(name: Foundation.Notification.Name(rawValue: identifier.notificationName), object: self, userInfo: userInfo)
+		nc.post(name: name, object: self, userInfo: userInfo)
 	}
 }
