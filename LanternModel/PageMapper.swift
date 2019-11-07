@@ -43,7 +43,7 @@ public final class PageMapper {
 	//var ignoresNoFollows = false
 	
 	
-	internal(set) var requestedURLsUnique = UniqueURLArray()
+	var requestedURLsUnique = UniqueURLArray()
 	
 	public internal(set) var loadedURLToPageInfo = [URL: PageInfo]()
 	public internal(set) var requestedURLToDestinationURL = [URL: URL]()
@@ -55,12 +55,12 @@ public final class PageMapper {
 	
 	public internal(set) var externalURLs = Set<URL>()
 	
-	internal(set) var requestedLocalPageURLsUnique = UniqueURLArray()
+	var requestedLocalPageURLsUnique = UniqueURLArray()
 	public var localPageURLsOrdered: [URL] {
 		return requestedLocalPageURLsUnique.orderedURLs as [URL]
 	}
 	
-	internal(set) var requestedImageURLsUnique = UniqueURLArray()
+	var requestedImageURLsUnique = UniqueURLArray()
 	public var imageURLsOrdered: [URL] {
 		return requestedImageURLsUnique.orderedURLs as [URL]
 	}

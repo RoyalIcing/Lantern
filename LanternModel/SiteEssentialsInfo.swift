@@ -53,8 +53,8 @@ public struct SiteEssentialInfo {
 open class SiteEssentialInfoRequest {
 	public typealias CompletionHandler = (_ info: SiteEssentialInfo) -> ()
 	
-	open let type: SiteEssentialType
-	open let completionHandler: CompletionHandler
+	public let type: SiteEssentialType
+	public let completionHandler: CompletionHandler
 	
 	var resourceRequests: [String: PageInfoRequest]
 	var resourceInfos: [String: PageInfo]

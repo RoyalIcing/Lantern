@@ -122,7 +122,7 @@ extension PageInfo {
 
 
 public extension PageMapper {
-	public func copyHTMLPageURLsWhichCompletelyValidateForType(_ type: BaseContentType) -> [URL] {
+	func copyHTMLPageURLsWhichCompletelyValidateForType(_ type: BaseContentType) -> [URL] {
 		let validationAreas = PageInfoValidationArea.allAreas
 		let URLs = copyURLsWithBaseContentType(type, withResponseType: .successful)
 		
@@ -137,7 +137,7 @@ public extension PageMapper {
 		}
 	}
 	
-	public func copyHTMLPageURLsForType(_ type: BaseContentType, failingToValidateInArea validationArea: PageInfoValidationArea) -> [URL] {
+	func copyHTMLPageURLsForType(_ type: BaseContentType, failingToValidateInArea validationArea: PageInfoValidationArea) -> [URL] {
 		let URLs = copyURLsWithBaseContentType(type, withResponseType: .successful)
 		
 		return URLs.filter { URL in

@@ -10,7 +10,7 @@ import Foundation
 
 
 public extension PageMapper {
-	public func numberOfRequestedURLsWithBaseContentType(_ type: BaseContentType) -> Int {
+	func numberOfRequestedURLsWithBaseContentType(_ type: BaseContentType) -> Int {
 		switch type {
 		case .localHTMLPage:
 			return requestedLocalPageURLsUnique.count
@@ -23,7 +23,7 @@ public extension PageMapper {
 		}
 	}
 	
-	public func numberOfLoadedURLsWithBaseContentType(_ baseContentType: BaseContentType, responseType: PageResponseType? = nil) -> UInt {
+	func numberOfLoadedURLsWithBaseContentType(_ baseContentType: BaseContentType, responseType: PageResponseType? = nil) -> UInt {
 		if let responseType = responseType {
 			return baseContentTypeToResponseTypeToURLCount[baseContentType]?[responseType] ?? 0
 		}
@@ -39,7 +39,7 @@ public extension PageMapper {
 		}
 	}
 	
-	public func copyURLsWithBaseContentType(_ type: BaseContentType) -> [URL] {
+	func copyURLsWithBaseContentType(_ type: BaseContentType) -> [URL] {
 		switch type {
 		case .localHTMLPage:
 			return localPageURLsOrdered as [URL]
@@ -52,7 +52,7 @@ public extension PageMapper {
 		}
 	}
 	
-	public func copyURLsWithBaseContentType(_ type: BaseContentType, withResponseType responseType: PageResponseType) -> [URL] {
+	func copyURLsWithBaseContentType(_ type: BaseContentType, withResponseType responseType: PageResponseType) -> [URL] {
 		let URLs: [URL] = copyURLsWithBaseContentType(type)
 		
 		return URLs.filter { (URL) in

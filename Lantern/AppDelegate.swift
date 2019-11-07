@@ -73,7 +73,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		
 		let nc = NotificationCenter.default
 		windowWillCloseObservers.append(nc.addObserver(forName: NSWindow.willCloseNotification, object: windowController.window!, queue: nil, using: { [unowned self] note in
-			if let index = self.mainWindowControllers.index(of: windowController) {
+			if let index = self.mainWindowControllers.firstIndex(of: windowController) {
 				self.mainWindowControllers.remove(at: index)
 			}
 		}))

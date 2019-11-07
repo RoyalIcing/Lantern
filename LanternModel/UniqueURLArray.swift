@@ -69,10 +69,10 @@ class UniqueURLArray: Sequence {
 	
 	func remove(_ URL: Foundation.URL) {
 		if let URL = conformURL(URL) {
-			if let setIndex = uniqueURLs.index(of: URL) {
+			if let setIndex = uniqueURLs.firstIndex(of: URL) {
 				uniqueURLs.remove(at: setIndex)
 				
-				if let arrayIndex = orderedURLs.index(of: URL) {
+				if let arrayIndex = orderedURLs.firstIndex(of: URL) {
 					orderedURLs.remove(at: arrayIndex)
 				}
 			}

@@ -30,7 +30,7 @@ public enum ModelManagerNotification: String {
 
 
 public final class ErrorReceiver {
-	open var errorCallback: ((_ error: NSError) -> ())?
+	public var errorCallback: ((_ error: NSError) -> ())?
 	
 	func receiveError(_ error: NSError) {
 		errorCallback?(error)
@@ -83,7 +83,7 @@ enum SitesLoadingProgression : Progression {
 	mutating func update(_ siteValues: SiteValues, uuid: Foundation.UUID) {
 		switch self {
 		case var .sitesList(sitesList, _):
-			guard let index = sitesList.index(where: { $0.UUID == uuid })
+			guard let index = sitesList.firstIndex(where: { $0.UUID == uuid })
 				else { return }
 			sitesList[index] = siteValues
 			self = .sitesList(sitesList: sitesList, needsSaving: true)
@@ -96,7 +96,7 @@ enum SitesLoadingProgression : Progression {
 		let url = siteValues.homePageURL.absoluteURL
 		switch self {
 		case var .sitesList(sitesList, _):
-			if let index = sitesList.index(where: { $0.homePageURL.absoluteURL == url }) {
+			if let index = sitesList.firstIndex(where: { $0.homePageURL.absoluteURL == url }) {
 				sitesList[index] = siteValues
 			}
 			else {
@@ -168,7 +168,7 @@ enum SitesSavingProgression : Progression {
 open class ModelManager {
 	var isAvailable = false
 	
-	open let errorReceiver = ErrorReceiver()
+	public let errorReceiver = ErrorReceiver()
 	
 	fileprivate var storeDirectory: SystemDirectory
 	fileprivate var sitesURL: URL?
