@@ -52,14 +52,9 @@ class MainWindowController: NSWindowController {
 		didSet {
 			toolbarAssistant = MainWindowToolbarAssistant(toolbar: toolbar, mainState: mainState, modelManager: modelManager)
 			
-			toolbarAssistant.prepareNewSiteButton = { button in
-				button.target = nil
-				button.action = #selector(MainWindowController.showAddSite(_:))
-			}
-			
-			toolbarAssistant.prepareSiteSettingsButton = { [unowned self] button in
+			toolbarAssistant.prepareURLSettingsButton = { [unowned self] button in
 				button.target = self.mainViewController
-				button.action = #selector(ViewController.showSiteSettings(_:))
+				button.action = #selector(ViewController.showURLSettings(_:))
 			}
 			
 			toolbarAssistant.prepareToggleViewControl = { [unowned self] segmentedControl in
@@ -110,7 +105,7 @@ class MainWindowController: NSWindowController {
 		if let provider = mainViewController.pageMapperProvider {
 			provider[activeURLChangedCallback: crawlerProviderListenerUUID] = { [weak self] url in
 				guard let self = self else { return }
-				if let url = url, let button = self.toolbarAssistant.siteSettingsButton {
+				if let url = url, let button = self.toolbarAssistant.urlSettingsButton {
 					button.title = url.absoluteString
 					self.toolbarAssistant.updateChosenSiteState()
 				}
@@ -125,8 +120,10 @@ class MainWindowController: NSWindowController {
 		}
 	}
 	
-	@IBAction func showAddSite(_ sender: Any?) {
-		mainViewController.showAddSiteRelativeToView(toolbarAssistant.addSiteButton)
+	@IBAction func openURL(_ sender: Any?) {
+		print("OPEN URL")
+		guard let button = toolbarAssistant.urlSettingsButton else { return }
+		mainViewController.showURLSettings(button)
 	}
 	
 	@IBAction func focusOnSearchPagesField(_ sender: Any?) {
@@ -280,8 +277,8 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		let hasSites = modelManager.allSites?.count > 0
 		
 		//sitesPopUpButton?.enabled = hasSites
-		siteSettingsButton?.isEnabled = hasSites
-		siteSettingsButton?.isHidden = !hasSites
+		urlSettingsButton?.isEnabled = hasSites
+		urlSettingsButton?.isHidden = !hasSites
 		
 		updateSitesPopUpButton()
 	}
@@ -316,16 +313,15 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		}*/
 	}
 	
-	var addSiteButton: NSButton!
+	var addSiteButton: NSButton?
 	var prepareNewSiteButton: ((NSButton) -> ())?
 	
-	var siteSettingsButton: NSButton!
-	var prepareSiteSettingsButton: ((NSButton) -> ())?
+	var urlSettingsButton: NSButton!
+	var prepareURLSettingsButton: ((NSButton) -> ())?
 	
 	var toggleViewControl: NSSegmentedControl!
 	var prepareToggleViewControl: ((NSSegmentedControl) -> ())?
 	func updateToggleViewControl(shownViews: Set<ToggleableViewIdentifier>) {
-		print("updateToggleViewControl \(shownViews)")
 		toggleViewControl.setSelected(shownViews.contains(.browser), forSegment: 0)
 		toggleViewControl.setSelected(shownViews.contains(.meta), forSegment: 1)
 	}
@@ -370,7 +366,8 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		var sizeToFit = false
 		
 		if itemIdentifier == "newSiteButton" {
-			addSiteButton = toolbarItem.view as! NSButton
+			let addSiteButton = toolbarItem.view as! NSButton
+			self.addSiteButton = addSiteButton
 			prepareNewSiteButton?(addSiteButton)
 		}
 		else if itemIdentifier == "chosenSite" {
@@ -378,9 +375,9 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			updateUIForSites()
 		}
 		else if itemIdentifier == "siteSettingsButton" {
-			siteSettingsButton = toolbarItem.view as! NSButton
+			urlSettingsButton = toolbarItem.view as! NSButton
 			//sizeToFit = true
-			prepareSiteSettingsButton?(siteSettingsButton)
+			prepareURLSettingsButton?(urlSettingsButton)
 			updateUIForSites()
 		}
 		else if itemIdentifier == "viewportWidth" {

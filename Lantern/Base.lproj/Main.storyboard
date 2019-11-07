@@ -66,14 +66,14 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Site" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="Add Site…" keyEquivalent="N" id="Was-JA-tGl">
-                                            <connections>
-                                                <action selector="showAddSite:" target="Ady-hI-5gd" id="xL6-ti-8bn"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="New Window" keyEquivalent="n" id="QMW-I5-Apg">
                                             <connections>
                                                 <action selector="newDocument:" target="Ady-hI-5gd" id="Bh0-yD-CEY"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Open URL…" keyEquivalent="l" id="Was-JA-tGl">
+                                            <connections>
+                                                <action selector="openURL:" target="Ady-hI-5gd" id="cDh-aG-hJU"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="Ya8-qH-8f5"/>
@@ -556,7 +556,7 @@
                 </toolbarItem>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="310" y="212"/>
+            <point key="canvasLocation" x="301" y="444"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">

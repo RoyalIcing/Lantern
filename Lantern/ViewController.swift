@@ -264,7 +264,7 @@ class ViewController : NSViewController
 	}
 	
 	
-	@IBAction func showSiteSettings(_ button: NSButton) {
+	@IBAction func showURLSettings(_ button: NSButton) {
 		if siteSettingsViewController.presentingViewController != nil {
 			dismiss(siteSettingsViewController)
 		}
