@@ -3,7 +3,8 @@
   "Mac" : [
     {
       "name" : "Syrup",
-      "hash" : "5646704aed51f0199f9a03a681a61e9acdb7e24549a744044b0e88c9a86bc0fb"
+      "hash" : "d3d8b5a78a79b5237d8f0c6e6a7b0566a47150e21f1ee33baba76569cc0a9c77",
+      "swiftToolchainVersion" : "5.1 (swiftlang-1100.0.270.13 clang-1100.0.33.7)"
     }
   ]
 }

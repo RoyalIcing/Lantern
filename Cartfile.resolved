@@ -1,4 +1,4 @@
-github "Alamofire/Alamofire" "4.7.3"
+github "Alamofire/Alamofire" "4.9.1"
 github "burntcaramel/BurntCocoaUI" "0.6.0"
 github "burntcaramel/BurntFoundation" "0.8.0"
 github "burntcaramel/Ono" "f7facf05e2e1c020a8421c8b3836755f9f15f2dc"
