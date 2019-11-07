@@ -595,10 +595,9 @@
 			};
 			buildConfigurationList = B22B7D8A1AC6B9090026AEDB /* Build configuration list for PBXProject "Lantern" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
