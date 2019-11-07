@@ -8,8 +8,6 @@
 
 import Cocoa
 import LanternModel
-import Fabric
-import Crashlytics
 
 
 let NSApp = NSApplication.shared
@@ -33,8 +31,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	}
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
-		Fabric.with([Crashlytics()])
-		
 		// Create shared manager to ensure quickest start up time.
 		let modelManager = LanternModel.ModelManager.sharedManager
 		modelManager.errorReceiver.errorCallback = { error in

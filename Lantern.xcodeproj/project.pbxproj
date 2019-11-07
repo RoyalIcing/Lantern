@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		B2054D831AF477C700DC2C00 /* LanternTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2054D821AF477C700DC2C00 /* LanternTests.swift */; };
 		B2054DB11AF494A300DC2C00 /* PageInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2054DB01AF494A300DC2C00 /* PageInfoRequest.swift */; };
-		B20DB3891B0F020500E57532 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DB3861B0F020500E57532 /* Fabric.framework */; };
-		B20DB38B1B0F020500E57532 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DB3871B0F020500E57532 /* Crashlytics.framework */; };
 		B21738F323742503003C5C59 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = B21738F223742503003C5C59 /* Makefile */; };
 		B21738F62374263D003C5C59 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = B21738F52374263D003C5C59 /* CSV */; };
 		B21738F823742C50003C5C59 /* PageMapper+CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21738F723742C50003C5C59 /* PageMapper+CSV.swift */; };
@@ -145,8 +143,6 @@
 		B2054D821AF477C700DC2C00 /* LanternTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanternTests.swift; sourceTree = "<group>"; };
 		B2054D8F1AF4780500DC2C00 /* Lantern.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Lantern.entitlements; sourceTree = "<group>"; };
 		B2054DB01AF494A300DC2C00 /* PageInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInfoRequest.swift; sourceTree = "<group>"; };
-		B20DB3861B0F020500E57532 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		B20DB3871B0F020500E57532 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		B2134AAD1AE9F97F00ACDDE3 /* PageMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageMapper.swift; sourceTree = "<group>"; };
 		B21738F223742503003C5C59 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
@@ -257,9 +253,7 @@
 			files = (
 				B27F48CE1B64E452003F1215 /* BurntCocoaUI.framework in Frameworks */,
 				B25020631B01C15900ABAE96 /* LanternModel.framework in Frameworks */,
-				B20DB38B1B0F020500E57532 /* Crashlytics.framework in Frameworks */,
 				B27F48CD1B64DF8A003F1215 /* BurntFoundation.framework in Frameworks */,
-				B20DB3891B0F020500E57532 /* Fabric.framework in Frameworks */,
 				B2921F012071F0CF00EAB561 /* Syrup.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -461,8 +455,6 @@
 				B2D563221AF5BF8A006DE202 /* Alamofire.framework */,
 				B27F48CA1B64DF8A003F1215 /* BurntCocoaUI.framework */,
 				B27F48CB1B64DF8A003F1215 /* BurntFoundation.framework */,
-				B20DB3861B0F020500E57532 /* Fabric.framework */,
-				B20DB3871B0F020500E57532 /* Crashlytics.framework */,
 				B25033131AF5C2D0006A2AE7 /* libxml2.dylib */,
 			);
 			name = Frameworks;
@@ -1115,7 +1107,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MARKETING_VERSION = 1.1.0;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.$(PRODUCT_NAME:rfc1034identifier).Mac";
@@ -1149,7 +1141,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.burntcaramel.$(PRODUCT_NAME:rfc1034identifier).Mac";
 				PRODUCT_NAME = Lantern;
