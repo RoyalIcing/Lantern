@@ -67,6 +67,7 @@
 		B2B542C11AF0980E00073464 /* NSData+ONOXMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B542C01AF0980E00073464 /* NSData+ONOXMLDocument.swift */; };
 		B2B542C31AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B542C21AF09C0000073464 /* ONOXMLDocument+StringEncoding.swift */; };
 		B2C4A93F1ACA31F0000F1566 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */; };
+		B2C73EE223752234004F44FF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B2C73EE123752234004F44FF /* README.md */; };
 		B2D39B001AF5ECEB003D6738 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */; };
 		B2D39B041AF5F074003D6738 /* NSViewController+PGWSConstraintConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = B22B7DB31AC6B9870026AEDB /* NSViewController+PGWSConstraintConvenience.m */; };
 		B2D39B0B1AF64533003D6738 /* PageMapper+LinkFiltering.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39B0A1AF64533003D6738 /* PageMapper+LinkFiltering.swift */; };
@@ -202,6 +203,7 @@
 		B2B542C61AF0A09600073464 /* ContentPreview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContentPreview.storyboard; sourceTree = "<group>"; };
 		B2C4A93E1ACA31F0000F1566 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		B2C4A9401ACA3203000F1566 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainState.swift; sourceTree = "<group>"; };
+		B2C73EE123752234004F44FF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B2D39B081AF601C7003D6738 /* code-sign-frameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "code-sign-frameworks.sh"; sourceTree = "<group>"; };
 		B2D39B0A1AF64533003D6738 /* PageMapper+LinkFiltering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PageMapper+LinkFiltering.swift"; sourceTree = "<group>"; };
 		B2D39B0C1AF64EB5003D6738 /* ContentPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPreview.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 		B22B7D861AC6B9090026AEDB = {
 			isa = PBXGroup;
 			children = (
+				B2C73EE123752234004F44FF /* README.md */,
 				B21738F223742503003C5C59 /* Makefile */,
 				B2921EFC2071EFD200EAB561 /* Cartfile */,
 				B2D9D8881B253D3100217300 /* Frameworks */,
@@ -649,6 +652,7 @@
 				B250334B1AF5E5B0006A2AE7 /* SiteSettings.storyboard in Resources */,
 				B250334C1AF5E5B0006A2AE7 /* userAgent.js in Resources */,
 				B250334D1AF5E5B0006A2AE7 /* console.js in Resources */,
+				B2C73EE223752234004F44FF /* README.md in Resources */,
 				B250334E1AF5E5B0006A2AE7 /* Page.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
