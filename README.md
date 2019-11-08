@@ -6,7 +6,7 @@ Crawl and audit websites. Written in Swift 5.
 
 [Download on the Mac App Store](https://itunes.apple.com/us/app/lantern-website-crawler-for/id991526452?ls=1&mt=12)
 
-[Home Website](http://www.burntcaramel.com/lantern/)
+[Home Website](https://icing.space/tools/lantern/)
 
 [Back on Open Collective](https://opencollective.com/lantern)
 
