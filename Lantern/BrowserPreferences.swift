@@ -91,13 +91,13 @@ class BrowserPreferences {
 		}
 	}
 	
-	func updateFromDefaults() {
+	private func updateFromDefaults() {
 		widthChoice = ud.choice(BrowserWidthChoice.self)
 	}
 	
-	init() {
+	private init() {
 		updateFromDefaults()
 	}
 	
-	static var sharedBrowserPreferences = BrowserPreferences()
+	static var shared = BrowserPreferences()
 }

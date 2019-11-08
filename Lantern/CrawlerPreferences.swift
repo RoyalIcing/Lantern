@@ -87,5 +87,5 @@ class CrawlerPreferences {
 		updateFromDefaults()
 	}
 	
-	static var sharedCrawlerPreferences = CrawlerPreferences()
+	static var shared = CrawlerPreferences()
 }

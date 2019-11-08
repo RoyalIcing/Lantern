@@ -30,8 +30,8 @@ func ==(lhs: SiteChoice, rhs: SiteChoice) -> Bool {
 
 
 class MainState {
-	let crawlerPreferences = CrawlerPreferences.sharedCrawlerPreferences
-	let browserPreferences = BrowserPreferences.sharedBrowserPreferences
+	let crawlerPreferences = CrawlerPreferences.shared
+	let browserPreferences = BrowserPreferences.shared
 	
 	var siteChoice = SiteChoice.custom {
 		didSet {

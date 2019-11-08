@@ -38,7 +38,7 @@ class BrowserMenuController: NSObject, NSUserInterfaceValidations {
 	var browserPreferencesObserver: NotificationObserver<BrowserPreferences.Notification>!
 	
 	var browserPrefences: BrowserPreferences {
-		return BrowserPreferences.sharedBrowserPreferences
+		return BrowserPreferences.shared
 	}
 	
 	init(browserWidthPlaceholderMenuItem: NSMenuItem) {
@@ -60,7 +60,7 @@ class BrowserMenuController: NSObject, NSUserInterfaceValidations {
 //			return (chosenWidthChoice == widthChoice) ? NSOnState : NSOffState
 //		}
 		widthMenuItemsAssistant.customization.additionalSetUp = { widthChoice, menuItem in
-			let chosenWidthChoice = BrowserPreferences.sharedBrowserPreferences.widthChoice
+			let chosenWidthChoice = BrowserPreferences.shared.widthChoice
 			menuItem.state = (chosenWidthChoice == widthChoice) ? NSControl.StateValue.on : NSControl.StateValue.off
 		}
 		
@@ -78,7 +78,7 @@ class BrowserMenuController: NSObject, NSUserInterfaceValidations {
 	}
 	
 	func startObservingBrowserPreferences() {
-		browserPreferencesObserver = NotificationObserver<BrowserPreferences.Notification>(object: BrowserPreferences.sharedBrowserPreferences)
+		browserPreferencesObserver = NotificationObserver<BrowserPreferences.Notification>(object: BrowserPreferences.shared)
 		
 		browserPreferencesObserver.observe(.widthChoiceDidChange) { notification in
 			self.updateWidthMenu()
@@ -95,7 +95,7 @@ class BrowserMenuController: NSObject, NSUserInterfaceValidations {
 			menuItem = sender as? NSMenuItem,
 			let widthChoice = widthMenuItemsAssistant.itemRepresentative(for: menuItem)
 		{
-			BrowserPreferences.sharedBrowserPreferences.widthChoice = widthChoice
+			BrowserPreferences.shared.widthChoice = widthChoice
 		}
 	}
 	

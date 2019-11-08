@@ -257,7 +257,7 @@ class StatsViewController: NSViewController {
 	var rowMenu: NSMenu!
 	var rowMenuAssistant: MenuAssistant<MenuActions>!
 	
-	let crawlerPreferences = CrawlerPreferences.sharedCrawlerPreferences
+	let crawlerPreferences = CrawlerPreferences.shared
 	var crawlerPreferencesObserver: NotificationObserver<CrawlerPreferences.Notification>!
 	
 	

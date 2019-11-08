@@ -326,16 +326,15 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		toggleViewControl.setSelected(shownViews.contains(.meta), forSegment: 1)
 	}
 	
-	//var viewportWidthAssistant: SegmentedControlAssistant<BrowserWidthChoice>?
 	var viewportWidthAssistant: PopUpButtonAssistant<BrowserWidthChoice>?
 	@IBAction func changeViewportWidth(_ sender: Any?) {
 		guard let widthChoice = viewportWidthAssistant?.selectedItemRepresentative else { return }
-		BrowserPreferences.sharedBrowserPreferences.widthChoice = widthChoice
+		BrowserPreferences.shared.widthChoice = widthChoice
 	}
 	
 	var browserPreferencesObserver: NotificationObserver<BrowserPreferences.Notification>!
 	func startObservingBrowserPreferences() {
-		let preferences = BrowserPreferences.sharedBrowserPreferences
+		let preferences = BrowserPreferences.shared
 		browserPreferencesObserver = NotificationObserver<BrowserPreferences.Notification>(object: preferences)
 		
 		browserPreferencesObserver.observe(.widthChoiceDidChange) { notification in
@@ -385,10 +384,12 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			popUpButton.target = self
 			popUpButton.action = #selector(changeViewportWidth(_:))
 			
+			let preferences = BrowserPreferences.shared
 			let assistant = PopUpButtonAssistant<BrowserWidthChoice>(popUpButton: popUpButton)
 			assistant.menuItemRepresentatives = BrowserWidthChoice.allChoices
-			//print(assistant.defaultSegmentedItemRepresentatives)
+			print("WIDTH \(preferences.widthChoice)")
 			assistant.update()
+			assistant.selectedUniqueIdentifier = preferences.widthChoice
 			self.viewportWidthAssistant = assistant
 		}
 		else if itemIdentifier == "showToggles" {

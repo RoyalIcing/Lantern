@@ -43,7 +43,7 @@ class CrawlerMenuController: NSObject, NSUserInterfaceValidations {
 //			return (chosenImageDownloadChoice == imageDownloadChoice) ? NSOnState : NSOffState
 //		}
 		imageDownloadMenuItemsAssistant.customization.additionalSetUp = { imageDownloadChoice, menuItem in
-			let chosenImageDownloadChoice = CrawlerPreferences.sharedCrawlerPreferences.imageDownloadChoice
+			let chosenImageDownloadChoice = CrawlerPreferences.shared.imageDownloadChoice
 			menuItem.state = (chosenImageDownloadChoice == imageDownloadChoice) ? NSControl.StateValue.on : NSControl.StateValue.off
 		}
 		
@@ -61,7 +61,7 @@ class CrawlerMenuController: NSObject, NSUserInterfaceValidations {
 	}
 	
 	func startObservingCrawlerPreferences() {
-		crawlerPreferencesObserver = NotificationObserver<CrawlerPreferences.Notification>(object: CrawlerPreferences.sharedCrawlerPreferences)
+		crawlerPreferencesObserver = NotificationObserver<CrawlerPreferences.Notification>(object: CrawlerPreferences.shared)
 		
 		crawlerPreferencesObserver.observe(.ImageDownloadChoiceDidChange) { notification in
 			self.updateImageDownloadMenu()
@@ -78,7 +78,7 @@ class CrawlerMenuController: NSObject, NSUserInterfaceValidations {
 			menuItem = sender as? NSMenuItem,
 			let imageDownloadChoice = imageDownloadMenuItemsAssistant.itemRepresentative(for: menuItem)
 		{
-			CrawlerPreferences.sharedCrawlerPreferences.imageDownloadChoice = imageDownloadChoice
+			CrawlerPreferences.shared.imageDownloadChoice = imageDownloadChoice
 		}
 	}
 	
