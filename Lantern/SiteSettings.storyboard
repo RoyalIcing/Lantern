@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -10,7 +10,7 @@
         <scene sceneID="2nV-nl-Dg5">
             <objects>
                 <viewController title="Site Settings" storyboardIdentifier="Site Settings View Controller" showSeguePresentationStyle="single" id="CU5-0T-cmJ" customClass="SiteSettingsViewController" customModule="Lantern" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" misplaced="YES" id="i5p-pL-hHv">
+                    <view key="view" id="i5p-pL-hHv">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="175"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -75,7 +75,6 @@ DQ
                     <connections>
                         <outlet property="homePageURLField" destination="VeV-fu-voS" id="zju-Up-BEi"/>
                         <outlet property="nameField" destination="uIC-0I-q7g" id="Dc9-PU-La3"/>
-                        <outlet property="saveInFavorites" destination="WnE-nz-lPG" id="8ia-IX-AyA"/>
                         <outlet property="saveInFavoritesButton" destination="WnE-nz-lPG" id="uhq-le-fDT"/>
                     </connections>
                 </viewController>
