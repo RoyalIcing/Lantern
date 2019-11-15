@@ -34,28 +34,62 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 		homePageURLField.stringValue = ""
 	}
 	
-	var state: (url: URL, favoriteName: (String)?)? {
-		didSet {
-			// Make sure view has loaded
-			_ = self.view
-			
-			var urlString = ""
-			var name = ""
-			var hasFavorite = false
-			
-			if let state = state {
-				urlString = state.url.absoluteString
-				if let favoriteName = state.favoriteName {
-					name = favoriteName
-					hasFavorite = true
-				}
-			}
-			
-			homePageURLField.stringValue = urlString
-			saveInFavoritesButton.state = hasFavorite ? NSControl.StateValue.on : NSControl.StateValue.off
-			nameField.isEnabled = hasFavorite
-			nameField.stringValue = name
+	// MARK -
+	
+	func reset(url: URL? = nil, favoriteName: String? = nil) {
+		// Make sure view has loaded
+		_ = self.view
+		
+		let urlString = url?.absoluteString ?? ""
+		var name = ""
+		var hasFavorite = false
+		
+		if let favoriteName = favoriteName {
+			name = favoriteName
+			hasFavorite = true
 		}
+		
+		homePageURLField.stringValue = urlString
+		saveInFavoritesButton.state = hasFavorite ? NSControl.StateValue.on : NSControl.StateValue.off
+		nameField.isEnabled = hasFavorite
+		nameField.stringValue = name
+	}
+	
+	struct Output {
+		var siteValues: SiteValues
+		var saveInFavorites: Bool
+	}
+	
+	func read(newSiteUUID: UUID? = nil) throws -> Output? {
+		// Make sure view has loaded
+		_ = self.view
+		
+		let saveInFavorites = saveInFavoritesButton.state == NSControl.StateValue.on
+		
+		let name: String
+		if saveInFavorites {
+			name = try ValidationError.validateString(nameField.stringValue, identifier: "Name")
+		}
+		else {
+			name = ""
+		}
+		
+		let homePageURL: URL
+		do {
+			homePageURL = try ValidationError.validate(urlString: homePageURLField.stringValue, identifier: "Primary URL")
+		}
+		catch let error as ValidationError {
+			switch (saveInFavorites, error) {
+			case (false, ValidationError.stringIsEmpty):
+				return nil
+			default:
+				throw error
+			}
+		}
+		
+		let siteValues = SiteValues(name: name, homePageURL: homePageURL, UUID: newSiteUUID ?? UUID())
+		
+		return Output(siteValues: siteValues, saveInFavorites: saveInFavorites)
 	}
 	
 	@IBAction func createSite(_ sender: NSButton) {
@@ -65,36 +99,6 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	@IBAction func toggleSaveInFavorites(_ sender: NSButton) {
 		let hasFavorite = sender.state == NSControl.StateValue.on
 		nameField.isEnabled = hasFavorite
-	}
-	
-	func copySiteValuesFromUI(uuid: Foundation.UUID? = nil) throws -> (siteValues: SiteValues, saveInFavorites: Bool)? {
-		// Make sure view has loaded
-		_ = self.view
-		
-		let siteInFavorites = saveInFavoritesButton.state == NSControl.StateValue.on
-		
-		let name: String
-		if siteInFavorites {
-			name = try ValidationError.validateString(nameField.stringValue, identifier: "Name")
-		}
-		else {
-			name = ""
-		}
-		
-		do {
-			let homePageURL = try ValidationError.validate(urlString: homePageURLField.stringValue, identifier: "Primary URL")
-			let siteValues = SiteValues(name: name, homePageURL: homePageURL, UUID: uuid ?? UUID())
-			
-			return (siteValues, siteInFavorites)
-		}
-		catch let error as ValidationError {
-			switch (siteInFavorites, error) {
-			case (false, ValidationError.stringIsEmpty):
-				return nil
-			default:
-				throw error
-			}
-		}
 	}
 	
 	// MARK NSPopoverDelegate

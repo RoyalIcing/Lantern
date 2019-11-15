@@ -265,31 +265,33 @@ class ViewController : NSViewController
 	
 	
 	@IBAction func showURLSettings(_ button: NSButton) {
-		if siteSettingsViewController.presentingViewController != nil {
-			dismiss(siteSettingsViewController)
+		let vc = self.siteSettingsViewController
+		
+		if vc.presentingViewController != nil {
+			dismiss(vc)
 		}
 		else {
 			let modelManager = self.modelManager!
 			
 			if let activeURL = activeURL {
 				let chosenSite = modelManager.siteWithURL(url: activeURL)
-				siteSettingsViewController.state = (url: activeURL, favoriteName: chosenSite?.name)
+				vc.reset(url: activeURL, favoriteName: chosenSite?.name)
 			}
 			else {
-				siteSettingsViewController.state = nil
+				vc.reset()
 			}
 			
-			siteSettingsViewController.onSaveSite = { siteSettingsViewController in
+			vc.onSaveSite = { vc in
 				do {
-					if let (siteValues, saveInFavorites) = try siteSettingsViewController.copySiteValuesFromUI() {
-						if saveInFavorites {
-							modelManager.addOrUpdateSite(values: siteValues)
+					if let output = try vc.read() {
+						if output.saveInFavorites {
+							modelManager.addOrUpdateSite(values: output.siteValues)
 						}
 						else {
-							modelManager.removeSite(url: siteValues.homePageURL)
+							modelManager.removeSite(url: output.siteValues.homePageURL)
 						}
 						
-						self.pageViewController.loadURL(siteValues.homePageURL)
+						self.pageViewController.loadURL(output.siteValues.homePageURL)
 					}
 				}
 				catch {
@@ -297,7 +299,7 @@ class ViewController : NSViewController
 				}
 			}
 			
-			present(siteSettingsViewController, asPopoverRelativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.maxY, behavior: .semitransient)
+			present(vc, asPopoverRelativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.maxY, behavior: .semitransient)
 		}
 	}
 	
