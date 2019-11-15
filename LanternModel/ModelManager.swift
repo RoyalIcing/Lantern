@@ -68,7 +68,18 @@ enum SitesLoadingProgression : Progression {
 				
 				return SiteValues(fromJSON: jsonObject)
 			}
-			self = .sitesList(sitesList: sitesList, needsSaving: false)
+			
+			var seenUUIDs = Set<UUID>()
+			let uniqueSites = sitesList.filter { site in
+				if seenUUIDs.contains(site.UUID) {
+					return false
+				}
+				
+				seenUUIDs.insert(site.UUID)
+				return true
+			}
+			
+			self = .sitesList(sitesList: uniqueSites, needsSaving: false)
 		case .sitesList, .none:
 			break
 		}
@@ -96,7 +107,10 @@ enum SitesLoadingProgression : Progression {
 		let url = siteValues.homePageURL.absoluteURL
 		switch self {
 		case var .sitesList(sitesList, _):
-			if let index = sitesList.firstIndex(where: { $0.homePageURL.absoluteURL == url }) {
+			if let index = sitesList.firstIndex(where: { $0.UUID == siteValues.UUID }) {
+				sitesList[index] = siteValues
+			}
+			else if let index = sitesList.firstIndex(where: { $0.homePageURL.absoluteURL == url }) {
 				sitesList[index] = siteValues
 			}
 			else {

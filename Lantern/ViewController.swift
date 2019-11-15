@@ -273,17 +273,33 @@ class ViewController : NSViewController
 		else {
 			let modelManager = self.modelManager!
 			
-			if let activeURL = activeURL {
-				let chosenSite = modelManager.siteWithURL(url: activeURL)
-				vc.reset(url: activeURL, favoriteName: chosenSite?.name)
+			print("ACTIVE")
+			let activeURL = self.activeURL
+			print(activeURL)
+			
+			let activeSite = activeURL.flatMap { modelManager.siteWithURL(url: $0) }
+			print(activeSite)
+			
+			if let activeSite = activeSite {
+				vc.editFavorite(url: activeSite.homePageURL, name: activeSite.name)
+			}
+			else if let activeURL = activeURL {
+				vc.editVisited(url: activeURL)
 			}
 			else {
 				vc.reset()
 			}
 			
+			vc.favoriteNameForURL = { url in
+				guard let foundSite = modelManager.siteWithURL(url: url) else {
+					return nil
+				}
+				return foundSite.name
+			}
+			
 			vc.onSaveSite = { vc in
 				do {
-					if let output = try vc.read() {
+					if let output = try vc.read(siteUUID: activeSite?.UUID) {
 						if output.saveInFavorites {
 							modelManager.addOrUpdateSite(values: output.siteValues)
 						}
