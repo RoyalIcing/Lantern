@@ -269,32 +269,17 @@ class ViewController : NSViewController
 			dismiss(siteSettingsViewController)
 		}
 		else {
-			//var chosenSite = mainState?.chosenSite
-			//var chosenSite = chosenSite
-			
-			//let activeURL = self.activeURL
-			
-//			if let activeURL = activeURL {
-//				chosenSite = chosenSite.map{ inner in
-//					var inner = inner
-//					inner.homePageURL = activeURL
-//					return inner
-//				} ?? SiteValues(name: "", homePageURL: activeURL)
-//			}
-			
 			let modelManager = self.modelManager!
 			
 			if let activeURL = activeURL {
 				let chosenSite = modelManager.siteWithURL(url: activeURL)
-				print("EDIT CHOSEN SITE", "\(String(describing: chosenSite))")
 				siteSettingsViewController.state = (url: activeURL, favoriteName: chosenSite?.name)
 			}
 			else {
 				siteSettingsViewController.state = nil
 			}
-			// TODO
 			
-			siteSettingsViewController.saveSite = { siteSettingsViewController in
+			siteSettingsViewController.onSaveSite = { siteSettingsViewController in
 				do {
 					if let (siteValues, saveInFavorites) = try siteSettingsViewController.copySiteValuesFromUI() {
 						if saveInFavorites {

@@ -22,7 +22,7 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 			saveInFavoritesButton.action = #selector(toggleSaveInFavorites(_:))
 		}
 	}
-	var saveSite: ((_ viewController: SiteSettingsViewController) -> ())?
+	var onSaveSite: ((_ viewController: SiteSettingsViewController) -> ())?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -59,32 +59,12 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	}
 	
 	@IBAction func createSite(_ sender: NSButton) {
-		saveSite?(self)
+		onSaveSite?(self)
 	}
 	
 	@IBAction func toggleSaveInFavorites(_ sender: NSButton) {
 		let hasFavorite = sender.state == NSControl.StateValue.on
 		nameField.isEnabled = hasFavorite
-	}
-	
-	private func updateUIWithSiteValues(_ siteValues: SiteValues?) {
-		// Make sure view has loaded
-		_ = self.view
-		
-		var urlString = ""
-		var name = ""
-		var hasFavorite = false
-		
-		if let siteValues = siteValues {
-			urlString = siteValues.homePageURL.absoluteString
-			name = siteValues.name
-			hasFavorite = modelManager.siteWithURL(url: siteValues.homePageURL) != nil
-		}
-		
-		homePageURLField.stringValue = urlString
-		saveInFavoritesButton.state = hasFavorite ? NSControl.StateValue.on : NSControl.StateValue.off
-		nameField.isEnabled = hasFavorite
-		nameField.stringValue = name
 	}
 	
 	func copySiteValuesFromUI(uuid: Foundation.UUID? = nil) throws -> (siteValues: SiteValues, saveInFavorites: Bool)? {
@@ -120,6 +100,6 @@ class SiteSettingsViewController: NSViewController, NSPopoverDelegate {
 	// MARK NSPopoverDelegate
 	
 	func popoverWillClose(_ notification: Notification) {
-		saveSite?(self)
+		onSaveSite?(self)
 	}
 }
