@@ -3,8 +3,8 @@
   "Mac" : [
     {
       "name" : "BurntCocoaUI",
-      "hash" : "76e36861000bacdbd2cb535fef2898e0b82a330c6efa479e9de679bba0352dc0",
-      "swiftToolchainVersion" : "5.1 (swiftlang-1100.0.270.13 clang-1100.0.33.7)"
+      "hash" : "5c80f1496ab89d50dbf031980700913b4038ea654a0980028258693e0da9f5b2",
+      "swiftToolchainVersion" : "5.1.2 (swiftlang-1100.0.278 clang-1100.0.33.9)"
     }
   ]
 }
