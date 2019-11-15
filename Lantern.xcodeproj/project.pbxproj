@@ -271,16 +271,13 @@
 				B22B7D941AC6B9090026AEDB /* AppDelegate.swift */,
 				B22B7D9A1AC6B9090026AEDB /* Main.storyboard */,
 				B2E2693C1AE9E9200044BE04 /* MainView.storyboard */,
-				B2C4A9401ACA3203000F1566 /* MainState.swift */,
 				B25020601B01B3B200ABAE96 /* Preferences */,
 				B219509F1DC87CB400ACCB38 /* Responder Chain */,
-				B21738F9237455B8003C5C59 /* ViewState.swift */,
-				B2E2693A1AE9E5130044BE04 /* MainSection.swift */,
+				B270E6A3237E20CD0093B12E /* ViewModel */,
 				B22876261AF3A4D800A8A4A2 /* SiteMenuItem.swift */,
 				B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */,
 				B22B7D961AC6B9090026AEDB /* ViewController.swift */,
-				B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */,
-				B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */,
+				B270E6A2237E20970093B12E /* SiteSettings */,
 				B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */,
 				B2D39B121AF65188003D6738 /* ValidatedStringValue+Presentation.swift */,
 				B22B7DBA1AC77EF20026AEDB /* Page.storyboard */,
@@ -435,6 +432,25 @@
 				B2E0FFFF1B007F500073CB8A /* BrowserMenuController.swift */,
 			);
 			name = Preferences;
+			sourceTree = "<group>";
+		};
+		B270E6A2237E20970093B12E /* SiteSettings */ = {
+			isa = PBXGroup;
+			children = (
+				B2A63B5E1AC8DAA0004CEBE1 /* SiteSettings.storyboard */,
+				B2A63B601AC8DACD004CEBE1 /* SiteSettingsViewController.swift */,
+			);
+			name = SiteSettings;
+			sourceTree = "<group>";
+		};
+		B270E6A3237E20CD0093B12E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B2C4A9401ACA3203000F1566 /* MainState.swift */,
+				B21738F9237455B8003C5C59 /* ViewState.swift */,
+				B2E2693A1AE9E5130044BE04 /* MainSection.swift */,
+			);
+			name = ViewModel;
 			sourceTree = "<group>";
 		};
 		B2D39B441AF6F482003D6738 /* Preview */ = {
