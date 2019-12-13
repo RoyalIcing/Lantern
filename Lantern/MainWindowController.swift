@@ -362,7 +362,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 //	}
 	
 	enum ItemIdentifier : String {
-		case siteSettingsButton
+		case pageURL
 		case chosenSite
 		case viewportWidth
 		case showToggles
@@ -375,7 +375,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	
 	func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
 		[
-			ItemIdentifier.siteSettingsButton.toolbarIdentifier,
+			ItemIdentifier.pageURL.toolbarIdentifier,
 			ItemIdentifier.chosenSite.toolbarIdentifier,
 			NSToolbarItem.Identifier.space,
 			ItemIdentifier.viewportWidth.toolbarIdentifier,
@@ -399,7 +399,7 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			self.sitesPopUpButton = popUp
 			updateUIForSites()
 		}
-		else if itemIdentifier == "siteSettingsButton" {
+		else if itemIdentifier == "pageURL" {
 			urlSettingsButton = toolbarItem.view as! NSButton
 			//sizeToFit = true
 			prepareURLSettingsButton?(urlSettingsButton)

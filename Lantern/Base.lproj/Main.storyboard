@@ -425,7 +425,7 @@
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="IPS-l0-Ja6"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Wpo-Aj-pBW"/>
-                                <toolbarItem implicitItemIdentifier="69CF055A-8451-4A20-8C7E-140CA0CF5072" explicitItemIdentifier="siteSettingsButton" label="Site Settings" paletteLabel="Viewed Page" visibilityPriority="1000" id="dTY-M3-1X3">
+                                <toolbarItem implicitItemIdentifier="69CF055A-8451-4A20-8C7E-140CA0CF5072" explicitItemIdentifier="pageURL" label="Site Settings" paletteLabel="Viewed Page" visibilityPriority="1000" id="dTY-M3-1X3">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="80" height="25"/>
                                     <size key="maxSize" width="4000" height="26"/>
