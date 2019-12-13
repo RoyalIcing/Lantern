@@ -425,14 +425,14 @@
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="IPS-l0-Ja6"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Wpo-Aj-pBW"/>
-                                <toolbarItem implicitItemIdentifier="E101A52F-9533-4F68-B061-3B53DDCE426E" explicitItemIdentifier="newSiteButton" label="New Site" paletteLabel="New Site" image="NSAddTemplate" visibilityPriority="1000" id="cbE-mo-coS">
+                                <toolbarItem implicitItemIdentifier="69CF055A-8451-4A20-8C7E-140CA0CF5072" explicitItemIdentifier="siteSettingsButton" label="Site Settings" paletteLabel="Viewed Page" visibilityPriority="1000" id="dTY-M3-1X3">
                                     <nil key="toolTip"/>
-                                    <size key="minSize" width="40" height="25"/>
-                                    <size key="maxSize" width="41" height="25"/>
-                                    <button key="view" verticalHuggingPriority="750" id="V8C-mE-AIW">
-                                        <rect key="frame" x="7" y="14" width="40" height="25"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSAddTemplate" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SxB-aC-a7k">
+                                    <size key="minSize" width="80" height="25"/>
+                                    <size key="maxSize" width="4000" height="26"/>
+                                    <button key="view" verticalHuggingPriority="750" id="i3Y-1h-JQU">
+                                        <rect key="frame" x="0.0" y="14" width="109" height="26"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" title="Enter Page URL" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VpM-Yb-73D">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -457,19 +457,6 @@
                                             </menu>
                                         </popUpButtonCell>
                                     </popUpButton>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="69CF055A-8451-4A20-8C7E-140CA0CF5072" explicitItemIdentifier="siteSettingsButton" label="Site Settings" paletteLabel="Viewed Page" visibilityPriority="1000" id="dTY-M3-1X3">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="80" height="25"/>
-                                    <size key="maxSize" width="4000" height="26"/>
-                                    <button key="view" verticalHuggingPriority="750" id="i3Y-1h-JQU">
-                                        <rect key="frame" x="0.0" y="14" width="109" height="26"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" title="Enter Page URL" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VpM-Yb-73D">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="CF62A87F-7F9D-40C1-9750-E9547A7576E9" explicitItemIdentifier="searchPages" label="Search Favorite Pages" paletteLabel="Search Favorite Pages" visibilityPriority="1" id="rlp-6h-mSD">
                                     <nil key="toolTip"/>
@@ -555,7 +542,4 @@
             <point key="canvasLocation" x="310" y="874"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="NSAddTemplate" width="11" height="11"/>
-    </resources>
 </document>

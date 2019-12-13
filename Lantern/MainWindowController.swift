@@ -357,6 +357,31 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	
 	//var sectionItem = ToolbarItem<NSSegmentedControl>()
 	
+//	func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
+//
+//	}
+	
+	enum ItemIdentifier : String {
+		case siteSettingsButton
+		case chosenSite
+		case viewportWidth
+		case showToggles
+		case searchPages
+		
+		var toolbarIdentifier: NSToolbarItem.Identifier {
+			.init(self.rawValue)
+		}
+	}
+	
+	func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
+		[
+			ItemIdentifier.siteSettingsButton.toolbarIdentifier,
+			ItemIdentifier.chosenSite.toolbarIdentifier,
+			NSToolbarItem.Identifier.space,
+			ItemIdentifier.viewportWidth.toolbarIdentifier,
+			ItemIdentifier.showToggles.toolbarIdentifier,
+		]
+	}
 	
 	func toolbarWillAddItem(_ notification: Notification) {
 		let userInfo = notification.userInfo!
@@ -370,7 +395,8 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			prepareNewSiteButton?(addSiteButton)
 		}
 		else if itemIdentifier == "chosenSite" {
-			sitesPopUpButton = toolbarItem.view as! NSPopUpButton
+			let popUp = toolbarItem.view as! NSPopUpButton
+			self.sitesPopUpButton = popUp
 			updateUIForSites()
 		}
 		else if itemIdentifier == "siteSettingsButton" {
