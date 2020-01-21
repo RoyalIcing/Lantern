@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -415,7 +415,7 @@
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="MainWindowController" customModule="Lantern" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="documentWindow" frameAutosaveName="MainWindow" id="IQv-IB-iLA">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
                         <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="900" height="700"/>
@@ -425,19 +425,6 @@
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="IPS-l0-Ja6"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Wpo-Aj-pBW"/>
-                                <toolbarItem implicitItemIdentifier="69CF055A-8451-4A20-8C7E-140CA0CF5072" explicitItemIdentifier="pageURL" label="Site Settings" paletteLabel="Viewed Page" visibilityPriority="1000" id="dTY-M3-1X3">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="80" height="25"/>
-                                    <size key="maxSize" width="4000" height="26"/>
-                                    <button key="view" verticalHuggingPriority="750" id="i3Y-1h-JQU">
-                                        <rect key="frame" x="0.0" y="14" width="109" height="26"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" title="Enter Page URL" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VpM-Yb-73D">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="33AB0BAC-0F75-433B-8547-5F52502A2215" explicitItemIdentifier="chosenSite" label="Favorites" paletteLabel="Favorites" id="UDa-Tt-8U7">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="90" height="28"/>
@@ -506,10 +493,23 @@
                                         </segmentedCell>
                                     </segmentedControl>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="21963801-CC00-4657-BBEB-51B9921A824D" explicitItemIdentifier="urlField" label="URL" paletteLabel="URL" visibilityPriority="10" id="iaf-Ks-jvZ">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="96" height="22"/>
+                                    <size key="maxSize" width="1000" height="22"/>
+                                    <textField key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tke-ai-6fH">
+                                        <rect key="frame" x="0.0" y="14" width="96" height="22"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="Enter URL" drawsBackground="YES" usesSingleLineMode="YES" id="HEU-o1-cUm">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
-                                <toolbarItem reference="dTY-M3-1X3"/>
-                                <toolbarItem reference="UDa-Tt-8U7"/>
+                                <toolbarItem reference="iaf-Ks-jvZ"/>
                                 <toolbarItem reference="IPS-l0-Ja6"/>
                                 <toolbarItem reference="KJk-MN-cfh"/>
                                 <toolbarItem reference="Irc-O6-gOu"/>
@@ -539,7 +539,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="310" y="874"/>
+            <point key="canvasLocation" x="301" y="1172"/>
         </scene>
     </scenes>
 </document>

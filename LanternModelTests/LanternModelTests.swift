@@ -21,7 +21,9 @@ class LanternModelTests: XCTestCase {
 				super.tearDown()
 		}
 		
-		func testExample() {
+		func testDetectWebURL() {
+			XCTAssertEqual(detectWebURL("https://www.burntcaramel.com/"), URL(string: "https://www.burntcaramel.com/"))
+			
 				// This is an example of a functional test case.
 				XCTAssert(true, "Pass")
 		}

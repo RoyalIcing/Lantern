@@ -54,7 +54,15 @@ enum SitesLoadingProgression : Progression {
 	mutating func updateOrDeferNext() throws -> Deferred<SitesLoadingProgression>? {
 		switch self {
 		case let .loadFromFile(fileURL):
-			self = try .jsonData(Data(contentsOf: fileURL, options: .mappedIfSafe))
+			do {
+				let data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
+				self = .jsonData(data)
+			}
+			catch let error as NSError {
+				if error.domain == NSCocoaErrorDomain && error.code == NSFileReadNoSuchFileError {
+					self = .sitesList(sitesList: [], needsSaving: false)
+				}
+			}
 		case let .jsonData(data):
 			self = try .json(JSONSerialization.jsonObject(with: data, options: []))
 		case let .json(json):

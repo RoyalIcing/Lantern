@@ -33,6 +33,15 @@ class MainState {
 	let crawlerPreferences = CrawlerPreferences.shared
 	let browserPreferences = BrowserPreferences.shared
 	
+	var startURL: URL? {
+		didSet {
+			print("startURL changing \(startURL)")
+			if startURL == oldValue { return }
+			mainQueue_notify(Self.startURLDidChangeNotification)
+		}
+	}
+//	var currentURL: URL?
+	
 	var siteChoice = SiteChoice.custom {
 		didSet {
 			if siteChoice == oldValue { return }
@@ -48,6 +57,8 @@ class MainState {
 	}
 	
 	var initialHost: String?
+	
+	static let startURLDidChangeNotification = Notification.Name.init("LanternModel.MainState.startURLDidChangeNotification")
 	
 	static let chosenSiteDidChangeNotification = Notification.Name.init("LanternModel.MainState.ChosenSiteDidChangeNotification")
 	

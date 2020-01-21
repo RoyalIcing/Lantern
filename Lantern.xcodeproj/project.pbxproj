@@ -17,7 +17,7 @@
 		B219509E1DC873CF00ACCB38 /* PageMapper+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219509D1DC873CF00ACCB38 /* PageMapper+UI.swift */; };
 		B22425F81AC8F8B200809EF0 /* HoverlyticsModel.h in Headers */ = {isa = PBXBuildFile; fileRef = B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B22425FE1AC8F8B200809EF0 /* LanternModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22425F31AC8F8B200809EF0 /* LanternModel.framework */; };
-		B22426071AC8F8B200809EF0 /* HoverlyticsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426061AC8F8B200809EF0 /* HoverlyticsModelTests.swift */; };
+		B22426071AC8F8B200809EF0 /* LanternModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426061AC8F8B200809EF0 /* LanternModelTests.swift */; };
 		B22426141AC8F8DB00809EF0 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22426131AC8F8DB00809EF0 /* Site.swift */; };
 		B22766281AEF36DA0083FE8C /* PageMapper+Filtering.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22766271AEF36DA0083FE8C /* PageMapper+Filtering.swift */; };
 		B22766291AEF37360083FE8C /* PageMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2134AAD1AE9F97F00ACDDE3 /* PageMapper.swift */; };
@@ -157,7 +157,7 @@
 		B22425F71AC8F8B200809EF0 /* HoverlyticsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HoverlyticsModel.h; sourceTree = "<group>"; };
 		B22425FD1AC8F8B200809EF0 /* LanternModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LanternModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22426051AC8F8B200809EF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B22426061AC8F8B200809EF0 /* HoverlyticsModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverlyticsModelTests.swift; sourceTree = "<group>"; };
+		B22426061AC8F8B200809EF0 /* LanternModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanternModelTests.swift; sourceTree = "<group>"; };
 		B22426131AC8F8DB00809EF0 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Site.swift; sourceTree = "<group>"; };
 		B22766251AEE62060083FE8C /* SourcePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePreviewViewController.swift; sourceTree = "<group>"; };
 		B22766271AEF36DA0083FE8C /* PageMapper+Filtering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PageMapper+Filtering.swift"; sourceTree = "<group>"; };
@@ -271,20 +271,16 @@
 				B22B7D941AC6B9090026AEDB /* AppDelegate.swift */,
 				B22B7D9A1AC6B9090026AEDB /* Main.storyboard */,
 				B2E2693C1AE9E9200044BE04 /* MainView.storyboard */,
+				B22B7DBA1AC77EF20026AEDB /* Page.storyboard */,
 				B25020601B01B3B200ABAE96 /* Preferences */,
 				B219509F1DC87CB400ACCB38 /* Responder Chain */,
 				B270E6A3237E20CD0093B12E /* ViewModel */,
 				B22876261AF3A4D800A8A4A2 /* SiteMenuItem.swift */,
-				B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */,
-				B22B7D961AC6B9090026AEDB /* ViewController.swift */,
+				B20A455D23BEE7A200139902 /* Controllers */,
 				B270E6A2237E20970093B12E /* SiteSettings */,
 				B2EAB9111AF74D8000A1F185 /* NSEvent+extension.swift */,
 				B2D39B121AF65188003D6738 /* ValidatedStringValue+Presentation.swift */,
-				B22B7DBA1AC77EF20026AEDB /* Page.storyboard */,
 				B2D39B151AF665D5003D6738 /* TableView-OutlineView-Subclass.swift */,
-				B22B7DB81AC77D420026AEDB /* PageViewController.swift */,
-				B219509B1DC86D1C00ACCB38 /* MetaViewController.swift */,
-				B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */,
 				B2D39B441AF6F482003D6738 /* Preview */,
 				B23E29EB1AE73F03009A94E5 /* WKUserContentController+bundledScripts.swift */,
 				B22B7DBC1AC782DD0026AEDB /* insertHoverlytics.js */,
@@ -325,6 +321,18 @@
 				B2054D811AF477C700DC2C00 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B20A455D23BEE7A200139902 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B22B7DB61AC77CAC0026AEDB /* MainWindowController.swift */,
+				B22B7D961AC6B9090026AEDB /* ViewController.swift */,
+				B22B7DB81AC77D420026AEDB /* PageViewController.swift */,
+				B219509B1DC86D1C00ACCB38 /* MetaViewController.swift */,
+				B2134AAB1AE9F5D800ACDDE3 /* StatsViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		B219509F1DC87CB400ACCB38 /* Responder Chain */ = {
@@ -374,7 +382,7 @@
 		B22426031AC8F8B200809EF0 /* LanternModelTests */ = {
 			isa = PBXGroup;
 			children = (
-				B22426061AC8F8B200809EF0 /* HoverlyticsModelTests.swift */,
+				B22426061AC8F8B200809EF0 /* LanternModelTests.swift */,
 				B22426041AC8F8B200809EF0 /* Supporting Files */,
 			);
 			path = LanternModelTests;
@@ -731,7 +739,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B22426071AC8F8B200809EF0 /* HoverlyticsModelTests.swift in Sources */,
+				B22426071AC8F8B200809EF0 /* LanternModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

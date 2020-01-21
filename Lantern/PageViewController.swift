@@ -23,7 +23,7 @@ open class PageViewController: NSViewController {
 	}
 	var toggledViewsDidChangeCallback: ((_ shownViews: Set<ToggleableViewIdentifier>) -> ())?
 	
-	@IBOutlet var URLField: NSTextField!
+	@IBOutlet var urlField: NSTextField!
 	@IBOutlet var crawlWhileBrowsingCheckButton: NSButton!
 	var webViewController: PageWebViewController! {
 		didSet {
@@ -131,15 +131,19 @@ open class PageViewController: NSViewController {
 	}
 	
 	func updateUIForURL(_ url: URL) {
-		//URLField.stringValue = URL.absoluteString
+		urlField.stringValue = url.absoluteString
 	}
 	
 	// MARK: Actions
 	
-	@IBAction func URLFieldChanged(_ textField: NSTextField) {
+	@IBAction func go(_ textField: NSTextField) {
 		if let url = LanternModel.detectWebURL(fromString: textField.stringValue) {
 			loadURL(url)
 		}
+	}
+	
+	@IBAction func stopCrawling(_ sender: AnyObject?) {
+		pageMapperProvider?.pageMapper?.cancel()
 	}
 	
 	@IBAction func toggleCrawlWhileBrowsing(_ checkButton: NSButton) {
@@ -174,6 +178,7 @@ open class PageViewController: NSViewController {
 	}
 }
 
+// MARK: -
 
 enum PageWebViewControllerNotification: String {
 	case URLDidChange = "HoverlyticsApp.PageWebViewControllerNotification.URLDidChange"

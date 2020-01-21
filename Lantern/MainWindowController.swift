@@ -34,6 +34,14 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 private let sectionUserDefaultKey = "mainSection"
 
+extension NSToolbarItem.Identifier {
+	static let lantern_urlField = NSToolbarItem.Identifier("urlField")
+	static let lantern_pageURL = NSToolbarItem.Identifier("pageURL")
+	static let lantern_chosenSite = NSToolbarItem.Identifier("chosenSite")
+	static let lantern_viewportWidth = NSToolbarItem.Identifier("viewportWidth")
+	static let lantern_showToggles = NSToolbarItem.Identifier("showToggles")
+}
+
 
 class MainWindowController: NSWindowController {
 	
@@ -79,9 +87,6 @@ class MainWindowController: NSWindowController {
 			// Combine title and toolbar
 			window.titleVisibility = .hidden
 			
-			//window.appearance = NSAppearance(named: NSAppearanceNameVibrantDark)
-			//window.appearance = NSAppearance(named: NSAppearanceNameVibrantLight)
-			
 			window.title = "New"
 		}
 		
@@ -121,9 +126,9 @@ class MainWindowController: NSWindowController {
 	}
 	
 	@IBAction func openURL(_ sender: Any?) {
-		print("OPEN URL")
-		guard let button = toolbarAssistant.urlSettingsButton else { return }
-		mainViewController.showURLSettings(button)
+		// FIXME
+		guard let field = mainViewController.pageViewController.urlField else { return }
+		field.window?.makeFirstResponder(field)
 	}
 	
 	@IBAction func focusOnSearchPagesField(_ sender: Any?) {
@@ -313,6 +318,15 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		}*/
 	}
 	
+	@objc @IBAction func visitURL(_ sender: NSTextField) {
+		print("visitURL:")
+		guard let url = LanternModel.detectWebURL(fromString: sender.stringValue) else {
+			return
+		}
+		
+		mainState.startURL = url
+	}
+	
 	var addSiteButton: NSButton?
 	var prepareNewSiteButton: ((NSButton) -> ())?
 	
@@ -361,51 +375,28 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 //
 //	}
 	
-	enum ItemIdentifier : String {
-		case pageURL
-		case chosenSite
-		case viewportWidth
-		case showToggles
-		case searchPages
-		
-		var toolbarIdentifier: NSToolbarItem.Identifier {
-			.init(self.rawValue)
-		}
-	}
-	
 	func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
 		[
-			ItemIdentifier.pageURL.toolbarIdentifier,
-			ItemIdentifier.chosenSite.toolbarIdentifier,
-			NSToolbarItem.Identifier.space,
-			ItemIdentifier.viewportWidth.toolbarIdentifier,
-			ItemIdentifier.showToggles.toolbarIdentifier,
+			.lantern_urlField,
+			.flexibleSpace,
+			.lantern_viewportWidth,
+			.lantern_showToggles
 		]
 	}
 	
 	func toolbarWillAddItem(_ notification: Notification) {
-		let userInfo = notification.userInfo!
-		let toolbarItem = userInfo["item"] as! NSToolbarItem
-		let itemIdentifier = toolbarItem.itemIdentifier.rawValue
+		let toolbarItem = notification.userInfo!["item"] as! NSToolbarItem
 		var sizeToFit = false
 		
-		if itemIdentifier == "newSiteButton" {
-			let addSiteButton = toolbarItem.view as! NSButton
-			self.addSiteButton = addSiteButton
-			prepareNewSiteButton?(addSiteButton)
-		}
-		else if itemIdentifier == "chosenSite" {
-			let popUp = toolbarItem.view as! NSPopUpButton
-			self.sitesPopUpButton = popUp
-			updateUIForSites()
-		}
-		else if itemIdentifier == "pageURL" {
-			urlSettingsButton = toolbarItem.view as! NSButton
-			//sizeToFit = true
-			prepareURLSettingsButton?(urlSettingsButton)
-			updateUIForSites()
-		}
-		else if itemIdentifier == "viewportWidth" {
+		print("toolbarWillAddItem: \(toolbarItem.itemIdentifier)")
+		
+		switch toolbarItem.itemIdentifier {
+		case .lantern_urlField:
+			print("toolbarWillAddItem lantern_urlField")
+			let textField = toolbarItem.view as! NSTextField
+			textField.target = self
+			textField.action = #selector(visitURL(_:))
+		case .lantern_viewportWidth:
 			let popUpButton = toolbarItem.view as! NSPopUpButton
 			popUpButton.target = self
 			popUpButton.action = #selector(changeViewportWidth(_:))
@@ -413,18 +404,19 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 			let preferences = BrowserPreferences.shared
 			let assistant = PopUpButtonAssistant<BrowserWidthChoice>(popUpButton: popUpButton)
 			assistant.menuItemRepresentatives = BrowserWidthChoice.allChoices
-			print("WIDTH \(preferences.widthChoice)")
 			assistant.update()
 			assistant.selectedUniqueIdentifier = preferences.widthChoice
 			self.viewportWidthAssistant = assistant
-		}
-		else if itemIdentifier == "showToggles" {
+		case .lantern_showToggles:
 			toggleViewControl = toolbarItem.view as! NSSegmentedControl
 			prepareToggleViewControl?(toggleViewControl)
+		default:
+			break
 		}
-		else if itemIdentifier == "searchPages" {
-			searchPagesField = toolbarItem.view as! NSSearchField
-		}
+		
+//		else if itemIdentifier == "searchPages" {
+//			searchPagesField = toolbarItem.view as! NSSearchField
+//		}
 		
 		if sizeToFit {
 			let fittingSize = toolbarItem.view!.fittingSize

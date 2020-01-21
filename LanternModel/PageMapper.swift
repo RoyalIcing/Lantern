@@ -338,6 +338,7 @@ public final class PageMapper {
 		}
 	}
 	
+	// TODO: remove pausing and resuming
 	public func pauseCrawling() {
 		assert(crawlsFoundURLs, "Must have been initialized with crawlsFoundURLs = true")
 		

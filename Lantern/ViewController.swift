@@ -119,10 +119,14 @@ class ViewController : NSViewController
 		let nc = NotificationCenter.default
 		let mainQueue = OperationQueue.main
 		
-		let observer = nc.addObserver(forName: MainState.chosenSiteDidChangeNotification, object: mainState, queue: mainQueue) { [weak self] _ in
-			self?.updateMainViewForState()
-		}
-		mainStateNotificationObservers.append(observer)
+		mainStateNotificationObservers += [
+			nc.addObserver(forName: MainState.chosenSiteDidChangeNotification, object: mainState, queue: mainQueue) { [weak self] _ in
+				self?.updateMainViewForState()
+			},
+			nc.addObserver(forName: MainState.startURLDidChangeNotification, object: mainState, queue: mainQueue) { [weak self] _ in
+				self?.startURLDidChange()
+			}
+		]
 	}
 	
 	func stopObservingModelManager() {
@@ -166,6 +170,17 @@ class ViewController : NSViewController
 	
 	var lastChosenSite: SiteValues?
 	
+	func startURLDidChange() {
+		print("startURLDidChange")
+		guard let startURL = mainState?.startURL else {
+			statsViewController.primaryURL = nil
+			return
+		}
+		
+		pageViewController.loadURL(startURL)
+		statsViewController.primaryURL = startURL
+	}
+	
 	func updateMainViewForState() {
 		let site = mainState?.chosenSite
 		if site?.UUID == lastChosenSite?.UUID {
@@ -176,17 +191,8 @@ class ViewController : NSViewController
 		if let site = site {
 			let initialURL = site.homePageURL
 			mainState.initialHost = initialURL.host
-			
-			#if false
-				pageViewController.GoogleOAuth2TokenJSONString = site.GoogleAPIOAuth2TokenJSONString
-				pageViewController.hoverlyticsPanelDidReceiveGoogleOAuth2TokenCallback = { [unowned self] tokenJSONString in
-				self.modelManager.setGoogleOAuth2TokenJSONString(tokenJSONString, forSite: site)
-				}
-			#endif
-			
 				
 			pageViewController.loadURL(initialURL)
-			
 			
 			statsViewController.primaryURL = site.homePageURL
 		}
