@@ -37,6 +37,26 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B22425FC1AC8F8B200809EF0"
+               BuildableName = "LanternModelTests.xctest"
+               BlueprintName = "LanternModelTests"
+               ReferencedContainer = "container:Lantern.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B2054D7B1AF477C700DC2C00"
+               BuildableName = "LanternTests.xctest"
+               BlueprintName = "LanternTests"
+               ReferencedContainer = "container:Lantern.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
