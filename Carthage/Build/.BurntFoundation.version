@@ -3,8 +3,8 @@
   "Mac" : [
     {
       "name" : "BurntFoundation",
-      "hash" : "f69b73f763a9b6bab5baca9ac266a20528176e24c445601df00a6c94ea8817fb",
-      "swiftToolchainVersion" : "5.1.2 (swiftlang-1100.0.278 clang-1100.0.33.9)"
+      "hash" : "954777f5961152a8cb0e0c0cc48f24c55f87bb3010f5effe0dbfc3b79e683880",
+      "swiftToolchainVersion" : "5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15)"
     }
   ]
 }
