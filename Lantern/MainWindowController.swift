@@ -49,7 +49,7 @@ class MainWindowController: NSWindowController {
 	
 	let modelManager = LanternModel.ModelManager.sharedManager
 	
-	var mainViewController: ViewController! {
+	var mainViewController: ViewController {
 		return contentViewController as! ViewController
 	}
 	
@@ -116,6 +116,8 @@ class MainWindowController: NSWindowController {
 				}
 			}
 		}
+		
+		self.openURL(nil)
 	}
 	
 	deinit {
@@ -126,9 +128,12 @@ class MainWindowController: NSWindowController {
 	}
 	
 	@IBAction func openURL(_ sender: Any?) {
-		// FIXME
-		guard let field = mainViewController.pageViewController.urlField else { return }
-		field.window?.makeFirstResponder(field)
+		guard let window = self.window else { return }
+		guard let urlToolbarItem = window.toolbar?.items.first(where: { $0.itemIdentifier == .lantern_urlField }) else {
+			return
+		}
+		
+		window.makeFirstResponder(urlToolbarItem.view)
 	}
 	
 	@IBAction func focusOnSearchPagesField(_ sender: Any?) {
@@ -319,7 +324,6 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 	}
 	
 	@objc @IBAction func visitURL(_ sender: NSTextField) {
-		print("visitURL:")
 		guard let url = LanternModel.detectWebURL(fromString: sender.stringValue) else {
 			return
 		}
@@ -388,11 +392,8 @@ class MainWindowToolbarAssistant: NSObject, NSToolbarDelegate {
 		let toolbarItem = notification.userInfo!["item"] as! NSToolbarItem
 		var sizeToFit = false
 		
-		print("toolbarWillAddItem: \(toolbarItem.itemIdentifier)")
-		
 		switch toolbarItem.itemIdentifier {
 		case .lantern_urlField:
-			print("toolbarWillAddItem lantern_urlField")
 			let textField = toolbarItem.view as! NSTextField
 			textField.target = self
 			textField.action = #selector(visitURL(_:))

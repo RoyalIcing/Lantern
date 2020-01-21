@@ -25,7 +25,11 @@ class LanternModelTests: XCTestCase {
 	func testDetectWebURL() {
 		XCTAssertEqual(detectWebURL(fromString: "https://www.burntcaramel.com/"), URL(string: "https://www.burntcaramel.com/"))
 		
-		XCTAssertEqual(detectWebURL(fromString: "https://www.burntcaramel.com/"), URL(string: "https://www.burntcaramel.com/"))
+		XCTAssertEqual(detectWebURL(fromString: "https://www.burntcaramel.com"), URL(string: "https://www.burntcaramel.com"))
+		
+		XCTAssertEqual(detectWebURL(fromString: "www.burntcaramel.com"), URL(string: "http://www.burntcaramel.com"))
+		
+		XCTAssertEqual(detectWebURL(fromString: "burntcaramel.com"), URL(string: "http://burntcaramel.com"))
 	}
 	
 	func testPerformanceExample() {
