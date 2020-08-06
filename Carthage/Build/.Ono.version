@@ -3,7 +3,8 @@
   "Mac" : [
     {
       "name" : "Ono",
-      "hash" : "96e987574f171057a42a83b54ab6c42e1ea631c67116f3e41e200fa996b0391b"
+      "hash" : "308d7ed5b5713a08d64cfda9ae27086613827086fc551706a5339ac1a6e21009",
+      "linking" : "dynamic"
     }
   ]
 }

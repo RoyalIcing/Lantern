@@ -2,9 +2,10 @@
   "commitish" : "0.8.0",
   "Mac" : [
     {
+      "hash" : "599d86113fc9c52b67829a0a62e3af0b6c68e8e2d6a57a8ab7b5dfbe446d3aee",
       "name" : "BurntFoundation",
-      "hash" : "954777f5961152a8cb0e0c0cc48f24c55f87bb3010f5effe0dbfc3b79e683880",
-      "swiftToolchainVersion" : "5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15)"
+      "linking" : "dynamic",
+      "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
     }
   ]
 }
