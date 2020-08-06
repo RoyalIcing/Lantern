@@ -2,3 +2,4 @@ Carthage/Checkouts
 xcuserdata
 /Lantern.xcodeproj/xcuserdata
 /build
+.DS_Store
