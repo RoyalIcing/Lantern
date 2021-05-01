@@ -2,10 +2,10 @@
   "commitish" : "4.9.1",
   "Mac" : [
     {
-      "hash" : "a3848c7b65ab79508c424eee6bb4a32481ace5546c83121343429b2913587575",
+      "hash" : "b15bbc536b5d7123db92652c3239a77bce9d279e271de43fe1f6297d6611ef86",
       "name" : "Alamofire",
       "linking" : "dynamic",
-      "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
+      "swiftToolchainVersion" : "5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)"
     }
   ]
 }

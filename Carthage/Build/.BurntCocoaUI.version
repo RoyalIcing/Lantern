@@ -2,10 +2,10 @@
   "commitish" : "0.6.0",
   "Mac" : [
     {
-      "hash" : "ecb02ea61cf384b9ce6ec251446279dd7c98819fa9c6dd1f33e22f7c59a793ac",
+      "hash" : "75254fc433075ae1ad7d18fdc44a301eb4054fef727b951ceeefb7ee439d8199",
       "name" : "BurntCocoaUI",
       "linking" : "dynamic",
-      "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
+      "swiftToolchainVersion" : "5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)"
     }
   ]
 }

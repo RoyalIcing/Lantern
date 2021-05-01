@@ -2,10 +2,10 @@
   "commitish" : "0.10.0",
   "Mac" : [
     {
-      "hash" : "6e59de4169f0f2ca5134d4ed24e12005561c2d56cdf89499067aab2bd747c962",
+      "hash" : "b5ebfa6e94a52bdff89a248d72828f1987d290fe27d3d0ae6ccd5b294a844032",
       "name" : "Syrup",
       "linking" : "dynamic",
-      "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
+      "swiftToolchainVersion" : "5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)"
     }
   ]
 }
