@@ -19,6 +19,8 @@ class MultipleStringPreviewViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		tableView.tableColumns[0].minWidth = 100
+		
 		tableView.dataSource = self
 		tableView.delegate = self
 		
@@ -106,8 +108,16 @@ extension MultipleStringPreviewViewController: NSTableViewDataSource, NSTableVie
 		let textField = view.textField!
 		textField.stringValue = validatedStringValue.stringValueForPresentation
 		
+		var presentedIndex: String {
+			switch validatedStringValue {
+			case .validKeyValue(let key, _): return key
+			default: return String(row + 1) // 1-based index
+			}
+		}
+		
 		let indexField = view.indexField!
-		indexField.stringValue = String(row + 1) // 1-based index
+		indexField.stringValue = presentedIndex
+		indexField.sizeToFit()
 		
 		if visualsAndInteraction {
 			let textColor = NSColor.textColor

@@ -13,6 +13,7 @@ import Ono
 
 public enum ValidatedStringValue {
 	case validString(string: String)
+	case validKeyValue(key: String, value: String)
 	case missing
 	case empty
 	case notRequested
@@ -79,6 +80,12 @@ extension ValidatedStringValue {
 		}
 	}
 	
+	static func validate(keyAttribute: String, valueAttribute: String, of element: ONOXMLElement) -> ValidatedStringValue {
+		let key = element[keyAttribute] as? String ?? ""
+		let value = element[valueAttribute] as? String ?? ""
+		return .validKeyValue(key: key, value: value)
+	}
+	
 	static func validateAttribute(_ attribute: String, ofElements elements: [ONOXMLElement]) -> ValidatedStringValue {
 		switch elements.count {
 		case 1:
@@ -91,6 +98,19 @@ extension ValidatedStringValue {
 				return self.validateAttribute(attribute, ofElement: element)
 			}
 			return .multiple(values)
+		}
+	}
+	
+	static func validate(keyAttribute: String, valueAttribute: String, of elements: [ONOXMLElement]) -> ValidatedStringValue {
+		switch elements.count {
+		case 1:
+			return validate(keyAttribute: keyAttribute, valueAttribute: valueAttribute, of: elements[0])
+		case 0:
+			return .missing
+		default:
+			return .multiple(elements.map {
+				validate(keyAttribute: keyAttribute, valueAttribute: valueAttribute, of: $0)
+			})
 		}
 	}
 }

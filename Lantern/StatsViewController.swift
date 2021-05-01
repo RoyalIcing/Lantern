@@ -150,6 +150,7 @@ extension StatsFilterResponseChoice: UIChoiceRepresentative {
 enum StatsColumnsMode: Int {
 	case titles = 1
 	case descriptions = 2
+	case openGraph = 6
 	case types = 3
 	case downloadSizes = 4
 	case links = 5
@@ -160,6 +161,8 @@ enum StatsColumnsMode: Int {
 			return [.pageTitle, .h1]
 		case .descriptions:
 			return [.metaDescription, .pageTitle]
+		case .openGraph:
+			return [.openGraphTags, .openGraphImage]
 		case .types:
 			return [.statusCode, .MIMEType]
 		case .downloadSizes:
@@ -176,16 +179,12 @@ enum StatsColumnsMode: Int {
 	
 	var title: String {
 		switch self {
-		case .titles:
-			return "Titles"
-		case .descriptions:
-			return "Descriptions"
-		case .types:
-			return "Types"
-		case .downloadSizes:
-			return "Sizes"
-		case .links:
-			return "Links"
+		case .titles: return "Titles"
+		case .descriptions: return "Descriptions"
+		case .openGraph: return "Open Graph"
+		case .types: return "Types"
+		case .downloadSizes: return "Sizes"
+		case .links: return "Links"
 		}
 	}
 }
@@ -222,7 +221,7 @@ extension BaseContentTypeChoice {
 	var allowedColumnsModes: [StatsColumnsMode] {
 		switch self {
 		case .localHTMLPages:
-			return [.titles, .descriptions, .types, .downloadSizes, .links]
+			return [.titles, .descriptions, .openGraph, .types, .downloadSizes, .links]
 		default:
 			return [.types, .downloadSizes]
 		}

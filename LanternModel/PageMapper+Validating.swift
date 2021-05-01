@@ -30,7 +30,7 @@ private func stringIsJustWhitespace(_ string: String) -> Bool {
 extension PageInfoValidationResult {
 	init(validatedStringValue: ValidatedStringValue) {
 		switch validatedStringValue{
-		case .validString:
+		case .validString, .validKeyValue:
 			self = .valid
 		case .notRequested:
 			self = .notRequested

@@ -155,10 +155,10 @@ extension ImagePreviewViewController {
 		performCopyImage()
 	}
 	
-	func performCopyImage() {
+	private func performCopyImage() {
 		if
 			let imageData = imageData,
-			let MIMEType = MIMEType , MIMEType != "",
+			let MIMEType = MIMEType, MIMEType != "",
 			let UTIs = UTTypeCreateAllIdentifiersForTag(kUTTagClassMIMEType, MIMEType as CFString, kUTTypeImage)?.takeRetainedValue() as? [String]//,
 			//let pasteboardType = UTTypeCopyPreferredTagWithClass(preferredUTI, kUTTagClassNSPboardType).takeRetainedValue()
 		{

@@ -29,6 +29,8 @@ public enum PagePresentedInfoIdentifier: String {
 	case pageTitle = "pageTitle"
 	case h1 = "h1"
 	case metaDescription = "metaDescription"
+	case openGraphTags = "openGraphTags"
+	case openGraphImage = "openGraphImage"
 	case pageByteCount = "pageByteCount"
 	case pageByteCountBeforeBodyTag = "pageBeforeBodyTagBytes"
 	case pageByteCountAfterBodyTag = "pageAfterBodyTagBytes"
@@ -75,6 +77,10 @@ public enum PagePresentedInfoIdentifier: String {
 			return "H1"
 		case .metaDescription:
 			return "Meta Description"
+		case .openGraphTags:
+			return "Open Graph Tags"
+		case .openGraphImage:
+			return "Open Graph Image"
 		case .pageByteCount:
 			return "Total Bytes"
 		case .pageByteCountBeforeBodyTag:
@@ -192,6 +198,14 @@ public enum PagePresentedInfoIdentifier: String {
 			if let metaDescriptionElements = pageInfo.contentInfo?.metaDescriptionElements {
 				return ValidatedStringValue.validateAttribute("content", ofElements: metaDescriptionElements)
 			}
+		case .openGraphTags:
+			if let openGraphElements = pageInfo.contentInfo?.openGraphElements {
+				return ValidatedStringValue.validate(keyAttribute: "property", valueAttribute: "content", of: openGraphElements)
+			}
+		case .openGraphImage:
+			guard let openGraphElements = pageInfo.contentInfo?.openGraphElements else { return .missing }
+			guard let imageElement = openGraphElements.first(where: { $0["property"] as? String == "og:image" }) else { return .missing }
+			return ValidatedStringValue.validate(keyAttribute: "property", valueAttribute: "content", of: imageElement)
 		case .pageByteCount:
 			if let byteCount = pageInfo.byteCount {
 				return ValidatedStringValue(

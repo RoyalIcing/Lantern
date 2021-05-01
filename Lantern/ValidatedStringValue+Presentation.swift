@@ -26,6 +26,8 @@ extension ValidatedStringValue {
 		switch self {
 		case .validString(let stringValue):
 			return stringValue
+		case .validKeyValue(_, let value):
+			return value
 		case .notRequested:
 			return "(not requested)"
 		case .missing:
